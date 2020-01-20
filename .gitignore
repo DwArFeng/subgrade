@@ -1,0 +1,82 @@
+#################
+## Eclipse
+#################
+*.pydevproject
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+#################
+## Idea
+#################
+**/*.iml
+.idea/
+
+#################
+## Maven
+#################
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
+!/.mvn/wrapper/maven-wrapper.jar
+
+#################
+## Logger Files
+#################
+/flight-data-recorder-impl/flight-data-recorder-impl-dao-hnh/logs/
+/flight-data-recorder-impl/flight-data-recorder-impl-dao-fuh/logs/
+/flight-data-recorder-impl/flight-data-recorder-impl-cache-redis/logs/
+/flight-data-recorder-sdk/logs/
+/flight-data-recorder-impl/flight-data-recorder-impl-service-maintain/logs/
+/flight-data-recorder-impl/flight-data-recorder-impl-service-record/logs/
+/flight-data-recorder-node/flight-data-recorder-node-manager-web/logs/
+/flight-data-recorder-node/flight-data-recorder-node-manager-ws/logs/
+/flight-data-recorder-node/flight-data-recorder-node-manager-dubbo/logs/
+/flight-data-recorder-node/flight-data-recorder-node-recorder-dubbo/logs/
+/flight-data-recorder-api/flight-data-recorder-api-maintain-dubbo/logs/
+/flight-data-recorder-api/flight-data-recorder-api-record-dubbo/logs/
+
+#################
+## Configuration Files
+#################
+/flight-data-recorder-impl/flight-data-recorder-impl-dao-hnh/conf/
+/flight-data-recorder-impl/flight-data-recorder-impl-dao-fuh/conf/
+/flight-data-recorder-impl/flight-data-recorder-impl-cache-redis/conf/
+/flight-data-recorder-sdk/conf/
+/flight-data-recorder-impl/flight-data-recorder-impl-service-maintain/conf/
+/flight-data-recorder-impl/flight-data-recorder-impl-service-record/conf/
+/flight-data-recorder-node/flight-data-recorder-node-manager-web/conf/
+/flight-data-recorder-node/flight-data-recorder-node-manager-ws/conf/
+/flight-data-recorder-node/flight-data-recorder-node-manager-dubbo/conf/
+/flight-data-recorder-node/flight-data-recorder-node-recorder-dubbo/conf/
+/flight-data-recorder-api/flight-data-recorder-api-maintain-dubbo/conf/
+/flight-data-recorder-api/flight-data-recorder-api-record-dubbo/conf/
