@@ -31,7 +31,7 @@ public final class ServiceExceptionHelper {
      * @return 添加了默认目标的映射。
      * @see MapServiceExceptionMapper#getDestination()
      */
-    public Map<Class<? extends Exception>, ServiceException.Code> putDefaultDestination(
+    public static Map<Class<? extends Exception>, ServiceException.Code> putDefaultDestination(
             Map<Class<? extends Exception>, ServiceException.Code> map) {
         if (Objects.isNull(map)) {
             map = new HashMap<>();
@@ -46,15 +46,15 @@ public final class ServiceExceptionHelper {
     }
 
     /**
-     * 记录指定的异常，并将该异常转化为服务异常抛出。
+     * 记录指定的异常，并返回该异常转化为服务异常。
      *
      * @param message  指定异常的记录文本。
      * @param logLevel 日志的等级。
      * @param mapper   指定的异常映射器。
      * @param e        指定的异常。
-     * @throws ServiceException 转化后抛出的服务异常。
+     * @return ServiceException 转化后抛出的服务异常。
      */
-    public void logAndThrow(String message, LogLevel logLevel, ServiceExceptionMapper mapper, Exception e) throws ServiceException {
+    public static ServiceException logAndThrow(String message, LogLevel logLevel, ServiceExceptionMapper mapper, Exception e) {
         Objects.requireNonNull(message, "入口参数 message 不能为 null");
         Objects.requireNonNull(logLevel, "入口参数 logLevel 不能为 null");
         Objects.requireNonNull(mapper, "入口参数 mapper 不能为 null");
@@ -73,6 +73,6 @@ public final class ServiceExceptionHelper {
                 LOGGER.error(message, e);
                 break;
         }
-        throw mapper.map(e);
+        return mapper.map(e);
     }
 }
