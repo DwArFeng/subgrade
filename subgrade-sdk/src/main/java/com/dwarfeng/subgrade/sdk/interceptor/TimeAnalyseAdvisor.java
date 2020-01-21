@@ -36,7 +36,7 @@ public class TimeAnalyseAdvisor {
             long lastTimeStamp = System.currentTimeMillis();
             LOGGER.debug("获得当前系统时间戳 " + lastTimeStamp);
             LOGGER.debug("计算方法执行时间，公式: " + lastTimeStamp + "-" + firstTimeStamp);
-            LOGGER.info("方法 " + className + "." + methodName + " 运行结束，用时 " + (lastTimeStamp - firstTimeStamp) + " 毫秒");
+            LOGGER.debug("方法 " + className + "." + methodName + " 运行结束，用时 " + (lastTimeStamp - firstTimeStamp) + " 毫秒");
         }
     }
 

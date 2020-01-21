@@ -10,24 +10,7 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public interface BaseDao<K extends Key, E extends Entity<K>> extends Dao {
-
-    /**
-     * 获取指定的实体是否存在。
-     *
-     * @param key 指定的实体的键。
-     * @return 指定的实体是否存在。
-     * @throws DaoException 数据访问层异常。
-     */
-    boolean exists(K key) throws DaoException;
-
-    /**
-     * 获取实体。
-     *
-     * @param key 实体的键。
-     * @return 实体的键对应的实体。
-     */
-    E get(K key) throws DaoException;
+public interface BaseDao<K extends Key, E extends Entity<K>> extends ReadOnlyDao<K, E> {
 
     /**
      * 插入实体。
