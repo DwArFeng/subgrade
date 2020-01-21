@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.util;
+package com.dwarfeng.subgrade.sdk.exception;
 
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 
@@ -15,9 +15,9 @@ public final class ServiceExceptionCodes {
      */
     public static final ServiceException.Code UNDEFINE = new ServiceException.Code(0, "undefine");
     /**
-     * GUID生成失败
+     * 主键获取失败
      */
-    public static final ServiceException.Code GUID_FETCH_FAILED = new ServiceException.Code(100, "guid fetch failed");
+    public static final ServiceException.Code KEY_FETCH_FAILED = new ServiceException.Code(100, "guid fetch failed");
     /**
      * 缓存异常。
      */
