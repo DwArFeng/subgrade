@@ -1,6 +1,5 @@
 package com.dwarfeng.subgrade.sdk.dao;
 
-import com.dwarfeng.subgrade.sdk.interceptor.TimeAnalyse;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanMapper;
 import com.dwarfeng.subgrade.stack.bean.dto.LookupPagingInfo;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *
  * @author DwArFeng
- * @since 0.0.1-alpha
+ * @since 0.0.1-beta
  */
 public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K>, PE extends Bean> implements BaseDao<K, E> {
 
@@ -113,7 +112,6 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     }
 
     @Override
-    @TimeAnalyse
     public int countAll() throws DaoException {
         try {
             DetachedCriteria criteria = DetachedCriteria.forClass(classPE);

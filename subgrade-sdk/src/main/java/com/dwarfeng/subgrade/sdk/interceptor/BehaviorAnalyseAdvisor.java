@@ -15,24 +15,33 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Aspect
-public class TimeAnalyseAdvisor {
+public class BehaviorAnalyseAdvisor {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(TimeAnalyseAdvisor.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(BehaviorAnalyseAdvisor.class);
 
-    @Around("@annotation(com.dwarfeng.subgrade.sdk.interceptor.TimeAnalyse) || @within(com.dwarfeng.subgrade.sdk.interceptor.TimeAnalyse)")
+    @Around("@annotation(com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse) || @within(com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         LOGGER.debug("进入增强方法");
         String className = pjp.getSignature().getDeclaringTypeName();
         String methodName = pjp.getSignature().getName();
+        Object result = null;
         LOGGER.debug("获得方法名称 " + methodName);
+        LOGGER.debug("获得方法参数");
+        for (int i = 0; i < pjp.getArgs().length; i++) {
+            LOGGER.debug("\t" + i + ". " + pjp.getArgs()[i]);
+        }
         LOGGER.debug("方法 " + className + "." + methodName + " 开始计时...");
         long firstTimeStamp = System.currentTimeMillis();
         LOGGER.debug("获得当前系统时间戳 " + firstTimeStamp);
         try {
             LOGGER.debug("原始方法执行");
-            return pjp.proceed(pjp.getArgs());
+            result = pjp.proceed(pjp.getArgs());
+            return result;
+        } catch (Throwable e) {
+            LOGGER.debug("方法 " + className + "." + methodName + " 抛出异常", e);
+            throw e;
         } finally {
-            LOGGER.debug("原始方法执行结束");
+            LOGGER.debug("原始方法执行结束，返回的对象为 " + result);
             long lastTimeStamp = System.currentTimeMillis();
             LOGGER.debug("获得当前系统时间戳 " + lastTimeStamp);
             LOGGER.debug("计算方法执行时间，公式: " + lastTimeStamp + "-" + firstTimeStamp);

@@ -1,21 +1,23 @@
-package com.dwarfeng.subgrade.stack.bean.key;
+package com.dwarfeng.subgrade.sdk.bean.key;
+
+import com.dwarfeng.subgrade.stack.bean.Bean;
 
 /**
- * Long主键，封装了Long。
+ * 适用于 FastJson 的 LongIdKey。
  *
  * @author DwArFeng
- * @since 0.0.1-alpha
+ * @since 0.0.1-beta
  */
-public class LongIdKey implements Key {
+public class FastJsonLongIdKey implements Bean {
 
-    private static final long serialVersionUID = 4894711608426921844L;
+    private static final long serialVersionUID = 8863415673517584070L;
 
     private long id;
 
-    public LongIdKey() {
+    public FastJsonLongIdKey() {
     }
 
-    public LongIdKey(long id) {
+    public FastJsonLongIdKey(long id) {
         this.id = id;
     }
 
@@ -32,9 +34,9 @@ public class LongIdKey implements Key {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LongIdKey longIdKey = (LongIdKey) o;
+        FastJsonLongIdKey that = (FastJsonLongIdKey) o;
 
-        return id == longIdKey.id;
+        return id == that.id;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class LongIdKey implements Key {
 
     @Override
     public String toString() {
-        return "LongIdKey{" +
+        return "FastJsonLongIdKey{" +
                 "id=" + id +
                 '}';
     }
