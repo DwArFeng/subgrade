@@ -1,27 +1,23 @@
-package com.dwarfeng.subgrade.sdk.bean.key;
-
-import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.subgrade.stack.bean.Bean;
+package com.dwarfeng.subgrade.stack.bean.key;
 
 import java.util.Objects;
 
 /**
- * 适用于 FastJson 的 UuidKey。
+ * 特殊的String主键，封装了使用Base64编码压缩过的UUID主键。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
  */
-public class FastJsonUuidKey implements Bean {
+public class DenseUuidKey implements Key {
 
-    private static final long serialVersionUID = 1819020183548760478L;
+    private static final long serialVersionUID = 4581891864042654555L;
 
-    @JSONField(name = "uuid", ordinal = 1)
     private String uuid;
 
-    public FastJsonUuidKey() {
+    public DenseUuidKey() {
     }
 
-    public FastJsonUuidKey(String id) {
+    public DenseUuidKey(String id) {
         this.uuid = id;
     }
 
@@ -38,7 +34,7 @@ public class FastJsonUuidKey implements Bean {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FastJsonUuidKey that = (FastJsonUuidKey) o;
+        DenseUuidKey that = (DenseUuidKey) o;
 
         return Objects.equals(uuid, that.uuid);
     }
@@ -50,7 +46,7 @@ public class FastJsonUuidKey implements Bean {
 
     @Override
     public String toString() {
-        return "FastJsonUuidKey{" +
+        return "DenseUuidKey{" +
                 "uuid='" + uuid + '\'' +
                 '}';
     }

@@ -2,19 +2,14 @@ package com.dwarfeng.subgrade.impl.dao;
 
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
-import com.dwarfeng.subgrade.stack.bean.dto.LookupPagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
 import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * 使用 Hibernate 实现的 BaseDao。
@@ -91,44 +86,6 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         try {
             PE pe = rawGet(key);
             return reverseTransformEntity(pe);
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public List<E> getAll() throws DaoException {
-        try {
-            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
-            @SuppressWarnings("unchecked")
-            List<PE> peList = (List<PE>) template.findByCriteria(criteria);
-            return peList.stream().map(this::reverseTransformEntity).collect(Collectors.toList());
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public int countAll() throws DaoException {
-        try {
-            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
-            criteria.setProjection(Projections.rowCount());
-            return template.findByCriteria(criteria)
-                    .stream().findFirst().map(Long.class::cast).map(Long::intValue).orElse(0);
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public List<E> get(LookupPagingInfo lookupPagingInfo) throws DaoException {
-        try {
-            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
-            @SuppressWarnings("unchecked")
-            List<PE> peList = (List<PE>) template.findByCriteria(criteria,
-                    lookupPagingInfo.getPage() * lookupPagingInfo.getRows(),
-                    lookupPagingInfo.getRows());
-            return peList.stream().map(this::reverseTransformEntity).collect(Collectors.toList());
         } catch (Exception e) {
             throw new DaoException(e);
         }

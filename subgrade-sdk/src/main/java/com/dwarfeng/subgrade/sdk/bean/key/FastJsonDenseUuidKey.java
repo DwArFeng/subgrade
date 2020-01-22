@@ -6,22 +6,22 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import java.util.Objects;
 
 /**
- * 适用于 FastJson 的 UuidKey。
+ * 适用于 FastJson 的 DenseUuidKey。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
  */
-public class FastJsonUuidKey implements Bean {
+public class FastJsonDenseUuidKey implements Bean {
 
-    private static final long serialVersionUID = 1819020183548760478L;
+    private static final long serialVersionUID = -678760030501902949L;
 
     @JSONField(name = "uuid", ordinal = 1)
     private String uuid;
 
-    public FastJsonUuidKey() {
+    public FastJsonDenseUuidKey() {
     }
 
-    public FastJsonUuidKey(String id) {
+    public FastJsonDenseUuidKey(String id) {
         this.uuid = id;
     }
 
@@ -38,7 +38,7 @@ public class FastJsonUuidKey implements Bean {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FastJsonUuidKey that = (FastJsonUuidKey) o;
+        FastJsonDenseUuidKey that = (FastJsonDenseUuidKey) o;
 
         return Objects.equals(uuid, that.uuid);
     }

@@ -29,7 +29,6 @@ public final class ServiceExceptionHelper {
      *
      * @param map 指定的映射，允许为null。
      * @return 添加了默认目标的映射。
-     * @see MapServiceExceptionMapper#getDestination()
      */
     public static Map<Class<? extends Exception>, ServiceException.Code> putDefaultDestination(
             Map<Class<? extends Exception>, ServiceException.Code> map) {

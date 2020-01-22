@@ -27,6 +27,14 @@ public final class ServiceExceptionCodes {
      */
     public static final ServiceException.Code DAO_FAILED = new ServiceException.Code(120, "dao failed");
     /**
+     * 实体已经存在。
+     */
+    public static final ServiceException.Code ENTITY_EXISTED = new ServiceException.Code(121, "entity existed");
+    /**
+     * 实体不存在。
+     */
+    public static final ServiceException.Code ENTITY_NOT_EXIST = new ServiceException.Code(122, "entity not existed");
+    /**
      * 参数验证失败。
      */
     public static final ServiceException.Code PARAM_VALIDATION_FAILED = new ServiceException.Code(130, "param validation failed");

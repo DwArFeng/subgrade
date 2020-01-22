@@ -30,6 +30,10 @@ public class MapServiceExceptionMapper implements ServiceExceptionMapper {
         if (Objects.isNull(e)) {
             return null;
         }
+        //如果异常本身属于ServiceException则直接返回异常本身。
+        if (e instanceof ServiceException) {
+            return (ServiceException) e;
+        }
 
         if (router.containsKey(e.getClass())) {
             return new ServiceException(router.get(e.getClass()));

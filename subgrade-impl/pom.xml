@@ -88,6 +88,15 @@
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer-spring</artifactId>
         </dependency>
+        <!-- dutil组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dutil-basic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dutil-develop</artifactId>
+        </dependency>
         <!-- 程序自身组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>

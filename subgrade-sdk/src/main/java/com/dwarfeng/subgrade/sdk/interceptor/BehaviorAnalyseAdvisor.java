@@ -27,8 +27,12 @@ public class BehaviorAnalyseAdvisor {
         Object result = null;
         LOGGER.debug("获得方法名称 " + methodName);
         LOGGER.debug("获得方法参数");
-        for (int i = 0; i < pjp.getArgs().length; i++) {
-            LOGGER.debug("\t" + i + ". " + pjp.getArgs()[i]);
+        if (pjp.getArgs().length == 0) {
+            LOGGER.debug("\t没有参数");
+        } else {
+            for (int i = 0; i < pjp.getArgs().length; i++) {
+                LOGGER.debug("\t" + i + ". " + pjp.getArgs()[i]);
+            }
         }
         LOGGER.debug("方法 " + className + "." + methodName + " 开始计时...");
         long firstTimeStamp = System.currentTimeMillis();
