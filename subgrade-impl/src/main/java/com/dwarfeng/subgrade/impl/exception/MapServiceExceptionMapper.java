@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.exception;
+package com.dwarfeng.subgrade.impl.exception;
 
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
@@ -18,9 +18,6 @@ public class MapServiceExceptionMapper implements ServiceExceptionMapper {
     private Map<Class<? extends Exception>, ServiceException.Code> destination;
     private ServiceException.Code defaultCode;
     private Map<Class<? extends Exception>, ServiceException.Code> router = new HashMap<>();
-
-    public MapServiceExceptionMapper() {
-    }
 
     public MapServiceExceptionMapper(Map<Class<? extends Exception>, ServiceException.Code> destination, ServiceException.Code defaultCode) {
         this.destination = destination;

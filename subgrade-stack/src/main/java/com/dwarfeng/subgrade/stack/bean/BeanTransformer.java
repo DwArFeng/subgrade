@@ -7,7 +7,7 @@ package com.dwarfeng.subgrade.stack.bean;
  * @param <U> 对象 U。
  * @param <V> 对象 V。
  */
-public interface BeanMapper<U extends Bean, V extends Bean> {
+public interface BeanTransformer<U extends Bean, V extends Bean> {
 
     /**
      * 变换-将 U 变成 V。

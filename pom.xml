@@ -376,5 +376,6 @@
     <modules>
         <module>subgrade-stack</module>
         <module>subgrade-sdk</module>
+        <module>subgrade-impl</module>
     </modules>
 </project>

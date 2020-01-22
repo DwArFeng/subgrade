@@ -1,7 +1,7 @@
-package com.dwarfeng.subgrade.sdk.dao;
+package com.dwarfeng.subgrade.impl.dao;
 
 import com.dwarfeng.subgrade.stack.bean.Bean;
-import com.dwarfeng.subgrade.stack.bean.BeanMapper;
+import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.dto.LookupPagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
@@ -26,21 +26,18 @@ import java.util.stream.Collectors;
 public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K>, PE extends Bean> implements BaseDao<K, E> {
 
     private HibernateTemplate template;
-    private BeanMapper<K, PK> keyMapper;
-    private BeanMapper<E, PE> entityMapper;
+    private BeanTransformer<K, PK> keyBeanTransformer;
+    private BeanTransformer<E, PE> entityBeanTransformer;
     private Class<PE> classPE;
 
     public HibernateBaseDao(
             @NonNull HibernateTemplate template,
-            @NonNull BeanMapper<K, PK> keyMapper,
-            @NonNull BeanMapper<E, PE> entityMapper,
-            @NonNull Class<K> clazzK,
-            @NonNull Class<E> classE,
-            @NonNull Class<PK> classPK,
+            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
+            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE) {
         this.template = template;
-        this.keyMapper = keyMapper;
-        this.entityMapper = entityMapper;
+        this.keyBeanTransformer = keyBeanTransformer;
+        this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
     }
 
@@ -143,19 +140,19 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     }
 
     private PK transformKey(K k) {
-        return keyMapper.transform(k);
+        return keyBeanTransformer.transform(k);
     }
 
     private K reverseTransformKey(PK pk) {
-        return keyMapper.reverseTransform(pk);
+        return keyBeanTransformer.reverseTransform(pk);
     }
 
     private PE transformEntity(E entity) {
-        return entityMapper.transform(entity);
+        return entityBeanTransformer.transform(entity);
     }
 
     private E reverseTransformEntity(PE persistenceEntity) {
-        return entityMapper.reverseTransform(persistenceEntity);
+        return entityBeanTransformer.reverseTransform(persistenceEntity);
     }
 
     public HibernateTemplate getTemplate() {
@@ -166,20 +163,20 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         this.template = template;
     }
 
-    public BeanMapper<K, PK> getKeyMapper() {
-        return keyMapper;
+    public BeanTransformer<K, PK> getKeyBeanTransformer() {
+        return keyBeanTransformer;
     }
 
-    public void setKeyMapper(@NonNull BeanMapper<K, PK> keyMapper) {
-        this.keyMapper = keyMapper;
+    public void setKeyBeanTransformer(@NonNull BeanTransformer<K, PK> keyBeanTransformer) {
+        this.keyBeanTransformer = keyBeanTransformer;
     }
 
-    public BeanMapper<E, PE> getEntityMapper() {
-        return entityMapper;
+    public BeanTransformer<E, PE> getEntityBeanTransformer() {
+        return entityBeanTransformer;
     }
 
-    public void setEntityMapper(@NonNull BeanMapper<E, PE> entityMapper) {
-        this.entityMapper = entityMapper;
+    public void setEntityBeanTransformer(@NonNull BeanTransformer<E, PE> entityBeanTransformer) {
+        this.entityBeanTransformer = entityBeanTransformer;
     }
 
     public Class<PE> getClassPE() {

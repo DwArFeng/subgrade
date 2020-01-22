@@ -1,7 +1,7 @@
-package com.dwarfeng.subgrade.sdk.bean;
+package com.dwarfeng.subgrade.impl.bean;
 
 import com.dwarfeng.subgrade.stack.bean.Bean;
-import com.dwarfeng.subgrade.stack.bean.BeanMapper;
+import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import org.dozer.Mapper;
 import org.springframework.lang.NonNull;
 
@@ -13,13 +13,13 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public class DozerBeanMapper<U extends Bean, V extends Bean> implements BeanMapper<U, V> {
+public class DozerBeanTransformer<U extends Bean, V extends Bean> implements BeanTransformer<U, V> {
 
     private Class<U> classU;
     private Class<V> classV;
     private Mapper mapper;
 
-    public DozerBeanMapper(
+    public DozerBeanTransformer(
             @NonNull Class<U> classU,
             @NonNull Class<V> classV,
             @NonNull Mapper mapper) {

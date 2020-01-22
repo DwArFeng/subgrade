@@ -1,7 +1,7 @@
-package com.dwarfeng.subgrade.sdk.bean;
+package com.dwarfeng.subgrade.impl.bean;
 
 import com.dwarfeng.subgrade.stack.bean.Bean;
-import com.dwarfeng.subgrade.stack.bean.BeanMapper;
+import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 
 /**
  * 本征 BeanMapper。
@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.bean.BeanMapper;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public class IdentityBeanMapper<U extends Bean> implements BeanMapper<U, U> {
+public class IdentityBeanTransformer<U extends Bean> implements BeanTransformer<U, U> {
 
     @Override
     public U transform(U u) {
