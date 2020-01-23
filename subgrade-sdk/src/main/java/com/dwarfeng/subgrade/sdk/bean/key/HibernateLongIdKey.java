@@ -1,6 +1,5 @@
 package com.dwarfeng.subgrade.sdk.bean.key;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 /**
@@ -13,22 +12,21 @@ public class HibernateLongIdKey implements Bean {
 
     private static final long serialVersionUID = 8863415673517584070L;
 
-    @JSONField(name = "id", ordinal = 1)
-    private long id;
+    private long longId;
 
     public HibernateLongIdKey() {
     }
 
-    public HibernateLongIdKey(long id) {
-        this.id = id;
+    public HibernateLongIdKey(long longId) {
+        this.longId = longId;
     }
 
-    public long getId() {
-        return id;
+    public long getLongId() {
+        return longId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setLongId(long longId) {
+        this.longId = longId;
     }
 
     @Override
@@ -38,18 +36,18 @@ public class HibernateLongIdKey implements Bean {
 
         HibernateLongIdKey that = (HibernateLongIdKey) o;
 
-        return id == that.id;
+        return longId == that.longId;
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return (int) (longId ^ (longId >>> 32));
     }
 
     @Override
     public String toString() {
         return "HibernateLongIdKey{" +
-                "id=" + id +
+                "longId=" + longId +
                 '}';
     }
 }

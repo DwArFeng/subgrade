@@ -21,7 +21,7 @@ public class LongIdStringKeyFormatter implements StringKeyFormatter<LongIdKey> {
     @Override
     public String format(LongIdKey key) {
         Objects.requireNonNull(key);
-        return prefix + key.getId();
+        return prefix + key.getLongId();
     }
 
     public String getPrefix() {

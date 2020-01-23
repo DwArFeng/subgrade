@@ -14,21 +14,21 @@ public class HibernateStringIdKey implements Bean {
 
     private static final long serialVersionUID = -5726485840245744787L;
 
-    private String id;
+    private String stringId;
 
     public HibernateStringIdKey() {
     }
 
     public HibernateStringIdKey(String id) {
-        this.id = id;
+        this.stringId = id;
     }
 
-    public String getId() {
-        return id;
+    public String getStringId() {
+        return stringId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStringId(String stringId) {
+        this.stringId = stringId;
     }
 
     @Override
@@ -38,18 +38,18 @@ public class HibernateStringIdKey implements Bean {
 
         HibernateStringIdKey that = (HibernateStringIdKey) o;
 
-        return Objects.equals(id, that.id);
+        return Objects.equals(stringId, that.stringId);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return stringId != null ? stringId.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "HibernateStringIdKey{" +
-                "id='" + id + '\'' +
+                "stringId='" + stringId + '\'' +
                 '}';
     }
 }

@@ -21,7 +21,7 @@ public class StringIdStringKeyFormatter implements StringKeyFormatter<StringIdKe
     @Override
     public String format(StringIdKey key) {
         Objects.requireNonNull(key);
-        return prefix + key.getId();
+        return prefix + key.getStringId();
     }
 
     @Override

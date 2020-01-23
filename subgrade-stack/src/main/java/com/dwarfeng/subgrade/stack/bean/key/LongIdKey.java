@@ -10,21 +10,21 @@ public class LongIdKey implements Key {
 
     private static final long serialVersionUID = 4894711608426921844L;
 
-    private long id;
+    private long longId;
 
     public LongIdKey() {
     }
 
     public LongIdKey(long id) {
-        this.id = id;
+        this.longId = id;
     }
 
-    public long getId() {
-        return id;
+    public long getLongId() {
+        return longId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setLongId(long longId) {
+        this.longId = longId;
     }
 
     @Override
@@ -34,18 +34,18 @@ public class LongIdKey implements Key {
 
         LongIdKey longIdKey = (LongIdKey) o;
 
-        return id == longIdKey.id;
+        return longId == longIdKey.longId;
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return (int) (longId ^ (longId >>> 32));
     }
 
     @Override
     public String toString() {
         return "LongIdKey{" +
-                "id=" + id +
+                "longId=" + longId +
                 '}';
     }
 }

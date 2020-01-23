@@ -12,21 +12,21 @@ public class StringIdKey implements Key {
 
     private static final long serialVersionUID = -6993449616016427834L;
 
-    private String id;
+    private String stringId;
 
     public StringIdKey() {
     }
 
     public StringIdKey(String id) {
-        this.id = id;
+        this.stringId = id;
     }
 
-    public String getId() {
-        return id;
+    public String getStringId() {
+        return stringId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStringId(String stringId) {
+        this.stringId = stringId;
     }
 
     @Override
@@ -36,18 +36,18 @@ public class StringIdKey implements Key {
 
         StringIdKey that = (StringIdKey) o;
 
-        return Objects.equals(id, that.id);
+        return Objects.equals(stringId, that.stringId);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return stringId != null ? stringId.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "StringIdKey{" +
-                "id='" + id + '\'' +
+                "stringId='" + stringId + '\'' +
                 '}';
     }
 }

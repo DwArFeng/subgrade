@@ -16,21 +16,21 @@ public class FastJsonStringIdKey implements Bean {
     private static final long serialVersionUID = -2889799277375755227L;
 
     @JSONField(name = "id", ordinal = 1)
-    private String id;
+    private String stringId;
 
     public FastJsonStringIdKey() {
     }
 
     public FastJsonStringIdKey(String id) {
-        this.id = id;
+        this.stringId = id;
     }
 
-    public String getId() {
-        return id;
+    public String getStringId() {
+        return stringId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStringId(String stringId) {
+        this.stringId = stringId;
     }
 
     @Override
@@ -40,18 +40,18 @@ public class FastJsonStringIdKey implements Bean {
 
         FastJsonStringIdKey that = (FastJsonStringIdKey) o;
 
-        return Objects.equals(id, that.id);
+        return Objects.equals(stringId, that.stringId);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return stringId != null ? stringId.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "FastJsonStringIdKey{" +
-                "id='" + id + '\'' +
+                "stringId='" + stringId + '\'' +
                 '}';
     }
 }

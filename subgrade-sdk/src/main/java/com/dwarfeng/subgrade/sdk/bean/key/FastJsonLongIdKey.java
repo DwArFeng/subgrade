@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.sdk.bean.key;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 /**
@@ -12,21 +13,22 @@ public class FastJsonLongIdKey implements Bean {
 
     private static final long serialVersionUID = 8863415673517584070L;
 
-    private long id;
+    @JSONField(name = "long_id", ordinal = 1)
+    private long longId;
 
     public FastJsonLongIdKey() {
     }
 
     public FastJsonLongIdKey(long id) {
-        this.id = id;
+        this.longId = id;
     }
 
-    public long getId() {
-        return id;
+    public long getLongId() {
+        return longId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setLongId(long longId) {
+        this.longId = longId;
     }
 
     @Override
@@ -36,18 +38,18 @@ public class FastJsonLongIdKey implements Bean {
 
         FastJsonLongIdKey that = (FastJsonLongIdKey) o;
 
-        return id == that.id;
+        return longId == that.longId;
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return (int) (longId ^ (longId >>> 32));
     }
 
     @Override
     public String toString() {
         return "FastJsonLongIdKey{" +
-                "id=" + id +
+                "longId=" + longId +
                 '}';
     }
 }
