@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.impl.cache.formatter;
 
+import com.dwarfeng.subgrade.sdk.util.Constants;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
 import java.util.Objects;
@@ -22,6 +23,11 @@ public class StringIdStringKeyFormatter implements StringKeyFormatter<StringIdKe
     public String format(StringIdKey key) {
         Objects.requireNonNull(key);
         return prefix + key.getStringId();
+    }
+
+    @Override
+    public String generalFormat() {
+        return prefix + Constants.REDIS_KEY_WILDCARD_CHARACTER;
     }
 
     @Override

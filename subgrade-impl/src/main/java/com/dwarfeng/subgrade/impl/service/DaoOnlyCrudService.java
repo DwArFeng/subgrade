@@ -27,27 +27,28 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements E
     private KeyFetcher<K> keyFetcher;
     private ServiceExceptionMapper sem;
     private LogLevel exceptionLogLevel;
-    private long cacheTimeout;
 
     public DaoOnlyCrudService(
             @NonNull BaseDao<K, E> dao,
             @NonNull KeyFetcher<K> keyFetcher,
             @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel,
-            @NonNull long cacheTimeout) {
+            @NonNull LogLevel exceptionLogLevel) {
         this.dao = dao;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
-        this.cacheTimeout = cacheTimeout;
     }
 
     @Override
     public boolean exists(K key) throws ServiceException {
+        return innerExists(key);
+    }
+
+    private boolean innerExists(K key) throws ServiceException {
         try {
             return dao.exists(key);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在是发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
@@ -56,14 +57,14 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements E
         try {
             return dao.get(key);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在是发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("获取实体信息时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
     public K insert(E element) throws ServiceException {
         try {
-            if (dao.exists(element.getKey())) {
+            if (innerExists(element.getKey())) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
             }
 
@@ -73,34 +74,33 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements E
             dao.insert(element);
             return element.getKey();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在是发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
     public K update(E element) throws ServiceException {
         try {
-            if (!dao.exists(element.getKey())) {
+            if (!innerExists(element.getKey())) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
 
             dao.update(element);
             return element.getKey();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在是发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
     public void delete(K key) throws ServiceException {
         try {
-            if (!dao.exists(key)) {
+            if (!innerExists(key)) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
-
             dao.delete(key);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在是发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
@@ -134,13 +134,5 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements E
 
     public void setExceptionLogLevel(@NonNull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
-    }
-
-    public long getCacheTimeout() {
-        return cacheTimeout;
-    }
-
-    public void setCacheTimeout(@NonNull long cacheTimeout) {
-        this.cacheTimeout = cacheTimeout;
     }
 }

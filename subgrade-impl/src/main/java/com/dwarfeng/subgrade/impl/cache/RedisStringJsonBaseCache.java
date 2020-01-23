@@ -76,6 +76,15 @@ public class RedisStringJsonBaseCache<K extends Key, E extends Entity<K>, JE ext
         }
     }
 
+    @Override
+    public void clear() throws CacheException {
+        try {
+            template.delete(template.keys(formatter.generalFormat()));
+        } catch (Exception e) {
+            throw new CacheException();
+        }
+    }
+
     private String formatKey(K key) {
         return formatter.format(key);
     }

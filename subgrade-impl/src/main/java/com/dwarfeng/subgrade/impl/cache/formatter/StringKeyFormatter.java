@@ -11,4 +11,6 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 public interface StringKeyFormatter<K extends Key> {
 
     String format(K key);
+
+    String generalFormat();
 }

@@ -1,12 +1,12 @@
 package com.dwarfeng.subgrade.stack.bean.dto;
 
 /**
- * 查询分页信息对象。
+ * 分页信息对象。
  *
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public class LookupPagingInfo implements Dto {
+public class PagingInfo implements Dto {
 
     private static final long serialVersionUID = -5393564201402936618L;
 
@@ -19,10 +19,10 @@ public class LookupPagingInfo implements Dto {
      */
     private int rows;
 
-    public LookupPagingInfo() {
+    public PagingInfo() {
     }
 
-    public LookupPagingInfo(int page, int rows) {
+    public PagingInfo(int page, int rows) {
         this.page = page;
         this.rows = rows;
     }
@@ -45,7 +45,7 @@ public class LookupPagingInfo implements Dto {
 
     @Override
     public String toString() {
-        return "LookupPagingInfo{" +
+        return "PagingInfo{" +
                 "page=" + page +
                 ", rows=" + rows +
                 '}';

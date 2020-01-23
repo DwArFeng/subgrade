@@ -50,13 +50,17 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements E
 
     @Override
     public boolean exists(K key) throws ServiceException {
+        return innerExists(key);
+    }
+
+    private boolean innerExists(K key) throws ServiceException {
         try {
             if (cache.exists(key)) {
                 return true;
             }
             return dao.exists(key);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在是发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
@@ -70,14 +74,14 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements E
             cache.push(key, entity, cacheTimeout);
             return entity;
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在是发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("获取实体信息时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
     public K insert(E element) throws ServiceException {
         try {
-            if (dao.exists(element.getKey())) {
+            if (innerExists(element.getKey())) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
             }
 
@@ -88,14 +92,14 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements E
             cache.push(element.getKey(), element, cacheTimeout);
             return element.getKey();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在是发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
     public K update(E element) throws ServiceException {
         try {
-            if (!dao.exists(element.getKey())) {
+            if (!innerExists(element.getKey())) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
 
@@ -103,14 +107,14 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements E
             cache.push(element.getKey(), element, cacheTimeout);
             return element.getKey();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在是发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
     public void delete(K key) throws ServiceException {
         try {
-            if (!dao.exists(key)) {
+            if (!innerExists(key)) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
 
@@ -119,7 +123,27 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements E
             }
             dao.delete(key);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在是发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    /**
+     * 将指定的键对应的实体存入缓存中。
+     *
+     * @param key 指定的键。
+     * @throws ServiceException 服务异常。
+     */
+    public void dumpCache(K key) throws ServiceException {
+        try {
+            E entity;
+            if (cache.exists(key)) {
+                entity = cache.get(key);
+            } else {
+                entity = dao.get(key);
+            }
+            cache.push(key, entity, cacheTimeout);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("将实体存入缓存时发生异常", exceptionLogLevel, sem, e);
         }
     }
 

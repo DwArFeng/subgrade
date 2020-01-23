@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.impl.cache.formatter;
 
+import com.dwarfeng.subgrade.sdk.util.Constants;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
 import java.util.Objects;
@@ -22,6 +23,11 @@ public class LongIdStringKeyFormatter implements StringKeyFormatter<LongIdKey> {
     public String format(LongIdKey key) {
         Objects.requireNonNull(key);
         return prefix + key.getLongId();
+    }
+
+    @Override
+    public String generalFormat() {
+        return prefix + Constants.REDIS_KEY_WILDCARD_CHARACTER;
     }
 
     public String getPrefix() {
