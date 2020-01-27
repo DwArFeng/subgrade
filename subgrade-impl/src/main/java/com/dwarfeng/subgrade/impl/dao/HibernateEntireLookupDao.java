@@ -4,7 +4,7 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
-import com.dwarfeng.subgrade.stack.dao.LookupDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
@@ -15,19 +15,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 使用 Hibernate 实现的 BaseDao。
+ * 使用 Hibernate 实现的 EntireLookupDao。
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class HibernateLookupDao<E extends Entity<?>, PE extends Bean> implements LookupDao<E> {
+public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> implements EntireLookupDao<E> {
 
     private HibernateTemplate template;
     private BeanTransformer<E, PE> entityBeanTransformer;
     private Class<PE> classPE;
 
-    public HibernateLookupDao(
+    public HibernateEntireLookupDao(
             @NonNull HibernateTemplate template,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE) {

@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public interface EntityCrudService<K extends Key, E extends Entity<K>> extends Service {
+public interface CrudService<K extends Key, E extends Entity<K>> extends Service {
 
     /**
      * 获取指定的实体是否存在。

@@ -7,12 +7,12 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
 import java.util.List;
 
 /**
- * 查询数据访问层。
+ * 查询全部数据的数据访问层。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public interface LookupDao<E extends Entity<?>> extends Dao {
+public interface EntireLookupDao<E extends Entity<?>> extends Dao {
 
     /**
      * 查询数据访问层中的所有元素。

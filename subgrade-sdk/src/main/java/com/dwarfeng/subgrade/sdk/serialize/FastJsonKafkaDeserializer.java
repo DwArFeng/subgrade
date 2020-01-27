@@ -1,7 +1,6 @@
 package com.dwarfeng.subgrade.sdk.serialize;
 
 import com.alibaba.fastjson.JSON;
-import com.dwarfeng.subgrade.sdk.util.Constants;
 import org.apache.kafka.common.serialization.Deserializer;
 
 /**
@@ -23,7 +22,7 @@ public class FastJsonKafkaDeserializer<T> implements Deserializer<T> {
         if (bytes == null || bytes.length <= 0) {
             return null;
         }
-        String str = new String(bytes, Constants.DEFAULT_CHARSET);
+        String str = new String(bytes);
         return JSON.parseObject(str, clazz);
     }
 }

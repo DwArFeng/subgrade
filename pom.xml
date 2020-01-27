@@ -6,7 +6,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>subgrade</artifactId>
-    <version>beta-0.0.3.a</version>
+    <version>beta-0.0.4.a-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -60,6 +60,7 @@
         <cxf.version>3.1.6</cxf.version>
         <kafka.version>2.4.0</kafka.version>
         <snowflake.version>0.0.1.a</snowflake.version>
+        <jaxb.version>2.3.1</jaxb.version>
         <!-- Maven插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
@@ -359,21 +360,27 @@
                 <artifactId>snowflake-distributed-service-api</artifactId>
                 <version>${snowflake.version}</version>
             </dependency>
+            <!-- Jaxb组件组件 -->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
             <!-- 程序自身组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>subgrade-stack</artifactId>
-                <version>beta-0.0.3.a</version>
+                <version>beta-0.0.4.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>subgrade-sdk</artifactId>
-                <version>beta-0.0.3.a</version>
+                <version>beta-0.0.4.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>subgrade-impl</artifactId>
-                <version>beta-0.0.3.a</version>
+                <version>beta-0.0.4.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

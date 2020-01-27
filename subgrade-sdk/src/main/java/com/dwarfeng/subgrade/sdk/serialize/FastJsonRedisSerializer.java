@@ -2,7 +2,6 @@ package com.dwarfeng.subgrade.sdk.serialize;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.dwarfeng.subgrade.sdk.util.Constants;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
@@ -26,7 +25,7 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
         if (t == null) {
             return new byte[0];
         }
-        return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(Constants.DEFAULT_CHARSET);
+        return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes();
     }
 
     @Override
@@ -34,7 +33,7 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
         if (bytes == null || bytes.length <= 0) {
             return null;
         }
-        String str = new String(bytes, Constants.DEFAULT_CHARSET);
+        String str = new String(bytes);
         return JSON.parseObject(str, clazz);
     }
 

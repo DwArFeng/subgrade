@@ -9,7 +9,7 @@ import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import com.dwarfeng.subgrade.stack.service.EntityCrudService;
+import com.dwarfeng.subgrade.stack.service.CrudService;
 import org.springframework.lang.NonNull;
 
 import java.util.Objects;
@@ -21,7 +21,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.0.1-beta
  */
-public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements EntityCrudService<K, E> {
+public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements CrudService<K, E> {
 
     private BaseDao<K, E> dao;
     private KeyFetcher<K> keyFetcher;

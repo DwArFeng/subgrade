@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.dwarfeng</groupId>
         <artifactId>subgrade</artifactId>
-        <version>beta-0.0.3.a</version>
+        <version>beta-0.0.4.a-SNAPSHOT</version>
     </parent>
 
     <artifactId>subgrade-sdk</artifactId>
@@ -88,11 +88,21 @@
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer-spring</artifactId>
         </dependency>
+        <!-- Jaxb组件组件 -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+        <!-- dutil组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dutil-basic</artifactId>
+        </dependency>
         <!-- 程序自身组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-stack</artifactId>
-            <version>beta-0.0.3.a</version>
+            <version>beta-0.0.4.a-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

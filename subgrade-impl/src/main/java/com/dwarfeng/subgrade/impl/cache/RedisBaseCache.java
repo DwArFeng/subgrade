@@ -19,14 +19,14 @@ import java.util.concurrent.TimeUnit;
  * @author DwArFeng
  * @since 0.0.1-beta
  */
-public class RedisStringJsonBaseCache<K extends Key, E extends Entity<K>, JE extends Bean> implements BaseCache<K, E> {
+public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean> implements BaseCache<K, E> {
 
-    private RedisTemplate<String, Object> template;
+    private RedisTemplate<String, JE> template;
     private StringKeyFormatter<K> formatter;
     private BeanTransformer<E, JE> transformer;
 
-    public RedisStringJsonBaseCache(
-            @Nullable RedisTemplate<String, Object> template,
+    public RedisBaseCache(
+            @Nullable RedisTemplate<String, JE> template,
             @Nullable StringKeyFormatter<K> formatter,
             @Nullable BeanTransformer<E, JE> transformer) {
         this.template = template;
@@ -46,8 +46,7 @@ public class RedisStringJsonBaseCache<K extends Key, E extends Entity<K>, JE ext
     @Override
     public E get(K key) throws CacheException {
         try {
-            @SuppressWarnings("unchecked")
-            JE je = (JE) template.opsForValue().get(formatKey(key));
+            JE je = template.opsForValue().get(formatKey(key));
             return transformer.reverseTransform(je);
         } catch (Exception e) {
             throw new CacheException();
@@ -89,11 +88,11 @@ public class RedisStringJsonBaseCache<K extends Key, E extends Entity<K>, JE ext
         return formatter.format(key);
     }
 
-    public RedisTemplate<String, Object> getTemplate() {
+    public RedisTemplate<String, JE> getTemplate() {
         return template;
     }
 
-    public void setTemplate(@Nullable RedisTemplate<String, Object> template) {
+    public void setTemplate(@Nullable RedisTemplate<String, JE> template) {
         this.template = template;
     }
 
