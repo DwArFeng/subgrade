@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.dwarfeng</groupId>
         <artifactId>subgrade</artifactId>
-        <version>beta-0.0.4.a</version>
+        <version>beta-0.0.5.a-SNAPSHOT</version>
     </parent>
 
     <artifactId>subgrade-impl</artifactId>
@@ -101,12 +101,12 @@
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-stack</artifactId>
-            <version>beta-0.0.4.a</version>
+            <version>beta-0.0.5.a-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-sdk</artifactId>
-            <version>beta-0.0.4.a</version>
+            <version>beta-0.0.5.a-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

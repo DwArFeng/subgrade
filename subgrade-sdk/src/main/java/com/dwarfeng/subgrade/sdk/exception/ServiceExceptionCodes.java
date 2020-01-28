@@ -38,6 +38,14 @@ public final class ServiceExceptionCodes {
      * 参数验证失败。
      */
     public static final ServiceException.Code PARAM_VALIDATION_FAILED = new ServiceException.Code(130, "param validation failed");
+    /**
+     * IO异常。
+     */
+    public static final ServiceException.Code IO_EXCEPTION = new ServiceException.Code(140, "io exception");
+    /**
+     * 过程异常。
+     */
+    public static final ServiceException.Code PROCESS_FAILDED = new ServiceException.Code(150, "process_failed");
 
     private ServiceExceptionCodes() {
         throw new IllegalStateException("禁止实例化");

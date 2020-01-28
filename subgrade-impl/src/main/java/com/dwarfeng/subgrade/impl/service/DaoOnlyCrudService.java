@@ -71,8 +71,7 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
             if (Objects.isNull(element.getKey())) {
                 element.setKey(keyFetcher.fetchKey());
             }
-            dao.insert(element);
-            return element.getKey();
+            return dao.insert(element);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
         }
@@ -85,8 +84,7 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
 
-            dao.update(element);
-            return element.getKey();
+            return dao.update(element);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
         }

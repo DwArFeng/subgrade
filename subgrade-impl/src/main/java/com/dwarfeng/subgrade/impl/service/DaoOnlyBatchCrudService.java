@@ -5,15 +5,17 @@ import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
-import com.dwarfeng.subgrade.stack.cache.BaseCache;
-import com.dwarfeng.subgrade.stack.dao.BaseDao;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import com.dwarfeng.subgrade.stack.service.CrudService;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 import org.springframework.lang.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 通用的实体增删改查服务。
@@ -24,24 +26,21 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.0.1-beta
  */
-public class GeneralCrudService<K extends Key, E extends Entity<K>> implements CrudService<K, E> {
+public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> implements BatchCrudService<K, E> {
 
-    private BaseDao<K, E> dao;
-    private BaseCache<K, E> cache;
+    private BatchBaseDao<K, E> dao;
     private KeyFetcher<K> keyFetcher;
     private ServiceExceptionMapper sem;
     private LogLevel exceptionLogLevel;
     private long cacheTimeout;
 
-    public GeneralCrudService(
-            @NonNull BaseDao<K, E> dao,
-            @NonNull BaseCache<K, E> cache,
+    public DaoOnlyBatchCrudService(
+            @NonNull BatchBaseDao<K, E> dao,
             @NonNull KeyFetcher<K> keyFetcher,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel,
             @NonNull long cacheTimeout) {
         this.dao = dao;
-        this.cache = cache;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
@@ -50,15 +49,8 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
 
     @Override
     public boolean exists(K key) throws ServiceException {
-        return internalExists(key);
-    }
-
-    private boolean internalExists(K key) throws ServiceException {
         try {
-            if (cache.exists(key)) {
-                return true;
-            }
-            return dao.exists(key);
+            return internalExists(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
         }
@@ -67,12 +59,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
     @Override
     public E get(K key) throws ServiceException {
         try {
-            if (cache.exists(key)) {
-                return cache.get(key);
-            }
-            E entity = dao.get(key);
-            cache.push(key, entity, cacheTimeout);
-            return entity;
+            return internalGet(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("获取实体信息时发生异常", exceptionLogLevel, sem, e);
         }
@@ -88,9 +75,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
             if (Objects.isNull(element.getKey())) {
                 element.setKey(keyFetcher.fetchKey());
             }
-            K key = dao.insert(element);
-            cache.push(key, element, cacheTimeout);
-            return key;
+            return dao.insert(element);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
         }
@@ -103,9 +88,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
 
-            K key = dao.update(element);
-            cache.push(key, element, cacheTimeout);
-            return key;
+            return dao.update(element);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
         }
@@ -118,49 +101,118 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
 
-            if (cache.exists(key)) {
-                cache.delete(key);
-            }
             dao.delete(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
-    /**
-     * 将指定的键对应的实体存入缓存中。
-     *
-     * @param key 指定的键。
-     * @throws ServiceException 服务异常。
-     */
-    public void dumpCache(K key) throws ServiceException {
+    private boolean internalExists(K key) throws Exception {
+        return dao.exists(key);
+    }
+
+    private E internalGet(K key) throws Exception {
+        return dao.get(key);
+    }
+
+    @Override
+    public boolean allExists(List<K> keys) throws ServiceException {
         try {
-            E entity;
-            if (cache.exists(key)) {
-                entity = cache.get(key);
-            } else {
-                entity = dao.get(key);
-            }
-            cache.push(key, entity, cacheTimeout);
+            return internalAllExists(keys);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("将实体存入缓存时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
-    public BaseDao<K, E> getDao() {
+    private boolean internalAllExists(List<K> keys) throws Exception {
+        for (K key : keys) {
+            if (!internalExists(key)) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean nonExists(List<K> keys) throws ServiceException {
+        try {
+            return internalNonExists(keys);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    private boolean internalNonExists(List<K> keys) throws Exception {
+        for (K key : keys) {
+            if (internalExists(key)) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public List<E> batchGet(List<K> keys) throws ServiceException {
+        try {
+            List<E> elements = new ArrayList<>();
+            for (K key : keys) {
+                elements.add(internalGet(key));
+            }
+            return elements;
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    @Override
+    public List<K> batchInsert(List<E> elements) throws ServiceException {
+        try {
+            List<K> collect = elements.stream().filter(e -> Objects.nonNull(e.getKey())).map(E::getKey).collect(Collectors.toList());
+            if (internalNonExists(collect)) {
+                throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+            }
+
+            for (E element : elements) {
+                if (Objects.isNull(element.getKey())) {
+                    element.setKey(keyFetcher.fetchKey());
+                }
+            }
+
+            return dao.batchInsert(elements);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    @Override
+    public List<K> batchUpdate(List<E> elements) throws ServiceException {
+        try {
+            List<K> collect = elements.stream().map(E::getKey).collect(Collectors.toList());
+            if (!internalAllExists(collect)) {
+                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            }
+
+            return dao.batchUpdate(elements);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    @Override
+    public void batchDelete(List<K> keys) throws ServiceException {
+        try {
+            if (!internalAllExists(keys)) {
+                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            }
+
+            dao.batchDelete(keys);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    public BatchBaseDao<K, E> getDao() {
         return dao;
     }
 
-    public void setDao(@NonNull BaseDao<K, E> dao) {
+    public void setDao(@NonNull BatchBaseDao<K, E> dao) {
         this.dao = dao;
-    }
-
-    public BaseCache<K, E> getCache() {
-        return cache;
-    }
-
-    public void setCache(@NonNull BaseCache<K, E> cache) {
-        this.cache = cache;
     }
 
     public KeyFetcher<K> getKeyFetcher() {

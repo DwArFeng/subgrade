@@ -1,10 +1,12 @@
 package com.dwarfeng.subgrade.sdk.exception;
 
+import com.dwarfeng.dutil.basic.prog.ProcessException;
 import com.dwarfeng.subgrade.stack.exception.*;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -40,6 +42,8 @@ public final class ServiceExceptionHelper {
         map.put(CacheException.class, ServiceExceptionCodes.CACHE_FAILED);
         map.put(DaoException.class, ServiceExceptionCodes.DAO_FAILED);
         map.put(ValidationException.class, ServiceExceptionCodes.PARAM_VALIDATION_FAILED);
+        map.put(IOException.class, ServiceExceptionCodes.IO_EXCEPTION);
+        map.put(ProcessException.class, ServiceExceptionCodes.PROCESS_FAILDED);
 
         return map;
     }
