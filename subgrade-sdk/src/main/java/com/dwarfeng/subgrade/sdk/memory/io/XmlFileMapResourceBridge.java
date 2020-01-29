@@ -34,7 +34,8 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
     public XmlFileMapResourceBridge(
             @NonNull File file,
             @NonNull BeanTransformer<E, XE> transformer,
-            @NonNull Class<XE> classXE, Class<XR> classXR) {
+            @NonNull Class<XE> classXE,
+            @NonNull Class<XR> classXR) {
         this.file = file;
         this.transformer = transformer;
         this.classXR = classXR;

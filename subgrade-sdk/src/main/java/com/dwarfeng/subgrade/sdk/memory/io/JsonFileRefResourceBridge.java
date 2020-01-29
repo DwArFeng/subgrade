@@ -2,6 +2,7 @@ package com.dwarfeng.subgrade.sdk.memory.io;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.dwarfeng.dutil.basic.cna.model.ReferenceModel;
 import com.dwarfeng.dutil.basic.io.FileUtil;
 import com.dwarfeng.dutil.basic.io.IOUtil;
 import com.dwarfeng.dutil.basic.io.StringInputStream;
@@ -17,11 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * JSON文件资源映射桥。
@@ -30,13 +27,14 @@ import java.util.stream.Collectors;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class JsonFileMapResourceBridge<K extends Key, E extends Entity<K>, JE extends Bean> implements MapResourceBridge<K, E> {
+public class JsonFileRefResourceBridge<K extends Key, E extends Entity<K>, JE extends Bean>
+        implements RefResourceBridge<K, E> {
 
     private File file;
     private BeanTransformer<E, JE> transformer;
     private Class<JE> classJE;
 
-    public JsonFileMapResourceBridge(
+    public JsonFileRefResourceBridge(
             @NonNull File file,
             @NonNull BeanTransformer<E, JE> transformer,
             @NonNull Class<JE> classJE) {
@@ -46,7 +44,7 @@ public class JsonFileMapResourceBridge<K extends Key, E extends Entity<K>, JE ex
     }
 
     @Override
-    public void fillMap(Map<K, E> map) throws ProcessException {
+    public void fillRef(ReferenceModel<E> referenceModel) throws NullPointerException, ProcessException {
         try {
             makesureFileExists(file);
             StringOutputStream sout = null;
@@ -56,9 +54,8 @@ public class JsonFileMapResourceBridge<K extends Key, E extends Entity<K>, JE ex
                 fin = new FileInputStream(file);
                 IOUtil.trans(fin, sout, 4096);
                 sout.flush();
-                Map<K, E> collect = JSON.parseArray(sout.toString(), classJE).stream().map(transformer::reverseTransform)
-                        .collect(Collectors.toMap(E::getKey, Function.identity()));
-                map.putAll(collect);
+                JE je = JSON.parseObject(sout.toString(), classJE);
+                referenceModel.set(transformer.reverseTransform(je));
             } finally {
                 if (Objects.nonNull(sout)) {
                     sout.close();
@@ -73,12 +70,12 @@ public class JsonFileMapResourceBridge<K extends Key, E extends Entity<K>, JE ex
     }
 
     @Override
-    public void saveMap(Map<K, E> map) throws ProcessException, UnsupportedOperationException {
+    public void saveRef(ReferenceModel<E> referenceModel) throws NullPointerException, ProcessException, UnsupportedOperationException {
         try {
             makesureFileExists(file);
-            List<JE> collect = map.values().stream().map(transformer::transform).collect(Collectors.toList());
+            JE je = transformer.transform(referenceModel.get());
             String json = JSON.toJSONString(
-                    collect,
+                    je,
                     SerializerFeature.PrettyFormat,
                     SerializerFeature.DisableCircularReferenceDetect,
                     SerializerFeature.WriteMapNullValue);
