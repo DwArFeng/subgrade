@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.impl.dao.preset.PresetMaker;
+import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
@@ -27,24 +27,24 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
     private HibernateTemplate template;
     private BeanTransformer<E, PE> entityBeanTransformer;
     private Class<PE> classPE;
-    private PresetMaker presetMaker;
+    private PresetCriteriaMaker presetCriteriaMaker;
 
     public HibernatePresetLookupDao(
             @NonNull HibernateTemplate template,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE,
-            @NonNull PresetMaker presetMaker) {
+            @NonNull PresetCriteriaMaker presetCriteriaMaker) {
         this.template = template;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
-        this.presetMaker = presetMaker;
+        this.presetCriteriaMaker = presetCriteriaMaker;
     }
 
     @Override
     public List<E> lookup(String preset, Object[] objs) throws DaoException {
         try {
             DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
-            presetMaker.makeCriteria(criteria, preset, objs);
+            presetCriteriaMaker.makeCriteria(criteria, preset, objs);
             //noinspection unchecked
             List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria);
             return byCriteria.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());
@@ -57,7 +57,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
     public List<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
         try {
             DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
-            presetMaker.makeCriteria(criteria, preset, objs);
+            presetCriteriaMaker.makeCriteria(criteria, preset, objs);
             //noinspection unchecked
             List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria,
                     pagingInfo.getPage() * pagingInfo.getRows(), pagingInfo.getRows());
@@ -71,7 +71,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
     public int lookupCount(String preset, Object[] objs) throws DaoException {
         try {
             DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
-            presetMaker.makeCriteria(criteria, preset, objs);
+            presetCriteriaMaker.makeCriteria(criteria, preset, objs);
             criteria.setProjection(Projections.rowCount());
             return template.findByCriteria(criteria).stream().findFirst().map(Long.class::cast)
                     .map(Long::intValue).orElse(0);
@@ -104,11 +104,11 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
         this.classPE = classPE;
     }
 
-    public PresetMaker getPresetMaker() {
-        return presetMaker;
+    public PresetCriteriaMaker getPresetCriteriaMaker() {
+        return presetCriteriaMaker;
     }
 
-    public void setPresetMaker(@NonNull PresetMaker presetMaker) {
-        this.presetMaker = presetMaker;
+    public void setPresetCriteriaMaker(@NonNull PresetCriteriaMaker presetCriteriaMaker) {
+        this.presetCriteriaMaker = presetCriteriaMaker;
     }
 }

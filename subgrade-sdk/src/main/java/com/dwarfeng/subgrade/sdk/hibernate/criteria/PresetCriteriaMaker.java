@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.impl.dao.preset;
+package com.dwarfeng.subgrade.sdk.hibernate.criteria;
 
 import org.hibernate.criterion.DetachedCriteria;
 
@@ -9,7 +9,7 @@ import org.hibernate.criterion.DetachedCriteria;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public interface PresetMaker {
+public interface PresetCriteriaMaker {
 
     /**
      * 制造Criteria。

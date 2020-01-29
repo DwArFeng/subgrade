@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.serialize;
+package com.dwarfeng.subgrade.sdk.redis.serialize;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;

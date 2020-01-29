@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.io;
+package com.dwarfeng.subgrade.sdk.memory.io;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;

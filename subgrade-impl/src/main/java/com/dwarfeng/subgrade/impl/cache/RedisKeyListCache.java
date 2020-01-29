@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.impl.cache;
 
-import com.dwarfeng.subgrade.impl.cache.formatter.StringKeyFormatter;
+import com.dwarfeng.subgrade.sdk.redis.formatter.StringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;

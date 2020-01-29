@@ -4,96 +4,96 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
-import com.dwarfeng.subgrade.stack.dao.BaseDao;
+import com.dwarfeng.subgrade.stack.dao.SingleObjectDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import java.util.Objects;
 
 /**
- * 使用 Hibernate 实现的 BaseDao。
+ * 通过 Hibernate 实现的单对象数据访问层。
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *
  * @author DwArFeng
- * @since 0.0.1-beta
+ * @since 0.0.3-beta
  */
-public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K>, PE extends Bean> implements BaseDao<K, E> {
+public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK extends Bean, PE extends Bean> implements SingleObjectDao<K, E> {
 
     private HibernateTemplate template;
     private BeanTransformer<K, PK> keyBeanTransformer;
     private BeanTransformer<E, PE> entityBeanTransformer;
+    private K key;
     private Class<PE> classPE;
 
-    public HibernateBaseDao(
+    public HibernateSingleObjectDao(
             @NonNull HibernateTemplate template,
             @NonNull BeanTransformer<K, PK> keyBeanTransformer,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE) {
+            @NonNull K key, Class<PE> classPE) {
         this.template = template;
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;
+        this.key = key;
         this.classPE = classPE;
     }
 
     @Override
-    public K insert(E element) throws DaoException {
+    public boolean exists() throws DaoException {
         try {
-            PE pe = transformEntity(element);
-            @SuppressWarnings("unchecked")
-            PK pk = (PK) template.save(pe);
+            return internalExists();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    private boolean internalExists() {
+        return Objects.nonNull(template.get(classPE, transformKey(key)));
+    }
+
+    @Override
+    public E get() throws DaoException {
+        try {
+            return internalGet();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void put(E entity) throws DaoException {
+        try {
+            //noinspection unchecked
+            E newEntity = (E) BeanUtils.cloneBean(entity);
+            newEntity.setKey(key);
+            template.clear();
+            template.saveOrUpdate(newEntity);
             template.flush();
-            return reverseTransformKey(pk);
         } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
     @Override
-    public K update(E element) throws DaoException {
+    public void clear() throws DaoException {
         try {
-            PE pe = transformEntity(element);
-            template.update(pe);
-            template.flush();
-            return element.getKey();
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
-    }
+            if (!internalExists()) {
+                throw new DaoException("实体对象不存在");
+            }
 
-    @Override
-    public void delete(K key) throws DaoException {
-        try {
-            PE pe = internalGet(key);
-            template.delete(pe);
+            PK pk = transformKey(key);
+            //noinspection ConstantConditions PE 不可能为null，因为之前的语句已经判断PE一定存在。
+            template.delete(template.get(classPE, pk));
             template.flush();
         } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
-    @Override
-    public boolean exists(K key) throws DaoException {
-        try {
-            return Objects.nonNull(template.get(classPE, transformKey(key)));
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public E get(K key) throws DaoException {
-        try {
-            PE pe = internalGet(key);
-            return reverseTransformEntity(pe);
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
-    }
-
-    private PE internalGet(K key) {
+    private E internalGet() {
         PK pk = transformKey(key);
-        return template.get(classPE, pk);
+        return reverseTransformEntity(template.get(classPE, pk));
     }
 
     private PK transformKey(K k) {
@@ -136,11 +136,19 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
+    public K getKey() {
+        return key;
+    }
+
+    public void setKey(K key) {
+        this.key = key;
+    }
+
     public Class<PE> getClassPE() {
         return classPE;
     }
 
-    public void setClassPE(@NonNull Class<PE> classPE) {
+    public void setClassPE(Class<PE> classPE) {
         this.classPE = classPE;
     }
 }

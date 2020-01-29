@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.impl.dao;
 
+import com.dwarfeng.subgrade.sdk.memory.io.MapResourceBridge;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BaseDao;
@@ -15,7 +16,7 @@ import java.util.Map;
  * 在数据访问层启动前读取资源数据，在结束之后保存数据，即可实现内存数据的持久化。</p>
  *
  * @author DwArFeng
- * @see com.dwarfeng.subgrade.sdk.io.MapResourceBridge
+ * @see MapResourceBridge
  * @since 0.0.3-beta
  */
 public class MemoryBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<K, E> {

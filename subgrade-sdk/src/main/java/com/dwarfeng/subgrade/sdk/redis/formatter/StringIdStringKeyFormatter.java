@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.impl.cache.formatter;
+package com.dwarfeng.subgrade.sdk.redis.formatter;
 
 import com.dwarfeng.subgrade.sdk.util.Constants;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;

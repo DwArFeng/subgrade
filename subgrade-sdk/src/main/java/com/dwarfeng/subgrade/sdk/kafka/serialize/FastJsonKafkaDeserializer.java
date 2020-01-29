@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.serialize;
+package com.dwarfeng.subgrade.sdk.kafka.serialize;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.kafka.common.serialization.Deserializer;

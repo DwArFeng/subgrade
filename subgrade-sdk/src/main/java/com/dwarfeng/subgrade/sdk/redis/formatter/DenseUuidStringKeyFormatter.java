@@ -1,26 +1,26 @@
-package com.dwarfeng.subgrade.impl.cache.formatter;
+package com.dwarfeng.subgrade.sdk.redis.formatter;
 
 import com.dwarfeng.subgrade.sdk.util.Constants;
-import com.dwarfeng.subgrade.stack.bean.key.UuidKey;
+import com.dwarfeng.subgrade.stack.bean.key.DenseUuidKey;
 
 import java.util.Objects;
 
 /**
- * UuidKey 的文本格式化转换器。
+ * DenseUuidKey 的文本格式化转换器。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
  */
-public class UuidStringKeyFormatter implements StringKeyFormatter<UuidKey> {
+public class DenseUuidStringKeyFormatter implements StringKeyFormatter<DenseUuidKey> {
 
     private String prefix;
 
-    public UuidStringKeyFormatter(String prefix) {
+    public DenseUuidStringKeyFormatter(String prefix) {
         this.prefix = prefix;
     }
 
     @Override
-    public String format(UuidKey key) {
+    public String format(DenseUuidKey key) {
         Objects.requireNonNull(key);
         return prefix + key.getUuid();
     }
@@ -32,7 +32,7 @@ public class UuidStringKeyFormatter implements StringKeyFormatter<UuidKey> {
 
     @Override
     public String toString() {
-        return "UuidStringKeyFormatter{" +
+        return "DenseUuidStringKeyFormatter{" +
                 "prefix='" + prefix + '\'' +
                 '}';
     }
