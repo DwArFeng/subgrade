@@ -19,7 +19,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK extends Bean, PE extends Bean> implements SingleObjectDao<K, E> {
+public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK extends Bean, PE extends Bean> implements SingleObjectDao<E> {
 
     private HibernateTemplate template;
     private BeanTransformer<K, PK> keyBeanTransformer;

@@ -32,19 +32,16 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     private KeyFetcher<K> keyFetcher;
     private ServiceExceptionMapper sem;
     private LogLevel exceptionLogLevel;
-    private long cacheTimeout;
 
     public DaoOnlyBatchCrudService(
             @NonNull BatchBaseDao<K, E> dao,
             @NonNull KeyFetcher<K> keyFetcher,
             @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel,
-            @NonNull long cacheTimeout) {
+            @NonNull LogLevel exceptionLogLevel) {
         this.dao = dao;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
-        this.cacheTimeout = cacheTimeout;
     }
 
     @Override
@@ -237,13 +234,5 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
 
     public void setExceptionLogLevel(@NonNull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
-    }
-
-    public long getCacheTimeout() {
-        return cacheTimeout;
-    }
-
-    public void setCacheTimeout(@NonNull long cacheTimeout) {
-        this.cacheTimeout = cacheTimeout;
     }
 }

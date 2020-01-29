@@ -15,7 +15,7 @@ import org.springframework.lang.NonNull;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class MemorySingleObjectDao<K extends Key, E extends Entity<K>> implements SingleObjectDao<K, E> {
+public class MemorySingleObjectDao<K extends Key, E extends Entity<K>> implements SingleObjectDao<E> {
 
     private ReferenceModel<E> memory;
     private K key;

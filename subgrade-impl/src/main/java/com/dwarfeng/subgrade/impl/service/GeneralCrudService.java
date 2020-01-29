@@ -50,18 +50,18 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
 
     @Override
     public boolean exists(K key) throws ServiceException {
-        return internalExists(key);
-    }
-
-    private boolean internalExists(K key) throws ServiceException {
         try {
-            if (cache.exists(key)) {
-                return true;
-            }
-            return dao.exists(key);
+            return internalExists(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
         }
+    }
+
+    private boolean internalExists(K key) throws Exception {
+        if (cache.exists(key)) {
+            return true;
+        }
+        return dao.exists(key);
     }
 
     @Override

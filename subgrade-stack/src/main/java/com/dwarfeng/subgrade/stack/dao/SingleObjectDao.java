@@ -1,7 +1,6 @@
 package com.dwarfeng.subgrade.stack.dao;
 
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
-import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 
 /**
@@ -10,7 +9,7 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public interface SingleObjectDao<K extends Key, E extends Entity<K>> extends Dao {
+public interface SingleObjectDao<E extends Entity<?>> extends Dao {
 
     /**
      * 判断单个实体是否存在。

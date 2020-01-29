@@ -5,29 +5,29 @@ import com.dwarfeng.subgrade.sdk.util.PagingUtil;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
-import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetDeleteDao;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import com.dwarfeng.subgrade.stack.service.PresetLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetDeleteService;
 import org.springframework.lang.NonNull;
 
 /**
- * 仅用数据访问层实现的预设实体查询服务。
+ * 仅用数据访问层实现的预设实体删除服务。
  * <p>该类同时使用数据访问层和缓存实现实体的查询方法。</p>
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLookupService<E> {
+public class DaoOnlyPresetDeleteService<E extends Entity<?>> implements PresetDeleteService<E> {
 
-    private PresetLookupDao<E> dao;
+    private PresetDeleteDao<E> dao;
     private ServiceExceptionMapper sem;
     private LogLevel exceptionLogLevel;
 
-    public DaoOnlyPresetLookupService(
-            @NonNull PresetLookupDao<E> dao,
+    public DaoOnlyPresetDeleteService(
+            @NonNull PresetDeleteDao<E> dao,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel) {
         this.dao = dao;
@@ -53,11 +53,20 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         }
     }
 
-    public PresetLookupDao<E> getDao() {
+    @Override
+    public void lookupDelete(String preset, Object[] objs) throws ServiceException {
+        try {
+            dao.lookupDelete(preset, objs);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询预设实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    public PresetDeleteDao<E> getDao() {
         return dao;
     }
 
-    public void setDao(@NonNull PresetLookupDao<E> dao) {
+    public void setDao(@NonNull PresetDeleteDao<E> dao) {
         this.dao = dao;
     }
 

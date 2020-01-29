@@ -1,31 +1,30 @@
-package com.dwarfeng.subgrade.impl.dao;
+package com.dwarfeng.subgrade.impl.cache;
 
 import com.dwarfeng.subgrade.sdk.redis.formatter.StringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
-import com.dwarfeng.subgrade.stack.dao.SingleObjectDao;
-import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.apache.commons.beanutils.BeanUtils;
+import com.dwarfeng.subgrade.stack.cache.SingleObjectCache;
+import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.lang.NonNull;
 
 /**
- * 通过 Redis 实现的单对象数据访问层。
+ * 使用 Redis 实现的单对象缓存。
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *
  * @author DwArFeng
- * @since 0.0.3-beta
+ * @since 0.0.5-beta
  */
-public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends Bean> implements SingleObjectDao<E> {
+public class RedisSingleObjectCache<K extends Key, E extends Entity<K>, JE extends Bean> implements SingleObjectCache<E> {
 
     private RedisTemplate<String, JE> template;
     private StringKeyFormatter<K> formatter;
     private BeanTransformer<E, JE> transformer;
     private K key;
 
-    public RedisSingleObjectDao(
+    public RedisSingleObjectCache(
             @NonNull RedisTemplate<String, JE> template,
             @NonNull StringKeyFormatter<K> formatter,
             @NonNull BeanTransformer<E, JE> transformer,
@@ -37,11 +36,11 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
     }
 
     @Override
-    public boolean exists() throws DaoException {
+    public boolean exists() throws CacheException {
         try {
             return internalExists();
         } catch (Exception e) {
-            throw new DaoException(e);
+            throw new CacheException(e);
         }
     }
 
@@ -50,32 +49,31 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
     }
 
     @Override
-    public E get() throws DaoException {
+    public E get() throws CacheException {
         try {
-            return transformer.reverseTransform(template.opsForValue().get(formatter.format(key)));
+            JE je = template.opsForValue().get(formatter.format(key));
+            return transformer.reverseTransform(je);
         } catch (Exception e) {
-            throw new DaoException(e);
+            throw new CacheException(e);
         }
     }
 
     @Override
-    public void put(E entity) throws DaoException {
+    public void put(E entity, long timeout) throws CacheException {
         try {
-            //noinspection unchecked
-            E newEntity = (E) BeanUtils.cloneBean(entity);
-            newEntity.setKey(key);
-            template.opsForValue().set(formatter.format(key), transformer.transform(newEntity));
+            JE je = transformer.transform(entity);
+            template.opsForValue().set(formatter.format(key), je, timeout);
         } catch (Exception e) {
-            throw new DaoException(e);
+            throw new CacheException(e);
         }
     }
 
     @Override
-    public void clear() throws DaoException {
+    public void clear() throws CacheException {
         try {
             template.delete(formatter.format(key));
         } catch (Exception e) {
-            throw new DaoException(e);
+            throw new CacheException(e);
         }
     }
 

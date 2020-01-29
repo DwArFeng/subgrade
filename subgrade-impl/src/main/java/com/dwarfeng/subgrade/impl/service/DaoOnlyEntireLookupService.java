@@ -25,17 +25,14 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
     private EntireLookupDao<E> dao;
     private ServiceExceptionMapper sem;
     private LogLevel exceptionLogLevel;
-    private long cacheTimeout;
 
     public DaoOnlyEntireLookupService(
             @NonNull EntireLookupDao<E> dao,
             @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel,
-            @NonNull long cacheTimeout) {
+            @NonNull LogLevel exceptionLogLevel) {
         this.dao = dao;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
-        this.cacheTimeout = cacheTimeout;
     }
 
     @Override
@@ -78,13 +75,5 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
 
     public void setExceptionLogLevel(@NonNull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
-    }
-
-    public long getCacheTimeout() {
-        return cacheTimeout;
-    }
-
-    public void setCacheTimeout(@NonNull long cacheTimeout) {
-        this.cacheTimeout = cacheTimeout;
     }
 }
