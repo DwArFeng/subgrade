@@ -3,7 +3,7 @@ package com.dwarfeng.subgrade.sdk.hibernate.criteria;
 import org.hibernate.criterion.DetachedCriteria;
 
 /**
- * Preset制造器。
+ * 预设 Criteria 制造器。
  * <p>根据预设名称与预设对象构造Criteria。</p>
  *
  * @author DwArFeng
