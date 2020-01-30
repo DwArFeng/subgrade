@@ -33,11 +33,10 @@ public interface BaseCache<K extends Key, E extends Entity<K>> extends Cache {
      * <p>
      * 如果指定的键不存在，则创建。
      *
-     * @param key     指定的键。
      * @param entity  指定的键对应的值。
      * @param timeout 超时时间（毫秒）。
      */
-    void push(K key, E entity, long timeout) throws CacheException;
+    void push(E entity, long timeout) throws CacheException;
 
     /**
      * 从缓存中删除指定的键。

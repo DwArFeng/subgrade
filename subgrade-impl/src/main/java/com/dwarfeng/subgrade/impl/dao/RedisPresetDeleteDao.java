@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class RedisPresetDeleteDao<K extends Key, E extends Entity<K>, JE extends Bean> implements PresetDeleteDao<E> {
+public class RedisPresetDeleteDao<K extends Key, E extends Entity<K>, JE extends Bean> implements PresetDeleteDao<K, E> {
 
     private RedisTemplate<String, JE> template;
     private StringKeyFormatter<K> formatter;
@@ -77,18 +77,24 @@ public class RedisPresetDeleteDao<K extends Key, E extends Entity<K>, JE extends
     }
 
     @Override
-    public void lookupDelete(String preset, Object[] objs) throws DaoException {
+    public List<K> lookupDelete(String preset, Object[] objs) throws DaoException {
         try {
             String s = formatter.generalFormat();
             Set<String> allKeys = template.keys(s);
+            List<JE> jes2Delete = new ArrayList<>();
             List<String> keys2Delete = allKeys.stream().filter(k -> {
                 //noinspection unchecked
                 JE je = (JE) template.opsForHash().get(dbKey, k);
-                return filter.accept(transformer.reverseTransform(je), preset, objs);
+                if (filter.accept(transformer.reverseTransform(je), preset, objs)) {
+                    jes2Delete.add(je);
+                    return true;
+                }
+                return false;
             }).collect(Collectors.toList());
             for (String key : keys2Delete) {
                 template.opsForHash().delete(dbKey, key);
             }
+            return jes2Delete.stream().map(transformer::reverseTransform).map(E::getKey).collect(Collectors.toList());
         } catch (Exception e) {
             throw new DaoException(e);
         }

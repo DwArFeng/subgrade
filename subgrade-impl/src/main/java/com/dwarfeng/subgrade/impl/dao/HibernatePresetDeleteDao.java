@@ -5,6 +5,7 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.PresetDeleteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.hibernate.criterion.DetachedCriteria;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class HibernatePresetDeleteDao<E extends Entity<?>, PE extends Bean> implements PresetDeleteDao<E> {
+public class HibernatePresetDeleteDao<K extends Key, E extends Entity<K>, PE extends Bean> implements PresetDeleteDao<K, E> {
 
     private HibernateTemplate template;
     private BeanTransformer<E, PE> entityBeanTransformer;
@@ -81,11 +82,14 @@ public class HibernatePresetDeleteDao<E extends Entity<?>, PE extends Bean> impl
     }
 
     @Override
-    public void lookupDelete(String preset, Object[] objs) throws DaoException {
+    public List<K> lookupDelete(String preset, Object[] objs) throws DaoException {
         try {
             DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
             presetCriteriaMaker.makeCriteria(criteria, preset, objs);
-            template.deleteAll(template.findByCriteria(criteria));
+            //noinspection unchecked
+            List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria);
+            template.deleteAll(byCriteria);
+            return byCriteria.stream().map(entityBeanTransformer::reverseTransform).map(E::getKey).collect(Collectors.toList());
         } catch (Exception e) {
             throw new DaoException(e);
         }

@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.util;
+package com.dwarfeng.subgrade.sdk.common;
 
 /**
  * 常量类。

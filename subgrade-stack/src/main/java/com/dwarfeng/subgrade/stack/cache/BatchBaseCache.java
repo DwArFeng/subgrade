@@ -45,12 +45,11 @@ public interface BatchBaseCache<K extends Key, E extends Entity<K>> extends Base
      * 向缓存中批量推送指定的键值对。
      * <p>需要保证 keys 和 entities 的数量一致。</p>
      *
-     * @param keys     指定的键组成的列表。
      * @param entities 指定的值组成的列表。
      * @param timeout  超时时间。
      * @throws CacheException 缓存异常。
      */
-    void batchPush(List<K> keys, List<E> entities, long timeout) throws CacheException;
+    void batchPush(List<E> entities, long timeout) throws CacheException;
 
     /**
      * 批量删除指定的键对应的元素。

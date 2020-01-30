@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @see MapResourceBridge
  * @since 0.0.3-beta
  */
-public class MemoryPresetDeleteDao<K extends Key, E extends Entity<K>> implements PresetDeleteDao<E> {
+public class MemoryPresetDeleteDao<K extends Key, E extends Entity<K>> implements PresetDeleteDao<K, E> {
 
     private Map<K, E> memory;
     private PresetEntityFilter<E> filter;
@@ -54,10 +54,11 @@ public class MemoryPresetDeleteDao<K extends Key, E extends Entity<K>> implement
     }
 
     @Override
-    public void lookupDelete(String preset, Object[] objs) {
+    public List<K> lookupDelete(String preset, Object[] objs) {
         List<K> collect = memory.entrySet().stream().filter(entry -> filter.accept(entry.getValue(), preset, objs))
                 .map(Map.Entry::getKey).collect(Collectors.toList());
         memory.keySet().removeAll(collect);
+        return collect;
     }
 
     public Map<K, E> getMemory() {

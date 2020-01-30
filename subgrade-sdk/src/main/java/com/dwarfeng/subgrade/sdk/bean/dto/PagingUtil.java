@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.util;
+package com.dwarfeng.subgrade.sdk.bean.dto;
 
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;

@@ -55,9 +55,9 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
     }
 
     @Override
-    public void push(K key, E value, long timeout) throws CacheException {
+    public void push(E value, long timeout) throws CacheException {
         try {
-            internalPush(key, value, timeout);
+            internalPush(value, timeout);
         } catch (Exception e) {
             throw new CacheException();
         }
@@ -90,9 +90,9 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
         return transformer.reverseTransform(je);
     }
 
-    private void internalPush(K key, E value, long timeout) {
+    private void internalPush(E value, long timeout) {
         template.opsForValue().set(
-                formatKey(key),
+                formatKey(value.getKey()),
                 transformer.transform(value),
                 timeout, TimeUnit.MILLISECONDS
         );
@@ -140,19 +140,11 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
     }
 
     @Override
-    public void batchPush(List<K> keys, List<E> entities, long timeout) throws CacheException {
+    public void batchPush(List<E> entities, long timeout) throws CacheException {
         try {
-            if (keys.size() != entities.size()) {
-                throw new CacheException("keys 的数量与 entities 的数量不相等，keys的数量为 "
-                        + keys.size() + " ，entities 的数量为 " + entities.size());
+            for (E entity : entities) {
+                internalPush(entity, timeout);
             }
-            for (int i = 0; i < keys.size(); i++) {
-                K key = keys.get(i);
-                E entity = entities.get(i);
-                internalPush(key, entity, timeout);
-            }
-        } catch (CacheException e) {
-            throw e;
         } catch (Exception e) {
             throw new CacheException();
         }

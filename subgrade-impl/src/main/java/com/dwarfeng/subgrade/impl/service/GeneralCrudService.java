@@ -71,7 +71,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
                 return cache.get(key);
             }
             E entity = dao.get(key);
-            cache.push(key, entity, cacheTimeout);
+            cache.push(entity, cacheTimeout);
             return entity;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("获取实体信息时发生异常", exceptionLogLevel, sem, e);
@@ -89,7 +89,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
                 element.setKey(keyFetcher.fetchKey());
             }
             K key = dao.insert(element);
-            cache.push(key, element, cacheTimeout);
+            cache.push(element, cacheTimeout);
             return key;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
@@ -104,7 +104,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
             }
 
             K key = dao.update(element);
-            cache.push(key, element, cacheTimeout);
+            cache.push(element, cacheTimeout);
             return key;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
@@ -141,7 +141,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
             } else {
                 entity = dao.get(key);
             }
-            cache.push(key, entity, cacheTimeout);
+            cache.push(entity, cacheTimeout);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("将实体存入缓存时发生异常", exceptionLogLevel, sem, e);
         }

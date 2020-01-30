@@ -46,7 +46,9 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @SuppressWarnings("unchecked")
             PK pk = (PK) template.save(pe);
             template.flush();
-            return reverseTransformKey(pk);
+            K key = reverseTransformKey(pk);
+            element.setKey(key);
+            return key;
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -115,7 +117,11 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
                 listPK.add((PK) template.save(pe));
             }
             template.flush();
-            return listPK.stream().map(keyBeanTransformer::reverseTransform).collect(Collectors.toList());
+            List<K> ks = listPK.stream().map(keyBeanTransformer::reverseTransform).collect(Collectors.toList());
+            for (int i = 0; i < elements.size(); i++) {
+                elements.get(i).setKey(ks.get(i));
+            }
+            return ks;
         } catch (Exception e) {
             throw new DaoException(e);
         }

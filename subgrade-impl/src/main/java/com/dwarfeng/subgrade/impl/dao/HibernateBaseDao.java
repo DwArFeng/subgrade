@@ -43,7 +43,9 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
             @SuppressWarnings("unchecked")
             PK pk = (PK) template.save(pe);
             template.flush();
-            return reverseTransformKey(pk);
+            K key = reverseTransformKey(pk);
+            element.setKey(key);
+            return key;
         } catch (Exception e) {
             throw new DaoException(e);
         }

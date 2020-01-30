@@ -54,10 +54,10 @@ public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean>
     }
 
     @Override
-    public void push(K key, E value, long timeout) throws CacheException {
+    public void push(E value, long timeout) throws CacheException {
         try {
             template.opsForValue().set(
-                    formatKey(key),
+                    formatKey(value.getKey()),
                     transformer.transform(value),
                     timeout, TimeUnit.MILLISECONDS
             );

@@ -80,7 +80,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
                 element.setKey(keyFetcher.fetchKey());
             }
             K key = dao.insert(element);
-            cache.push(key, element, cacheTimeout);
+            cache.push(element, cacheTimeout);
             return key;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
@@ -95,7 +95,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             }
 
             K key = dao.update(element);
-            cache.push(key, element, cacheTimeout);
+            cache.push(element, cacheTimeout);
             return key;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
@@ -130,7 +130,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             return cache.get(key);
         }
         E entity = dao.get(key);
-        cache.push(key, entity, cacheTimeout);
+        cache.push(entity, cacheTimeout);
         return entity;
     }
 
@@ -194,7 +194,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             }
 
             List<K> ks = dao.batchInsert(elements);
-            cache.batchPush(ks, elements, cacheTimeout);
+            cache.batchPush(elements, cacheTimeout);
             return ks;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
@@ -210,7 +210,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             }
 
             List<K> ks = dao.batchUpdate(elements);
-            cache.batchPush(ks, elements, cacheTimeout);
+            cache.batchPush(elements, cacheTimeout);
             return ks;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
@@ -252,7 +252,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         } else {
             entity = dao.get(key);
         }
-        cache.push(key, entity, cacheTimeout);
+        cache.push(entity, cacheTimeout);
     }
 
     /**

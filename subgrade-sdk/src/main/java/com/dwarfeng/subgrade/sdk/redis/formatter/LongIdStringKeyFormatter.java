@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.sdk.redis.formatter;
 
-import com.dwarfeng.subgrade.sdk.util.Constants;
+import com.dwarfeng.subgrade.sdk.common.Constants;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
 import java.util.Objects;

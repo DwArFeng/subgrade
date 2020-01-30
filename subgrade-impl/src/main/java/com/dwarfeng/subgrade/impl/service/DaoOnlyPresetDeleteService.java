@@ -1,10 +1,11 @@
 package com.dwarfeng.subgrade.impl.service;
 
+import com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
-import com.dwarfeng.subgrade.sdk.util.PagingUtil;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.PresetDeleteDao;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
@@ -20,14 +21,14 @@ import org.springframework.lang.NonNull;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class DaoOnlyPresetDeleteService<E extends Entity<?>> implements PresetDeleteService<E> {
+public class DaoOnlyPresetDeleteService<K extends Key, E extends Entity<K>> implements PresetDeleteService<E> {
 
-    private PresetDeleteDao<E> dao;
+    private PresetDeleteDao<K, E> dao;
     private ServiceExceptionMapper sem;
     private LogLevel exceptionLogLevel;
 
     public DaoOnlyPresetDeleteService(
-            @NonNull PresetDeleteDao<E> dao,
+            @NonNull PresetDeleteDao<K, E> dao,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel) {
         this.dao = dao;
@@ -62,11 +63,11 @@ public class DaoOnlyPresetDeleteService<E extends Entity<?>> implements PresetDe
         }
     }
 
-    public PresetDeleteDao<E> getDao() {
+    public PresetDeleteDao<K, E> getDao() {
         return dao;
     }
 
-    public void setDao(@NonNull PresetDeleteDao<E> dao) {
+    public void setDao(@NonNull PresetDeleteDao<K, E> dao) {
         this.dao = dao;
     }
 
