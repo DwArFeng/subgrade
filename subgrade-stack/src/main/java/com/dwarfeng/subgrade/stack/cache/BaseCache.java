@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.exception.CacheException;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public interface BaseCache<K extends Key, E extends Entity<K>> extends Cache {
+public interface BaseCache<K extends Key, E extends Entity<K>> extends Cache<E> {
 
     /**
      * 获取缓存中指定的键是否存在。

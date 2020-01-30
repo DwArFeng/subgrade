@@ -11,7 +11,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public interface ListCache<E extends Entity<?>> extends Cache {
+public interface ListCache<E extends Entity<?>> extends Cache<E> {
 
     /**
      * 获取缓存中指定的键是否存在。

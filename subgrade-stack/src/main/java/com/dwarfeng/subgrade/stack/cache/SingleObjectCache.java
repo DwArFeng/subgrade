@@ -9,7 +9,7 @@ import com.dwarfeng.subgrade.stack.exception.CacheException;
  * @author DwArFeng
  * @since 0.0.5-beta
  */
-public interface SingleObjectCache<E extends Entity<?>> extends Cache {
+public interface SingleObjectCache<E extends Entity<?>> extends Cache<E> {
 
     /**
      * 判断单个实体是否存在。
