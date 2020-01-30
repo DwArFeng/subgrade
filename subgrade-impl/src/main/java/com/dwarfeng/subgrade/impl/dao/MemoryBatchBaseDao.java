@@ -43,13 +43,12 @@ public class MemoryBatchBaseDao<K extends Key, E extends Entity<K>> implements B
     }
 
     @Override
-    public K update(E element) throws DaoException {
+    public void update(E element) throws DaoException {
         K key = element.getKey();
         if (!memory.containsKey(key)) {
             throw new DaoException("元素不存在: " + key);
         }
         memory.put(key, element);
-        return key;
     }
 
     @Override
@@ -85,14 +84,13 @@ public class MemoryBatchBaseDao<K extends Key, E extends Entity<K>> implements B
     }
 
     @Override
-    public List<K> batchUpdate(List<E> elements) throws DaoException {
+    public void batchUpdate(List<E> elements) throws DaoException {
         List<K> collect = elements.stream().map(E::getKey).collect(Collectors.toList());
         Map<K, E> map = elements.stream().collect(Collectors.toMap(E::getKey, Function.identity()));
         if (!internalAllExists(collect)) {
             throw new DaoException("至少一个元素不存在");
         }
         memory.putAll(map);
-        return collect;
     }
 
     @Override

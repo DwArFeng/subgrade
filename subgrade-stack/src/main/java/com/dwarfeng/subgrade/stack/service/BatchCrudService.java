@@ -55,10 +55,9 @@ public interface BatchCrudService<K extends Key, E extends Entity<K>> extends Cr
      * 批量更新实体。
      *
      * @param elements 实体组成的列表。
-     * @return 更新的实体对应的主键。
      * @throws ServiceException 服务异常。
      */
-    List<K> batchUpdate(List<E> elements) throws ServiceException;
+    void batchUpdate(List<E> elements) throws ServiceException;
 
     /**
      * 批量删除实体。

@@ -27,10 +27,9 @@ public interface BatchBaseDao<K extends Key, E extends Entity<K>> extends BaseDa
      * 批量更新实体。
      *
      * @param elements 实体组成的列表。
-     * @return 更新的实体对应的主键。
      * @throws DaoException 数据访问层异常。
      */
-    List<K> batchUpdate(List<E> elements) throws DaoException;
+    void batchUpdate(List<E> elements) throws DaoException;
 
     /**
      * 批量删除实体。

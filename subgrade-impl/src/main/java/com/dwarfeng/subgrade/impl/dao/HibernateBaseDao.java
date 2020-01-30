@@ -52,12 +52,11 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     }
 
     @Override
-    public K update(E element) throws DaoException {
+    public void update(E element) throws DaoException {
         try {
             PE pe = transformEntity(element);
             template.update(pe);
             template.flush();
-            return element.getKey();
         } catch (Exception e) {
             throw new DaoException(e);
         }

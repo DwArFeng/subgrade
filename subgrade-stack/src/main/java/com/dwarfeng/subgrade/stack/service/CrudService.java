@@ -43,10 +43,9 @@ public interface CrudService<K extends Key, E extends Entity<K>> extends Service
      * 更新实体。
      *
      * @param element 更新的实体。
-     * @return 更新实体对应的键。
      * @throws ServiceException 服务异常。
      */
-    K update(E element) throws ServiceException;
+    void update(E element) throws ServiceException;
 
     /**
      * 删除实体。

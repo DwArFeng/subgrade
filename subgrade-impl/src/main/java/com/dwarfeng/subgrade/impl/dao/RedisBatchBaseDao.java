@@ -52,13 +52,12 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
     }
 
     @Override
-    public K update(E element) throws DaoException {
+    public void update(E element) throws DaoException {
         try {
             if (!internalExists(element.getKey())) {
                 throw new DaoException("元素不存在。");
             }
             template.opsForHash().put(dbKey, formatter.format(element.getKey()), transformer.transform(element));
-            return element.getKey();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -124,7 +123,7 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
     }
 
     @Override
-    public List<K> batchUpdate(List<E> elements) throws DaoException {
+    public void batchUpdate(List<E> elements) throws DaoException {
         try {
             List<K> keys = elements.stream().map(E::getKey).collect(Collectors.toList());
             if (!internalAllExists(keys)) {
@@ -136,7 +135,6 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
                 E element = elements.get(i);
                 template.opsForHash().put(dbKey, format, transformer.transform(element));
             }
-            return keys;
         } catch (Exception e) {
             throw new DaoException(e);
         }

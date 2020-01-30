@@ -24,9 +24,8 @@ public interface BaseDao<K extends Key, E extends Entity<K>> extends ReadOnlyDao
      * 更新实体。
      *
      * @param element 更新的实体。
-     * @return 更新实体对应的键。
      */
-    K update(E element) throws DaoException;
+    void update(E element) throws DaoException;
 
     /**
      * 删除实体。

@@ -43,7 +43,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     public K insert(E element) throws DaoException {
         try {
             PE pe = transformEntity(element);
-            @SuppressWarnings("unchecked")
+            //noinspection unchecked
             PK pk = (PK) template.save(pe);
             template.flush();
             K key = reverseTransformKey(pk);
@@ -55,13 +55,12 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     }
 
     @Override
-    public K update(E element) throws DaoException {
+    public void update(E element) throws DaoException {
         try {
             PE pe = transformEntity(element);
             template.clear();
             template.update(pe);
             template.flush();
-            return element.getKey();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -128,7 +127,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     }
 
     @Override
-    public List<K> batchUpdate(List<E> elements) throws DaoException {
+    public void batchUpdate(List<E> elements) throws DaoException {
         try {
             template.clear();
             List<PE> collect = elements.stream().map(entityBeanTransformer::transform).collect(Collectors.toList());
@@ -136,7 +135,6 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
                 template.update(pe);
             }
             template.flush();
-            return elements.stream().map(E::getKey).collect(Collectors.toList());
         } catch (Exception e) {
             throw new DaoException(e);
         }

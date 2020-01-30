@@ -78,13 +78,13 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
     }
 
     @Override
-    public K update(E element) throws ServiceException {
+    public void update(E element) throws ServiceException {
         try {
             if (!innerExists(element.getKey())) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
 
-            return dao.update(element);
+            dao.update(element);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
         }

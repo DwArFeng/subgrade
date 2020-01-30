@@ -50,13 +50,12 @@ public class RedisBaseDao<K extends Key, E extends Entity<K>, JE extends Bean> i
     }
 
     @Override
-    public K update(E element) throws DaoException {
+    public void update(E element) throws DaoException {
         try {
             if (!internalExists(element.getKey())) {
                 throw new DaoException("元素不存在。");
             }
             template.opsForHash().put(dbKey, formatter.format(element.getKey()), transformer.transform(element));
-            return element.getKey();
         } catch (Exception e) {
             throw new DaoException(e);
         }

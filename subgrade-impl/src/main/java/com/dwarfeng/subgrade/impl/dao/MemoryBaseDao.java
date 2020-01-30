@@ -38,13 +38,12 @@ public class MemoryBaseDao<K extends Key, E extends Entity<K>> implements BaseDa
     }
 
     @Override
-    public K update(E element) throws DaoException {
+    public void update(E element) throws DaoException {
         K key = element.getKey();
         if (!memory.containsKey(key)) {
             throw new DaoException("元素不存在: " + key);
         }
         memory.put(key, element);
-        return key;
     }
 
     @Override

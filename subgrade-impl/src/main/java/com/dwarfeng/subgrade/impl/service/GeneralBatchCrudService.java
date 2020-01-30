@@ -88,15 +88,14 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public K update(E element) throws ServiceException {
+    public void update(E element) throws ServiceException {
         try {
             if (!internalExists(element.getKey())) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
 
-            K key = dao.update(element);
+            dao.update(element);
             cache.push(element, cacheTimeout);
-            return key;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
         }
@@ -202,16 +201,15 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public List<K> batchUpdate(List<E> elements) throws ServiceException {
+    public void batchUpdate(List<E> elements) throws ServiceException {
         try {
             List<K> collect = elements.stream().map(E::getKey).collect(Collectors.toList());
             if (!internalAllExists(collect)) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
 
-            List<K> ks = dao.batchUpdate(elements);
+            dao.batchUpdate(elements);
             cache.batchPush(elements, cacheTimeout);
-            return ks;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
         }
