@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletion;
-import com.dwarfeng.subgrade.sdk.hibernate.modification.Deletion;
+import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
+import com.dwarfeng.subgrade.sdk.hibernate.modification.DeletionMod;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
@@ -29,7 +29,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     private BeanTransformer<K, PK> keyBeanTransformer;
     private BeanTransformer<E, PE> entityBeanTransformer;
     private Class<PE> classPE;
-    private Deletion<PE> deletion;
+    private DeletionMod<PE> deletionMod;
 
     public HibernateBatchBaseDao(
             @NonNull HibernateTemplate template,
@@ -40,7 +40,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
-        deletion = new DefaultDeletion<>();
+        deletionMod = new DefaultDeletionMod<>();
     }
 
     public HibernateBatchBaseDao(
@@ -48,12 +48,12 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @NonNull BeanTransformer<K, PK> keyBeanTransformer,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE,
-            @NonNull Deletion<PE> deletion) {
+            @NonNull DeletionMod<PE> deletionMod) {
         this.template = template;
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
-        this.deletion = deletion;
+        this.deletionMod = deletionMod;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     public void delete(K key) throws DaoException {
         try {
             PE pe = internalGet(key);
-            List<Object> objects = deletion.updateBeforeDelete(pe);
+            List<Object> objects = deletionMod.updateBeforeDelete(pe);
             objects.forEach(template::update);
             template.delete(pe);
             template.flush();
@@ -151,7 +151,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             template.clear();
             List<PE> collect = elements.stream().map(entityBeanTransformer::transform).collect(Collectors.toList());
             for (PE pe : collect) {
-                List<Object> objects = deletion.updateBeforeDelete(pe);
+                List<Object> objects = deletionMod.updateBeforeDelete(pe);
                 objects.forEach(template::update);
                 template.update(pe);
             }
@@ -255,11 +255,11 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         this.classPE = classPE;
     }
 
-    public Deletion<PE> getDeletion() {
-        return deletion;
+    public DeletionMod<PE> getDeletionMod() {
+        return deletionMod;
     }
 
-    public void setDeletion(Deletion<PE> deletion) {
-        this.deletion = deletion;
+    public void setDeletionMod(@NonNull DeletionMod<PE> deletionMod) {
+        this.deletionMod = deletionMod;
     }
 }

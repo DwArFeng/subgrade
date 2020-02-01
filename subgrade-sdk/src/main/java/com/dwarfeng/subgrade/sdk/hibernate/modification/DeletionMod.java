@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.sdk.hibernate.modification;
 
+import com.dwarfeng.subgrade.stack.bean.Bean;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.0.7-beta
  */
-public interface Deletion<E> {
+public interface DeletionMod<E extends Bean> {
 
     /**
      * 提供当指定对象删除时，需要更新的所有对象。
