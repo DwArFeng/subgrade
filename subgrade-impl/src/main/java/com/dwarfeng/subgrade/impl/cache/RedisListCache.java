@@ -7,6 +7,7 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.cache.ListCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +27,15 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     private String key;
     private RedisTemplate<String, JE> template;
     private BeanTransformer<E, JE> transformer;
+
+    public RedisListCache(
+            @NonNull String key,
+            @NonNull RedisTemplate<String, JE> template,
+            @NonNull BeanTransformer<E, JE> transformer) {
+        this.key = key;
+        this.template = template;
+        this.transformer = transformer;
+    }
 
     @Override
     public boolean exists() throws CacheException {
@@ -124,5 +134,29 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         } catch (Exception e) {
             throw new CacheException();
         }
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(@NonNull String key) {
+        this.key = key;
+    }
+
+    public RedisTemplate<String, JE> getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(@NonNull RedisTemplate<String, JE> template) {
+        this.template = template;
+    }
+
+    public BeanTransformer<E, JE> getTransformer() {
+        return transformer;
+    }
+
+    public void setTransformer(@NonNull BeanTransformer<E, JE> transformer) {
+        this.transformer = transformer;
     }
 }
