@@ -1,6 +1,8 @@
 package com.dwarfeng.subgrade.impl.dao;
 
 import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
+import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletion;
+import com.dwarfeng.subgrade.sdk.hibernate.modification.Deletion;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
@@ -14,6 +16,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +32,7 @@ public class HibernatePresetDeleteDao<K extends Key, E extends Entity<K>, PE ext
     private BeanTransformer<E, PE> entityBeanTransformer;
     private Class<PE> classPE;
     private PresetCriteriaMaker presetCriteriaMaker;
+    private Deletion<PE> deletion;
 
     public HibernatePresetDeleteDao(
             @NonNull HibernateTemplate template,
@@ -39,6 +43,20 @@ public class HibernatePresetDeleteDao<K extends Key, E extends Entity<K>, PE ext
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
         this.presetCriteriaMaker = presetCriteriaMaker;
+        deletion = new DefaultDeletion<>();
+    }
+
+    public HibernatePresetDeleteDao(
+            @NonNull HibernateTemplate template,
+            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
+            @NonNull Class<PE> classPE,
+            @NonNull PresetCriteriaMaker presetCriteriaMaker,
+            @NonNull Deletion<PE> deletion) {
+        this.template = template;
+        this.entityBeanTransformer = entityBeanTransformer;
+        this.classPE = classPE;
+        this.presetCriteriaMaker = presetCriteriaMaker;
+        this.deletion = deletion;
     }
 
     @Override
@@ -88,6 +106,13 @@ public class HibernatePresetDeleteDao<K extends Key, E extends Entity<K>, PE ext
             presetCriteriaMaker.makeCriteria(criteria, preset, objs);
             //noinspection unchecked
             List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria);
+            Optional<List<Object>> reduce = byCriteria.stream().map(deletion::updateBeforeDelete).reduce(
+                    (a, b) -> {
+                        a.addAll(b);
+                        return a;
+                    }
+            );
+            reduce.ifPresent(objects -> objects.forEach(template::update));
             template.deleteAll(byCriteria);
             return byCriteria.stream().map(entityBeanTransformer::reverseTransform).map(E::getKey).collect(Collectors.toList());
         } catch (Exception e) {
@@ -125,5 +150,13 @@ public class HibernatePresetDeleteDao<K extends Key, E extends Entity<K>, PE ext
 
     public void setPresetCriteriaMaker(@NonNull PresetCriteriaMaker presetCriteriaMaker) {
         this.presetCriteriaMaker = presetCriteriaMaker;
+    }
+
+    public Deletion<PE> getDeletion() {
+        return deletion;
+    }
+
+    public void setDeletion(Deletion<PE> deletion) {
+        this.deletion = deletion;
     }
 }

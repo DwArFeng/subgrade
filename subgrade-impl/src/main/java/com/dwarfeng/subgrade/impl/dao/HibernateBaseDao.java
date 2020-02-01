@@ -1,5 +1,7 @@
 package com.dwarfeng.subgrade.impl.dao;
 
+import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletion;
+import com.dwarfeng.subgrade.sdk.hibernate.modification.Deletion;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
@@ -9,6 +11,7 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -24,6 +27,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     private BeanTransformer<K, PK> keyBeanTransformer;
     private BeanTransformer<E, PE> entityBeanTransformer;
     private Class<PE> classPE;
+    private Deletion<PE> deletion;
 
     public HibernateBaseDao(
             @NonNull HibernateTemplate template,
@@ -34,6 +38,20 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
+        deletion = new DefaultDeletion<>();
+    }
+
+    public HibernateBaseDao(
+            @NonNull HibernateTemplate template,
+            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
+            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
+            @NonNull Class<PE> classPE,
+            @NonNull Deletion<PE> deletion) {
+        this.template = template;
+        this.keyBeanTransformer = keyBeanTransformer;
+        this.entityBeanTransformer = entityBeanTransformer;
+        this.classPE = classPE;
+        this.deletion = deletion;
     }
 
     @Override
@@ -66,6 +84,8 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     public void delete(K key) throws DaoException {
         try {
             PE pe = internalGet(key);
+            List<Object> objects = deletion.updateBeforeDelete(pe);
+            objects.forEach(template::update);
             template.delete(pe);
             template.flush();
         } catch (Exception e) {
@@ -143,5 +163,13 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
 
     public void setClassPE(@NonNull Class<PE> classPE) {
         this.classPE = classPE;
+    }
+
+    public Deletion<PE> getDeletion() {
+        return deletion;
+    }
+
+    public void setDeletion(Deletion<PE> deletion) {
+        this.deletion = deletion;
     }
 }
