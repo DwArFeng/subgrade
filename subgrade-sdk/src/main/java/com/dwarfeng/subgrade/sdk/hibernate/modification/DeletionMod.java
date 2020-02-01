@@ -1,7 +1,6 @@
 package com.dwarfeng.subgrade.sdk.hibernate.modification;
 
 import com.dwarfeng.subgrade.stack.bean.Bean;
-import org.springframework.lang.NonNull;
 
 import java.util.List;
 
@@ -19,6 +18,5 @@ public interface DeletionMod<E extends Bean> {
      * @param element 指定的对象。
      * @return 需要更新的对象组成的列表。
      */
-    @NonNull
-    List<Object> updateBeforeDelete(@NonNull E element);
+    List<Object> updateBeforeDelete(E element);
 }
