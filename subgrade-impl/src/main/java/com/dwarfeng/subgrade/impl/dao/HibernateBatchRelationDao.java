@@ -9,8 +9,8 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -83,11 +83,10 @@ public class HibernateBatchRelationDao<
             PE pe = template.get(classPE, pkTransformer.transform(pk));
             List<CE> ces = cks.stream().map(ck -> template.get(classCE, ckTransformer.transform(ck))).collect(Collectors.toList());
             assert pe != null;
-            Optional<List<Object>> reduce = ces.stream().map(ce -> relationMod.updateOnAdd(pe, ce)).reduce((a, b) -> {
+            ces.stream().map(ce -> relationMod.updateOnAdd(pe, ce)).reduce(new ArrayList<>(), (a, b) -> {
                 a.addAll(b);
                 return a;
-            });
-            reduce.ifPresent(objects -> objects.forEach(template::update));
+            }).forEach(template::update);
             template.flush();
         } catch (Exception e) {
             throw new DaoException(e);
@@ -100,11 +99,10 @@ public class HibernateBatchRelationDao<
             PE pe = template.get(classPE, pkTransformer.transform(pk));
             List<CE> ces = cks.stream().map(ck -> template.get(classCE, ckTransformer.transform(ck))).collect(Collectors.toList());
             assert pe != null;
-            Optional<List<Object>> reduce = ces.stream().map(ce -> relationMod.updateOnDelete(pe, ce)).reduce((a, b) -> {
+            ces.stream().map(ce -> relationMod.updateOnDelete(pe, ce)).reduce(new ArrayList<>(), (a, b) -> {
                 a.addAll(b);
                 return a;
-            });
-            reduce.ifPresent(objects -> objects.forEach(template::update));
+            }).forEach(template::update);
             template.flush();
         } catch (Exception e) {
             throw new DaoException(e);

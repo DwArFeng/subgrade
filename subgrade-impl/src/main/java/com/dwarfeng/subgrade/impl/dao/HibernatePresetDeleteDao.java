@@ -15,8 +15,8 @@ import org.hibernate.criterion.Projections;
 import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -106,11 +106,10 @@ public class HibernatePresetDeleteDao<K extends Key, E extends Entity<K>, PE ext
             presetCriteriaMaker.makeCriteria(criteria, preset, objs);
             //noinspection unchecked
             List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria);
-            Optional<List<Object>> reduce = byCriteria.stream().map(deletionMod::updateBeforeDelete).reduce((a, b) -> {
+            byCriteria.stream().map(deletionMod::updateBeforeDelete).reduce(new ArrayList<>(), (a, b) -> {
                 a.addAll(b);
                 return a;
-            });
-            reduce.ifPresent(objects -> objects.forEach(template::update));
+            }).forEach(template::update);
             template.deleteAll(byCriteria);
             return byCriteria.stream().map(entityBeanTransformer::reverseTransform).map(E::getKey).collect(Collectors.toList());
         } catch (Exception e) {
