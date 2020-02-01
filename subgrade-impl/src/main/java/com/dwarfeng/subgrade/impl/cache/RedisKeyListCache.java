@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class RedisKeyListCache<K extends Key, E extends Entity<K>, JE extends Bean> implements KeyListCache<K, E> {
+public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, JE extends Bean> implements KeyListCache<K, E> {
 
     private RedisTemplate<String, JE> template;
     private StringKeyFormatter<K> formatter;
