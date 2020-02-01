@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.interceptor;
+package com.dwarfeng.subgrade.sdk.interceptor.analyse;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -19,7 +19,7 @@ public class BehaviorAnalyseAdvisor {
 
     private final Logger LOGGER = LoggerFactory.getLogger(BehaviorAnalyseAdvisor.class);
 
-    @Around("@annotation(com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse) || @within(com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse)")
+    @Around("@annotation(com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse) || @within(com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         LOGGER.debug("进入增强方法");
         String className = pjp.getSignature().getDeclaringTypeName();
