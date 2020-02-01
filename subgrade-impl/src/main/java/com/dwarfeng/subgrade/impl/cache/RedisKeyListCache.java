@@ -91,7 +91,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
             String formatKey = formatKey(key);
             Long totleSize = template.opsForList().size(formatKey);
             long beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
-            long endIndex = Math.max(totleSize, beginIndex + pagingInfo.getRows()) - 1;
+            long endIndex = Math.min(totleSize, beginIndex + pagingInfo.getRows()) - 1;
             List<JE> range = template.opsForList().range(formatKey, beginIndex, endIndex);
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {

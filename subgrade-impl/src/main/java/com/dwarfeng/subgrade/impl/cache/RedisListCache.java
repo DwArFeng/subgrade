@@ -85,7 +85,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         try {
             Long totleSize = template.opsForList().size(key);
             long beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
-            long endIndex = Math.max(totleSize, beginIndex + pagingInfo.getRows()) - 1;
+            long endIndex = Math.min(totleSize, beginIndex + pagingInfo.getRows()) - 1;
             List<JE> range = template.opsForList().range(key, beginIndex, endIndex);
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {

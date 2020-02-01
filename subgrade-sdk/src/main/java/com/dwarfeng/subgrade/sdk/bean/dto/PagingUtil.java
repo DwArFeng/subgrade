@@ -52,4 +52,104 @@ public class PagingUtil {
                 data
         );
     }
+
+    /**
+     * 获取分页信息对应的序号边界。
+     *
+     * @param pagingInfo 指定的分页信息。
+     * @return 分页信息对应的序号边界。
+     */
+    public static IntIndexBounds intIndexBound(PagingInfo pagingInfo) {
+        return intIndexBound(pagingInfo, Integer.MAX_VALUE);
+    }
+
+    /**
+     * 获取分页信息对应的序号边界。
+     *
+     * @param pagingInfo 指定的分页信息。
+     * @param totleSize  列表的总长度。
+     * @return 分页信息对应的序号边界。
+     */
+    public static IntIndexBounds intIndexBound(PagingInfo pagingInfo, int totleSize) {
+        int beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
+        int endIndex = Math.min(totleSize, beginIndex + pagingInfo.getRows()) - 1;
+        return new IntIndexBounds(beginIndex, endIndex);
+    }
+
+    /**
+     * 获取分页信息对应的序号边界。
+     *
+     * @param pagingInfo 指定的分页信息。
+     * @return 分页信息对应的序号边界。
+     */
+    public static LongIndexBounds longIndexBound(PagingInfo pagingInfo) {
+        return longIndexBound(pagingInfo, Long.MAX_VALUE);
+    }
+
+    /**
+     * 获取分页信息对应的序号边界。
+     *
+     * @param pagingInfo 指定的分页信息。
+     * @param totleSize  列表的总长度。
+     * @return 分页信息对应的序号边界。
+     */
+    public static LongIndexBounds longIndexBound(PagingInfo pagingInfo, long totleSize) {
+        long beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
+        long endIndex = Math.min(totleSize, beginIndex + pagingInfo.getRows()) - 1;
+        return new LongIndexBounds(beginIndex, endIndex);
+    }
+
+    public static final class IntIndexBounds {
+
+        private final int beginIndex;
+        private final int endIndex;
+
+        public IntIndexBounds(int beginIndex, int endIndex) {
+            this.beginIndex = beginIndex;
+            this.endIndex = endIndex;
+        }
+
+        public int getBeginIndex() {
+            return beginIndex;
+        }
+
+        public int getEndIndex() {
+            return endIndex;
+        }
+
+        @Override
+        public String toString() {
+            return "IntIndexBounds{" +
+                    "beginIndex=" + beginIndex +
+                    ", endIndex=" + endIndex +
+                    '}';
+        }
+    }
+
+    public static final class LongIndexBounds {
+
+        private final long beginIndex;
+        private final long endIndex;
+
+        public LongIndexBounds(long beginIndex, long endIndex) {
+            this.beginIndex = beginIndex;
+            this.endIndex = endIndex;
+        }
+
+        public long getBeginIndex() {
+            return beginIndex;
+        }
+
+        public long getEndIndex() {
+            return endIndex;
+        }
+
+        @Override
+        public String toString() {
+            return "IntIndexBounds{" +
+                    "beginIndex=" + beginIndex +
+                    ", endIndex=" + endIndex +
+                    '}';
+        }
+    }
 }
