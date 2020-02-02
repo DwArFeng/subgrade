@@ -46,6 +46,10 @@ public final class ServiceExceptionCodes {
      * 过程异常。
      */
     public static final ServiceException.Code PROCESS_FAILDED = new ServiceException.Code(150, "process_failed");
+    /**
+     * 处理器异常。
+     */
+    public static final ServiceException.Code HANDLER_FAILED = new ServiceException.Code(150, "handler_failed");
 
     private ServiceExceptionCodes() {
         throw new IllegalStateException("禁止实例化");

@@ -44,6 +44,7 @@ public final class ServiceExceptionHelper {
         map.put(ValidationException.class, ServiceExceptionCodes.PARAM_VALIDATION_FAILED);
         map.put(IOException.class, ServiceExceptionCodes.IO_EXCEPTION);
         map.put(ProcessException.class, ServiceExceptionCodes.PROCESS_FAILDED);
+        map.put(HandlerException.class, ServiceExceptionCodes.HANDLER_FAILED);
 
         return map;
     }
