@@ -45,11 +45,15 @@ public final class ServiceExceptionCodes {
     /**
      * 过程异常。
      */
-    public static final ServiceException.Code PROCESS_FAILDED = new ServiceException.Code(150, "process_failed");
+    public static final ServiceException.Code PROCESS_FAILDED = new ServiceException.Code(150, "process failed");
     /**
      * 处理器异常。
      */
-    public static final ServiceException.Code HANDLER_FAILED = new ServiceException.Code(150, "handler_failed");
+    public static final ServiceException.Code HANDLER_FAILED = new ServiceException.Code(160, "handler failed");
+    /**
+     * 权限拒绝。
+     */
+    public static final ServiceException.Code PERMISSION_DENIED = new ServiceException.Code(170, "permission denied");
 
     private ServiceExceptionCodes() {
         throw new IllegalStateException("禁止实例化");

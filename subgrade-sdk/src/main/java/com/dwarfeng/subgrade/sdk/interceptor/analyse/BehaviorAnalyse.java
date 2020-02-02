@@ -1,15 +1,16 @@
 package com.dwarfeng.subgrade.sdk.interceptor.analyse;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
- * 时间分析注解。
+ * 行为分析注解。
+ *
+ * @author DwArFeng
+ * @since 0.1.0-beta
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
+@Documented
 public @interface BehaviorAnalyse {
 
 }
