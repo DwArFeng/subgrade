@@ -46,6 +46,7 @@ public final class ServiceExceptionHelper {
         map.put(ProcessException.class, ServiceExceptionCodes.PROCESS_FAILDED);
         map.put(HandlerException.class, ServiceExceptionCodes.HANDLER_FAILED);
         map.put(PermissionDeniedException.class, ServiceExceptionCodes.PERMISSION_DENIED);
+        map.put(LoginFailedException.class, ServiceExceptionCodes.LOGIN_FAILDED);
 
         return map;
     }

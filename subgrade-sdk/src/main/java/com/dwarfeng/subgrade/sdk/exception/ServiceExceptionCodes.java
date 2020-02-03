@@ -54,6 +54,10 @@ public final class ServiceExceptionCodes {
      * 权限拒绝。
      */
     public static final ServiceException.Code PERMISSION_DENIED = new ServiceException.Code(170, "permission denied");
+    /**
+     * 登录失败。
+     */
+    public static final ServiceException.Code LOGIN_FAILDED = new ServiceException.Code(170, "login failed");
 
     private ServiceExceptionCodes() {
         throw new IllegalStateException("禁止实例化");

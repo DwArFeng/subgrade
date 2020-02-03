@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.stack.handler;
 
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface PermissionHandler {
      * @return 指定的用户是否拥有指定的权限。
      * @throws HandlerException 处理器异常。
      */
-    boolean hasPermission(String userName, String permissionNode) throws HandlerException;
+    boolean hasPermission(StringIdKey userName, String permissionNode) throws HandlerException;
 
     /**
      * 查询用户是否拥有权限。
@@ -30,7 +31,7 @@ public interface PermissionHandler {
      * @return 指定的用户是否拥有指定的所有权限。
      * @throws HandlerException 处理器异常。
      */
-    boolean hasPermission(String userName, List<String> permissionNodes) throws HandlerException;
+    boolean hasPermission(StringIdKey userName, List<String> permissionNodes) throws HandlerException;
 
     /**
      * 查询用户缺失的权限。
@@ -41,5 +42,5 @@ public interface PermissionHandler {
      * @return 用户缺失的权限。
      * @throws HandlerException 处理器异常。
      */
-    List<String> getMissingPermission(String userName, List<String> permissionNodes) throws HandlerException;
+    List<String> getMissingPermission(StringIdKey userName, List<String> permissionNodes) throws HandlerException;
 }
