@@ -65,42 +65,102 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     @Override
     public K insert(E element) throws ServiceException {
         try {
-            if (Objects.nonNull(element.getKey()) && internalExists(element.getKey())) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
-            }
+            return internalInsert(element);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
 
-            if (Objects.isNull(element.getKey())) {
-                element.setKey(keyFetcher.fetchKey());
+    private K internalInsert(E element) throws Exception {
+        if (Objects.nonNull(element.getKey()) && internalExists(element.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+        }
+
+        if (Objects.isNull(element.getKey())) {
+            element.setKey(keyFetcher.fetchKey());
+        }
+        return dao.insert(element);
+    }
+
+    @Override
+    public void update(E element) throws ServiceException {
+        try {
+            internalUpdate(element);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    private void internalUpdate(E element) throws Exception {
+        if (!internalExists(element.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        dao.update(element);
+    }
+
+    @Override
+    public void delete(K key) throws ServiceException {
+        try {
+            internalDelete(key);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    private void internalDelete(K key) throws Exception {
+        if (!internalExists(key)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        dao.delete(key);
+    }
+
+    @Override
+    public K insertIfNotExists(E element) throws ServiceException {
+        try {
+            if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
+                return internalInsert(element);
             }
-            return dao.insert(element);
+            return null;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
-    public void update(E element) throws ServiceException {
+    public void updateIfExists(E element) throws ServiceException {
         try {
-            if (!internalExists(element.getKey())) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            if (internalExists(element.getKey())) {
+                internalUpdate(element);
             }
-
-            dao.update(element);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
-    public void delete(K key) throws ServiceException {
+    public void deleteIfExists(K key) throws ServiceException {
         try {
-            if (!internalExists(key)) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            if (internalExists(key)) {
+                internalDelete(key);
             }
-
-            dao.delete(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    @Override
+    public K insertOrUpdate(E element) throws ServiceException {
+        try {
+            if (internalExists(element.getKey())) {
+                internalUpdate(element);
+                return null;
+            } else {
+                return internalInsert(element);
+            }
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入或更新实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
@@ -160,47 +220,123 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     @Override
     public List<K> batchInsert(List<E> elements) throws ServiceException {
         try {
-            List<K> collect = elements.stream().filter(e -> Objects.nonNull(e.getKey())).map(E::getKey).collect(Collectors.toList());
-            if (internalNonExists(collect)) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
-            }
+            return internalBatchInsert(elements);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
 
+    private List<K> internalBatchInsert(List<E> elements) throws Exception {
+        List<K> collect = elements.stream().filter(e -> Objects.nonNull(e.getKey())).map(E::getKey).collect(Collectors.toList());
+        if (internalNonExists(collect)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+        }
+
+        for (E element : elements) {
+            if (Objects.isNull(element.getKey())) {
+                element.setKey(keyFetcher.fetchKey());
+            }
+        }
+
+        return dao.batchInsert(elements);
+    }
+
+    @Override
+    public void batchUpdate(List<E> elements) throws ServiceException {
+        try {
+            internalBatchUpdate(elements);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    private void internalBatchUpdate(List<E> elements) throws Exception {
+        List<K> collect = elements.stream().map(E::getKey).collect(Collectors.toList());
+        if (!internalAllExists(collect)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        dao.batchUpdate(elements);
+    }
+
+    @Override
+    public void batchDelete(List<K> keys) throws ServiceException {
+        try {
+            internalBatchDelete(keys);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    private void internalBatchDelete(List<K> keys) throws Exception {
+        if (!internalAllExists(keys)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        dao.batchDelete(keys);
+    }
+
+    @Override
+    public List<K> batchInsertIfExists(List<E> elements) throws ServiceException {
+        try {
+            List<E> elements2Insert = new ArrayList<>();
             for (E element : elements) {
-                if (Objects.isNull(element.getKey())) {
-                    element.setKey(keyFetcher.fetchKey());
+                if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
+                    elements2Insert.add(element);
                 }
             }
-
-            return dao.batchInsert(elements);
+            return internalBatchInsert(elements2Insert);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
-    public void batchUpdate(List<E> elements) throws ServiceException {
+    public void batchUpdateIfExists(List<E> elements) throws ServiceException {
         try {
-            List<K> collect = elements.stream().map(E::getKey).collect(Collectors.toList());
-            if (!internalAllExists(collect)) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            List<E> elements2Update = new ArrayList<>();
+            for (E element : elements) {
+                if (internalExists(element.getKey())) {
+                    elements2Update.add(element);
+                }
             }
-
-            dao.batchUpdate(elements);
+            internalBatchUpdate(elements2Update);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
-    public void batchDelete(List<K> keys) throws ServiceException {
+    public void batchDeleteIfExists(List<K> keys) throws ServiceException {
         try {
-            if (!internalAllExists(keys)) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            List<K> keys2Delete = new ArrayList<>();
+            for (K key : keys) {
+                if (internalExists(key)) {
+                    keys2Delete.add(key);
+                }
             }
-
-            dao.batchDelete(keys);
+            internalBatchDelete(keys2Delete);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    @Override
+    public List<K> batchInsertOrUpdate(List<E> elements) throws ServiceException {
+        try {
+            List<E> elements2Insert = new ArrayList<>();
+            List<E> elements2Update = new ArrayList<>();
+            for (E element : elements) {
+                if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
+                    elements2Insert.add(element);
+                } else {
+                    elements2Update.add(element);
+                }
+            }
+            internalBatchUpdate(elements2Update);
+            return internalBatchInsert(elements2Insert);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入或更新实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 

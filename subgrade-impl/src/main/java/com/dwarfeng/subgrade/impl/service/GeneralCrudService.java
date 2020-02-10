@@ -81,48 +81,108 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
     @Override
     public K insert(E element) throws ServiceException {
         try {
-            if (Objects.nonNull(element.getKey()) && internalExists(element.getKey())) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
-            }
+            return internalInsert(element);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
 
-            if (Objects.isNull(element.getKey())) {
-                element.setKey(keyFetcher.fetchKey());
+    private K internalInsert(E element) throws Exception {
+        if (Objects.nonNull(element.getKey()) && internalExists(element.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+        }
+
+        if (Objects.isNull(element.getKey())) {
+            element.setKey(keyFetcher.fetchKey());
+        }
+        K key = dao.insert(element);
+        cache.push(element, cacheTimeout);
+        return key;
+    }
+
+    @Override
+    public void update(E element) throws ServiceException {
+        try {
+            internalUpdate(element);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    private void internalUpdate(E element) throws Exception {
+        if (!internalExists(element.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        dao.update(element);
+        cache.push(element, cacheTimeout);
+    }
+
+    @Override
+    public void delete(K key) throws ServiceException {
+        try {
+            internalDelete(key);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    private void internalDelete(K key) throws Exception {
+        if (!internalExists(key)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        if (cache.exists(key)) {
+            cache.delete(key);
+        }
+        dao.delete(key);
+    }
+
+    @Override
+    public K insertIfNotExists(E element) throws ServiceException {
+        try {
+            if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
+                return internalInsert(element);
             }
-            K key = dao.insert(element);
-            cache.push(element, cacheTimeout);
-            return key;
+            return null;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
-    public void update(E element) throws ServiceException {
+    public void updateIfExists(E element) throws ServiceException {
         try {
-            if (!internalExists(element.getKey())) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            if (internalExists(element.getKey())) {
+                internalUpdate(element);
             }
-
-            dao.update(element);
-            cache.push(element, cacheTimeout);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 
     @Override
-    public void delete(K key) throws ServiceException {
+    public void deleteIfExists(K key) throws ServiceException {
         try {
-            if (!internalExists(key)) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            if (internalExists(key)) {
+                internalDelete(key);
             }
-
-            if (cache.exists(key)) {
-                cache.delete(key);
-            }
-            dao.delete(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    @Override
+    public K insertOrUpdate(E element) throws ServiceException {
+        try {
+            if (internalExists(element.getKey())) {
+                internalUpdate(element);
+                return null;
+            } else {
+                return internalInsert(element);
+            }
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入或更新实体时发生异常", exceptionLogLevel, sem, e);
         }
     }
 

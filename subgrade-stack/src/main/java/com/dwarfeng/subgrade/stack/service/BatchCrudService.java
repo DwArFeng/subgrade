@@ -66,4 +66,38 @@ public interface BatchCrudService<K extends Key, E extends Entity<K>> extends Cr
      * @throws ServiceException 服务异常。
      */
     void batchDelete(List<K> keys) throws ServiceException;
+
+    /**
+     * 如果不存在指定的元素，则插入。
+     *
+     * @param elements 指定的元素组成的集合。
+     * @return 所有被插入元素的主键，小于或等于 elements 的个数。
+     * @throws ServiceException 服务异常。
+     */
+    List<K> batchInsertIfExists(List<E> elements) throws ServiceException;
+
+    /**
+     * 如果存在指定的元素，则更新。
+     *
+     * @param elements 指定的元素组成的集合。
+     * @throws ServiceException 服务异常。
+     */
+    void batchUpdateIfExists(List<E> elements) throws ServiceException;
+
+    /**
+     * 如果存在指定的元素，则删除。
+     *
+     * @param keys 指定的元素对应的键组成的集合。
+     * @throws ServiceException 服务异常。
+     */
+    void batchDeleteIfExists(List<K> keys) throws ServiceException;
+
+    /**
+     * 如果元素不存在，则插入；存在，则更新。
+     *
+     * @param elements 指定的元素组成的集合。
+     * @return 所有被插入元素的主键，小于或等于 elements 的个数。
+     * @throws ServiceException 服务异常。
+     */
+    List<K> batchInsertOrUpdate(List<E> elements) throws ServiceException;
 }
