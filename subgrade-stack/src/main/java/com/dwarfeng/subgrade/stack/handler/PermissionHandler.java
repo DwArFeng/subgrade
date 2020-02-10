@@ -16,31 +16,31 @@ public interface PermissionHandler {
     /**
      * 查询用户是否拥有权限。
      *
-     * @param userName       指定的用户。
+     * @param userKey        指定的用户。
      * @param permissionNode 指定的权限。
      * @return 指定的用户是否拥有指定的权限。
      * @throws HandlerException 处理器异常。
      */
-    boolean hasPermission(StringIdKey userName, String permissionNode) throws HandlerException;
+    boolean hasPermission(StringIdKey userKey, String permissionNode) throws HandlerException;
 
     /**
      * 查询用户是否拥有权限。
      *
-     * @param userName        指定的用户。
+     * @param userKey         指定的用户。
      * @param permissionNodes 指定的权限组成的列表。
      * @return 指定的用户是否拥有指定的所有权限。
      * @throws HandlerException 处理器异常。
      */
-    boolean hasPermission(StringIdKey userName, List<String> permissionNodes) throws HandlerException;
+    boolean hasPermission(StringIdKey userKey, List<String> permissionNodes) throws HandlerException;
 
     /**
      * 查询用户缺失的权限。
      * <p>如果用户不缺失权限，返回空列表。</p>
      *
-     * @param userName        指定的用户。
+     * @param userKey         指定的用户。
      * @param permissionNodes 指定的权限组成的列表。
      * @return 用户缺失的权限。
      * @throws HandlerException 处理器异常。
      */
-    List<String> getMissingPermission(StringIdKey userName, List<String> permissionNodes) throws HandlerException;
+    List<String> getMissingPermission(StringIdKey userKey, List<String> permissionNodes) throws HandlerException;
 }
