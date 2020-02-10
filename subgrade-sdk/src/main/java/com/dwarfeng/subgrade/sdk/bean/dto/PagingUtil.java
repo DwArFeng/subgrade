@@ -11,7 +11,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class PagingUtil {
+public final class PagingUtil {
 
     private PagingUtil() {
         throw new IllegalStateException("禁止外部实例化。");
