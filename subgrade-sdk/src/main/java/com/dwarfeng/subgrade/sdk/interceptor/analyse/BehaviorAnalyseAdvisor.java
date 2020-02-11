@@ -5,16 +5,19 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
- * 运行时间分析增强。
+ * 方法行为分析增强。
  *
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
 @Component
 @Aspect
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class BehaviorAnalyseAdvisor {
 
     private final Logger LOGGER = LoggerFactory.getLogger(BehaviorAnalyseAdvisor.class);
