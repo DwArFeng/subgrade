@@ -43,10 +43,10 @@ public final class ServiceExceptionHelper {
         map.put(DaoException.class, ServiceExceptionCodes.DAO_FAILED);
         map.put(ValidationException.class, ServiceExceptionCodes.PARAM_VALIDATION_FAILED);
         map.put(IOException.class, ServiceExceptionCodes.IO_EXCEPTION);
-        map.put(ProcessException.class, ServiceExceptionCodes.PROCESS_FAILDED);
+        map.put(ProcessException.class, ServiceExceptionCodes.PROCESS_FAILED);
         map.put(HandlerException.class, ServiceExceptionCodes.HANDLER_FAILED);
         map.put(PermissionDeniedException.class, ServiceExceptionCodes.PERMISSION_DENIED);
-        map.put(LoginFailedException.class, ServiceExceptionCodes.LOGIN_FAILDED);
+        map.put(LoginFailedException.class, ServiceExceptionCodes.LOGIN_FAILED);
 
         return map;
     }

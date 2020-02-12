@@ -13,11 +13,6 @@ public final class Constants {
      */
     public static final String REDIS_KEY_WILDCARD_CHARACTER = "*";
 
-    /**
-     * 异常代号的偏移量。
-     */
-    public static final int EXCEPTION_CODE_OFFSET = 0;
-
     private Constants() {
         throw new IllegalStateException("禁止实例化");
     }
