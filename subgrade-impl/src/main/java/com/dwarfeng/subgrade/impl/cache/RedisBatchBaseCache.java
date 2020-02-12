@@ -41,7 +41,7 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
         try {
             return internalExists(key);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -50,7 +50,7 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
         try {
             return internalGet(key);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -59,7 +59,7 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
         try {
             internalPush(value, timeout);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -68,7 +68,7 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
         try {
             internalDelete(key);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -77,7 +77,7 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
         try {
             template.delete(template.keys(formatter.generalFormat()));
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -110,7 +110,7 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
             }
             return true;
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -122,7 +122,7 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
             }
             return true;
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -135,7 +135,7 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
             }
             return entities;
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -146,7 +146,7 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
                 internalPush(entity, timeout);
             }
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -157,7 +157,7 @@ public class RedisBatchBaseCache<K extends Key, E extends Entity<K>, JE extends 
                 internalDelete(key);
             }
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 

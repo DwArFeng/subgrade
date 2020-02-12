@@ -39,7 +39,7 @@ public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean>
         try {
             return template.hasKey(formatKey(key));
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -49,7 +49,7 @@ public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean>
             JE je = template.opsForValue().get(formatKey(key));
             return transformer.reverseTransform(je);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -62,7 +62,7 @@ public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean>
                     timeout, TimeUnit.MILLISECONDS
             );
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -71,7 +71,7 @@ public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean>
         try {
             template.delete(formatKey(key));
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -80,7 +80,7 @@ public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean>
         try {
             template.delete(template.keys(formatter.generalFormat()));
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 

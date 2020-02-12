@@ -42,7 +42,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         try {
             return template.hasKey(key);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -51,7 +51,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         try {
             return template.opsForList().size(key).intValue();
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -66,7 +66,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
                 return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
             }
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -76,7 +76,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
             List<JE> range = template.opsForList().range(key, beginIndex, beginIndex + maxEntity - 1);
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -89,7 +89,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
             List<JE> range = template.opsForList().range(key, beginIndex, endIndex);
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -101,7 +101,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
             template.opsForList().rightPushAll(key, collect);
             template.expire(key, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -112,7 +112,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
             template.opsForList().leftPushAll(key, collect);
             template.expire(key, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -123,7 +123,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
             template.opsForList().rightPushAll(key, collect);
             template.expire(key, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -132,7 +132,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         try {
             template.delete(key);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 

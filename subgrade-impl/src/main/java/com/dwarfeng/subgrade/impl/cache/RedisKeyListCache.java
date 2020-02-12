@@ -44,7 +44,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
         try {
             return template.hasKey(formatKey(key));
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -54,7 +54,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
             String formatKey = formatKey(key);
             return template.opsForList().size(formatKey).intValue();
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -70,7 +70,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
                 return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
             }
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -81,7 +81,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
             List<JE> range = template.opsForList().range(formatKey, beginIndex, beginIndex + maxEntity - 1);
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -95,7 +95,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
             List<JE> range = template.opsForList().range(formatKey, beginIndex, endIndex);
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -108,7 +108,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
             template.opsForList().leftPushAll(formatKey, collect);
             template.expire(formatKey, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -120,7 +120,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
             template.opsForList().leftPushAll(formatKey, collect);
             template.expire(formatKey, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -132,7 +132,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
             template.opsForList().rightPushAll(formatKey, collect);
             template.expire(formatKey, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -141,7 +141,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
         try {
             template.delete(formatKey(key));
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
@@ -150,7 +150,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
         try {
             template.delete(template.keys(formatter.generalFormat()));
         } catch (Exception e) {
-            throw new CacheException();
+            throw new CacheException(e);
         }
     }
 
