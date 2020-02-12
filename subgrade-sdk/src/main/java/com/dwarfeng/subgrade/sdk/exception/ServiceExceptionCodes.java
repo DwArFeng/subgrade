@@ -2,6 +2,8 @@ package com.dwarfeng.subgrade.sdk.exception;
 
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 
+import static com.dwarfeng.subgrade.sdk.common.Constants.EXCEPTION_CODE_OFFSET;
+
 /**
  * 服务异常代码。
  *
@@ -13,51 +15,51 @@ public final class ServiceExceptionCodes {
     /**
      * 未定义错误代码，代表未定义的错误。
      */
-    public static final ServiceException.Code UNDEFINE = new ServiceException.Code(0, "undefine");
+    public static final ServiceException.Code UNDEFINE = new ServiceException.Code(EXCEPTION_CODE_OFFSET, "undefine");
     /**
      * 主键获取失败
      */
-    public static final ServiceException.Code KEY_FETCH_FAILED = new ServiceException.Code(100, "guid fetch failed");
+    public static final ServiceException.Code KEY_FETCH_FAILED = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 100, "guid fetch failed");
     /**
      * 缓存异常。
      */
-    public static final ServiceException.Code CACHE_FAILED = new ServiceException.Code(110, "cache failed");
+    public static final ServiceException.Code CACHE_FAILED = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 110, "cache failed");
     /**
      * 数据访问层异常。
      */
-    public static final ServiceException.Code DAO_FAILED = new ServiceException.Code(120, "dao failed");
+    public static final ServiceException.Code DAO_FAILED = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 120, "dao failed");
     /**
      * 实体已经存在。
      */
-    public static final ServiceException.Code ENTITY_EXISTED = new ServiceException.Code(121, "entity existed");
+    public static final ServiceException.Code ENTITY_EXISTED = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 121, "entity existed");
     /**
      * 实体不存在。
      */
-    public static final ServiceException.Code ENTITY_NOT_EXIST = new ServiceException.Code(122, "entity not existed");
+    public static final ServiceException.Code ENTITY_NOT_EXIST = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 122, "entity not existed");
     /**
      * 参数验证失败。
      */
-    public static final ServiceException.Code PARAM_VALIDATION_FAILED = new ServiceException.Code(130, "param validation failed");
+    public static final ServiceException.Code PARAM_VALIDATION_FAILED = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 130, "param validation failed");
     /**
      * IO异常。
      */
-    public static final ServiceException.Code IO_EXCEPTION = new ServiceException.Code(140, "io exception");
+    public static final ServiceException.Code IO_EXCEPTION = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 140, "io exception");
     /**
      * 过程异常。
      */
-    public static final ServiceException.Code PROCESS_FAILDED = new ServiceException.Code(150, "process failed");
+    public static final ServiceException.Code PROCESS_FAILDED = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 150, "process failed");
     /**
      * 处理器异常。
      */
-    public static final ServiceException.Code HANDLER_FAILED = new ServiceException.Code(160, "handler failed");
+    public static final ServiceException.Code HANDLER_FAILED = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 160, "handler failed");
     /**
      * 权限拒绝。
      */
-    public static final ServiceException.Code PERMISSION_DENIED = new ServiceException.Code(170, "permission denied");
+    public static final ServiceException.Code PERMISSION_DENIED = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 170, "permission denied");
     /**
      * 登录失败。
      */
-    public static final ServiceException.Code LOGIN_FAILDED = new ServiceException.Code(170, "login failed");
+    public static final ServiceException.Code LOGIN_FAILDED = new ServiceException.Code(EXCEPTION_CODE_OFFSET + 170, "login failed");
 
     private ServiceExceptionCodes() {
         throw new IllegalStateException("禁止实例化");
