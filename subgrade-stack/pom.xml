@@ -7,11 +7,10 @@
     <parent>
         <groupId>com.dwarfeng</groupId>
         <artifactId>subgrade</artifactId>
-        <version>beta-0.2.0.a-SNAPSHOT</version>
+        <version>beta-0.2.0.a</version>
     </parent>
 
     <artifactId>subgrade-stack</artifactId>
-
     <name>subgrade-stack</name>
     <url>http://maven.apache.org</url>
 
