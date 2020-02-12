@@ -14,7 +14,6 @@ import java.util.List;
  */
 public interface BatchCrudService<K extends Key, E extends Entity<K>> extends CrudService<K, E> {
 
-
     /**
      * 查询指定的主键是否全部存在。
      *
@@ -66,6 +65,15 @@ public interface BatchCrudService<K extends Key, E extends Entity<K>> extends Cr
      * @throws ServiceException 服务异常。
      */
     void batchDelete(List<K> keys) throws ServiceException;
+
+    /**
+     * 批量获取指定且存在的键对应的元素。
+     *
+     * @param keys 指定的键组成的列表。
+     * @return 指定且存在的键对应的元素组成的列表，元素的个数小于等于键列表的个数。
+     * @throws ServiceException 服务异常。
+     */
+    List<E> batchGetIfExists(List<K> keys) throws ServiceException;
 
     /**
      * 如果不存在指定的元素，则插入。

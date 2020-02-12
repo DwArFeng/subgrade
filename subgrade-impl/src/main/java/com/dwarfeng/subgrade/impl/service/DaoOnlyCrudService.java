@@ -55,10 +55,14 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
     @Override
     public E get(K key) throws ServiceException {
         try {
-            return dao.get(key);
+            return internalGet(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("获取实体信息时发生异常", exceptionLogLevel, sem, e);
         }
+    }
+
+    private E internalGet(K key) throws Exception {
+        return dao.get(key);
     }
 
     @Override
@@ -112,6 +116,15 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
         dao.delete(key);
+    }
+
+    @Override
+    public E getIfExists(K key) throws ServiceException {
+        try {
+            return internalExists(key) ? internalGet(key) : null;
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", exceptionLogLevel, sem, e);
+        }
     }
 
     @Override

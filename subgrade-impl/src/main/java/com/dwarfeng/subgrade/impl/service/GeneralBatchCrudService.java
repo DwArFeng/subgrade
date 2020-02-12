@@ -130,6 +130,15 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
+    public E getIfExists(K key) throws ServiceException {
+        try {
+            return internalExists(key) ? internalGet(key) : null;
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    @Override
     public K insertIfNotExists(E element) throws ServiceException {
         try {
             if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
@@ -228,14 +237,18 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     @Override
     public List<E> batchGet(List<K> keys) throws ServiceException {
         try {
-            List<E> elements = new ArrayList<>();
-            for (K key : keys) {
-                elements.add(internalGet(key));
-            }
-            return elements;
+            return internalBatchGet(keys);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
         }
+    }
+
+    private List<E> internalBatchGet(List<K> keys) throws Exception {
+        List<E> elements = new ArrayList<>();
+        for (K key : keys) {
+            elements.add(internalGet(key));
+        }
+        return elements;
     }
 
     @Override
@@ -299,6 +312,21 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
 
         cache.batchDelete(keys);
         dao.batchDelete(keys);
+    }
+
+    @Override
+    public List<E> batchGetIfExists(List<K> keys) throws ServiceException {
+        try {
+            List<K> existsKeys = new ArrayList<>();
+            for (K key : keys) {
+                if (internalExists(key)) {
+                    existsKeys.add(key);
+                }
+            }
+            return internalBatchGet(existsKeys);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", exceptionLogLevel, sem, e);
+        }
     }
 
     @Override

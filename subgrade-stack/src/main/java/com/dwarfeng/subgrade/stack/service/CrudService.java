@@ -56,6 +56,15 @@ public interface CrudService<K extends Key, E extends Entity<K>> extends Service
     void delete(K key) throws ServiceException;
 
     /**
+     * 如果存在指定的键，则获取实体。
+     *
+     * @param key 实体的键。
+     * @return 实体的键对应的实体，或者是 null。
+     * @throws ServiceException 服务异常。
+     */
+    E getIfExists(K key) throws ServiceException;
+
+    /**
      * 如果不存在指定的元素，则插入。
      *
      * @param element 指定的元素。
