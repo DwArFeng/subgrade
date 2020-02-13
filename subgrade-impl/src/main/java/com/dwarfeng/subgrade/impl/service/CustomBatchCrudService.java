@@ -2,10 +2,10 @@ package com.dwarfeng.subgrade.impl.service;
 
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
+import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
-import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -18,27 +18,25 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * 通用的实体增删改查服务。
- * <p>该类同时使用数据访问层和缓存实现实体的增删改查方法。</p>
- * <p>插入没有主键的对象时，该服务会试图通过主键抓取器抓取新的主键，如果没有主键抓取器，就会报出异常。</p>
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ * 自定义的批量实体增删改查服务。
+ * <p>该类只提供最基本的方法实现，没有添加任何事务或同步锁，请通过代理的方式在代理类中添加事务或者同步锁。</p>
  *
  * @author DwArFeng
- * @since 0.0.1-beta
+ * @since 0.2.1-beta
  */
-public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> implements BatchCrudService<K, E> {
+public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implements BatchCrudService<K, E> {
 
-    private BatchBaseDao<K, E> dao;
+    private BatchCrudOperation<K, E> operation;
     private KeyFetcher<K> keyFetcher;
     private ServiceExceptionMapper sem;
     private LogLevel exceptionLogLevel;
 
-    public DaoOnlyBatchCrudService(
-            @NonNull BatchBaseDao<K, E> dao,
+    public CustomBatchCrudService(
+            @NonNull BatchCrudOperation<K, E> operation,
             @NonNull KeyFetcher<K> keyFetcher,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel) {
-        this.dao = dao;
+        this.operation = operation;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
@@ -53,6 +51,10 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         }
     }
 
+    private boolean internalExists(K key) throws Exception {
+        return operation.exists(key);
+    }
+
     @Override
     public E get(K key) throws ServiceException {
         try {
@@ -60,6 +62,14 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("获取实体信息时发生异常", exceptionLogLevel, sem, e);
         }
+    }
+
+    private E internalGet(K key) throws Exception {
+        E e = operation.get(key);
+        if (Objects.isNull(e)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+        return e;
     }
 
     @Override
@@ -72,14 +82,13 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private K internalInsert(E element) throws Exception {
-        if (Objects.nonNull(element.getKey()) && internalExists(element.getKey())) {
-            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
-        }
-
         if (Objects.isNull(element.getKey())) {
             element.setKey(keyFetcher.fetchKey());
         }
-        return dao.insert(element);
+        if (internalExists(element.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+        }
+        return operation.insert(element);
     }
 
     @Override
@@ -92,11 +101,10 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private void internalUpdate(E element) throws Exception {
-        if (!internalExists(element.getKey())) {
+        if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
-
-        dao.update(element);
+        operation.update(element);
     }
 
     @Override
@@ -109,11 +117,10 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private void internalDelete(K key) throws Exception {
-        if (!internalExists(key)) {
+        if (Objects.isNull(key) || !internalExists(key)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
-
-        dao.delete(key);
+        operation.delete(key);
     }
 
     @Override
@@ -173,14 +180,6 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         }
     }
 
-    private boolean internalExists(K key) throws Exception {
-        return dao.exists(key);
-    }
-
-    private E internalGet(K key) throws Exception {
-        return dao.get(key);
-    }
-
     @Override
     public boolean allExists(List<K> keys) throws ServiceException {
         try {
@@ -191,10 +190,7 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private boolean internalAllExists(List<K> keys) throws Exception {
-        for (K key : keys) {
-            if (!internalExists(key)) return false;
-        }
-        return true;
+        return operation.allExists(keys);
     }
 
     @Override
@@ -207,10 +203,7 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private boolean internalNonExists(List<K> keys) throws Exception {
-        for (K key : keys) {
-            if (internalExists(key)) return false;
-        }
-        return true;
+        return operation.nonExists(keys);
     }
 
     @Override
@@ -223,9 +216,9 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private List<E> internalBatchGet(List<K> keys) throws Exception {
-        List<E> elements = new ArrayList<>();
-        for (K key : keys) {
-            elements.add(internalGet(key));
+        List<E> elements = operation.batchGet(keys);
+        if (Objects.isNull(elements)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
         return elements;
     }
@@ -251,7 +244,7 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
             }
         }
 
-        return dao.batchInsert(elements);
+        return operation.batchInsert(elements);
     }
 
     @Override
@@ -269,7 +262,7 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
 
-        dao.batchUpdate(elements);
+        operation.batchUpdate(elements);
     }
 
     @Override
@@ -286,7 +279,7 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
 
-        dao.batchDelete(keys);
+        operation.batchDelete(keys);
     }
 
     @Override
@@ -368,12 +361,12 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         }
     }
 
-    public BatchBaseDao<K, E> getDao() {
-        return dao;
+    public BatchCrudOperation<K, E> getOperation() {
+        return operation;
     }
 
-    public void setDao(@NonNull BatchBaseDao<K, E> dao) {
-        this.dao = dao;
+    public void setOperation(@NonNull BatchCrudOperation<K, E> operation) {
+        this.operation = operation;
     }
 
     public KeyFetcher<K> getKeyFetcher() {

@@ -2,10 +2,10 @@ package com.dwarfeng.subgrade.impl.service;
 
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
+import com.dwarfeng.subgrade.sdk.service.custom.operation.CrudOperation;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
-import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -15,25 +15,25 @@ import org.springframework.lang.NonNull;
 import java.util.Objects;
 
 /**
- * 仅用数据访问层实现的实体增删改查服务。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ * 自定义的实体增删改查服务。
+ * <p>该类只提供最基本的方法实现，没有添加任何事务或同步锁，请通过代理的方式在代理类中添加事务或者同步锁。</p>
  *
  * @author DwArFeng
- * @since 0.0.1-beta
+ * @since 0.2.1-beta
  */
-public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements CrudService<K, E> {
+public class CustomCrudService<K extends Key, E extends Entity<K>> implements CrudService<K, E> {
 
-    private BaseDao<K, E> dao;
+    private CrudOperation<K, E> operation;
     private KeyFetcher<K> keyFetcher;
     private ServiceExceptionMapper sem;
     private LogLevel exceptionLogLevel;
 
-    public DaoOnlyCrudService(
-            @NonNull BaseDao<K, E> dao,
+    public CustomCrudService(
+            @NonNull CrudOperation<K, E> operation,
             @NonNull KeyFetcher<K> keyFetcher,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel) {
-        this.dao = dao;
+        this.operation = operation;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
@@ -49,7 +49,7 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
     }
 
     private boolean internalExists(K key) throws Exception {
-        return dao.exists(key);
+        return operation.exists(key);
     }
 
     @Override
@@ -62,7 +62,11 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
     }
 
     private E internalGet(K key) throws Exception {
-        return dao.get(key);
+        E e = operation.get(key);
+        if (Objects.isNull(e)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+        return e;
     }
 
     @Override
@@ -75,14 +79,13 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
     }
 
     private K internalInsert(E element) throws Exception {
-        if (internalExists(element.getKey())) {
-            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
-        }
-
         if (Objects.isNull(element.getKey())) {
             element.setKey(keyFetcher.fetchKey());
         }
-        return dao.insert(element);
+        if (internalExists(element.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+        }
+        return operation.insert(element);
     }
 
     @Override
@@ -95,11 +98,10 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
     }
 
     private void internalUpdate(E element) throws Exception {
-        if (!internalExists(element.getKey())) {
+        if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
-
-        dao.update(element);
+        operation.update(element);
     }
 
     @Override
@@ -112,10 +114,10 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
     }
 
     private void internalDelete(K key) throws Exception {
-        if (!internalExists(key)) {
+        if (Objects.isNull(key) || !internalExists(key)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
-        dao.delete(key);
+        operation.delete(key);
     }
 
     @Override
@@ -175,12 +177,12 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
         }
     }
 
-    public BaseDao<K, E> getDao() {
-        return dao;
+    public CrudOperation<K, E> getOperation() {
+        return operation;
     }
 
-    public void setDao(@NonNull BaseDao<K, E> dao) {
-        this.dao = dao;
+    public void setOperation(@NonNull CrudOperation<K, E> operation) {
+        this.operation = operation;
     }
 
     public KeyFetcher<K> getKeyFetcher() {
