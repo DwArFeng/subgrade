@@ -48,7 +48,7 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
             JAXBContext jaxbContext = JAXBContext.newInstance(classXR);
             //noinspection unchecked
             XmlFileMapResourceBridge.Root<XE> unmarshal = (Root<XE>) jaxbContext.createUnmarshaller().unmarshal(file);
-            Map<K, E> collect = unmarshal.getXmlElement().stream().map(transformer::reverseTransform)
+            Map<K, E> collect = unmarshal.getXmlElements().stream().map(transformer::reverseTransform)
                     .collect(Collectors.toMap(E::getKey, Function.identity()));
             map.putAll(collect);
         } catch (Exception e) {
@@ -62,7 +62,7 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
             makesureFileExists(file);
             List<XE> collect = map.values().stream().map(transformer::transform).collect(Collectors.toList());
             XR xr = classXR.newInstance();
-            xr.setXmlElement(collect);
+            xr.setXmlElements(collect);
             JAXBContext jaxbContext = JAXBContext.newInstance(classXR);
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -108,8 +108,8 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
      */
     public interface Root<XE extends Bean> {
 
-        List<XE> getXmlElement();
+        List<XE> getXmlElements();
 
-        void setXmlElement(List<XE> list);
+        void setXmlElements(List<XE> list);
     }
 }
