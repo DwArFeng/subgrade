@@ -1,27 +1,26 @@
 package com.dwarfeng.subgrade.sdk.bean.key;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 /**
- * 适用于 FastJson 的 LongIdKey。
- * <p>注意：该类中含有长整型的字段，在与JS前端通信中，会发生精度丢失的问题。
- * 请使用 {@link JSFixedFastJsonLongIdKey} 来解决JS前端的工薪问题</p>
+ * 修正了 JS 精度问题的适用于 FastJson 的 LongIdKey。
  *
  * @author DwArFeng
- * @since 0.0.1-beta
+ * @since 0.2.1-beta
  */
-public class FastJsonLongIdKey implements Bean {
+public class JSFixedFastJsonLongIdKey implements Bean {
 
     private static final long serialVersionUID = 8863415673517584070L;
 
-    @JSONField(name = "long_id", ordinal = 1)
+    @JSONField(name = "long_id", ordinal = 1, serializeUsing = ToStringSerializer.class)
     private long longId;
 
-    public FastJsonLongIdKey() {
+    public JSFixedFastJsonLongIdKey() {
     }
 
-    public FastJsonLongIdKey(long id) {
+    public JSFixedFastJsonLongIdKey(long id) {
         this.longId = id;
     }
 
@@ -38,7 +37,7 @@ public class FastJsonLongIdKey implements Bean {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FastJsonLongIdKey that = (FastJsonLongIdKey) o;
+        JSFixedFastJsonLongIdKey that = (JSFixedFastJsonLongIdKey) o;
 
         return longId == that.longId;
     }
