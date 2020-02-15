@@ -48,7 +48,7 @@ public class JsonFileMapResourceBridge<K extends Key, E extends Entity<K>, JE ex
     @Override
     public void fillMap(Map<K, E> map) throws ProcessException {
         try {
-            makesureFileExists(file);
+            makeSureFileExists(file);
             StringOutputStream sout = null;
             FileInputStream fin = null;
             try {
@@ -75,7 +75,7 @@ public class JsonFileMapResourceBridge<K extends Key, E extends Entity<K>, JE ex
     @Override
     public void saveMap(Map<K, E> map) throws ProcessException, UnsupportedOperationException {
         try {
-            makesureFileExists(file);
+            makeSureFileExists(file);
             List<JE> collect = map.values().stream().map(transformer::transform).collect(Collectors.toList());
             String json = JSON.toJSONString(
                     collect,
@@ -102,7 +102,7 @@ public class JsonFileMapResourceBridge<K extends Key, E extends Entity<K>, JE ex
         }
     }
 
-    private void makesureFileExists(File file) throws IOException {
+    private void makeSureFileExists(File file) throws IOException {
         FileUtil.createFileIfNotExists(file);
     }
 

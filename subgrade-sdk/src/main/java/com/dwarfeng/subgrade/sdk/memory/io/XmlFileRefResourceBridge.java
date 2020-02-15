@@ -39,7 +39,7 @@ public class XmlFileRefResourceBridge<K extends Key, E extends Entity<K>, XE ext
     @Override
     public void fillRef(ReferenceModel<E> referenceModel) throws NullPointerException, ProcessException {
         try {
-            makesureFileExists(file);
+            makeSureFileExists(file);
             JAXBContext jaxbContext = JAXBContext.newInstance(classXE);
             //noinspection unchecked
             XE xe = (XE) jaxbContext.createUnmarshaller().unmarshal(file);
@@ -52,7 +52,7 @@ public class XmlFileRefResourceBridge<K extends Key, E extends Entity<K>, XE ext
     @Override
     public void saveRef(ReferenceModel<E> referenceModel) throws NullPointerException, ProcessException, UnsupportedOperationException {
         try {
-            makesureFileExists(file);
+            makeSureFileExists(file);
             JAXBContext jaxbContext = JAXBContext.newInstance(classXE);
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -62,7 +62,7 @@ public class XmlFileRefResourceBridge<K extends Key, E extends Entity<K>, XE ext
         }
     }
 
-    private void makesureFileExists(File file) throws IOException {
+    private void makeSureFileExists(File file) throws IOException {
         FileUtil.createFileIfNotExists(file);
     }
 

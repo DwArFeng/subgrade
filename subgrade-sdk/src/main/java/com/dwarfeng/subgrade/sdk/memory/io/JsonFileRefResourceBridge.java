@@ -46,7 +46,7 @@ public class JsonFileRefResourceBridge<K extends Key, E extends Entity<K>, JE ex
     @Override
     public void fillRef(ReferenceModel<E> referenceModel) throws NullPointerException, ProcessException {
         try {
-            makesureFileExists(file);
+            makeSureFileExists(file);
             StringOutputStream sout = null;
             FileInputStream fin = null;
             try {
@@ -72,7 +72,7 @@ public class JsonFileRefResourceBridge<K extends Key, E extends Entity<K>, JE ex
     @Override
     public void saveRef(ReferenceModel<E> referenceModel) throws NullPointerException, ProcessException, UnsupportedOperationException {
         try {
-            makesureFileExists(file);
+            makeSureFileExists(file);
             JE je = transformer.transform(referenceModel.get());
             String json = JSON.toJSONString(
                     je,
@@ -99,7 +99,7 @@ public class JsonFileRefResourceBridge<K extends Key, E extends Entity<K>, JE ex
         }
     }
 
-    private void makesureFileExists(File file) throws IOException {
+    private void makeSureFileExists(File file) throws IOException {
         FileUtil.createFileIfNotExists(file);
     }
 

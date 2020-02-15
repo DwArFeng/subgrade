@@ -44,7 +44,7 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
     @Override
     public void fillMap(Map<K, E> map) throws ProcessException {
         try {
-            makesureFileExists(file);
+            makeSureFileExists(file);
             JAXBContext jaxbContext = JAXBContext.newInstance(classXR);
             //noinspection unchecked
             XmlFileMapResourceBridge.Root<XE> unmarshal = (Root<XE>) jaxbContext.createUnmarshaller().unmarshal(file);
@@ -59,7 +59,7 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
     @Override
     public void saveMap(Map<K, E> map) throws ProcessException, UnsupportedOperationException {
         try {
-            makesureFileExists(file);
+            makeSureFileExists(file);
             List<XE> collect = map.values().stream().map(transformer::transform).collect(Collectors.toList());
             XR xr = classXR.newInstance();
             xr.setXmlElements(collect);
@@ -72,7 +72,7 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
         }
     }
 
-    private void makesureFileExists(File file) throws IOException {
+    private void makeSureFileExists(File file) throws IOException {
         FileUtil.createFileIfNotExists(file);
     }
 
