@@ -6,5 +6,5 @@ package com.dwarfeng.subgrade.sdk.validation.group;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public interface Insert {
+public interface Insert extends Write {
 }
