@@ -96,8 +96,11 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     @Override
     public void set(Collection<E> entities, long timeout) throws CacheException {
         try {
-            List<JE> collect = entities.stream().map(transformer::transform).collect(Collectors.toList());
             template.delete(key);
+            if (entities.isEmpty()) {
+                return;
+            }
+            List<JE> collect = entities.stream().map(transformer::transform).collect(Collectors.toList());
             template.opsForList().rightPushAll(key, collect);
             template.expire(key, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
@@ -108,6 +111,9 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     @Override
     public void leftPush(Collection<E> entities, long timeout) throws CacheException {
         try {
+            if (entities.isEmpty()) {
+                return;
+            }
             List<JE> collect = entities.stream().map(transformer::transform).collect(Collectors.toList());
             template.opsForList().leftPushAll(key, collect);
             template.expire(key, timeout, TimeUnit.MILLISECONDS);
@@ -119,6 +125,9 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     @Override
     public void rightPush(Collection<E> entities, long timeout) throws CacheException {
         try {
+            if (entities.isEmpty()) {
+                return;
+            }
             List<JE> collect = entities.stream().map(transformer::transform).collect(Collectors.toList());
             template.opsForList().rightPushAll(key, collect);
             template.expire(key, timeout, TimeUnit.MILLISECONDS);

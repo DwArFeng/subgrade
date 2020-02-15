@@ -103,8 +103,11 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
     public void set(K key, Collection<E> entities, long timeout) throws CacheException {
         try {
             String formatKey = formatKey(key);
-            List<JE> collect = entities.stream().map(transformer::transform).collect(Collectors.toList());
             template.delete(formatKey);
+            if (entities.isEmpty()) {
+                return;
+            }
+            List<JE> collect = entities.stream().map(transformer::transform).collect(Collectors.toList());
             template.opsForList().leftPushAll(formatKey, collect);
             template.expire(formatKey, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
@@ -115,6 +118,9 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
     @Override
     public void leftPush(K key, Collection<E> entities, long timeout) throws CacheException {
         try {
+            if (entities.isEmpty()) {
+                return;
+            }
             String formatKey = formatKey(key);
             List<JE> collect = entities.stream().map(transformer::transform).collect(Collectors.toList());
             template.opsForList().leftPushAll(formatKey, collect);
@@ -127,6 +133,9 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
     @Override
     public void rightPush(K key, Collection<E> entities, long timeout) throws CacheException {
         try {
+            if (entities.isEmpty()) {
+                return;
+            }
             String formatKey = formatKey(key);
             List<JE> collect = entities.stream().map(transformer::transform).collect(Collectors.toList());
             template.opsForList().rightPushAll(formatKey, collect);
