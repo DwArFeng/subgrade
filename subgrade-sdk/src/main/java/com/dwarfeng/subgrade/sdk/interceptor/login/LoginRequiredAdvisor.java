@@ -30,7 +30,7 @@ import java.util.Objects;
 @Aspect
 public class LoginRequiredAdvisor {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(LoginRequiredAdvisor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginRequiredAdvisor.class);
 
     @Autowired
     private LoginHandler loginHandler;

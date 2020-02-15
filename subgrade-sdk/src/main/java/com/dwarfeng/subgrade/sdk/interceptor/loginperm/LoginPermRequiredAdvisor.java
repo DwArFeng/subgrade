@@ -32,7 +32,7 @@ import java.util.Objects;
 @Aspect
 public class LoginPermRequiredAdvisor {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(LoginPermRequiredAdvisor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginPermRequiredAdvisor.class);
 
     @Autowired
     private LoginPermHandler loginPermHandler;

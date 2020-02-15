@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class BehaviorAnalyseAdvisor {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(BehaviorAnalyseAdvisor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BehaviorAnalyseAdvisor.class);
 
     @Around("@annotation(com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse) || @within(com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
