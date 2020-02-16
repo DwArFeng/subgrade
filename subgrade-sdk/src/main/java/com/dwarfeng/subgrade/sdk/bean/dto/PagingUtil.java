@@ -1,9 +1,13 @@
 package com.dwarfeng.subgrade.sdk.bean.dto;
 
+import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
+import org.springframework.lang.NonNull;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 分页工具类。
@@ -151,5 +155,45 @@ public final class PagingUtil {
                     ", endIndex=" + endIndex +
                     '}';
         }
+    }
+
+    /**
+     * 通过指定的Bean转换器将第一个类型的PagedData转换成第二个类型的PagedData。
+     *
+     * @param pagedData   第一个类型的PagedData。
+     * @param transformer 第二个类型的PagedData。
+     * @param <U>         第一个类型。
+     * @param <V>         第二个类型。
+     * @return 第二个类型的PagedData。
+     */
+    public static <U extends Bean, V extends Bean> PagedData<V>
+    transform(@NonNull PagedData<U> pagedData, @NonNull BeanTransformer<U, V> transformer) {
+        PagedData<V> p = new PagedData<>();
+        p.setCount(pagedData.getCount());
+        p.setCurrentPage(pagedData.getCurrentPage());
+        p.setRows(pagedData.getRows());
+        p.setTotlePages(pagedData.getTotlePages());
+        p.setData(pagedData.getData().stream().map(transformer::transform).collect(Collectors.toList()));
+        return p;
+    }
+
+    /**
+     * 通过指定的Bean转换器将第二个类型的PagedData转换成第一个类型的PagedData。
+     *
+     * @param pagedData   第二个类型的PagedData。
+     * @param transformer 第一个类型的PagedData。
+     * @param <U>         第一个类型。
+     * @param <V>         第二个类型。
+     * @return 第一个类型的PagedData。
+     */
+    public static <U extends Bean, V extends Bean> PagedData<U>
+    reverseTransform(@NonNull PagedData<V> pagedData, @NonNull BeanTransformer<U, V> transformer) {
+        PagedData<U> p = new PagedData<>();
+        p.setCount(pagedData.getCount());
+        p.setCurrentPage(pagedData.getCurrentPage());
+        p.setRows(pagedData.getRows());
+        p.setTotlePages(pagedData.getTotlePages());
+        p.setData(pagedData.getData().stream().map(transformer::reverseTransform).collect(Collectors.toList()));
+        return p;
     }
 }

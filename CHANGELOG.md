@@ -6,7 +6,8 @@
 
 #### 功能构建
 
-- (无)
+- 优化ResponseDataUtil.bad方法，使其入口参数能接受T的超类。
+- PagingUtil中增加PageData的转换方法。
 
 #### Bug修复
 
