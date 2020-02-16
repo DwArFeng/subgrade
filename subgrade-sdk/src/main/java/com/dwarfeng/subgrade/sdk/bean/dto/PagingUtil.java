@@ -33,7 +33,7 @@ public final class PagingUtil {
     public static <E> PagedData<E> pagedData(PagingInfo pagingInfo, int count, List<E> data) {
         return new PagedData<>(
                 pagingInfo.getPage(),
-                count == 0 || pagingInfo.getRows() == 0 ? 0 : count / pagingInfo.getRows(),
+                count == 0 || pagingInfo.getRows() == 0 ? 0 : count / pagingInfo.getRows() + 1,
                 pagingInfo.getRows(),
                 count,
                 data

@@ -1,5 +1,19 @@
 # ChangeLog
 
+### Beta_0.2.2_20200216_build_B
+
+#### 功能构建
+
+- (无)
+
+#### Bug修复
+
+- 修复PageUtil.pagedData方法返回总页数不正确的bug。
+
+#### 功能移除
+
+- (无)
+
 ---
 
 ### Beta_0.2.2_20200216_build_A
