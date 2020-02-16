@@ -35,7 +35,7 @@ public final class ResponseDataUtil {
      * @param <T>   泛型的类。
      * @return 指定数据类型且元数据对应服务异常的响应数据。
      */
-    public static <T> ResponseData<T> bad(Class<T> clazz, ServiceException e) {
+    public static <T> ResponseData<T> bad(Class<? super T> clazz, ServiceException e) {
         return new ResponseData<>(null, new Meta(e.getCode().getCode(), e.getCode().getTip()));
     }
 }
