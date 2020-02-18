@@ -42,7 +42,7 @@ public class FastJsonPagedData<E> implements Dto {
     private int rows;
     @JSONField(name = "count", ordinal = 4)
     private long count;
-    @JSONField(name = "count", ordinal = 5)
+    @JSONField(name = "data", ordinal = 5)
     private List<E> data;
 
     public FastJsonPagedData() {

@@ -1,5 +1,21 @@
 # ChangeLog
 
+### Beta_0.2.3_20200219_build_B
+
+#### 功能构建
+
+- (无)
+
+#### Bug修复
+
+- 修正FastJsonPagedData中错误的JSON字段。
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Beta_0.2.3_20200218_build_A
 
 #### 功能构建
