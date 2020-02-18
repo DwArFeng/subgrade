@@ -2,6 +2,8 @@ package com.dwarfeng.subgrade.sdk.bean.key;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
+import org.springframework.lang.NonNull;
 
 import java.util.Objects;
 
@@ -14,6 +16,16 @@ import java.util.Objects;
 public class FastJsonStringIdKey implements Bean {
 
     private static final long serialVersionUID = -2889799277375755227L;
+
+    /**
+     * 根据指定的 StringIdKey 生成 FastJsonStringIdKey。
+     *
+     * @param stringIdKey 指定的 StringIdKey。
+     * @return 通过指定的 StringIdKey 生成的 FastJsonStringIdKey。
+     */
+    public static FastJsonStringIdKey of(@NonNull StringIdKey stringIdKey) {
+        return new FastJsonStringIdKey(stringIdKey.getStringId());
+    }
 
     @JSONField(name = "id", ordinal = 1)
     private String stringId;

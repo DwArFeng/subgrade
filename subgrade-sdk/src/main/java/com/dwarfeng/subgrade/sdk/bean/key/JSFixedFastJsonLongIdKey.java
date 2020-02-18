@@ -3,6 +3,8 @@ package com.dwarfeng.subgrade.sdk.bean.key;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import org.springframework.lang.NonNull;
 
 /**
  * 修正了 JS 精度问题的适用于 FastJson 的 LongIdKey。
@@ -13,6 +15,16 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 public class JSFixedFastJsonLongIdKey implements Bean {
 
     private static final long serialVersionUID = 8863415673517584070L;
+
+    /**
+     * 根据指定的 LongIdKey 生成 JSFixedFastJsonLongIdKey。
+     *
+     * @param longIdKey 指定的 LongIdKey。
+     * @return 通过指定的 LongIdKey 生成的 JSFixedFastJsonLongIdKey。
+     */
+    public static JSFixedFastJsonLongIdKey of(@NonNull LongIdKey longIdKey) {
+        return new JSFixedFastJsonLongIdKey(longIdKey.getLongId());
+    }
 
     @JSONField(name = "long_id", ordinal = 1, serializeUsing = ToStringSerializer.class)
     private long longId;

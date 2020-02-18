@@ -7,6 +7,7 @@
 - 编写与Json相关的PagedData类。
   - FastJsonPagedData
   - JSFixedFastJsonPagedData
+- 为FastJson相关的对象添加 of 静态方法。
 
 #### Bug修复
 
