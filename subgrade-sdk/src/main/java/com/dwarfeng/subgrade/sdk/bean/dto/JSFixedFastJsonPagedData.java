@@ -17,6 +17,24 @@ import java.util.List;
 public class JSFixedFastJsonPagedData<E> implements Dto {
 
     private static final long serialVersionUID = 248702761438026673L;
+
+    /**
+     * 通过指定的 PagedData 生成的 JSFixedFastJsonPagedData。
+     *
+     * @param pagedData 指定的 PagedData。
+     * @param <E>       PageData 中的元素的类型。
+     * @return 生成的 JSFixedFastJsonPagedData。
+     */
+    public static <E> JSFixedFastJsonPagedData<E> of(@NonNull PagedData<E> pagedData) {
+        return new JSFixedFastJsonPagedData<>(
+                pagedData.getCurrentPage(),
+                pagedData.getTotalPages(),
+                pagedData.getRows(),
+                pagedData.getCount(),
+                pagedData.getData()
+        );
+    }
+
     @JSONField(name = "current_page", ordinal = 1)
     private int currentPage;
     @JSONField(name = "total_pages", ordinal = 2)
@@ -37,23 +55,6 @@ public class JSFixedFastJsonPagedData<E> implements Dto {
         this.rows = rows;
         this.count = count;
         this.data = data;
-    }
-
-    /**
-     * 通过指定的 PagedData 生成的 JSFixedFastJsonPagedData。
-     *
-     * @param pagedData 指定的 PagedData。
-     * @param <E>       PageData 中的元素的类型。
-     * @return 生成的 JSFixedFastJsonPagedData。
-     */
-    public static <E> JSFixedFastJsonPagedData<E> of(@NonNull PagedData<E> pagedData) {
-        return new JSFixedFastJsonPagedData<>(
-                pagedData.getCurrentPage(),
-                pagedData.getTotalPages(),
-                pagedData.getRows(),
-                pagedData.getCount(),
-                pagedData.getData()
-        );
     }
 
     public int getCurrentPage() {

@@ -16,6 +16,24 @@ import java.util.List;
 public class FastJsonPagedData<E> implements Dto {
 
     private static final long serialVersionUID = 8921354594124344866L;
+
+    /**
+     * 通过指定的 PagedData 生成的 FastJsonPagedData。
+     *
+     * @param pagedData 指定的 PagedData。
+     * @param <E>       PageData 中的元素的类型。
+     * @return 生成的 FastJsonPagedData。
+     */
+    public static <E> FastJsonPagedData<E> of(@NonNull PagedData<E> pagedData) {
+        return new FastJsonPagedData<>(
+                pagedData.getCurrentPage(),
+                pagedData.getTotalPages(),
+                pagedData.getRows(),
+                pagedData.getCount(),
+                pagedData.getData()
+        );
+    }
+
     @JSONField(name = "current_page", ordinal = 1)
     private int currentPage;
     @JSONField(name = "total_pages", ordinal = 2)
@@ -36,23 +54,6 @@ public class FastJsonPagedData<E> implements Dto {
         this.rows = rows;
         this.count = count;
         this.data = data;
-    }
-
-    /**
-     * 通过指定的 PagedData 生成的 FastJsonPagedData。
-     *
-     * @param pagedData 指定的 PagedData。
-     * @param <E>       PageData 中的元素的类型。
-     * @return 生成的 FastJsonPagedData。
-     */
-    public static <E> FastJsonPagedData<E> of(@NonNull PagedData<E> pagedData) {
-        return new FastJsonPagedData<>(
-                pagedData.getCurrentPage(),
-                pagedData.getTotalPages(),
-                pagedData.getRows(),
-                pagedData.getCount(),
-                pagedData.getData()
-        );
     }
 
     public int getCurrentPage() {
