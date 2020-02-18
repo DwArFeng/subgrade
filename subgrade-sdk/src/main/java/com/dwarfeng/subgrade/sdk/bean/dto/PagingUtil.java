@@ -172,7 +172,7 @@ public final class PagingUtil {
         p.setCount(pagedData.getCount());
         p.setCurrentPage(pagedData.getCurrentPage());
         p.setRows(pagedData.getRows());
-        p.setTotlePages(pagedData.getTotlePages());
+        p.setTotalPages(pagedData.getTotalPages());
         p.setData(pagedData.getData().stream().map(transformer::transform).collect(Collectors.toList()));
         return p;
     }
@@ -192,7 +192,7 @@ public final class PagingUtil {
         p.setCount(pagedData.getCount());
         p.setCurrentPage(pagedData.getCurrentPage());
         p.setRows(pagedData.getRows());
-        p.setTotlePages(pagedData.getTotlePages());
+        p.setTotalPages(pagedData.getTotalPages());
         p.setData(pagedData.getData().stream().map(transformer::reverseTransform).collect(Collectors.toList()));
         return p;
     }

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class PagedData<E> implements Dto {
 
-    private static final long serialVersionUID = -3109709137312688572L;
+    private static final long serialVersionUID = 9121659227089130120L;
 
     /**
      * 当前的页数，从0开始计数。
@@ -19,7 +19,7 @@ public class PagedData<E> implements Dto {
     /**
      * 总共的页数，该值最小是1。
      */
-    private int totlePages;
+    private int totalPages;
     /**
      * 每页返回的行数。
      */
@@ -36,9 +36,9 @@ public class PagedData<E> implements Dto {
     public PagedData() {
     }
 
-    public PagedData(int currentPage, int totlePages, int rows, long count, List<E> data) {
+    public PagedData(int currentPage, int totalPages, int rows, long count, List<E> data) {
         this.currentPage = currentPage;
-        this.totlePages = totlePages;
+        this.totalPages = totalPages;
         this.rows = rows;
         this.count = count;
         this.data = data;
@@ -52,12 +52,12 @@ public class PagedData<E> implements Dto {
         this.currentPage = currentPage;
     }
 
-    public int getTotlePages() {
-        return totlePages;
+    public int getTotalPages() {
+        return totalPages;
     }
 
-    public void setTotlePages(int totlePages) {
-        this.totlePages = totlePages;
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
     }
 
     public int getRows() {
@@ -88,7 +88,7 @@ public class PagedData<E> implements Dto {
     public String toString() {
         return "PagedData{" +
                 "currentPage=" + currentPage +
-                ", totlePages=" + totlePages +
+                ", totalPages=" + totalPages +
                 ", rows=" + rows +
                 ", count=" + count +
                 ", data=" + data +

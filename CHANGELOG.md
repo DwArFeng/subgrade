@@ -4,11 +4,13 @@
 
 #### 功能构建
 
-- (无)
+- 编写与Json相关的PagedData类。
+  - FastJsonPagedData
+  - JSFixedFastJsonPagedData
 
 #### Bug修复
 
-- (无)
+- 修正PagedData中的字段拼写问题。
 
 #### 功能移除
 
