@@ -14,4 +14,5 @@
 
 ## 推荐使用版本
 
-不低于 **beta-0.2.3.a**
+* 任何项目推荐不低于 **beta-0.2.3.a**，过去的版本与该版本不兼容。
+* 如果您的项目中涉及到 `FastJsonPagedData` 或者 `JSFixedFastJsonPagedData`，请使用 **beta-0.2.3.b**以上的版本。
