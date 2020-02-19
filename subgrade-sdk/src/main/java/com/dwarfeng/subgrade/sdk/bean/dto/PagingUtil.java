@@ -6,6 +6,7 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import org.springframework.lang.NonNull;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,7 +63,9 @@ public final class PagingUtil {
      *
      * @param pagingInfo 指定的分页信息。
      * @return 分页信息对应的序号边界。
+     * @deprecated 请使用工具类中的 {@link #subList(List, PagingInfo)} 方法。
      */
+    @Deprecated
     public static IntIndexBounds intIndexBound(PagingInfo pagingInfo) {
         return intIndexBound(pagingInfo, Integer.MAX_VALUE);
     }
@@ -73,7 +76,9 @@ public final class PagingUtil {
      * @param pagingInfo 指定的分页信息。
      * @param totleSize  列表的总长度。
      * @return 分页信息对应的序号边界。
+     * @deprecated 请使用工具类中的 {@link #subList(List, PagingInfo)} 方法。
      */
+    @Deprecated
     public static IntIndexBounds intIndexBound(PagingInfo pagingInfo, int totleSize) {
         int beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
         int endIndex = Math.min(totleSize, beginIndex + pagingInfo.getRows()) - 1;
@@ -85,7 +90,9 @@ public final class PagingUtil {
      *
      * @param pagingInfo 指定的分页信息。
      * @return 分页信息对应的序号边界。
+     * @deprecated 请使用工具类中的 {@link #subList(List, PagingInfo)} 方法。
      */
+    @Deprecated
     public static LongIndexBounds longIndexBound(PagingInfo pagingInfo) {
         return longIndexBound(pagingInfo, Long.MAX_VALUE);
     }
@@ -96,13 +103,19 @@ public final class PagingUtil {
      * @param pagingInfo 指定的分页信息。
      * @param totleSize  列表的总长度。
      * @return 分页信息对应的序号边界。
+     * @deprecated 请使用工具类中的 {@link #subList(List, PagingInfo)} 方法。
      */
+    @Deprecated
     public static LongIndexBounds longIndexBound(PagingInfo pagingInfo, long totleSize) {
         long beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
         long endIndex = Math.min(totleSize, beginIndex + pagingInfo.getRows()) - 1;
         return new LongIndexBounds(beginIndex, endIndex);
     }
 
+    /**
+     * @deprecated 请使用工具类中的 {@link #subList(List, PagingInfo)} 方法。
+     */
+    @Deprecated
     public static final class IntIndexBounds {
 
         private final int beginIndex;
@@ -130,6 +143,10 @@ public final class PagingUtil {
         }
     }
 
+    /**
+     * @deprecated 请使用工具类中的 {@link #subList(List, PagingInfo)} 方法。
+     */
+    @Deprecated
     public static final class LongIndexBounds {
 
         private final long beginIndex;
@@ -195,5 +212,22 @@ public final class PagingUtil {
         p.setTotalPages(pagedData.getTotalPages());
         p.setData(pagedData.getData().stream().map(transformer::reverseTransform).collect(Collectors.toList()));
         return p;
+    }
+
+    /**
+     * 返回指定的列表在指定的分页上对应的子列表。
+     *
+     * @param list       指定的列表。
+     * @param pagingInfo 指定的分页。
+     * @param <E>        列表中的元素类型。
+     * @return 指定的列表在指定的分页上对应的子列表。
+     */
+    public static <E> List<E> subList(List<E> list, PagingInfo pagingInfo) {
+        int beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
+        if (beginIndex >= list.size()) {
+            return Collections.emptyList();
+        }
+        int endIndex = Math.min(list.size(), beginIndex + pagingInfo.getRows()) - 1;
+        return list.subList(beginIndex, endIndex);
     }
 }

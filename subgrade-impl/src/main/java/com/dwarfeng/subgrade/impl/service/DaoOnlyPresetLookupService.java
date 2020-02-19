@@ -13,7 +13,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.lang.NonNull;
 
 /**
- * 仅用数据访问层实现的预设实体查询服务。
+ * 仅通过数据访问层实现的预设实体查询服务。
  * <p>该类同时使用数据访问层和缓存实现实体的查询方法。</p>
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *

@@ -15,7 +15,7 @@ import org.springframework.lang.NonNull;
 import java.util.Objects;
 
 /**
- * 仅用数据访问层实现的实体增删改查服务。
+ * 仅通过数据访问层实现的实体增删改查服务。
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *
  * @author DwArFeng

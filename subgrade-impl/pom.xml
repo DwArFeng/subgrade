@@ -54,6 +54,11 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Apache工具组件 -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
         <!-- Spring集成Kafka组件 -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
