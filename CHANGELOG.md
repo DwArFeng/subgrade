@@ -5,6 +5,7 @@
 #### 功能构建
 
 - 新增主键实体IntegerIdKey。
+- 添加KeyFetcher的UUID以及DenseUUID实现。
 
 #### Bug修复
 
