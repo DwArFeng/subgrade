@@ -8,7 +8,8 @@
 - 添加KeyFetcher的UUID以及DenseUUID实现。
 - 添加 PagingUtil.subList方法。
 - 完善RelationDao以及RelationService及其实现。
-- 添加ResponseDataUtil.bad方法
+- 添加ResponseDataUtil.bad方法。
+- 添加FastJsonResponseData。
 
 #### Bug修复
 
