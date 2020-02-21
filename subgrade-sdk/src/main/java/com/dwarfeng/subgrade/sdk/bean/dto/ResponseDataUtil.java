@@ -3,6 +3,7 @@ package com.dwarfeng.subgrade.sdk.bean.dto;
 import com.dwarfeng.subgrade.stack.bean.dto.ResponseData;
 import com.dwarfeng.subgrade.stack.bean.dto.ResponseData.Meta;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 
 /**
  * 响应数据工具类。
@@ -37,5 +38,18 @@ public final class ResponseDataUtil {
      */
     public static <T> ResponseData<T> bad(Class<? super T> clazz, ServiceException e) {
         return new ResponseData<>(null, new Meta(e.getCode().getCode(), e.getCode().getTip()));
+    }
+
+    /**
+     * 生成一个指定数据类型且元数据对应任何异常的响应数据。
+     *
+     * @param clazz 响应数据的泛型类。
+     * @param e     元数据对应的任何异常。
+     * @param sem   服务异常映射器。
+     * @param <T>   泛型的类。
+     * @return 指定数据类型且元数据对应服务异常的响应数据。
+     */
+    public static <T> ResponseData<T> bad(Class<? super T> clazz, Exception e, ServiceExceptionMapper sem) {
+        return bad(clazz, sem.map(e));
     }
 }
