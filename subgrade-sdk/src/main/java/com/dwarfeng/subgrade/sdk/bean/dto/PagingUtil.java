@@ -227,7 +227,7 @@ public final class PagingUtil {
         if (beginIndex >= list.size()) {
             return Collections.emptyList();
         }
-        int endIndex = Math.min(list.size(), beginIndex + pagingInfo.getRows()) - 1;
+        int endIndex = Math.min(list.size(), beginIndex + pagingInfo.getRows());
         return list.subList(beginIndex, endIndex);
     }
 }
