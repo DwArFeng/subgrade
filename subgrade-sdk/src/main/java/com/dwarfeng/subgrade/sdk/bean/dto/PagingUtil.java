@@ -34,7 +34,7 @@ public final class PagingUtil {
     public static <E> PagedData<E> pagedData(PagingInfo pagingInfo, int count, List<E> data) {
         return new PagedData<>(
                 pagingInfo.getPage(),
-                count == 0 || pagingInfo.getRows() == 0 ? 0 : count / pagingInfo.getRows() + 1,
+                count <= 0 || pagingInfo.getRows() <= 0 ? 0 : (count - 1) / pagingInfo.getRows() + 1,
                 pagingInfo.getRows(),
                 count,
                 data
@@ -50,7 +50,7 @@ public final class PagingUtil {
      */
     public static <E> PagedData<E> pagedData(List<E> data) {
         return new PagedData<>(
-                1,
+                0,
                 1,
                 data.size(),
                 data.size(),
@@ -74,14 +74,14 @@ public final class PagingUtil {
      * 获取分页信息对应的序号边界。
      *
      * @param pagingInfo 指定的分页信息。
-     * @param totleSize  列表的总长度。
+     * @param totalSize  列表的总长度。
      * @return 分页信息对应的序号边界。
      * @deprecated 请使用工具类中的 {@link #subList(List, PagingInfo)} 方法。
      */
     @Deprecated
-    public static IntIndexBounds intIndexBound(PagingInfo pagingInfo, int totleSize) {
+    public static IntIndexBounds intIndexBound(PagingInfo pagingInfo, int totalSize) {
         int beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
-        int endIndex = Math.min(totleSize, beginIndex + pagingInfo.getRows()) - 1;
+        int endIndex = Math.min(totalSize, beginIndex + pagingInfo.getRows()) - 1;
         return new IntIndexBounds(beginIndex, endIndex);
     }
 
@@ -101,14 +101,14 @@ public final class PagingUtil {
      * 获取分页信息对应的序号边界。
      *
      * @param pagingInfo 指定的分页信息。
-     * @param totleSize  列表的总长度。
+     * @param totalSize  列表的总长度。
      * @return 分页信息对应的序号边界。
      * @deprecated 请使用工具类中的 {@link #subList(List, PagingInfo)} 方法。
      */
     @Deprecated
-    public static LongIndexBounds longIndexBound(PagingInfo pagingInfo, long totleSize) {
+    public static LongIndexBounds longIndexBound(PagingInfo pagingInfo, long totalSize) {
         long beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
-        long endIndex = Math.min(totleSize, beginIndex + pagingInfo.getRows()) - 1;
+        long endIndex = Math.min(totalSize, beginIndex + pagingInfo.getRows()) - 1;
         return new LongIndexBounds(beginIndex, endIndex);
     }
 

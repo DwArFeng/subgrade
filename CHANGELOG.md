@@ -14,6 +14,7 @@
 #### Bug修复
 
 - 修正FastJsonStringIdKey.stringId不正确的JSON注解。
+- 修正PagingUtil.pagedData中部分参数返回数据异常的bug。
 
 #### 功能移除
 
