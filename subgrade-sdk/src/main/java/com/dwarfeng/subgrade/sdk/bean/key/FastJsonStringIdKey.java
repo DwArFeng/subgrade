@@ -27,7 +27,7 @@ public class FastJsonStringIdKey implements Bean {
         return new FastJsonStringIdKey(stringIdKey.getStringId());
     }
 
-    @JSONField(name = "id", ordinal = 1)
+    @JSONField(name = "string_id", ordinal = 1)
     private String stringId;
 
     public FastJsonStringIdKey() {

@@ -1,6 +1,6 @@
 # ChangeLog
 
-### Beta_0.2.4_20200221_build_A
+### Beta_0.2.4_20200222_build_A
 
 #### 功能构建
 
@@ -13,7 +13,7 @@
 
 #### Bug修复
 
-- (无)
+- 修正FastJsonStringIdKey.stringId不正确的JSON注解。
 
 #### 功能移除
 
