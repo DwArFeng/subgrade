@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.sdk.bean.key;
 
-import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.key.Key;
 
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.0.1-beta
  */
-public class HibernateDenseUuidKey implements Bean {
+public class HibernateDenseUuidKey implements Key {
 
     private static final long serialVersionUID = 1570626749532200270L;
 

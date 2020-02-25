@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.sdk.bean.key;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.bean.key.UuidKey;
 import org.springframework.lang.NonNull;
 
@@ -13,7 +13,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.0.1-beta
  */
-public class FastJsonUuidKey implements Bean {
+public class FastJsonUuidKey implements Key {
 
     private static final long serialVersionUID = 1819020183548760478L;
 

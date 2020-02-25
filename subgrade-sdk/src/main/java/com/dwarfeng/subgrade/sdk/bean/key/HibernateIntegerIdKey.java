@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.sdk.bean.key;
 
-import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.key.Key;
 
 /**
  * 适用于 Hibernate 的 IntegerIdKey。
@@ -8,10 +8,10 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
  * @author DwArFeng
  * @since 0.2.4-beta
  */
-public class HibernateIntegerIdKey implements Bean {
+public class HibernateIntegerIdKey implements Key {
 
     private static final long serialVersionUID = -3247707695336724271L;
-    
+
     private int integerId;
 
     public HibernateIntegerIdKey() {

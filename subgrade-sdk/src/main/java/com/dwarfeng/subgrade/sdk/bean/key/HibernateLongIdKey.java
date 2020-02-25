@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.sdk.bean.key;
 
-import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.key.Key;
 
 /**
  * 适用于 Hibernate 的 LongIdKey。
@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
  * @author DwArFeng
  * @since 0.0.1-beta
  */
-public class HibernateLongIdKey implements Bean {
+public class HibernateLongIdKey implements Key {
 
     private static final long serialVersionUID = 8863415673517584070L;
 

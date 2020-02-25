@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.sdk.bean.key;
 
-import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.key.Key;
 
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.0.1-beta
  */
-public class HibernateStringIdKey implements Bean {
+public class HibernateStringIdKey implements Key {
 
     private static final long serialVersionUID = -5726485840245744787L;
 

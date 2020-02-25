@@ -9,6 +9,7 @@
 #### Bug修复
 
 - 解决依赖冲突。
+- com.dwarfeng.subgrade.sdk.bean.key中的键对象实现接口从Bean更改为Key。
 
 #### 功能移除
 
