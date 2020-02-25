@@ -52,10 +52,11 @@
         <aopalliance.version>1.0</aopalliance.version>
         <spring.data.redis.version>1.7.11.RELEASE</spring.data.redis.version>
         <hibernate.version>5.3.13.Final</hibernate.version>
+        <jboss-logging.version>3.3.2.Final</jboss-logging.version>
         <el.version>3.0.0</el.version>
         <hibernate-validator.version>6.0.18.Final</hibernate-validator.version>
         <log4j2.version>2.12.1</log4j2.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <slf4j.version>1.7.5</slf4j.version>
         <dozer.version>5.5.1</dozer.version>
         <dutil.version>beta-0.2.1.a-SNAPSHOT</dutil.version>
         <cxf.version>3.1.6</cxf.version>
@@ -157,6 +158,11 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
             <!-- MySql连接器 -->
             <dependency>
                 <groupId>mysql</groupId>
@@ -170,6 +176,11 @@
                 <version>${druid.version}</version>
             </dependency>
             <!-- Spring -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
@@ -219,6 +230,12 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>spring-core</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.springframework.data</groupId>
@@ -233,6 +250,14 @@
                         <groupId>org.springframework</groupId>
                         <artifactId>spring-context-support</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <artifactId>spring-core</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jcl-over-slf4j</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <!-- Spring集成Kafka组件 -->
@@ -240,6 +265,12 @@
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
                 <version>${spring-kafka.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>spring-core</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- Kafka组件 -->
             <dependency>
@@ -303,11 +334,23 @@
                 <artifactId>httpcore</artifactId>
                 <version>${httpcomponents.version}</version>
             </dependency>
+            <!-- jboss组件 -->
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging</artifactId>
+                <version>${jboss-logging.version}</version>
+            </dependency>
             <!-- hibernate组件 -->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
                 <version>${hibernate.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>jboss-logging</artifactId>
+                        <groupId>org.jboss.logging</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- Hibernate验证器 -->
             <dependency>
@@ -326,6 +369,12 @@
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
                 <version>${dozer.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>jcl-over-slf4j</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>net.sf.dozer</groupId>
@@ -342,6 +391,12 @@
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>dutil-develop</artifactId>
                 <version>${dutil.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>log4j-api</artifactId>
+                        <groupId>org.apache.logging.log4j</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- cxf WebService组件 -->
             <dependency>
