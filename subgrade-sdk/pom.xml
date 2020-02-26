@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.dwarfeng</groupId>
         <artifactId>subgrade</artifactId>
-        <version>0.3.0.a-SNAPSHOT</version>
+        <version>beta-0.3.0.a-SNAPSHOT</version>
     </parent>
 
     <artifactId>subgrade-sdk</artifactId>
@@ -102,11 +102,10 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
         </dependency>
-        <!-- 日志处理 -->
+        <!-- Servlet相关 -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
         </dependency>
         <!-- dutil组件 -->
         <dependency>
@@ -117,7 +116,7 @@
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-stack</artifactId>
-            <version>0.3.0.a-SNAPSHOT</version>
+            <version>beta-0.3.0.a-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

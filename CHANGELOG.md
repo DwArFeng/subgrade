@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 强化LoginRequiredAdvisor增强。
 
 #### Bug修复
 
@@ -12,7 +12,7 @@
 
 #### 功能移除
 
-- (无)
+- ~~删除LoginPermRequiredAdvisor增强。~~
 
 ---
 

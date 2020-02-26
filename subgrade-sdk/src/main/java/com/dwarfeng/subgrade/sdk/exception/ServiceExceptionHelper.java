@@ -1,6 +1,7 @@
 package com.dwarfeng.subgrade.sdk.exception;
 
 import com.dwarfeng.dutil.basic.prog.ProcessException;
+import com.dwarfeng.subgrade.sdk.interceptor.login.LoginFailedException;
 import com.dwarfeng.subgrade.stack.exception.*;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import org.slf4j.Logger;

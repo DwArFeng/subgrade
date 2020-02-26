@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.stack.exception;
+package com.dwarfeng.subgrade.sdk.interceptor.login;
 
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
