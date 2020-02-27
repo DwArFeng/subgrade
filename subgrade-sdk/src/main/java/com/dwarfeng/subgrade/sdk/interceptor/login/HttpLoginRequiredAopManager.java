@@ -18,7 +18,7 @@ import static com.dwarfeng.subgrade.stack.bean.dto.ResponseData.Meta;
  * @author DwArFeng
  * @since 0.3.0-beta
  */
-public class HttpLoginAopManager implements LoginAopManager {
+public class HttpLoginRequiredAopManager implements LoginRequiredAopManager {
 
     private String tokenKey;
 

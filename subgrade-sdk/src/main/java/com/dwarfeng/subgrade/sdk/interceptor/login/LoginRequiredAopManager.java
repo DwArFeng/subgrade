@@ -9,7 +9,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
  * @author DwArFeng
  * @since 0.3.0-beta
  */
-public interface LoginAopManager {
+public interface LoginRequiredAopManager {
 
     /**
      * 从指定的PJP中获取登录ID。

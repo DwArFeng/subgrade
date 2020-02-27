@@ -5,6 +5,7 @@
 #### 功能构建
 
 - 强化LoginRequiredAdvisor增强。
+- 实现BindingCheck增强。
 
 #### Bug修复
 

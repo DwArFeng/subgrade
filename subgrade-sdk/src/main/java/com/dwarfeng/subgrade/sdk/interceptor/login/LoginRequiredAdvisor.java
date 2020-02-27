@@ -32,12 +32,12 @@ public class LoginRequiredAdvisor {
     @Autowired
     private LoginHandler loginHandler;
     @Autowired
-    private LoginAopManager manager;
+    private LoginRequiredAopManager manager;
 
     @Around("@annotation(com.dwarfeng.subgrade.sdk.interceptor.login.LoginRequired)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         // 记录日志。
-        LOGGER.info("正在验证是否登录...");
+        LOGGER.debug("正在验证是否登录...");
 
         // 获取PJP中的登录ID信息。
         LongIdKey loginId = manager.getLoginId(pjp);
@@ -80,11 +80,11 @@ public class LoginRequiredAdvisor {
         this.loginHandler = loginHandler;
     }
 
-    public LoginAopManager getManager() {
+    public LoginRequiredAopManager getManager() {
         return manager;
     }
 
-    public void setManager(LoginAopManager manager) {
+    public void setManager(LoginRequiredAopManager manager) {
         this.manager = manager;
     }
 

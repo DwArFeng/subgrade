@@ -20,7 +20,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.3.0-beta
  */
-class DefaultLoginAopManager implements LoginAopManager {
+class DefaultLoginRequiredAopManager implements LoginRequiredAopManager {
 
     @Override
     public LongIdKey getLoginId(ProceedingJoinPoint pjp) {
