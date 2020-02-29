@@ -6,6 +6,7 @@
 
 - 强化LoginRequiredAdvisor增强。
 - 实现BindingCheck增强。
+- Key实体的WebInput实现。
 
 #### Bug修复
 
