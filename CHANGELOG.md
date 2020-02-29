@@ -9,7 +9,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复了RedisBaseDao以及RedisBatchBaseDao的方法执行问题。
 
 #### 功能移除
 

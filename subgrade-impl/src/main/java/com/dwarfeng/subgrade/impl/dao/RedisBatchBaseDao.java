@@ -10,6 +10,7 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,10 +33,12 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
     public RedisBatchBaseDao(
             @NonNull RedisTemplate<String, JE> template,
             @NonNull StringKeyFormatter<K> formatter,
-            @NonNull BeanTransformer<E, JE> transformer) {
+            @NonNull BeanTransformer<E, JE> transformer,
+            @NotNull String dbKey) {
         this.template = template;
         this.formatter = formatter;
         this.transformer = transformer;
+        this.dbKey = dbKey;
     }
 
     @Override
@@ -87,8 +90,7 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
 
     private boolean internalExists(K key) {
         String format = formatter.format(key);
-        template.opsForHash().hasKey(dbKey, format);
-        return template.hasKey(format);
+        return template.opsForHash().hasKey(dbKey, format);
     }
 
     @Override
@@ -163,9 +165,8 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
     }
 
     private boolean internalAllExists(List<K> keys) {
-        List<String> collect = keys.stream().map(formatter::format).collect(Collectors.toList());
-        for (String format : collect) {
-            if (!template.hasKey(format)) return false;
+        for (K key : keys) {
+            if (!internalExists(key)) return false;
         }
         return true;
     }
@@ -180,9 +181,8 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
     }
 
     private boolean internalNonExists(List<K> keys) {
-        List<String> collect = keys.stream().map(formatter::format).collect(Collectors.toList());
-        for (String format : collect) {
-            if (template.hasKey(format)) return false;
+        for (K key : keys) {
+            if (internalExists(key)) return false;
         }
         return true;
     }

@@ -85,8 +85,7 @@ public class RedisBaseDao<K extends Key, E extends Entity<K>, JE extends Bean> i
 
     private boolean internalExists(K key) {
         String format = formatter.format(key);
-        template.opsForHash().hasKey(dbKey, format);
-        return template.hasKey(format);
+        return template.opsForHash().hasKey(dbKey, format);
     }
 
     @Override
