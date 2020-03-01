@@ -18,7 +18,20 @@ public class WebInputUuidKey implements Key {
 
     private static final long serialVersionUID = -2737801818336160820L;
 
-    @JSONField(name = "uuid", ordinal = 1)
+    /**
+     * WebInputUuidKey 转 UuidKey。
+     *
+     * @param webInputUuidKey WebInputUuidKey。
+     * @return UuidKey。
+     */
+    public static UuidKey toStackBean(WebInputUuidKey webInputUuidKey) {
+        if (Objects.isNull(webInputUuidKey)) {
+            return null;
+        }
+        return new UuidKey(webInputUuidKey.getUuid());
+    }
+
+    @JSONField(name = "uuid")
     @NotNull
     @NotEmpty
     private String uuid;
@@ -36,10 +49,6 @@ public class WebInputUuidKey implements Key {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
-    }
-
-    public UuidKey toStackBean() {
-        return new UuidKey(uuid);
     }
 
     @Override

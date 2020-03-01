@@ -18,7 +18,20 @@ public class WebInputStringIdKey implements Key {
 
     private static final long serialVersionUID = 5663915425535205270L;
 
-    @JSONField(name = "string_id", ordinal = 1)
+    /**
+     * WebInputStringIdKey 转 StringIdKey。
+     *
+     * @param webInputStringIdKey WebInputStringIdKey。
+     * @return StringIdKey。
+     */
+    public static StringIdKey toStackBean(WebInputStringIdKey webInputStringIdKey) {
+        if (Objects.isNull(webInputStringIdKey)) {
+            return null;
+        }
+        return new StringIdKey(webInputStringIdKey.getStringId());
+    }
+
+    @JSONField(name = "string_id")
     @NotNull
     @NotEmpty
     private String stringId;
@@ -36,10 +49,6 @@ public class WebInputStringIdKey implements Key {
 
     public void setStringId(String stringId) {
         this.stringId = stringId;
-    }
-
-    public StringIdKey toStackBean() {
-        return new StringIdKey(stringId);
     }
 
     @Override

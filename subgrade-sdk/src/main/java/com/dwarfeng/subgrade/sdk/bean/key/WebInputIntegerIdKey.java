@@ -4,6 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 
+import java.util.Objects;
+
 /**
  * 带有验证注解的网络输入型的 IntegerIdKey。
  *
@@ -14,7 +16,20 @@ public class WebInputIntegerIdKey implements Key {
 
     private static final long serialVersionUID = -5919040604668758118L;
 
-    @JSONField(name = "integer_id", ordinal = 1)
+    /**
+     * WebInputIntegerIdKey 转 IntegerIdKey。
+     *
+     * @param webInputIntegerIdKey WebInputIntegerIdKey。
+     * @return IntegerIdKey。
+     */
+    public static IntegerIdKey toStackBean(WebInputIntegerIdKey webInputIntegerIdKey) {
+        if (Objects.isNull(webInputIntegerIdKey)) {
+            return null;
+        }
+        return new IntegerIdKey(webInputIntegerIdKey.getIntegerId());
+    }
+
+    @JSONField(name = "integer_id")
     private int integerId;
 
     public WebInputIntegerIdKey() {
@@ -30,10 +45,6 @@ public class WebInputIntegerIdKey implements Key {
 
     public void setIntegerId(int integerId) {
         this.integerId = integerId;
-    }
-
-    public IntegerIdKey toStackBean() {
-        return new IntegerIdKey(integerId);
     }
 
     @Override

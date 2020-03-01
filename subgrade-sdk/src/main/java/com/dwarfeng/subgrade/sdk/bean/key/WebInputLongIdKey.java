@@ -4,6 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
+import java.util.Objects;
+
 /**
  * 带有验证注解的网络输入型的 LongIdKey。
  *
@@ -14,7 +16,20 @@ public class WebInputLongIdKey implements Key {
 
     private static final long serialVersionUID = 9039742259922391556L;
 
-    @JSONField(name = "long_id", ordinal = 1)
+    /**
+     * WebInputLongIdKey 转 LongIdKey。
+     *
+     * @param webInputLongIdKey WebInputLongIdKey。
+     * @return LongIdKey。
+     */
+    public static LongIdKey toStackBean(WebInputLongIdKey webInputLongIdKey) {
+        if (Objects.isNull(webInputLongIdKey)) {
+            return null;
+        }
+        return new LongIdKey(webInputLongIdKey.getLongId());
+    }
+
+    @JSONField(name = "long_id")
     private long longId;
 
     public WebInputLongIdKey() {
@@ -30,10 +45,6 @@ public class WebInputLongIdKey implements Key {
 
     public void setLongId(long longId) {
         this.longId = longId;
-    }
-
-    public LongIdKey toStackBean() {
-        return new LongIdKey(longId);
     }
 
     @Override
