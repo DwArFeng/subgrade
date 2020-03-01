@@ -3,7 +3,6 @@ package com.dwarfeng.subgrade.sdk.bean.key;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
-import org.springframework.lang.NonNull;
 
 import java.util.Objects;
 
@@ -23,7 +22,10 @@ public class FastJsonStringIdKey implements Key {
      * @param stringIdKey 指定的 StringIdKey。
      * @return 通过指定的 StringIdKey 生成的 FastJsonStringIdKey。
      */
-    public static FastJsonStringIdKey of(@NonNull StringIdKey stringIdKey) {
+    public static FastJsonStringIdKey of(StringIdKey stringIdKey) {
+        if (Objects.isNull(stringIdKey)) {
+            return null;
+        }
         return new FastJsonStringIdKey(stringIdKey.getStringId());
     }
 

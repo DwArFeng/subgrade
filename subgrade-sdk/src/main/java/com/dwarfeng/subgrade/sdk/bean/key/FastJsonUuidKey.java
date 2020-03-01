@@ -3,7 +3,6 @@ package com.dwarfeng.subgrade.sdk.bean.key;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.bean.key.UuidKey;
-import org.springframework.lang.NonNull;
 
 import java.util.Objects;
 
@@ -23,7 +22,10 @@ public class FastJsonUuidKey implements Key {
      * @param uuidKey 指定的 UuidKey。
      * @return 通过指定的 UuidKey 生成的 FastJsonUuidKey。
      */
-    public static FastJsonUuidKey of(@NonNull UuidKey uuidKey) {
+    public static FastJsonUuidKey of(UuidKey uuidKey) {
+        if (Objects.isNull(uuidKey)) {
+            return null;
+        }
         return new FastJsonUuidKey(uuidKey.getUuid());
     }
 
