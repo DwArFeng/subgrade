@@ -3,9 +3,9 @@ package com.dwarfeng.subgrade.sdk.bean.dto;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
-import org.springframework.lang.NonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 适用于 FastJson 的 PagedData。
@@ -24,7 +24,10 @@ public class FastJsonPagedData<E> implements Dto {
      * @param <E>       PageData 中的元素的类型。
      * @return 生成的 FastJsonPagedData。
      */
-    public static <E> FastJsonPagedData<E> of(@NonNull PagedData<E> pagedData) {
+    public static <E> FastJsonPagedData<E> of(PagedData<E> pagedData) {
+        if (Objects.isNull(pagedData)) {
+            return null;
+        }
         return new FastJsonPagedData<>(
                 pagedData.getCurrentPage(),
                 pagedData.getTotalPages(),
