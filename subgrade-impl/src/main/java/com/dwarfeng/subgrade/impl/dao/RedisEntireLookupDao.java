@@ -56,8 +56,9 @@ public class RedisEntireLookupDao<K extends Key, E extends Entity<K>, JE extends
         Set<String> keys = template.keys(s);
         List<JE> jes = new ArrayList<>();
         for (String key : keys) {
-            //noinspection unchecked
-            jes.add((JE) template.opsForHash().get(dbKey, key));
+            @SuppressWarnings("unchecked")
+            JE je = (JE) template.opsForHash().get(dbKey, key);
+            jes.add(je);
         }
         return jes.stream().map(transformer::reverseTransform).collect(Collectors.toList());
     }

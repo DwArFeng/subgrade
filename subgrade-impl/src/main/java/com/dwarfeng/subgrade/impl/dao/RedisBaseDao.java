@@ -92,7 +92,7 @@ public class RedisBaseDao<K extends Key, E extends Entity<K>, JE extends Bean> i
     public E get(K key) throws DaoException {
         try {
             String format = formatter.format(key);
-            //noinspection unchecked
+            @SuppressWarnings("unchecked")
             JE je = (JE) template.opsForHash().get(dbKey, format);
             return transformer.reverseTransform(je);
         } catch (Exception e) {

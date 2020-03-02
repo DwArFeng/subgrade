@@ -64,7 +64,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
     @Override
     public void put(E entity) throws DaoException {
         try {
-            //noinspection unchecked
+            @SuppressWarnings("unchecked")
             E newEntity = (E) BeanUtils.cloneBean(entity);
             newEntity.setKey(key);
             template.clear();

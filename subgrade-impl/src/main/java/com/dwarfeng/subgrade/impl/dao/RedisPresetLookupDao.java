@@ -81,8 +81,9 @@ public class RedisPresetLookupDao<K extends Key, E extends Entity<K>, JE extends
         Set<String> keys = template.keys(s);
         List<JE> jes = new ArrayList<>();
         for (String key : keys) {
-            //noinspection unchecked
-            jes.add((JE) template.opsForHash().get(dbKey, key));
+            @SuppressWarnings("unchecked")
+            JE je = (JE) template.opsForHash().get(dbKey, key);
+            jes.add(je);
         }
         List<E> es = jes.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         return es.stream().filter(e -> filter.accept(e, preset, objs)).collect(Collectors.toList());

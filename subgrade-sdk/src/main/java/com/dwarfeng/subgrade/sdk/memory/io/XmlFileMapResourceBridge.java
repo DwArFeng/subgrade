@@ -46,7 +46,7 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
         try {
             makeSureFileExists(file);
             JAXBContext jaxbContext = JAXBContext.newInstance(classXR);
-            //noinspection unchecked
+            @SuppressWarnings("unchecked")
             XmlFileMapResourceBridge.Root<XE> unmarshal = (Root<XE>) jaxbContext.createUnmarshaller().unmarshal(file);
             Map<K, E> collect = unmarshal.getXmlElements().stream().map(transformer::reverseTransform)
                     .collect(Collectors.toMap(E::getKey, Function.identity()));

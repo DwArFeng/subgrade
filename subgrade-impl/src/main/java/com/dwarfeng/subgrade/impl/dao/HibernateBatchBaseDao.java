@@ -60,7 +60,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     public K insert(E element) throws DaoException {
         try {
             PE pe = transformEntity(element);
-            //noinspection unchecked
+            @SuppressWarnings("unchecked")
             PK pk = (PK) template.save(pe);
             template.flush();
             K key = reverseTransformKey(pk);
@@ -131,8 +131,9 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             List<PE> collect = elements.stream().map(entityBeanTransformer::transform).collect(Collectors.toList());
             List<PK> listPK = new ArrayList<>();
             for (PE pe : collect) {
-                //noinspection unchecked
-                listPK.add((PK) template.save(pe));
+                @SuppressWarnings("unchecked")
+                PK save = (PK) template.save(pe);
+                listPK.add(save);
             }
             template.flush();
             List<K> ks = listPK.stream().map(keyBeanTransformer::reverseTransform).collect(Collectors.toList());

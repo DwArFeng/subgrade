@@ -41,7 +41,7 @@ public class XmlFileRefResourceBridge<K extends Key, E extends Entity<K>, XE ext
         try {
             makeSureFileExists(file);
             JAXBContext jaxbContext = JAXBContext.newInstance(classXE);
-            //noinspection unchecked
+            @SuppressWarnings("unchecked")
             XE xe = (XE) jaxbContext.createUnmarshaller().unmarshal(file);
             referenceModel.set(transformer.reverseTransform(xe));
         } catch (Exception e) {

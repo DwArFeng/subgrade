@@ -40,7 +40,7 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
     public List<E> lookup() throws DaoException {
         try {
             DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
-            //noinspection unchecked
+            @SuppressWarnings("unchecked")
             List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria);
             return byCriteria.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
     public List<E> lookup(PagingInfo pagingInfo) throws DaoException {
         try {
             DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
-            //noinspection unchecked
+            @SuppressWarnings("unchecked")
             List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria,
                     pagingInfo.getPage() * pagingInfo.getRows(), pagingInfo.getRows());
             return byCriteria.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());

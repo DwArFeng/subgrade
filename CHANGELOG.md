@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 将//noinspection替换为@SupressWarning
 
 #### 功能移除
 

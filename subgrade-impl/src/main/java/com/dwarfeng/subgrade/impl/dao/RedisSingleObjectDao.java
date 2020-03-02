@@ -61,7 +61,7 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
     @Override
     public void put(E entity) throws DaoException {
         try {
-            //noinspection unchecked
+            @SuppressWarnings("unchecked")
             E newEntity = (E) BeanUtils.cloneBean(entity);
             newEntity.setKey(key);
             template.opsForValue().set(formatter.format(key), transformer.transform(newEntity));

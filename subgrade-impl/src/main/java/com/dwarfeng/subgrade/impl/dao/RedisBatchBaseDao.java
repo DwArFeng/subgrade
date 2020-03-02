@@ -97,7 +97,7 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
     public E get(K key) throws DaoException {
         try {
             String format = formatter.format(key);
-            //noinspection unchecked
+            @SuppressWarnings("unchecked")
             JE je = (JE) template.opsForHash().get(dbKey, format);
             return transformer.reverseTransform(je);
         } catch (Exception e) {
@@ -193,8 +193,9 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
             List<String> formats = keys.stream().map(formatter::format).collect(Collectors.toList());
             List<JE> jes = new ArrayList<>();
             for (String format : formats) {
-                //noinspection unchecked
-                jes.add((JE) template.opsForHash().get(dbKey, format));
+                @SuppressWarnings("unchecked")
+                JE je = (JE) template.opsForHash().get(dbKey, format);
+                jes.add(je);
             }
             return jes.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
