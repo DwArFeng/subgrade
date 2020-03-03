@@ -32,9 +32,10 @@
 
 ## 推荐使用版本
 
-* 对于任何的新项目，使用 **beta-0.3.1.a**以上的版本，此版本将idea的警告注释//noinspection替换为了@SupressWarning，
+* 对于任何的新项目，使用 **beta-0.3.1.b**以上的版本，此版本将idea的警告注释//noinspection替换为了@SupressWarning，
 解决了编译时的报警问题。
-* 对于使用Redis作为数据访问层的项目，使用不低于 **beta-0.3.0.a**以上的版本，此版本修复了Redis数据访问层的诸多问题。
+* 对于使用Hibernate数据访问层的项目，使用**beta-0.3.1.b**以上的版本，此版本修复了HibernateBaseDao更新实体的问题。
+* 对于使用Redis作为数据访问层的项目，使用**beta-0.3.0.a**以上的版本，此版本修复了Redis数据访问层的诸多问题。
 * 如果您的项目中涉及到实体的FastJson、WebInput、JSFixedFastJson实现，请使用 **beta-0.3.0.a**以上的版本，
 该版本解决了of方法以及toStackBean方法的空值判断问题。
 * 任何项目推荐不低于 **beta-0.2.3.a**，过去的版本与该版本不兼容。

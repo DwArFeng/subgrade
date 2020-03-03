@@ -1,5 +1,21 @@
 # ChangeLog
 
+### Beta_0.3.1_20200303_build_B
+
+#### 功能构建
+
+- (无)
+
+#### Bug修复
+
+- 解决了HibernateBaseDao.update方法不正常抛出异常的bug。
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Beta_0.3.1_20200302_build_A
 
 #### 功能构建

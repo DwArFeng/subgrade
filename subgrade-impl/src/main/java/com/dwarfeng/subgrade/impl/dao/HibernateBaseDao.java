@@ -73,6 +73,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     public void update(E element) throws DaoException {
         try {
             PE pe = transformEntity(element);
+            template.clear();
             template.update(pe);
             template.flush();
         } catch (Exception e) {
