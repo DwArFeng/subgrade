@@ -1,5 +1,21 @@
 # ChangeLog
 
+### Beta_0.3.1_20200307_build_C
+
+#### 功能构建
+
+- (无)
+
+#### Bug修复
+
+- 修复了CrudService.insertOrUpdate方法处理主键为null的元素时的异常表现bug。
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Beta_0.3.1_20200303_build_B
 
 #### 功能构建

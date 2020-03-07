@@ -188,11 +188,11 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
     @Override
     public K insertOrUpdate(E element) throws ServiceException {
         try {
-            if (internalExists(element.getKey())) {
+            if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
+                return internalInsert(element);
+            } else {
                 internalUpdate(element);
                 return null;
-            } else {
-                return internalInsert(element);
             }
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入或更新实体时发生异常", exceptionLogLevel, sem, e);
