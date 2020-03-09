@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 优化HibernateBaseDao的写入效率。
 
 #### Bug修复
 

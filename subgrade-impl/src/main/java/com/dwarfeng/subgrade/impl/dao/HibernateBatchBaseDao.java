@@ -25,22 +25,27 @@ import java.util.stream.Collectors;
  */
 public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Entity<K>, PE extends Bean> implements BatchBaseDao<K, E> {
 
+    /**
+     * 默认的批处理数。
+     *
+     * @since 0.3.2-beta
+     */
+    public static final int DEFAULT_BATCH_SIZE = 100;
+
     private HibernateTemplate template;
     private BeanTransformer<K, PK> keyBeanTransformer;
     private BeanTransformer<E, PE> entityBeanTransformer;
     private Class<PE> classPE;
     private DeletionMod<PE> deletionMod;
+    private int batchSize;
 
     public HibernateBatchBaseDao(
             @NonNull HibernateTemplate template,
             @NonNull BeanTransformer<K, PK> keyBeanTransformer,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE) {
-        this.template = template;
-        this.keyBeanTransformer = keyBeanTransformer;
-        this.entityBeanTransformer = entityBeanTransformer;
-        this.classPE = classPE;
-        deletionMod = new DefaultDeletionMod<>();
+        this(template, keyBeanTransformer, entityBeanTransformer, classPE, new DefaultDeletionMod<>(),
+                DEFAULT_BATCH_SIZE);
     }
 
     public HibernateBatchBaseDao(
@@ -49,11 +54,25 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE,
             @NonNull DeletionMod<PE> deletionMod) {
+        this(template, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod, DEFAULT_BATCH_SIZE);
+    }
+
+    public HibernateBatchBaseDao(
+            @NonNull HibernateTemplate template,
+            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
+            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
+            @NonNull Class<PE> classPE,
+            @NonNull DeletionMod<PE> deletionMod,
+            int batchSize) {
+        if (batchSize <= 0) {
+            throw new IllegalArgumentException("参数 batchSize 必须为正数");
+        }
         this.template = template;
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
         this.deletionMod = deletionMod;
+        this.batchSize = batchSize;
     }
 
     @Override
@@ -63,6 +82,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @SuppressWarnings("unchecked")
             PK pk = (PK) template.save(pe);
             template.flush();
+            template.clear();
             K key = reverseTransformKey(pk);
             element.setKey(key);
             return key;
@@ -78,6 +98,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             template.clear();
             template.update(pe);
             template.flush();
+            template.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -91,6 +112,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             objects.forEach(template::update);
             template.delete(pe);
             template.flush();
+            template.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -130,12 +152,18 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         try {
             List<PE> collect = elements.stream().map(entityBeanTransformer::transform).collect(Collectors.toList());
             List<PK> listPK = new ArrayList<>();
-            for (PE pe : collect) {
+            for (int i = 0; i < collect.size(); i++) {
+                if (i % batchSize == 0) {
+                    template.flush();
+                    template.clear();
+                }
+                PE pe = collect.get(i);
                 @SuppressWarnings("unchecked")
                 PK save = (PK) template.save(pe);
                 listPK.add(save);
             }
             template.flush();
+            template.clear();
             List<K> ks = listPK.stream().map(keyBeanTransformer::reverseTransform).collect(Collectors.toList());
             for (int i = 0; i < elements.size(); i++) {
                 elements.get(i).setKey(ks.get(i));
@@ -151,12 +179,18 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         try {
             template.clear();
             List<PE> collect = elements.stream().map(entityBeanTransformer::transform).collect(Collectors.toList());
-            for (PE pe : collect) {
+            for (int i = 0; i < collect.size(); i++) {
+                if (i % batchSize == 0) {
+                    template.flush();
+                    template.clear();
+                }
+                PE pe = collect.get(i);
                 List<Object> objects = deletionMod.updateBeforeDelete(pe);
                 objects.forEach(template::update);
                 template.update(pe);
             }
             template.flush();
+            template.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -165,11 +199,17 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     @Override
     public void batchDelete(List<K> keys) throws DaoException {
         try {
-            for (K key : keys) {
+            for (int i = 0; i < keys.size(); i++) {
+                if (i % batchSize == 0) {
+                    template.flush();
+                    template.clear();
+                }
+                K key = keys.get(i);
                 PE pe = internalGet(key);
                 template.delete(pe);
             }
             template.flush();
+            template.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -262,5 +302,13 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
 
     public void setDeletionMod(@NonNull DeletionMod<PE> deletionMod) {
         this.deletionMod = deletionMod;
+    }
+
+    public int getBatchSize() {
+        return batchSize;
+    }
+
+    public void setBatchSize(int batchSize) {
+        this.batchSize = batchSize;
     }
 }

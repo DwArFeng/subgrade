@@ -61,6 +61,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
             @SuppressWarnings("unchecked")
             PK pk = (PK) template.save(pe);
             template.flush();
+            template.clear();
             K key = reverseTransformKey(pk);
             element.setKey(key);
             return key;
@@ -76,6 +77,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
             template.clear();
             template.update(pe);
             template.flush();
+            template.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -89,6 +91,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
             objects.forEach(template::update);
             template.delete(pe);
             template.flush();
+            template.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
