@@ -1,6 +1,6 @@
 # ChangeLog
 
-### Beta_0.3.2_20200310_build_A
+### Beta_0.3.2_20200319_build_A
 
 #### 功能构建
 
