@@ -1,5 +1,21 @@
 # ChangeLog
 
+### Beta_0.3.2_20200411_build_C
+
+#### 功能构建
+
+- 细化 HttpLoginRequiredAopManager 的异常处理过程。
+
+#### Bug修复
+
+- (无)
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Beta_0.3.2_20200326_build_B
 
 #### 功能构建

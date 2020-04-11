@@ -6,6 +6,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 import static com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.LOGIN_FAILED;
 import static com.dwarfeng.subgrade.stack.bean.dto.ResponseData.Meta;
@@ -28,7 +29,15 @@ public class HttpLoginRequiredAopManager implements LoginRequiredAopManager {
         for (Object arg : args) {
             if (arg instanceof HttpServletRequest) {
                 String header = ((HttpServletRequest) arg).getHeader(tokenKey);
-                return new LongIdKey(Long.parseLong(header));
+                if (Objects.isNull(header)) {
+                    throw new IllegalArgumentException("HttpServletRequest对象没有名称为 " + tokenKey + " 的 header");
+                }
+                try {
+                    return new LongIdKey(Long.parseLong(header));
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException(
+                            "Header " + tokenKey + " 对应的值 " + header + " 无法转换成 Long 对象");
+                }
             }
         }
         throw new IllegalArgumentException("未能在入口参数中找到HttpServletRequest对象，" +
