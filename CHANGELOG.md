@@ -10,6 +10,8 @@
 
 - 修复RedisEntireLookupDao.lookup方法数组越界的bug。
 - 修复RedisPresetLookupDao.lookup方法数组越界的bug。
+- 修复RedisEntireLookupDao.lookup方法返回结果不正确的bug。
+- 修复RedisPresetLookupDao.lookup方法返回结果不正确的bug。
 
 #### 功能移除
 

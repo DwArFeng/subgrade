@@ -11,9 +11,7 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.lang.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -52,14 +50,8 @@ public class RedisEntireLookupDao<K extends Key, E extends Entity<K>, JE extends
     }
 
     private List<E> internalLookup() {
-        String s = formatter.generalFormat();
-        Set<String> keys = template.keys(s);
-        List<JE> jes = new ArrayList<>();
-        for (String key : keys) {
-            @SuppressWarnings("unchecked")
-            JE je = (JE) template.opsForHash().get(dbKey, key);
-            jes.add(je);
-        }
+        @SuppressWarnings("unchecked")
+        List<JE> jes = template.opsForHash().values(dbKey).stream().map(o -> (JE) o).collect(Collectors.toList());
         return jes.stream().map(transformer::reverseTransform).collect(Collectors.toList());
     }
 
