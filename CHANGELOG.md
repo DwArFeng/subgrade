@@ -8,7 +8,8 @@
 
 #### Bug修复
 
-- (无)
+- 修复RedisEntireLookupDao.lookup方法数组越界的bug。
+- 修复RedisPresetLookupDao.lookup方法数组越界的bug。
 
 #### 功能移除
 

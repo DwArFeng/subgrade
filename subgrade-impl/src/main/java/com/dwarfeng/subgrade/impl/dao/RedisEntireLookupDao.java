@@ -69,7 +69,7 @@ public class RedisEntireLookupDao<K extends Key, E extends Entity<K>, JE extends
             int beginIndex = pagingInfo.getPage() * pagingInfo.getRows();
             int endIndex = beginIndex + pagingInfo.getRows() - 1;
             List<E> es = internalLookup();
-            return es.subList(beginIndex, endIndex);
+            return es.subList(beginIndex, Math.min(es.size(), endIndex));
         } catch (Exception e) {
             throw new DaoException(e);
         }
