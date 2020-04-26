@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 添加主键类型com.dwarfeng.subgrade.stack.bean.key.ByteIdKey。
 
 #### Bug修复
 
