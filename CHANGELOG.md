@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复HibernateBatchBaseDao.batchGet不抛出DaoException的代码问题。
 
 #### 功能移除
 

@@ -240,12 +240,16 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     }
 
     @Override
-    public List<E> batchGet(List<K> keys) {
-        List<PE> list = new ArrayList<>();
-        for (K key : keys) {
-            list.add(internalGet(key));
+    public List<E> batchGet(List<K> keys) throws DaoException {
+        try {
+            List<PE> list = new ArrayList<>();
+            for (K key : keys) {
+                list.add(internalGet(key));
+            }
+            return list.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
-        return list.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());
     }
 
     private PK transformKey(K k) {
