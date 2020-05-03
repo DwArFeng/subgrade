@@ -38,7 +38,7 @@ public class MemoryEntireLookupDao<K extends Key, E extends Entity<K>> implement
     @Override
     public List<E> lookup(PagingInfo pagingInfo) {
         int beginIndex = pagingInfo.getPage() * pagingInfo.getRows();
-        int endIndex = beginIndex + pagingInfo.getRows() - 1;
+        int endIndex = beginIndex + pagingInfo.getRows();
         return new ArrayList<>(memory.values()).subList(beginIndex, endIndex);
     }
 

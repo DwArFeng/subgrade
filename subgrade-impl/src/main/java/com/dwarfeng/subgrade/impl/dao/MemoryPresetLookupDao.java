@@ -43,7 +43,7 @@ public class MemoryPresetLookupDao<K extends Key, E extends Entity<K>> implement
     @Override
     public List<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) {
         int beginIndex = pagingInfo.getPage() * pagingInfo.getRows();
-        int endIndex = beginIndex + pagingInfo.getRows() - 1;
+        int endIndex = beginIndex + pagingInfo.getRows();
         List<E> collect = memory.values().stream().filter(e -> filter.accept(e, preset, objs)).collect(Collectors.toList());
         return collect.subList(beginIndex, endIndex);
     }

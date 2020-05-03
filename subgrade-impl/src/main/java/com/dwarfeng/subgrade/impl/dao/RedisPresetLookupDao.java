@@ -57,7 +57,7 @@ public class RedisPresetLookupDao<K extends Key, E extends Entity<K>, JE extends
     public List<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
         try {
             int beginIndex = pagingInfo.getPage() * pagingInfo.getRows();
-            int endIndex = beginIndex + pagingInfo.getRows() - 1;
+            int endIndex = beginIndex + pagingInfo.getRows();
             List<E> es = internalEntireLookup(preset, objs);
             return es.subList(beginIndex, Math.min(es.size(), endIndex));
         } catch (Exception e) {

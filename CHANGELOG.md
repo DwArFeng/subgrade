@@ -8,7 +8,11 @@
 
 #### Bug修复
 
-- (无)
+- 修正部分LookupDao分页行为不正确的bug。
+  - com.dwarfeng.subgrade.impl.dao.MemoryEntireLookupDao
+  - com.dwarfeng.subgrade.impl.dao.MemoryPresetLookupDao
+  - com.dwarfeng.subgrade.impl.dao.RedisEntireLookupDao
+  - com.dwarfeng.subgrade.impl.dao.RedisPresetLookupDao
 
 #### 功能移除
 
