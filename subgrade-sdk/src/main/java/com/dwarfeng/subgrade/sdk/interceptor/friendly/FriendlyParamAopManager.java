@@ -6,7 +6,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
  * 友好性参数增强管理器。
  *
  * @author DwArFeng
- * @since 1.1.0
+ * @since 1.0.2
  */
 public interface FriendlyParamAopManager {
 

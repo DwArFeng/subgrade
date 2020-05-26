@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 友好性增强注解。
  *
  * @author DwArFeng
- * @since 1.1.0
+ * @since 1.0.2
  */
 @Documented
 @Retention(RUNTIME)

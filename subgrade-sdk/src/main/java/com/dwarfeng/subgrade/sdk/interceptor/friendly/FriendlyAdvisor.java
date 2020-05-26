@@ -69,7 +69,7 @@ import java.util.stream.Collectors;
  * </pre></blockquote>
  *
  * @author DwArFeng
- * @since 1.1.0
+ * @since 1.0.2
  */
 @Component
 @Aspect

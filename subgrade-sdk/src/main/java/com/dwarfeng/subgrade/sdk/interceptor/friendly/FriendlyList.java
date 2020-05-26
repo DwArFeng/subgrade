@@ -28,7 +28,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * </pre></blockquote>
  *
  * @author DwArFeng
- * @since 1.1.0
+ * @since 1.0.2
  */
 @Documented
 @Retention(RUNTIME)

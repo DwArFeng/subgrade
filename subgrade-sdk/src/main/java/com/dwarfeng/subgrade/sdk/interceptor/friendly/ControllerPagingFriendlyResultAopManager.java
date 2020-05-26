@@ -39,7 +39,7 @@ import java.util.Objects;
  * </pre></blockquote>
  *
  * @author DwArFeng
- * @since 1.1.0
+ * @since 1.0.2
  */
 public class ControllerPagingFriendlyResultAopManager implements FriendlyResultAopManager {
 
