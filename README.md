@@ -36,7 +36,7 @@
 
 - 定义了同一的异常处理机制，使得Service服务或其它方法能够输出统一的异常，方便下序进行进一步处理。
 
-- 实现了常用的AOP，如性能分析、登录判断、权限判断。
+- 实现了常用的AOP，如性能分析、登录判断、权限判断、友好性增强。
 
 - 实现了多种组件的序列化器，如Redis的序列化器、Kafka的序列化器，可供这些框架直接使用。
 
@@ -123,6 +123,9 @@
   - `com.dwarfeng.subgrade.sdk.interceptor.permission.PermissionRequiredAdvisor` 未被使用过，
   其成熟度未知。
   
+  - `com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyAdvisor` 刚刚开发，在一个项目中进行验证，
+  目前没有发现问题，但不排除随着使用频率的增加发现新的问题。
+  
 ---
 
 ## 包含的工具
@@ -155,7 +158,8 @@
 
 ## 推荐使用版本
 
-- 对于任何的新项目，使用1.0.1.a。
+- 对于任何的新项目，使用不低于1.0.1.a的版本。
+- 对于最新的web后端/前后端分离项目，推荐使用1.1.0.a以上的版本。
 - 对于任何项目，使用不低于1.0.0.a的版本。正式版，新体验。
 
 - 对于使用 `RedisPresetLookupDao` 或者 `RedisEntireLookupDao` 的项目，请使用1.0.1.a的版本。

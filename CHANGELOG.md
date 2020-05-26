@@ -4,7 +4,14 @@
 
 #### 功能构建
 
-- (无)
+- 添加友好性AOP及其注解与实现方法。
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.ControllerPagingFriendlyParamAopManager
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.ControllerPagingFriendlyResultAopManager
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.Friendly
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyAdvisor
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyList
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyParamAopManager
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyResultAopManager
 
 #### Bug修复
 
