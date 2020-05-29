@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- 过时接口 com.dwarfeng.subgrade.stack.dao.ReadOnlyBatchDao。
+  - 使用com.dwarfeng.subgrade.stack.dao.BatchReadOnlyDao 替代。
+  - 这可能会引发轻微的不兼容。
 
 #### Bug修复
 

@@ -12,7 +12,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public interface BatchBaseDao<K extends Key, E extends Entity<K>> extends BaseDao<K, E>, ReadOnlyBatchDao<K, E> {
+public interface BatchBaseDao<K extends Key, E extends Entity<K>> extends BaseDao<K, E>, BatchReadOnlyDao<K, E> {
 
     /**
      * 批量插入实体。
