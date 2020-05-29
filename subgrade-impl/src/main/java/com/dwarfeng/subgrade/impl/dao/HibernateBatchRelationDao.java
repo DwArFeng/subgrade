@@ -128,7 +128,6 @@ public class HibernateBatchRelationDao<
         }
     }
 
-
     @Override
     public void deleteRelation(PK pk, CK ck) throws DaoException {
         try {

@@ -4,6 +4,15 @@
 
 #### 功能构建
 
+- 编写写入服务，旨在更高效的处理连续写入新数据的工况。
+  - com.dwarfeng.subgrade.stack.service.WriteService
+  - com.dwarfeng.subgrade.stack.service.BatchWriteService
+  - com.dwarfeng.subgrade.stack.dao.WriteDao
+  - com.dwarfeng.subgrade.stack.dao.BatchWriteDao
+  - com.dwarfeng.subgrade.impl.dao.HibernateWriteDao
+  - com.dwarfeng.subgrade.impl.dao.HibernateBatchWriteDao
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyWriteService
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService
 - 过时接口 com.dwarfeng.subgrade.stack.dao.ReadOnlyBatchDao。
   - 使用com.dwarfeng.subgrade.stack.dao.BatchReadOnlyDao 替代。
   - 这可能会引发轻微的不兼容。

@@ -29,7 +29,6 @@ public class FastJsonUuidKey implements Key {
         return new FastJsonUuidKey(uuidKey.getUuid());
     }
 
-
     @JSONField(name = "uuid", ordinal = 1)
     private String uuid;
 

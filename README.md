@@ -77,6 +77,10 @@
     - com.dwarfeng.subgrade.impl.dao.RedisBaseDao
     - com.dwarfeng.subgrade.impl.dao.RedisBatchBaseDao
     
+  - 刚刚开发的框架，在至少一个项目中使用
+    - com.dwarfeng.subgrade.impl.dao.BatchWriteDao
+    - com.dwarfeng.subgrade.impl.dao.HibernateBatchWriteDao
+
   - 其余的数据访问层框架使用情况极少或几乎没有使用，非常有可能存在bug。
   
 - 缓存框架。
@@ -109,13 +113,15 @@
     - com.dwarfeng.subgrade.impl.service.GeneralEntireLookupService
     - com.dwarfeng.subgrade.impl.service.GeneralSingleObjectService
     
+  - 刚刚开发的框架，在至少一个项目中使用
+    - com.dwarfeng.subgrade.impl.service.DaoOnlyWriteService
+    - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService
+    
 - Interceptor
 
-  - `com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyseAdvisor` 被广泛使用，
-  这导致我多次提升其表现与性能，它没有任何问题。
-  
-  - `com.dwarfeng.subgrade.sdk.interceptor.http.BindingCheckAdvisor` 在web后端被广泛使用，
-  没有发现问题。
+  - 没有任何问题的框架。
+    - com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyseAdvisor
+    - com.dwarfeng.subgrade.sdk.interceptor.http.BindingCheckAdvisor
 
   - `com.dwarfeng.subgrade.sdk.interceptor.login.LoginRequiredAdvisor` 在web后端被偶尔使用，
   暂时没有发现问题，不过随着使用频率的升高，我也许会考虑此框架的表现。
@@ -123,8 +129,8 @@
   - `com.dwarfeng.subgrade.sdk.interceptor.permission.PermissionRequiredAdvisor` 未被使用过，
   其成熟度未知。
   
-  - `com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyAdvisor` 刚刚开发，在一个项目中进行验证，
-  目前没有发现问题，但不排除随着使用频率的增加发现新的问题。
+  - 刚刚开发的框架，在至少一个项目中使用
+    - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyAdvisor
   
 ---
 
