@@ -146,7 +146,6 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         return Objects.nonNull(template.get(classPE, transformKey(key)));
     }
 
-
     @Override
     public List<K> batchInsert(List<E> elements) throws DaoException {
         try {
