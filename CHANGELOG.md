@@ -4,6 +4,13 @@
 
 #### 功能构建
 
+- 编写可选查询服务，旨在实现无限制的自由查询。
+  - com.dwarfeng.subgrade.stack.dao.OptionalLookupDao
+  - com.dwarfeng.subgrade.stack.service.OptionalLookupService
+  - com.dwarfeng.subgrade.impl.dao.HibernateOptionalLookupDao
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyOptionalLookupService
+  - com.dwarfeng.subgrade.sdk.hibernate.criteria.OptionalCriteriaMaker
+- 修改 DaoOnlyPresetLookupService 类中错误的文档注释。
 - 编写写入服务，旨在更高效的处理连续写入新数据的工况。
   - com.dwarfeng.subgrade.stack.service.WriteService
   - com.dwarfeng.subgrade.stack.service.BatchWriteService
@@ -23,7 +30,9 @@
 
 #### 功能移除
 
-- (无)
+- ~~删除（重命名）com.dwarfeng.subgrade.stack.dao.ConstraintLookupDao~~
+
+  该在创建之时已经做出注释警告用户不要使用，因此该类的删除不会造成太大的不兼容。
 
 ---
 

@@ -38,7 +38,7 @@
 
 - 实现了常用的AOP，如性能分析、登录判断、权限判断、友好性增强。
 
-- 实现了多种组件的序列化器，如Redis的序列化器、Kafka的序列化器，可供这些框架直接使用。
+- 实现了多种中间件的序列化器，如Redis的序列化器、Kafka的序列化器，可供这些框架直接使用。
 
 - 实现了Web后端的常用工具，如分页、对象封装等常用方法。
 
@@ -67,19 +67,22 @@
   - 在使用的过程中，多数bug出现在此，意味着该框架仍然拥有潜在的不成熟的因素。但是几乎所有项目都会使用
   此框架，因此任何不成熟的因素都会更快的被发现。
   
-  - 数据访问层框架被最大量使用的是Hibernate的数据访问层框架，有
+  - 数据访问层框架被最大量使用的是Hibernate的数据访问层框架
     - com.dwarfeng.subgrade.impl.dao.HibernateBaseDao
     - com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao
     - com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao
     - com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao
     
-  - 除此之外，通过Reids进行持久化的数据访问层也偶尔被使用，有
+  - 除此之外，通过Redis进行持久化的数据访问层也偶尔被使用
     - com.dwarfeng.subgrade.impl.dao.RedisBaseDao
     - com.dwarfeng.subgrade.impl.dao.RedisBatchBaseDao
     
   - 刚刚开发的框架，在至少一个项目中使用
     - com.dwarfeng.subgrade.impl.dao.BatchWriteDao
     - com.dwarfeng.subgrade.impl.dao.HibernateBatchWriteDao
+    
+  - 刚刚开发的框架，且从来没有被使用过
+    - com.dwarfeng.subgrade.impl.dao.HibernateOptionalLookupDao
 
   - 其余的数据访问层框架使用情况极少或几乎没有使用，非常有可能存在bug。
   
@@ -91,8 +94,9 @@
     - com.dwarfeng.subgrade.impl.cache.RedisKeyListCache
     - com.dwarfeng.subgrade.impl.cache.RedisListCache
     
-  - `com.dwarfeng.subgrade.impl.cache.RedisSingleObjectCache` 没有大量使用，可能含有潜在的没有被发现的问题。
-
+  - 较少使用的框架，可能含有潜在的没有被发现的问题。
+    - com.dwarfeng.subgrade.impl.cache.RedisSingleObjectCache
+    
 - 异常映射框架。
 
   - 十分成熟，广泛使用，至今未发现任何问题。
@@ -106,16 +110,19 @@
     - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchRelationService
     - com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService
     - com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService
-    
-  - 不常用的服务框架有可能存在潜在的未被发现的问题。
     - com.dwarfeng.subgrade.impl.service.GeneralCrudService
     - com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService
+    
+  - 不常用的服务框架有可能存在潜在的未被发现的问题。
     - com.dwarfeng.subgrade.impl.service.GeneralEntireLookupService
     - com.dwarfeng.subgrade.impl.service.GeneralSingleObjectService
     
   - 刚刚开发的框架，在至少一个项目中使用
     - com.dwarfeng.subgrade.impl.service.DaoOnlyWriteService
     - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService
+    
+  - 刚刚开发的框架，且从来没有被使用过
+    - com.dwarfeng.subgrade.impl.service.DaoOnlyOptionalLookupService
     
 - Interceptor
 
