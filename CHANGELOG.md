@@ -4,6 +4,13 @@
 
 #### 功能构建
 
+- 编写 JDBC 基础数据访问层以及 JDBC 批处理基础数据访问层，旨在通过 JDBC 用原生 SQL直接访问数据源。
+  - com.dwarfeng.subgrade.sdk.jdbc.template.ColumnDefinitionSQLProvider
+  - com.dwarfeng.subgrade.sdk.jdbc.template.EntityMapper
+  - com.dwarfeng.subgrade.sdk.jdbc.template.PhoenixSQLProvider
+  - com.dwarfeng.subgrade.sdk.jdbc.template.SQLProvider
+  - com.dwarfeng.subgrade.impl.dao.JdbcBaseDao
+  - com.dwarfeng.subgrade.impl.dao.JdbcBatchBaseDao
 - 编写可选查询服务，旨在实现无限制的自由查询。
   - com.dwarfeng.subgrade.stack.dao.OptionalLookupDao
   - com.dwarfeng.subgrade.stack.service.OptionalLookupService

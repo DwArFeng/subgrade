@@ -17,12 +17,13 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * 使用 Hibernate 实现的 BaseDao。
+ * 使用 Hibernate 实现的 BatchBaseDao。
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *
  * @author DwArFeng
  * @since 0.0.1-beta
  */
+@SuppressWarnings("DuplicatedCode")
 public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Entity<K>, PE extends Bean> implements BatchBaseDao<K, E> {
 
     /**
