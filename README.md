@@ -85,6 +85,8 @@
     - com.dwarfeng.subgrade.impl.dao.HibernateOptionalLookupDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBaseDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBatchBaseDao
+    - com.dwarfeng.subgrade.impl.dao.JdbcBatchWriteDao
+    - com.dwarfeng.subgrade.impl.dao.JdbcWriteDao
 
   - 其余的数据访问层框架使用情况极少或几乎没有使用，非常有可能存在bug。
   

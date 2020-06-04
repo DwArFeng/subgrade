@@ -27,6 +27,8 @@
   - com.dwarfeng.subgrade.impl.dao.HibernateBatchWriteDao
   - com.dwarfeng.subgrade.impl.service.DaoOnlyWriteService
   - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService
+  - com.dwarfeng.subgrade.impl.service.JdbcBatchWriteDao
+  - com.dwarfeng.subgrade.impl.service.JdbcWriteDao
 - 过时接口 com.dwarfeng.subgrade.stack.dao.ReadOnlyBatchDao。
   - 使用com.dwarfeng.subgrade.stack.dao.BatchReadOnlyDao 替代。
   - 这可能会引发轻微的不兼容。
