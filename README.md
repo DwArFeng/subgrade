@@ -80,7 +80,13 @@
   - 刚刚开发的框架，在至少一个项目中使用
     - com.dwarfeng.subgrade.impl.dao.BatchWriteDao
     - com.dwarfeng.subgrade.impl.dao.HibernateBatchWriteDao
-    
+    - com.dwarfeng.subgrade.impl.dao.JdbcBaseDao
+    - com.dwarfeng.subgrade.impl.dao.JdbcBatchBaseDao
+    - com.dwarfeng.subgrade.impl.dao.JdbcWriteDao
+    - com.dwarfeng.subgrade.impl.dao.JdbcBatchWriteDao
+    - com.dwarfeng.subgrade.impl.dao.JdbcEntireLookupDao
+    - com.dwarfeng.subgrade.impl.dao.JdbcPresetLookupDao
+
   - 刚刚开发的框架，且从来没有被使用过
     - com.dwarfeng.subgrade.impl.dao.HibernateOptionalLookupDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBaseDao
@@ -107,7 +113,7 @@
   
 - 服务框架。
 
-  - 最长用的服务框架几乎没有任何问题。
+  - 最常用的服务框架几乎没有任何问题。
     - com.dwarfeng.subgrade.impl.service.CustomCrudService
     - com.dwarfeng.subgrade.impl.service.CustomBatchCrudService
     - com.dwarfeng.subgrade.impl.service.DaoOnlyCrudService
@@ -142,6 +148,11 @@
   
   - 刚刚开发的框架，在至少一个项目中使用
     - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyAdvisor
+    
+- JDBC 数据访问层不同数据库样板
+
+  - 刚刚开发的框架，在至少一个项目中使用
+    - Apache Phoenix
   
 ---
 

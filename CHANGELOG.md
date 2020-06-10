@@ -4,6 +4,14 @@
 
 #### 功能构建
 
+- 编写 JDBC 基础数据访问层的 Apache Phoenix 实现。
+  - com.dwarfeng.subgrade.sdk.jdbc.mapper.PhoenixEntireLookupMapper
+  - com.dwarfeng.subgrade.sdk.jdbc.template.PhoenixEntireLookupTemplate
+- 编写 JDBC 整体查询数据访问层，旨在通过 JDBC 用原生 SQL直接访问数据源。
+  - com.dwarfeng.subgrade.impl.dao.JdbcEntireLookupDao
+  - com.dwarfeng.subgrade.sdk.jdbc.mapper.EntireLookupMapper
+  - com.dwarfeng.subgrade.sdk.jdbc.template.EntireLookupTemplate
+  - com.dwarfeng.subgrade.sdk.jdbc.template.GeneralEntireLookupTemplate
 - 编写 JDBC 预设查询数据访问层的 Apache Phoenix 实现。
   - com.dwarfeng.subgrade.sdk.jdbc.template.PhoenixPresetLookupTemplate
 - 编写 JDBC 预设查询数据访问层，旨在通过 JDBC 用原生 SQL 进行预设查询。
