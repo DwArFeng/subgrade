@@ -1,7 +1,9 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.template.EntityMapper;
-import com.dwarfeng.subgrade.sdk.jdbc.template.SQLProvider;
+import com.dwarfeng.subgrade.sdk.jdbc.mapper.CrudMapper;
+import com.dwarfeng.subgrade.sdk.jdbc.mapper.ResultMapper;
+import com.dwarfeng.subgrade.sdk.jdbc.template.CreateTableTemplate;
+import com.dwarfeng.subgrade.sdk.jdbc.template.CrudTemplate;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BaseDao;
@@ -28,40 +30,36 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     private static final Logger LOGGER = LoggerFactory.getLogger(JdbcBaseDao.class);
 
     private JdbcTemplate jdbcTemplate;
-    private SQLProvider sqlProvider;
-    private EntityMapper<K, E> entityMapper;
-
-    private final SQLCache sqlCache = new SQLCache();
+    private CrudTemplate crudTemplate;
+    private CrudMapper<K, E> crudMapper;
+    private ResultMapper<E> resultMapper;
 
     public JdbcBaseDao(
             @NonNull JdbcTemplate jdbcTemplate,
-            @NonNull SQLProvider sqlProvider,
-            @NonNull EntityMapper<K, E> entityMapper) {
-        this(jdbcTemplate, sqlProvider, entityMapper, false);
+            @NonNull CrudTemplate crudTemplate,
+            @NonNull CrudMapper<K, E> crudMapper,
+            @NonNull ResultMapper<E> resultMapper) {
+        this(jdbcTemplate, crudTemplate, crudMapper, resultMapper, null);
     }
 
     public JdbcBaseDao(
             @NonNull JdbcTemplate jdbcTemplate,
-            @NonNull SQLProvider sqlProvider,
-            @NonNull EntityMapper<K, E> entityMapper,
-            boolean createTable) {
+            @NonNull CrudTemplate crudTemplate,
+            @NonNull CrudMapper<K, E> crudMapper,
+            @NonNull ResultMapper<E> resultMapper,
+            CreateTableTemplate createTableTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.sqlProvider = sqlProvider;
-        this.entityMapper = entityMapper;
-        if (createTable) {
-            creatTable();
+        this.crudTemplate = crudTemplate;
+        this.crudMapper = crudMapper;
+        this.resultMapper = resultMapper;
+        if (Objects.nonNull(createTableTemplate)) {
+            creatTable(createTableTemplate);
         }
     }
 
-    private void creatTable() {
-        List<String> crateTableSQLs;
-        try {
-            crateTableSQLs = sqlProvider.provideCreateTableSQL();
-        } catch (UnsupportedOperationException e) {
-            LOGGER.warn("指定的 BaseSqlProvider 不支持建表，将不会执行建表语句");
-            return;
-        }
-        for (String crateTableSQL : crateTableSQLs) {
+    private void creatTable(CreateTableTemplate createTableTemplate) {
+        List<String> crateTableSQLList = createTableTemplate.createTableSQL();
+        for (String crateTableSQL : crateTableSQLList) {
             jdbcTemplate.execute(crateTableSQL);
         }
     }
@@ -69,12 +67,8 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     @Override
     public K insert(E entity) throws DaoException {
         try {
-            String insertSQL = sqlCache.getInsertSQL();
-            if (Objects.isNull(insertSQL)) {
-                insertSQL = sqlProvider.provideInsertSQL();
-                sqlCache.setInsertSQL(insertSQL);
-            }
-            jdbcTemplate.update(insertSQL, entityMapper.entity2Objects(entity));
+            String insertSQL = crudTemplate.insertSQL();
+            jdbcTemplate.update(insertSQL, crudMapper.insert2Args(entity));
             return entity.getKey();
         } catch (Exception e) {
             throw new DaoException(e);
@@ -84,12 +78,8 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     @Override
     public void update(E entity) throws DaoException {
         try {
-            String updateSQL = sqlCache.getUpdateSQL();
-            if (Objects.isNull(updateSQL)) {
-                updateSQL = sqlProvider.provideUpdateSQL();
-                sqlCache.setUpdateSQL(updateSQL);
-            }
-            jdbcTemplate.update(updateSQL, entityMapper.entity2Objects(entity));
+            String updateSQL = crudTemplate.updateSQL();
+            jdbcTemplate.update(updateSQL, crudMapper.update2Args(entity));
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -98,12 +88,8 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     @Override
     public void delete(K key) throws DaoException {
         try {
-            String deleteSQL = sqlCache.getDeleteSQL();
-            if (Objects.isNull(deleteSQL)) {
-                deleteSQL = sqlProvider.provideDeleteSQL();
-                sqlCache.setDeleteSQL(deleteSQL);
-            }
-            jdbcTemplate.update(deleteSQL, entityMapper.key2Objects(key));
+            String deleteSQL = crudTemplate.deleteSQL();
+            jdbcTemplate.update(deleteSQL, crudMapper.delete2Args(key));
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -112,12 +98,8 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     @Override
     public boolean exists(K key) throws DaoException {
         try {
-            String existsSQL = sqlCache.getExistsSQL();
-            if (Objects.isNull(existsSQL)) {
-                existsSQL = sqlProvider.provideExistsSQL();
-                sqlCache.setExistsSQL(existsSQL);
-            }
-            Boolean exists = jdbcTemplate.query(existsSQL, entityMapper.key2Objects(key), ResultSet::next);
+            String existsSQL = crudTemplate.existsSQL();
+            Boolean exists = jdbcTemplate.query(existsSQL, crudMapper.exists2Args(key), ResultSet::next);
             assert exists != null;
             return exists;
         } catch (Exception e) {
@@ -128,18 +110,10 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     @Override
     public E get(K key) throws DaoException {
         try {
-            String getSQL = sqlCache.getGetSQL();
-            if (Objects.isNull(getSQL)) {
-                getSQL = sqlProvider.provideGetSQL();
-                sqlCache.setGetSQL(getSQL);
-            }
-            return jdbcTemplate.query(getSQL, entityMapper.key2Objects(key), rs -> {
+            String getSQL = crudTemplate.getSQL();
+            return jdbcTemplate.query(getSQL, crudMapper.get2Args(key), rs -> {
                 if (rs.next()) {
-                    Object[] objects = new Object[rs.getMetaData().getColumnCount()];
-                    for (int i = 0; i < objects.length; i++) {
-                        objects[i] = rs.getObject(i);
-                    }
-                    return entityMapper.objects2Entity(objects);
+                    return resultMapper.result2Entity(rs);
                 } else {
                     return null;
                 }
@@ -157,79 +131,27 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public SQLProvider getSqlProvider() {
-        return sqlProvider;
+    public CrudTemplate getCrudTemplate() {
+        return crudTemplate;
     }
 
-    public void setSqlProvider(SQLProvider sqlProvider) {
-        this.sqlProvider = sqlProvider;
+    public void setCrudTemplate(@NonNull CrudTemplate crudTemplate) {
+        this.crudTemplate = crudTemplate;
     }
 
-    public EntityMapper<K, E> getEntityMapper() {
-        return entityMapper;
+    public CrudMapper<K, E> getCrudMapper() {
+        return crudMapper;
     }
 
-    public void setEntityMapper(@NonNull EntityMapper<K, E> entityMapper) {
-        this.entityMapper = entityMapper;
+    public void setCrudMapper(@NonNull CrudMapper<K, E> crudMapper) {
+        this.crudMapper = crudMapper;
     }
 
-    private static final class SQLCache {
+    public ResultMapper<E> getResultMapper() {
+        return resultMapper;
+    }
 
-        private String insertSQL;
-        private String updateSQL;
-        private String deleteSQL;
-        private String existsSQL;
-        private String getSQL;
-
-        public String getInsertSQL() {
-            return insertSQL;
-        }
-
-        public void setInsertSQL(String insertSQL) {
-            this.insertSQL = insertSQL;
-        }
-
-        public String getUpdateSQL() {
-            return updateSQL;
-        }
-
-        public void setUpdateSQL(String updateSQL) {
-            this.updateSQL = updateSQL;
-        }
-
-        public String getDeleteSQL() {
-            return deleteSQL;
-        }
-
-        public void setDeleteSQL(String deleteSQL) {
-            this.deleteSQL = deleteSQL;
-        }
-
-        public String getExistsSQL() {
-            return existsSQL;
-        }
-
-        public void setExistsSQL(String existsSQL) {
-            this.existsSQL = existsSQL;
-        }
-
-        public String getGetSQL() {
-            return getSQL;
-        }
-
-        public void setGetSQL(String getSQL) {
-            this.getSQL = getSQL;
-        }
-
-        @Override
-        public String toString() {
-            return "SQLCache{" +
-                    "insertSQL='" + insertSQL + '\'' +
-                    ", updateSQL='" + updateSQL + '\'' +
-                    ", deleteSQL='" + deleteSQL + '\'' +
-                    ", existsSQL='" + existsSQL + '\'' +
-                    ", getSQL='" + getSQL + '\'' +
-                    '}';
-        }
+    public void setResultMapper(@NonNull ResultMapper<E> resultMapper) {
+        this.resultMapper = resultMapper;
     }
 }

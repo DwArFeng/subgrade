@@ -1,54 +1,40 @@
 package com.dwarfeng.subgrade.sdk.jdbc.template;
 
-import java.util.List;
-
 /**
- * 基础SQL提供器。
+ * Crud模板。
  *
  * @author DwArFeng
  * @since 1.1.0
  */
-public interface SQLProvider {
-
-    /**
-     * 提供建表用的SQL语句序列。
-     *
-     * <p>
-     * 建表SQL应包括必要的建表语句，必要时包含索引以及外键语句。<br>
-     * 该方法是可选的，可以简单的抛出 {@link UnsupportedOperationException} 代表该提供器不支持该方法。
-     *
-     * @return 建表用的SQL语句序列。
-     * @throws UnsupportedOperationException 不支持该方法时抛出的异常。
-     */
-    List<String> provideCreateTableSQL() throws UnsupportedOperationException;
+public interface CrudTemplate {
 
     /**
      * 提供插入数据用的SQL语句。
      *
      * @return 插入数据用的SQL语句。
      */
-    String provideInsertSQL();
+    String insertSQL();
 
     /**
      * 提供更新数据用的SQL语句。
      *
      * @return 更新数据用的SQL语句。
      */
-    String provideUpdateSQL();
+    String updateSQL();
 
     /**
      * 提供删除数据用的SQL语句。
      *
      * @return 删除数据用的SQL语句。
      */
-    String provideDeleteSQL();
+    String deleteSQL();
 
     /**
      * 提供获取数据用的SQL语句。
      *
      * @return 获取数据用的SQL语句。
      */
-    String provideGetSQL();
+    String getSQL();
 
     /**
      * 提供判断数据是否存在用的SQL语句。
@@ -59,5 +45,5 @@ public interface SQLProvider {
      *
      * @return 判断数据是否存在用的SQL语句。
      */
-    String provideExistsSQL();
+    String existsSQL();
 }
