@@ -1,9 +1,9 @@
-package com.dwarfeng.subgrade.sdk.jdbc.td;
+package com.dwarfeng.subgrade.sdk.jdbc.database;
 
 import java.util.List;
 import java.util.Objects;
 
-import static com.dwarfeng.subgrade.sdk.jdbc.td.TableDefinition.ColumnDefinition;
+import static com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ColumnDefinition;
 
 /**
  * 数据库表定义的工具类。

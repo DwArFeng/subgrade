@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.jdbc.td;
+package com.dwarfeng.subgrade.sdk.jdbc.database;
 
 /**
  * Phoenix 数据库表定义常量。
@@ -6,7 +6,7 @@ package com.dwarfeng.subgrade.sdk.jdbc.td;
  * @author DwArFeng
  * @since 1.1.0
  */
-public final class PhoenixTDConstants {
+public final class PhoenixConstants {
 
     public static final String CUSTOM_NULLABLE = "NULLABLE";
     public static final String CUSTOM_DEFAULT = "DEFAULT";
@@ -48,7 +48,7 @@ public final class PhoenixTDConstants {
         ASYNC, NOT_ASYNC
     }
 
-    private PhoenixTDConstants() {
+    private PhoenixConstants() {
         throw new IllegalStateException("禁止外部实例化");
     }
 }

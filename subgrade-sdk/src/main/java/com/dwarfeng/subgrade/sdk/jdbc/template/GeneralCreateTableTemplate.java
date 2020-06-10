@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.sdk.jdbc.template;
 
-import com.dwarfeng.subgrade.sdk.jdbc.td.TableDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;

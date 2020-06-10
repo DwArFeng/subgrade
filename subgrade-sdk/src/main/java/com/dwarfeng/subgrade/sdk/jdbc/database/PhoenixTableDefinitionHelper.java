@@ -1,16 +1,16 @@
-package com.dwarfeng.subgrade.sdk.jdbc.td;
+package com.dwarfeng.subgrade.sdk.jdbc.database;
 
-import com.dwarfeng.subgrade.sdk.jdbc.td.PhoenixTDConstants.IndexAsyncType;
-import com.dwarfeng.subgrade.sdk.jdbc.td.PhoenixTDConstants.IndexType;
-import com.dwarfeng.subgrade.sdk.jdbc.td.PhoenixTDConstants.UpdateCacheFrequency;
-import com.dwarfeng.subgrade.sdk.jdbc.td.TableDefinition.ConstraintDefinition;
-import com.dwarfeng.subgrade.sdk.jdbc.td.TableDefinition.IndexDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants.IndexAsyncType;
+import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants.IndexType;
+import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants.UpdateCacheFrequency;
+import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ConstraintDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.IndexDefinition;
 import org.springframework.lang.NonNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.dwarfeng.subgrade.sdk.jdbc.td.TableDefinition.ColumnDefinition;
+import static com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ColumnDefinition;
 
 /**
  * Phoenix 数据库表定义帮手。
@@ -21,7 +21,7 @@ import static com.dwarfeng.subgrade.sdk.jdbc.td.TableDefinition.ColumnDefinition
  * @author DwArFeng
  * @since 1.1.0
  */
-public class PhoenixTDHelper {
+public class PhoenixTableDefinitionHelper {
 
     private String tableName;
     private final Map<String, Object> customDefinition = new HashMap<>();
@@ -29,8 +29,8 @@ public class PhoenixTDHelper {
     private ConstraintDefinition primaryKeyConstraintDefinition = null;
     private final Map<String, IndexDefinition> indexDefinitionMap = new LinkedHashMap<>();
 
-    public PhoenixTDHelper() {
-        customDefinition.put(PhoenixTDConstants.CUSTOM_SPLIT_POINT, new ArrayList<>());
+    public PhoenixTableDefinitionHelper() {
+        customDefinition.put(PhoenixConstants.CUSTOM_SPLIT_POINT, new ArrayList<>());
     }
 
     public void setTableName(@NonNull String tableName) {
@@ -58,8 +58,8 @@ public class PhoenixTDHelper {
             throw new IllegalArgumentException("列名称" + columnName + "不存在");
         }
         ColumnDefinition columnDefinition = columnDefinitionMap.get(columnName);
-        columnDefinition.getCustomDefinition().put(PhoenixTDConstants.CUSTOM_NULLABLE,
-                PhoenixTDConstants.ColumnNullable.NULL);
+        columnDefinition.getCustomDefinition().put(PhoenixConstants.CUSTOM_NULLABLE,
+                PhoenixConstants.ColumnNullable.NULL);
     }
 
     public void notNullColumn(@NonNull String columnName) {
@@ -67,8 +67,8 @@ public class PhoenixTDHelper {
             throw new IllegalArgumentException("列名称" + columnName + "不存在");
         }
         ColumnDefinition columnDefinition = columnDefinitionMap.get(columnName);
-        columnDefinition.getCustomDefinition().put(PhoenixTDConstants.CUSTOM_NULLABLE,
-                PhoenixTDConstants.ColumnNullable.NOT_NULL);
+        columnDefinition.getCustomDefinition().put(PhoenixConstants.CUSTOM_NULLABLE,
+                PhoenixConstants.ColumnNullable.NOT_NULL);
     }
 
     public void defaultColumn(@NonNull String columnName, @NonNull String defaultValue) {
@@ -76,7 +76,7 @@ public class PhoenixTDHelper {
             throw new IllegalArgumentException("列名称" + columnName + "不存在");
         }
         ColumnDefinition columnDefinition = columnDefinitionMap.get(columnName);
-        columnDefinition.getCustomDefinition().put(PhoenixTDConstants.CUSTOM_DEFAULT, defaultValue);
+        columnDefinition.getCustomDefinition().put(PhoenixConstants.CUSTOM_DEFAULT, defaultValue);
     }
 
     /**
@@ -88,10 +88,10 @@ public class PhoenixTDHelper {
         List<String> nameList = Arrays.asList(columnNames);
         makeSureAllColumnExists(nameList);
         Map<String, Object> customDefinition = new HashMap<>();
-        customDefinition.put(PhoenixTDConstants.CUSTOM_ASC, new HashSet<String>());
-        customDefinition.put(PhoenixTDConstants.CUSTOM_DESC, new HashSet<String>());
+        customDefinition.put(PhoenixConstants.CUSTOM_ASC, new HashSet<String>());
+        customDefinition.put(PhoenixConstants.CUSTOM_DESC, new HashSet<String>());
         primaryKeyConstraintDefinition = new ConstraintDefinition(
-                PhoenixTDConstants.NAME_PRIMARY_KEY, PhoenixTDConstants.TYPE_PRIMARY_KEY,
+                PhoenixConstants.NAME_PRIMARY_KEY, PhoenixConstants.TYPE_PRIMARY_KEY,
                 nameList.stream().map(columnDefinitionMap::get).collect(Collectors.toList()), customDefinition);
     }
 
@@ -100,8 +100,8 @@ public class PhoenixTDHelper {
         List<String> nameList = Arrays.asList(columnNames);
         makeSureAllColumnExists(nameList);
         Map<String, Object> customDefinition = primaryKeyConstraintDefinition.getCustomDefinition();
-        ((HashSet<String>) customDefinition.get(PhoenixTDConstants.CUSTOM_ASC)).addAll(nameList);
-        ((HashSet<String>) customDefinition.get(PhoenixTDConstants.CUSTOM_DESC)).removeAll(nameList);
+        ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_ASC)).addAll(nameList);
+        ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_DESC)).removeAll(nameList);
     }
 
     @SuppressWarnings("unchecked")
@@ -109,8 +109,8 @@ public class PhoenixTDHelper {
         List<String> nameList = Arrays.asList(columnNames);
         makeSureAllColumnExists(nameList);
         Map<String, Object> customDefinition = primaryKeyConstraintDefinition.getCustomDefinition();
-        ((HashSet<String>) customDefinition.get(PhoenixTDConstants.CUSTOM_ASC)).removeAll(nameList);
-        ((HashSet<String>) customDefinition.get(PhoenixTDConstants.CUSTOM_DESC)).addAll(nameList);
+        ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_ASC)).removeAll(nameList);
+        ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_DESC)).addAll(nameList);
     }
 
     public void rowTimestampPrimaryKey(@NonNull String columnName) {
@@ -118,7 +118,7 @@ public class PhoenixTDHelper {
             throw new IllegalArgumentException("列名称" + columnName + "不存在");
         }
         Map<String, Object> customDefinition = primaryKeyConstraintDefinition.getCustomDefinition();
-        customDefinition.put(PhoenixTDConstants.CUSTOM_ROW_TIMESTAMP, columnName);
+        customDefinition.put(PhoenixConstants.CUSTOM_ROW_TIMESTAMP, columnName);
     }
 
     /**
@@ -136,7 +136,7 @@ public class PhoenixTDHelper {
         if (Objects.nonNull(val) && (val < 0 || val > 256)) {
             throw new IllegalArgumentException("SALT_BUCKETS 的取值在 0-256 之前，当前值是 " + val);
         }
-        customDefinition.put(PhoenixTDConstants.CUSTOM_SALT_BUCKETS, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_SALT_BUCKETS, val);
     }
 
     /**
@@ -145,7 +145,7 @@ public class PhoenixTDHelper {
      * updating a table which is not the source-of-truth and thus making the lose of data acceptable.
      */
     public void setTableDisableVal(Boolean val) {
-        customDefinition.put(PhoenixTDConstants.CUSTOM_DISABLE_WAL, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_DISABLE_WAL, val);
     }
 
     /**
@@ -159,7 +159,7 @@ public class PhoenixTDHelper {
      * http://phoenix.incubator.apache.org/secondary_indexing.html</a>
      */
     public void setTableImmutableRows(Boolean val) {
-        customDefinition.put(PhoenixTDConstants.CUSTOM_IMMUTABLE_ROWS, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_IMMUTABLE_ROWS, val);
     }
 
     /**
@@ -169,7 +169,7 @@ public class PhoenixTDHelper {
      * http://phoenix.incubator.apache.org/multi-tenancy.html</a>
      */
     public void setTableMultiTelnet(Boolean val) {
-        customDefinition.put(PhoenixTDConstants.CUSTOM_MULTI_TENANT, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_MULTI_TENANT, val);
     }
 
     /**
@@ -180,7 +180,7 @@ public class PhoenixTDHelper {
         if (Objects.isNull(val) || val.isEmpty()) {
             throw new IllegalArgumentException("DEFAULT_COLUMN_FAMILY 不能为 null 或空字符串");
         }
-        customDefinition.put(PhoenixTDConstants.CUSTOM_DEFAULT_COLUMN_FAMILY, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_DEFAULT_COLUMN_FAMILY, val);
     }
 
     /**
@@ -189,7 +189,7 @@ public class PhoenixTDHelper {
      * facilitate doing flashback queries (i.e. queries to look at the state of a record in the past).
      */
     public void setTableStoreNulls(Boolean val) {
-        customDefinition.put(PhoenixTDConstants.CUSTOM_STORE_NULLS, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_STORE_NULLS, val);
     }
 
     /**
@@ -200,7 +200,7 @@ public class PhoenixTDHelper {
      * <a href = http://phoenix.apache.org/transactions.html>http://phoenix.apache.org/transactions.html</a>
      */
     public void setTableTransactional(Boolean val) {
-        customDefinition.put(PhoenixTDConstants.CUSTOM_TRANSACTIONAL, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_TRANSACTIONAL, val);
     }
 
     /**
@@ -212,7 +212,7 @@ public class PhoenixTDHelper {
      * metadata before checking back with the server for updates.
      */
     public void setTableUpdateCacheFrequency(UpdateCacheFrequency val) {
-        customDefinition.put(PhoenixTDConstants.CUSTOM_UPDATE_CACHE_FREQUENCY, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_UPDATE_CACHE_FREQUENCY, val);
     }
 
     /**
@@ -222,7 +222,7 @@ public class PhoenixTDHelper {
         if (Objects.nonNull(val) && val < 0) {
             throw new IllegalArgumentException("UPDATE_CACHE_FREQUENCY 的取值应大于0 " + val);
         }
-        customDefinition.put(PhoenixTDConstants.CUSTOM_UPDATE_CACHE_FREQUENCY, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_UPDATE_CACHE_FREQUENCY, val);
     }
 
     /**
@@ -231,7 +231,7 @@ public class PhoenixTDHelper {
      * table metadata when the client already has all columns declared in a
      */
     public void setTableAppendOnlySchema(Boolean val) {
-        customDefinition.put(PhoenixTDConstants.CUSTOM_APPEND_ONLY_SCHEMA, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_APPEND_ONLY_SCHEMA, val);
     }
 
     /**
@@ -243,7 +243,7 @@ public class PhoenixTDHelper {
         if (Objects.isNull(val) || val.isEmpty()) {
             throw new IllegalArgumentException("AUTO_PARTITION_SEQ 不能为 null 或空字符串");
         }
-        customDefinition.put(PhoenixTDConstants.CUSTOM_AUTO_PARTITION_SEQ, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_AUTO_PARTITION_SEQ, val);
     }
 
     /**
@@ -257,12 +257,12 @@ public class PhoenixTDHelper {
         if (Objects.nonNull(val) && val < 0) {
             throw new IllegalArgumentException("GUIDE_POSTS_WIDTH 的取值应大于0 " + val);
         }
-        customDefinition.put(PhoenixTDConstants.CUSTOM_GUIDE_POSTS_WIDTH, val);
+        customDefinition.put(PhoenixConstants.CUSTOM_GUIDE_POSTS_WIDTH, val);
     }
 
     public void setTableSplitPoint(String... columnNames) {
         makeSureAllColumnExists(Arrays.asList(columnNames));
-        customDefinition.put(PhoenixTDConstants.CUSTOM_SPLIT_POINT, Arrays.asList(columnNames));
+        customDefinition.put(PhoenixConstants.CUSTOM_SPLIT_POINT, Arrays.asList(columnNames));
     }
 
     public void addIndex(@NonNull String indexName, @NonNull IndexType indexType, @NonNull String... columnNames) {
@@ -271,15 +271,15 @@ public class PhoenixTDHelper {
         }
         List<String> columnNameList = Arrays.asList(columnNames);
         String type = indexType == IndexType.GLOBAL ?
-                PhoenixTDConstants.INDEX_TYPE_GLOBAL : PhoenixTDConstants.INDEX_TYPE_LOCAL;
+                PhoenixConstants.INDEX_TYPE_GLOBAL : PhoenixConstants.INDEX_TYPE_LOCAL;
         List<ColumnDefinition> columnDefinitions = columnNameList.stream()
                 .map(columnDefinitionMap::get).collect(Collectors.toList());
         makeSureAllColumnExists(columnNameList);
         Map<String, Object> customDefinition = new HashMap<>();
-        customDefinition.put(PhoenixTDConstants.CUSTOM_ASC, new HashSet<String>());
-        customDefinition.put(PhoenixTDConstants.CUSTOM_DESC, new HashSet<String>());
-        customDefinition.put(PhoenixTDConstants.CUSTOM_SPLIT_POINT, new ArrayList<>());
-        customDefinition.put(PhoenixTDConstants.CUSTOM_INCLUDE, new ArrayList<>());
+        customDefinition.put(PhoenixConstants.CUSTOM_ASC, new HashSet<String>());
+        customDefinition.put(PhoenixConstants.CUSTOM_DESC, new HashSet<String>());
+        customDefinition.put(PhoenixConstants.CUSTOM_SPLIT_POINT, new ArrayList<>());
+        customDefinition.put(PhoenixConstants.CUSTOM_INCLUDE, new ArrayList<>());
         indexDefinitionMap.put(indexName, new IndexDefinition(indexName, type, columnDefinitions, customDefinition));
     }
 
@@ -289,8 +289,8 @@ public class PhoenixTDHelper {
         makeSureIndexExists(indexName);
         makeSureAllColumnExists(columnNameList);
         Map<String, Object> customDefinition = indexDefinitionMap.get(indexName).getCustomDefinition();
-        ((HashSet<String>) customDefinition.get(PhoenixTDConstants.CUSTOM_ASC)).addAll(columnNameList);
-        ((HashSet<String>) customDefinition.get(PhoenixTDConstants.CUSTOM_DESC)).removeAll(columnNameList);
+        ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_ASC)).addAll(columnNameList);
+        ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_DESC)).removeAll(columnNameList);
     }
 
     @SuppressWarnings("unchecked")
@@ -299,20 +299,20 @@ public class PhoenixTDHelper {
         makeSureIndexExists(indexName);
         makeSureAllColumnExists(columnNameList);
         Map<String, Object> customDefinition = indexDefinitionMap.get(indexName).getCustomDefinition();
-        ((HashSet<String>) customDefinition.get(PhoenixTDConstants.CUSTOM_ASC)).removeAll(columnNameList);
-        ((HashSet<String>) customDefinition.get(PhoenixTDConstants.CUSTOM_DESC)).addAll(columnNameList);
+        ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_ASC)).removeAll(columnNameList);
+        ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_DESC)).addAll(columnNameList);
     }
 
     public void setIndexInclude(@NonNull String indexName, @NonNull String... columnNames) {
         List<String> columnNameList = Arrays.asList(columnNames);
         makeSureIndexExists(indexName);
         makeSureAllColumnExists(columnNameList);
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_INCLUDE, columnNameList);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_INCLUDE, columnNameList);
     }
 
     public void setIndexAsyncType(@NonNull String indexName, IndexAsyncType indexAsyncType) {
         makeSureIndexExists(indexName);
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_ASYNC, indexAsyncType);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_ASYNC, indexAsyncType);
     }
 
     /**
@@ -331,7 +331,7 @@ public class PhoenixTDHelper {
         if (Objects.nonNull(val) && (val < 0 || val > 256)) {
             throw new IllegalArgumentException("SALT_BUCKETS 的取值在 0-256 之前，当前值是 " + val);
         }
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_SALT_BUCKETS, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_SALT_BUCKETS, val);
     }
 
     /**
@@ -341,7 +341,7 @@ public class PhoenixTDHelper {
      */
     public void setIndexDisableVal(String indexName, Boolean val) {
         makeSureIndexExists(indexName);
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_DISABLE_WAL, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_DISABLE_WAL, val);
     }
 
     /**
@@ -356,7 +356,7 @@ public class PhoenixTDHelper {
      */
     public void setIndexImmutableRows(String indexName, Boolean val) {
         makeSureIndexExists(indexName);
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_IMMUTABLE_ROWS, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_IMMUTABLE_ROWS, val);
     }
 
     /**
@@ -367,7 +367,7 @@ public class PhoenixTDHelper {
      */
     public void setIndexMultiTelnet(String indexName, Boolean val) {
         makeSureIndexExists(indexName);
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_MULTI_TENANT, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_MULTI_TENANT, val);
     }
 
     /**
@@ -379,7 +379,7 @@ public class PhoenixTDHelper {
         if (Objects.isNull(val) || val.isEmpty()) {
             throw new IllegalArgumentException("DEFAULT_COLUMN_FAMILY 不能为 null 或空字符串");
         }
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_DEFAULT_COLUMN_FAMILY, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_DEFAULT_COLUMN_FAMILY, val);
     }
 
     /**
@@ -389,7 +389,7 @@ public class PhoenixTDHelper {
      */
     public void setIndexStoreNulls(String indexName, Boolean val) {
         makeSureIndexExists(indexName);
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_STORE_NULLS, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_STORE_NULLS, val);
     }
 
     /**
@@ -401,7 +401,7 @@ public class PhoenixTDHelper {
      */
     public void setIndexTransactional(String indexName, Boolean val) {
         makeSureIndexExists(indexName);
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_TRANSACTIONAL, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_TRANSACTIONAL, val);
     }
 
     /**
@@ -414,7 +414,7 @@ public class PhoenixTDHelper {
      */
     public void setIndexUpdateCacheFrequency(String name, UpdateCacheFrequency val) {
         makeSureIndexExists(name);
-        indexDefinitionMap.get(name).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_UPDATE_CACHE_FREQUENCY, val);
+        indexDefinitionMap.get(name).getCustomDefinition().put(PhoenixConstants.CUSTOM_UPDATE_CACHE_FREQUENCY, val);
     }
 
     /**
@@ -425,7 +425,7 @@ public class PhoenixTDHelper {
         if (Objects.nonNull(val) && val < 0) {
             throw new IllegalArgumentException("UPDATE_CACHE_FREQUENCY 的取值应大于0 " + val);
         }
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_UPDATE_CACHE_FREQUENCY, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_UPDATE_CACHE_FREQUENCY, val);
     }
 
     /**
@@ -435,7 +435,7 @@ public class PhoenixTDHelper {
      */
     public void setIndexAppendOnlySchema(String indexName, Boolean val) {
         makeSureIndexExists(indexName);
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_APPEND_ONLY_SCHEMA, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_APPEND_ONLY_SCHEMA, val);
     }
 
     /**
@@ -448,7 +448,7 @@ public class PhoenixTDHelper {
         if (Objects.isNull(val) || val.isEmpty()) {
             throw new IllegalArgumentException("AUTO_PARTITION_SEQ 不能为 null 或空字符串");
         }
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_AUTO_PARTITION_SEQ, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_AUTO_PARTITION_SEQ, val);
     }
 
     /**
@@ -463,14 +463,14 @@ public class PhoenixTDHelper {
         if (Objects.nonNull(val) && val < 0) {
             throw new IllegalArgumentException("GUIDE_POSTS_WIDTH 的取值应大于0 " + val);
         }
-        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixTDConstants.CUSTOM_GUIDE_POSTS_WIDTH, val);
+        indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_GUIDE_POSTS_WIDTH, val);
     }
 
     public void setIndexSplitPoint(String indexName, String... columnNames) {
         makeSureIndexExists(indexName);
         makeSureAllColumnExists(Arrays.asList(columnNames));
         indexDefinitionMap.get(indexName).getCustomDefinition()
-                .put(PhoenixTDConstants.CUSTOM_SPLIT_POINT, Arrays.asList(columnNames));
+                .put(PhoenixConstants.CUSTOM_SPLIT_POINT, Arrays.asList(columnNames));
     }
 
     private void makeSureAllColumnExists(List<String> nameList) {

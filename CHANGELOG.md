@@ -4,23 +4,25 @@
 
 #### 功能构建
 
+- 编写 JDBC 预设查询数据访问层的 Apache Phoenix 实现。
+  - com.dwarfeng.subgrade.sdk.jdbc.template.PhoenixPresetLookupTemplate
 - 编写 JDBC 预设查询数据访问层，旨在通过 JDBC 用原生 SQL 进行预设查询。
   - com.dwarfeng.subgrade.impl.dao.JdbcPresetLookupDao
   - com.dwarfeng.subgrade.sdk.jdbc.mapper.PresetLookupMapper
   - com.dwarfeng.subgrade.sdk.jdbc.template.PresetLookupTemplate
   - com.dwarfeng.subgrade.sdk.jdbc.template.GeneralPresetLookupTemplate
-- 编写 JDBC 基础数据访问层以的 Apache Phoenix 实现。
+- 编写 JDBC 基础数据访问层的 Apache Phoenix 实现。
   - com.dwarfeng.subgrade.sdk.jdbc.template.PhoenixCreateTableTemplate
   - com.dwarfeng.subgrade.sdk.jdbc.template.PhoenixCrudTemplate
-  - com.dwarfeng.subgrade.sdk.jdbc.td.PhoenixTDConstants
+  - com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants
   - com.dwarfeng.subgrade.sdk.jdbc.mapper.PresetLookupMapper
 - 编写 JDBC 基础数据访问层以及 JDBC 批处理基础数据访问层，旨在通过 JDBC 用原生 SQL直接访问数据源。
   - com.dwarfeng.subgrade.sdk.jdbc.template.CreateTableTemplate
   - com.dwarfeng.subgrade.sdk.jdbc.template.CrudTemplate
   - com.dwarfeng.subgrade.sdk.jdbc.template.GeneralCreateTableTemplate
   - com.dwarfeng.subgrade.sdk.jdbc.template.GeneralCrudTemplate
-  - com.dwarfeng.subgrade.sdk.jdbc.td.TableDefinitionUtil
-  - com.dwarfeng.subgrade.sdk.jdbc.td.TableDefinition
+  - com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinitionUtil
+  - com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition
   - com.dwarfeng.subgrade.sdk.jdbc.mapper.ResultMapper
   - com.dwarfeng.subgrade.sdk.jdbc.mapper.CrudMapper
   - com.dwarfeng.subgrade.impl.dao.JdbcBaseDao

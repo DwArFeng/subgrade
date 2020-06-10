@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.sdk.jdbc.template;
 
-import com.dwarfeng.subgrade.sdk.jdbc.td.TableDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,24 +43,24 @@ public abstract class GeneralPresetLookupTemplate implements PresetLookupTemplat
     @Override
     public abstract String countSQL(String preset, Object[] args);
 
-    protected final boolean containsKey(String key) {
+    protected final boolean containsCachedSQLFragment(String key) {
         return sqlFragmentCache.containsKey(key);
     }
 
-    protected final String get(String key) {
+    protected final String getCachedSQLFragment(String key) {
         String sqlFragment = sqlFragmentCache.get(key);
         LOGGER.debug("using cache: key = " + key + ", sqlFragment = " + sqlFragment);
         return sqlFragment;
     }
 
-    protected final String put(String key, String sqlFragment) {
+    protected final void putCachedSQLFragment(String key, String sqlFragment) {
         LOGGER.debug("putting cache: key = " + key + ", sqlFragment = " + sqlFragment);
-        return sqlFragmentCache.put(key, sqlFragment);
+        sqlFragmentCache.put(key, sqlFragment);
     }
 
-    protected final String remove(String key) {
+    protected final void removeCachedSQLFragment(String key) {
         LOGGER.debug("removing cache: key = " + key);
-        return sqlFragmentCache.remove(key);
+        sqlFragmentCache.remove(key);
     }
 
     public TableDefinition getTableDefinition() {
@@ -94,8 +94,8 @@ public abstract class GeneralPresetLookupTemplate implements PresetLookupTemplat
             return cacheMap.put(key, sqlFragment);
         }
 
-        public String remove(String key) {
-            return cacheMap.remove(key);
+        public void remove(String key) {
+            cacheMap.remove(key);
         }
     }
 }
