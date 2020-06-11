@@ -1,6 +1,6 @@
 # ChangeLog
 
-### Release_1.1.0_20200529_build_A
+### Release_1.1.0_20200611_build_A
 
 #### 功能构建
 
@@ -54,7 +54,7 @@
   - com.dwarfeng.subgrade.impl.service.JdbcBatchWriteDao
   - com.dwarfeng.subgrade.impl.service.JdbcWriteDao
 - 过时接口 com.dwarfeng.subgrade.stack.dao.ReadOnlyBatchDao。
-  - 使用com.dwarfeng.subgrade.stack.dao.BatchReadOnlyDao 替代。
+  - 使用com.dwarfeng.subgrade.stack.dao.BatchReadOnlyDao 替代
   - 这可能会引发轻微的不兼容。
 
 #### Bug修复
