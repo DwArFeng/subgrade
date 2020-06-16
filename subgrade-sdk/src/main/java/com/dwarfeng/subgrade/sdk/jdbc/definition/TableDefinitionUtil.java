@@ -1,9 +1,9 @@
-package com.dwarfeng.subgrade.sdk.jdbc.database;
+package com.dwarfeng.subgrade.sdk.jdbc.definition;
 
 import java.util.List;
 import java.util.Objects;
 
-import static com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ColumnDefinition;
+import static com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition.ColumnDefinition;
 
 /**
  * 数据库表定义的工具类。
@@ -25,7 +25,22 @@ public final class TableDefinitionUtil {
      * @return 全序列对应的SQL语句。
      */
     public static String fullColumnSerial(TableDefinition tableDefinition) {
-        return columnSerial(tableDefinition.getColumnDefinitions());
+        return columnSerial(tableDefinition.getColumnDefinitions(), "");
+    }
+
+    /**
+     * 获取指定的数据库表定义对应的全序列对应的SQL语句。
+     *
+     * <p>
+     * 生成如下SQL语句的下划线部分。<br>
+     * <code>SELECT <u>t.id, t.name, t.age</u> FROM table AS t</code><br>
+     *
+     * @param tableDefinition 指定的数据库表定义。
+     * @param prefix          列名称的前缀。
+     * @return 全序列对应的SQL语句。
+     */
+    public static String fullColumnSerial(TableDefinition tableDefinition, String prefix) {
+        return columnSerial(tableDefinition.getColumnDefinitions(), prefix);
     }
 
     /**
@@ -40,12 +55,27 @@ public final class TableDefinitionUtil {
      * @return 序列对应的SQL语句。
      */
     public static String columnSerial(List<ColumnDefinition> columnDefinitions) {
+        return columnSerial(columnDefinitions, "");
+    }
+
+    /**
+     * 获取指定的列定义对应的序列对应的SQL语句。
+     *
+     * <p>
+     * 生成如下SQL语句的下划线部分。<br>
+     * <code>SELECT <u>t.id, t.name, t.age</u> FROM table AS t</code><br>
+     *
+     * @param columnDefinitions 指定的列定义集合。
+     * @param prefix            列名称的前缀。
+     * @return 序列对应的SQL语句。
+     */
+    public static String columnSerial(List<ColumnDefinition> columnDefinitions, String prefix) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < columnDefinitions.size(); i++) {
             if (i != 0) {
                 sb.append(", ");
             }
-            sb.append(columnDefinitions.get(i).getName());
+            sb.append(prefix).append(columnDefinitions.get(i).getName());
         }
         return sb.toString();
     }

@@ -1,13 +1,13 @@
 package com.dwarfeng.subgrade.sdk.jdbc.template;
 
-import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants;
-import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants.ColumnNullable;
-import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants.IndexAsyncType;
-import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants.UpdateCacheFrequency;
-import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition;
-import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ColumnDefinition;
-import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ConstraintDefinition;
-import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.IndexDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.PhoenixConstants;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.PhoenixConstants.ColumnNullable;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.PhoenixConstants.IndexAsyncType;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.PhoenixConstants.UpdateCacheFrequency;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition.ColumnDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition.ConstraintDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition.IndexDefinition;
 import org.springframework.lang.NonNull;
 
 import java.util.*;
@@ -30,6 +30,7 @@ public class PhoenixCreateTableTemplate extends GeneralCreateTableTemplate {
     @Override
     protected List<String> internalCreateTableSQL() {
         List<String> sqlList = new ArrayList<>();
+        String schemaName = tableDefinition.getSchemaName();
         String tableName = tableDefinition.getTableName();
         List<ColumnDefinition> columnDefinitions = tableDefinition.getColumnDefinitions();
         ConstraintDefinition pkConstraintDefinition = tableDefinition.getConstraintDefinitions().stream()
@@ -37,7 +38,7 @@ public class PhoenixCreateTableTemplate extends GeneralCreateTableTemplate {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("表定义不包含主键"));
         Map<String, Object> customDefinition = tableDefinition.getCustomDefinition();
-        sqlList.add(createTableSQL(tableName, columnDefinitions, pkConstraintDefinition, customDefinition));
+        sqlList.add(createTableSQL(schemaName, tableName, columnDefinitions, pkConstraintDefinition, customDefinition));
         for (IndexDefinition indexDefinition : tableDefinition.getIndexDefinitions()) {
             sqlList.add(createIndexSQL(tableName, indexDefinition));
         }
@@ -45,11 +46,14 @@ public class PhoenixCreateTableTemplate extends GeneralCreateTableTemplate {
     }
 
     private String createTableSQL(
-            String tableName, List<ColumnDefinition> columnDefinitions, ConstraintDefinition pkConstraintDefinition,
-            Map<String, Object> customDefinition) {
+            String schemaName, String tableName, List<ColumnDefinition> columnDefinitions,
+            ConstraintDefinition pkConstraintDefinition, Map<String, Object> customDefinition) {
         StringBuilder sb = new StringBuilder();
         // 追加 CREATE TABLE IF NOT EXISTS + 表名
         sb.append("CREATE TABLE IF NOT EXISTS ");
+        if (Objects.nonNull(schemaName)) {
+            sb.append(schemaName).append('.');
+        }
         sb.append(tableName).append(" (");
         // 追加全列序列。
         for (int i = 0; i < columnDefinitions.size(); i++) {
@@ -167,8 +171,14 @@ public class PhoenixCreateTableTemplate extends GeneralCreateTableTemplate {
         // 按需增加 ASYNC。
         IndexAsyncType indexAsyncType = (IndexAsyncType) customDefinition
                 .getOrDefault(PhoenixConstants.CUSTOM_ASYNC, null);
-        if (Objects.nonNull(indexAsyncType) && indexAsyncType == IndexAsyncType.ASYNC) {
-            sb.append(" ASYNC");
+        if (Objects.nonNull(indexAsyncType)) {
+            switch (indexAsyncType) {
+                case ASYNC:
+                    sb.append(" ASYNC");
+                    break;
+                case NOT_ASYNC:
+                    break;
+            }
         }
         // 追加索引的选项。
         appendOptions(sb, customDefinition);
@@ -211,10 +221,13 @@ public class PhoenixCreateTableTemplate extends GeneralCreateTableTemplate {
         val = customDefinition.getOrDefault(PhoenixConstants.CUSTOM_UPDATE_CACHE_FREQUENCY, null);
         if (Objects.nonNull(val)) {
             if (val instanceof UpdateCacheFrequency) {
-                if (val == UpdateCacheFrequency.ALWAYS) {
-                    options.add("UPDATE_CACHE_FREQUENCY='ALWAYS'");
-                } else {
-                    options.add("UPDATE_CACHE_FREQUENCY='NEVER'");
+                switch ((UpdateCacheFrequency) val) {
+                    case ALWAYS:
+                        options.add("UPDATE_CACHE_FREQUENCY='ALWAYS'");
+                        break;
+                    case NEVER:
+                        options.add("UPDATE_CACHE_FREQUENCY='NEVER'");
+                        break;
                 }
             } else {
                 options.add(String.format("UPDATE_CACHE_FREQUENCY=%d", val));

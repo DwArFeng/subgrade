@@ -1,20 +1,17 @@
-package com.dwarfeng.subgrade.sdk.jdbc.database;
+package com.dwarfeng.subgrade.sdk.jdbc.definition;
 
-import com.dwarfeng.subgrade.stack.bean.Bean;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * 数据库表定义。
+ * 默认数据库表定义。
  *
  * @author DwArFeng
- * @since 1.1.0
+ * @since 1.1.1
  */
-public class TableDefinition implements Bean {
-
-    private static final long serialVersionUID = 7430771675523291923L;
+public class DefaultTableDefinition implements TableDefinition {
 
     private String schemaName;
     private String tableName;
@@ -23,10 +20,10 @@ public class TableDefinition implements Bean {
     private List<IndexDefinition> indexDefinitions;
     private Map<String, Object> customDefinition;
 
-    public TableDefinition() {
+    public DefaultTableDefinition() {
     }
 
-    public TableDefinition(
+    public DefaultTableDefinition(
             String schemaName,
             @NonNull String tableName,
             @NonNull List<ColumnDefinition> columnDefinitions,
@@ -41,6 +38,7 @@ public class TableDefinition implements Bean {
         this.customDefinition = customDefinition;
     }
 
+    @Override
     public String getSchemaName() {
         return schemaName;
     }
@@ -49,6 +47,7 @@ public class TableDefinition implements Bean {
         this.schemaName = schemaName;
     }
 
+    @Override
     public String getTableName() {
         return tableName;
     }
@@ -57,6 +56,7 @@ public class TableDefinition implements Bean {
         this.tableName = tableName;
     }
 
+    @Override
     public List<ColumnDefinition> getColumnDefinitions() {
         return columnDefinitions;
     }
@@ -65,6 +65,7 @@ public class TableDefinition implements Bean {
         this.columnDefinitions = columnDefinitions;
     }
 
+    @Override
     public List<ConstraintDefinition> getConstraintDefinitions() {
         return constraintDefinitions;
     }
@@ -73,6 +74,7 @@ public class TableDefinition implements Bean {
         this.constraintDefinitions = constraintDefinitions;
     }
 
+    @Override
     public List<IndexDefinition> getIndexDefinitions() {
         return indexDefinitions;
     }
@@ -81,6 +83,7 @@ public class TableDefinition implements Bean {
         this.indexDefinitions = indexDefinitions;
     }
 
+    @Override
     public Map<String, Object> getCustomDefinition() {
         return customDefinition;
     }
@@ -91,7 +94,7 @@ public class TableDefinition implements Bean {
 
     @Override
     public String toString() {
-        return "TableDefinition{" +
+        return "DefaultTableDefinition{" +
                 "schemaName='" + schemaName + '\'' +
                 ", tableName='" + tableName + '\'' +
                 ", columnDefinitions=" + columnDefinitions +
@@ -102,28 +105,27 @@ public class TableDefinition implements Bean {
     }
 
     /**
-     * 列定义。
+     * 默认列定义。
      *
      * @author DwArFeng
-     * @since 1.1.0
+     * @since 1.1.1
      */
-    public static class ColumnDefinition implements Bean {
-
-        private static final long serialVersionUID = -8852077835867458066L;
+    public static class DefaultColumnDefinition implements ColumnDefinition {
 
         private String name;
         private String type;
         private Map<String, Object> customDefinition;
 
-        public ColumnDefinition() {
+        public DefaultColumnDefinition() {
         }
 
-        public ColumnDefinition(String name, String type, Map<String, Object> customDefinition) {
+        public DefaultColumnDefinition(String name, String type, Map<String, Object> customDefinition) {
             this.name = name;
             this.type = type;
             this.customDefinition = customDefinition;
         }
 
+        @Override
         public String getName() {
             return name;
         }
@@ -132,6 +134,7 @@ public class TableDefinition implements Bean {
             this.name = name;
         }
 
+        @Override
         public String getType() {
             return type;
         }
@@ -140,6 +143,7 @@ public class TableDefinition implements Bean {
             this.type = type;
         }
 
+        @Override
         public Map<String, Object> getCustomDefinition() {
             return customDefinition;
         }
@@ -150,7 +154,7 @@ public class TableDefinition implements Bean {
 
         @Override
         public String toString() {
-            return "ColumnDefinition{" +
+            return "DefaultColumnDefinition{" +
                     "name='" + name + '\'' +
                     ", type='" + type + '\'' +
                     ", customDefinition=" + customDefinition +
@@ -159,24 +163,22 @@ public class TableDefinition implements Bean {
     }
 
     /**
-     * 约束定义。
+     * 默认约束定义。
      *
      * @author DwArFeng
-     * @since 1.1.0
+     * @since 1.1.1
      */
-    public static class ConstraintDefinition implements Bean {
-
-        private static final long serialVersionUID = 8592654160606313624L;
+    public static class DefaultConstraintDefinition implements ConstraintDefinition {
 
         private String name;
         private String type;
         private List<ColumnDefinition> columnDefinitions;
         private Map<String, Object> customDefinition;
 
-        public ConstraintDefinition() {
+        public DefaultConstraintDefinition() {
         }
 
-        public ConstraintDefinition(
+        public DefaultConstraintDefinition(
                 String name, String type, List<ColumnDefinition> columnDefinitions,
                 Map<String, Object> customDefinition) {
             this.name = name;
@@ -185,6 +187,7 @@ public class TableDefinition implements Bean {
             this.customDefinition = customDefinition;
         }
 
+        @Override
         public String getName() {
             return name;
         }
@@ -193,6 +196,7 @@ public class TableDefinition implements Bean {
             this.name = name;
         }
 
+        @Override
         public String getType() {
             return type;
         }
@@ -201,6 +205,7 @@ public class TableDefinition implements Bean {
             this.type = type;
         }
 
+        @Override
         public List<ColumnDefinition> getColumnDefinitions() {
             return columnDefinitions;
         }
@@ -209,6 +214,7 @@ public class TableDefinition implements Bean {
             this.columnDefinitions = columnDefinitions;
         }
 
+        @Override
         public Map<String, Object> getCustomDefinition() {
             return customDefinition;
         }
@@ -219,7 +225,7 @@ public class TableDefinition implements Bean {
 
         @Override
         public String toString() {
-            return "ConstraintDefinition{" +
+            return "DefaultConstraintDefinition{" +
                     "name='" + name + '\'' +
                     ", type='" + type + '\'' +
                     ", columnDefinitions=" + columnDefinitions +
@@ -229,24 +235,22 @@ public class TableDefinition implements Bean {
     }
 
     /**
-     * 索引定义。
+     * 默认索引定义。
      *
      * @author DwArFeng
-     * @since 1.1.0
+     * @since 1.1.1
      */
-    public static class IndexDefinition implements Bean {
-
-        private static final long serialVersionUID = 323860932257378915L;
+    public static class DefaultIndexDefinition implements IndexDefinition {
 
         private String name;
         private String type;
         private List<ColumnDefinition> columnDefinitions;
         private Map<String, Object> customDefinition;
 
-        public IndexDefinition() {
+        public DefaultIndexDefinition() {
         }
 
-        public IndexDefinition(
+        public DefaultIndexDefinition(
                 String name, String type, List<ColumnDefinition> columnDefinitions,
                 Map<String, Object> customDefinition) {
             this.name = name;
@@ -255,6 +259,7 @@ public class TableDefinition implements Bean {
             this.customDefinition = customDefinition;
         }
 
+        @Override
         public String getName() {
             return name;
         }
@@ -263,6 +268,7 @@ public class TableDefinition implements Bean {
             this.name = name;
         }
 
+        @Override
         public String getType() {
             return type;
         }
@@ -271,6 +277,7 @@ public class TableDefinition implements Bean {
             this.type = type;
         }
 
+        @Override
         public List<ColumnDefinition> getColumnDefinitions() {
             return columnDefinitions;
         }
@@ -279,6 +286,7 @@ public class TableDefinition implements Bean {
             this.columnDefinitions = columnDefinitions;
         }
 
+        @Override
         public Map<String, Object> getCustomDefinition() {
             return customDefinition;
         }
@@ -289,7 +297,7 @@ public class TableDefinition implements Bean {
 
         @Override
         public String toString() {
-            return "IndexDefinition{" +
+            return "DefaultIndexDefinition{" +
                     "name='" + name + '\'' +
                     ", type='" + type + '\'' +
                     ", columnDefinitions=" + columnDefinitions +

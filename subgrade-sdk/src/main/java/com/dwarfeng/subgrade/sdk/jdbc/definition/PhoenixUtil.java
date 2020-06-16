@@ -1,7 +1,7 @@
-package com.dwarfeng.subgrade.sdk.jdbc.database;
+package com.dwarfeng.subgrade.sdk.jdbc.definition;
 
-import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ColumnDefinition;
-import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ConstraintDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition.ColumnDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition.ConstraintDefinition;
 import org.springframework.lang.NonNull;
 
 import java.util.List;

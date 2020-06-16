@@ -1,16 +1,20 @@
-package com.dwarfeng.subgrade.sdk.jdbc.database;
+package com.dwarfeng.subgrade.sdk.jdbc.definition;
 
-import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants.IndexAsyncType;
-import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants.IndexType;
-import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixConstants.UpdateCacheFrequency;
-import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ConstraintDefinition;
-import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.IndexDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.DefaultTableDefinition.DefaultColumnDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.DefaultTableDefinition.DefaultConstraintDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.DefaultTableDefinition.DefaultIndexDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.PhoenixConstants.ColumnNullable;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.PhoenixConstants.IndexAsyncType;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.PhoenixConstants.IndexType;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.PhoenixConstants.UpdateCacheFrequency;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition.ConstraintDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition.IndexDefinition;
 import org.springframework.lang.NonNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ColumnDefinition;
+import static com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition.ColumnDefinition;
 
 /**
  * Phoenix 数据库表定义帮手。
@@ -23,7 +27,8 @@ import static com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition.ColumnDefi
  */
 public class PhoenixTableDefinitionHelper {
 
-    private String tableName;
+    private String schemaName = null;
+    private String tableName = null;
     private final Map<String, Object> customDefinition = new HashMap<>();
     private final Map<String, ColumnDefinition> columnDefinitionMap = new LinkedHashMap<>();
     private ConstraintDefinition primaryKeyConstraintDefinition = null;
@@ -33,6 +38,20 @@ public class PhoenixTableDefinitionHelper {
         customDefinition.put(PhoenixConstants.CUSTOM_SPLIT_POINT, new ArrayList<>());
     }
 
+    /**
+     * 设置数据表的库名称。
+     *
+     * @param schemaName 数据表的库名称。
+     */
+    public void setSchemaName(String schemaName) {
+        this.schemaName = schemaName;
+    }
+
+    /**
+     * 设置数据表的名称。
+     *
+     * @param tableName 数据表的名称。
+     */
     public void setTableName(@NonNull String tableName) {
         if (tableName.isEmpty()) {
             throw new IllegalArgumentException("参数 tableName 不能为空");
@@ -47,36 +66,37 @@ public class PhoenixTableDefinitionHelper {
      * @param type       列的类型。
      */
     public void addColumn(@NonNull String columnName, @NonNull String type) {
+        addColumn(columnName, type, null, null);
+    }
+
+    /**
+     * 添加列定义。
+     *
+     * @param columnName     列的名称。
+     * @param type           列的类型。
+     * @param columnNullable 列是否允许为 NULL。
+     * @param defaultValue   列的默认值。
+     */
+    public void addColumn(
+            @NonNull String columnName, @NonNull String type, ColumnNullable columnNullable, String defaultValue) {
         if (columnDefinitionMap.containsKey(columnName)) {
             throw new IllegalArgumentException("列名称 " + columnName + "已经存在");
         }
-        columnDefinitionMap.put(columnName, new ColumnDefinition(columnName, type, new HashMap<>()));
-    }
-
-    public void nullColumn(@NonNull String columnName) {
-        if (!columnDefinitionMap.containsKey(columnName)) {
-            throw new IllegalArgumentException("列名称" + columnName + "不存在");
+        Map<String, Object> customDefinition = new HashMap<>();
+        if (Objects.nonNull(columnNullable)) {
+            switch (columnNullable) {
+                case NULL:
+                    customDefinition.put(PhoenixConstants.CUSTOM_NULLABLE, ColumnNullable.NULL);
+                    break;
+                case NOT_NULL:
+                    customDefinition.put(PhoenixConstants.CUSTOM_NULLABLE, ColumnNullable.NOT_NULL);
+                    break;
+            }
         }
-        ColumnDefinition columnDefinition = columnDefinitionMap.get(columnName);
-        columnDefinition.getCustomDefinition().put(PhoenixConstants.CUSTOM_NULLABLE,
-                PhoenixConstants.ColumnNullable.NULL);
-    }
-
-    public void notNullColumn(@NonNull String columnName) {
-        if (!columnDefinitionMap.containsKey(columnName)) {
-            throw new IllegalArgumentException("列名称" + columnName + "不存在");
+        if (Objects.nonNull(defaultValue)) {
+            customDefinition.put(PhoenixConstants.CUSTOM_DEFAULT, defaultValue);
         }
-        ColumnDefinition columnDefinition = columnDefinitionMap.get(columnName);
-        columnDefinition.getCustomDefinition().put(PhoenixConstants.CUSTOM_NULLABLE,
-                PhoenixConstants.ColumnNullable.NOT_NULL);
-    }
-
-    public void defaultColumn(@NonNull String columnName, @NonNull String defaultValue) {
-        if (!columnDefinitionMap.containsKey(columnName)) {
-            throw new IllegalArgumentException("列名称" + columnName + "不存在");
-        }
-        ColumnDefinition columnDefinition = columnDefinitionMap.get(columnName);
-        columnDefinition.getCustomDefinition().put(PhoenixConstants.CUSTOM_DEFAULT, defaultValue);
+        columnDefinitionMap.put(columnName, new DefaultColumnDefinition(columnName, type, customDefinition));
     }
 
     /**
@@ -90,11 +110,16 @@ public class PhoenixTableDefinitionHelper {
         Map<String, Object> customDefinition = new HashMap<>();
         customDefinition.put(PhoenixConstants.CUSTOM_ASC, new HashSet<String>());
         customDefinition.put(PhoenixConstants.CUSTOM_DESC, new HashSet<String>());
-        primaryKeyConstraintDefinition = new ConstraintDefinition(
+        primaryKeyConstraintDefinition = new DefaultConstraintDefinition(
                 PhoenixConstants.NAME_PRIMARY_KEY, PhoenixConstants.TYPE_PRIMARY_KEY,
                 nameList.stream().map(columnDefinitionMap::get).collect(Collectors.toList()), customDefinition);
     }
 
+    /**
+     * 设置主键升序排序。
+     *
+     * @param columnNames 需要设置主键升序排序的列的名称。
+     */
     @SuppressWarnings("unchecked")
     public void setPrimaryKeyAsc(@NonNull String... columnNames) {
         List<String> nameList = Arrays.asList(columnNames);
@@ -104,6 +129,11 @@ public class PhoenixTableDefinitionHelper {
         ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_DESC)).removeAll(nameList);
     }
 
+    /**
+     * 设置主键降序排序。
+     *
+     * @param columnNames 需要设置主键降序排序的列的名称。
+     */
     @SuppressWarnings("unchecked")
     public void setPrimaryKeyDesc(@NonNull String... columnNames) {
         List<String> nameList = Arrays.asList(columnNames);
@@ -113,6 +143,11 @@ public class PhoenixTableDefinitionHelper {
         ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_DESC)).addAll(nameList);
     }
 
+    /**
+     * 设置主键的指定列启用 ROW_TIMESTAMP 属性。
+     *
+     * @param columnName 自用属性的列名称。
+     */
     public void rowTimestampPrimaryKey(@NonNull String columnName) {
         if (!columnDefinitionMap.containsKey(columnName)) {
             throw new IllegalArgumentException("列名称" + columnName + "不存在");
@@ -260,18 +295,37 @@ public class PhoenixTableDefinitionHelper {
         customDefinition.put(PhoenixConstants.CUSTOM_GUIDE_POSTS_WIDTH, val);
     }
 
+    /**
+     * 设置数据表的分割点。
+     *
+     * @param columnNames 分割点的名称。
+     */
     public void setTableSplitPoint(String... columnNames) {
         makeSureAllColumnExists(Arrays.asList(columnNames));
         customDefinition.put(PhoenixConstants.CUSTOM_SPLIT_POINT, Arrays.asList(columnNames));
     }
 
+    /**
+     * 添加索引。
+     *
+     * @param indexName   索引的名称。
+     * @param indexType   所以的类型。
+     * @param columnNames 索引包含的列。
+     */
     public void addIndex(@NonNull String indexName, @NonNull IndexType indexType, @NonNull String... columnNames) {
         if (indexDefinitionMap.containsKey(indexName)) {
             throw new IllegalArgumentException("索引 " + indexName + " 已经存在");
         }
         List<String> columnNameList = Arrays.asList(columnNames);
-        String type = indexType == IndexType.GLOBAL ?
-                PhoenixConstants.INDEX_TYPE_GLOBAL : PhoenixConstants.INDEX_TYPE_LOCAL;
+        String type = PhoenixConstants.INDEX_TYPE_GLOBAL;
+        switch (indexType) {
+            case GLOBAL:
+                type = PhoenixConstants.INDEX_TYPE_GLOBAL;
+                break;
+            case LOCAL:
+                type = PhoenixConstants.INDEX_TYPE_LOCAL;
+                break;
+        }
         List<ColumnDefinition> columnDefinitions = columnNameList.stream()
                 .map(columnDefinitionMap::get).collect(Collectors.toList());
         makeSureAllColumnExists(columnNameList);
@@ -280,9 +334,16 @@ public class PhoenixTableDefinitionHelper {
         customDefinition.put(PhoenixConstants.CUSTOM_DESC, new HashSet<String>());
         customDefinition.put(PhoenixConstants.CUSTOM_SPLIT_POINT, new ArrayList<>());
         customDefinition.put(PhoenixConstants.CUSTOM_INCLUDE, new ArrayList<>());
-        indexDefinitionMap.put(indexName, new IndexDefinition(indexName, type, columnDefinitions, customDefinition));
+        indexDefinitionMap.put(
+                indexName, new DefaultIndexDefinition(indexName, type, columnDefinitions, customDefinition));
     }
 
+    /**
+     * 设置索引升序排序。
+     *
+     * @param indexName   索引的名称。
+     * @param columnNames 需要设置索引升序排序的列的名称。
+     */
     @SuppressWarnings("unchecked")
     public void setIndexAsc(@NonNull String indexName, @NonNull String... columnNames) {
         List<String> columnNameList = Arrays.asList(columnNames);
@@ -293,6 +354,12 @@ public class PhoenixTableDefinitionHelper {
         ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_DESC)).removeAll(columnNameList);
     }
 
+    /**
+     * 设置索引降序排序。
+     *
+     * @param indexName   索引的名称。
+     * @param columnNames 需要设置索引降序排序的列的名称。
+     */
     @SuppressWarnings("unchecked")
     public void setIndexDesc(@NonNull String indexName, @NonNull String... columnNames) {
         List<String> columnNameList = Arrays.asList(columnNames);
@@ -303,6 +370,12 @@ public class PhoenixTableDefinitionHelper {
         ((HashSet<String>) customDefinition.get(PhoenixConstants.CUSTOM_DESC)).addAll(columnNameList);
     }
 
+    /**
+     * 设置索引的包含列。
+     *
+     * @param indexName   索引的名称。
+     * @param columnNames 索引的包含列。
+     */
     public void setIndexInclude(@NonNull String indexName, @NonNull String... columnNames) {
         List<String> columnNameList = Arrays.asList(columnNames);
         makeSureIndexExists(indexName);
@@ -310,6 +383,12 @@ public class PhoenixTableDefinitionHelper {
         indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_INCLUDE, columnNameList);
     }
 
+    /**
+     * 设置索引的同步类型。
+     *
+     * @param indexName      索引的名称。
+     * @param indexAsyncType 索引的同步类型。
+     */
     public void setIndexAsyncType(@NonNull String indexName, IndexAsyncType indexAsyncType) {
         makeSureIndexExists(indexName);
         indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_ASYNC, indexAsyncType);
@@ -466,6 +545,12 @@ public class PhoenixTableDefinitionHelper {
         indexDefinitionMap.get(indexName).getCustomDefinition().put(PhoenixConstants.CUSTOM_GUIDE_POSTS_WIDTH, val);
     }
 
+    /**
+     * 设置索引的分割点。
+     *
+     * @param indexName   索引的名称。
+     * @param columnNames 分割点的名称。
+     */
     public void setIndexSplitPoint(String indexName, String... columnNames) {
         makeSureIndexExists(indexName);
         makeSureAllColumnExists(Arrays.asList(columnNames));
@@ -474,7 +559,7 @@ public class PhoenixTableDefinitionHelper {
     }
 
     private void makeSureAllColumnExists(List<String> nameList) {
-        if (!columnDefinitionMap.values().containsAll(nameList)) {
+        if (!columnDefinitionMap.keySet().containsAll(nameList)) {
             for (String name : nameList) {
                 if (!columnDefinitionMap.containsKey(name)) {
                     throw new IllegalArgumentException("列名称" + name + "不存在");
@@ -489,9 +574,18 @@ public class PhoenixTableDefinitionHelper {
         }
     }
 
+    /**
+     * 构造数据表定义。
+     *
+     * @return 构造生成的数据表定义。
+     */
+    @SuppressWarnings("DuplicatedCode")
     public TableDefinition buildTableDefinition() {
         if (Objects.isNull(tableName)) {
             throw new IllegalArgumentException("您还没有指定表名称，请先调用 setTableName(String)");
+        }
+        if (Objects.nonNull(schemaName) && tableName.contains(".")) {
+            throw new IllegalArgumentException("指定数据库名称时，表名称不应该含有字符 '.'");
         }
         if (columnDefinitionMap.isEmpty()) {
             throw new IllegalArgumentException("您还没有指定表中的任何列，请先调用 addColumn(String, String)");
@@ -500,8 +594,8 @@ public class PhoenixTableDefinitionHelper {
             throw new IllegalArgumentException("您还没有指定表的主键，请先调用 setPrimaryKey(String...)");
         }
 
-        return new TableDefinition(
-                null,
+        return new DefaultTableDefinition(
+                schemaName,
                 tableName,
                 new ArrayList<>(columnDefinitionMap.values()),
                 Collections.singletonList(primaryKeyConstraintDefinition),

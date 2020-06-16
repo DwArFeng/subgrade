@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- com.dwarfeng.subgrade.sdk.jdbc 包结构调整。
+  - 该调整将会导致此版本与 Release_1.1.0_20200611_build_A 不兼容。
 
 #### Bug修复
 

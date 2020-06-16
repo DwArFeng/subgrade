@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.jdbc.database;
+package com.dwarfeng.subgrade.sdk.jdbc.definition;
 
 /**
  * Phoenix 数据库表定义常量。

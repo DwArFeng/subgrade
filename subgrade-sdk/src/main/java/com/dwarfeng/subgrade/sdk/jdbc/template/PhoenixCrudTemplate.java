@@ -1,8 +1,8 @@
 package com.dwarfeng.subgrade.sdk.jdbc.template;
 
-import com.dwarfeng.subgrade.sdk.jdbc.database.PhoenixUtil;
-import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinition;
-import com.dwarfeng.subgrade.sdk.jdbc.database.TableDefinitionUtil;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.PhoenixUtil;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition;
+import com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinitionUtil;
 import org.springframework.lang.NonNull;
 
 /**
