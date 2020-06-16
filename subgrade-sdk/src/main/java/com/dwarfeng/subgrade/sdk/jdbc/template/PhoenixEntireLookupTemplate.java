@@ -31,7 +31,7 @@ public class PhoenixEntireLookupTemplate extends GeneralEntireLookupTemplate {
     @Override
     protected String internalPagingSQL() {
         return String.format(
-                "SELECT %s FROM %s OFFSET ? LIMIT ?",
+                "SELECT %s FROM %s LIMIT ? OFFSET ?",
                 TableDefinitionUtil.fullColumnSerial(tableDefinition),
                 TableDefinitionUtil.fullTableName(tableDefinition));
     }

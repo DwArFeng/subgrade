@@ -53,8 +53,8 @@ public abstract class PhoenixPresetLookupTemplate extends GeneralPresetLookupTem
         if (Objects.nonNull(orderByClause) && !orderByClause.isEmpty()) {
             sqlBuilder.append(" ORDER BY ").append(orderByClause);
         }
-        sqlBuilder.append(" OFFSET ").append(Math.max(pagingInfo.getPage() * pagingInfo.getRows(), 0))
-                .append(" LIMIT ").append(Math.max(pagingInfo.getRows(), 0));
+        sqlBuilder.append(" LIMIT ").append(Math.max(pagingInfo.getRows(), 0))
+                .append(" OFFSET ").append(Math.max(pagingInfo.getPage() * pagingInfo.getRows(), 0));
         return sqlBuilder.toString();
     }
 

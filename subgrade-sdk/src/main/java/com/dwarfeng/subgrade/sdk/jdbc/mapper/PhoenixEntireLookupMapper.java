@@ -17,7 +17,7 @@ public class PhoenixEntireLookupMapper implements EntireLookupMapper {
 
     @Override
     public Object[] paging2Args(PagingInfo pagingInfo) {
-        return new Object[]{Math.max(pagingInfo.getPage() * pagingInfo.getRows(), 0), Math.max(pagingInfo.getRows(), 0)};
+        return new Object[]{Math.max(pagingInfo.getRows(), 0), Math.max(pagingInfo.getPage() * pagingInfo.getRows(), 0)};
     }
 
     @Override

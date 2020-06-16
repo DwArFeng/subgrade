@@ -10,7 +10,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复使用jdbc框架进行 Apache Phoenix 分页查询时生成错误的 SQL 语句的bug。
 
 #### 功能移除
 
