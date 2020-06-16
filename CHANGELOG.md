@@ -6,6 +6,7 @@
 
 - com.dwarfeng.subgrade.sdk.jdbc 包结构调整。
   - 该调整将会导致此版本与 Release_1.1.0_20200611_build_A 不兼容。
+- 更改 README.md 的`推荐使用版本`条目，并且移除 git 中 Release_1.1.0_20200611_build_A 的版本标签。
 
 #### Bug修复
 
