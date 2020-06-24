@@ -93,7 +93,15 @@
     - com.dwarfeng.subgrade.impl.dao.JdbcBatchBaseDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBatchWriteDao
     - com.dwarfeng.subgrade.impl.dao.JdbcWriteDao
-
+    - com.dwarfeng.subgrade.impl.dao.MyBatisBaseDao
+    - com.dwarfeng.subgrade.impl.dao.MyBatisBatchBaseDao
+    - com.dwarfeng.subgrade.impl.dao.MyBatisRelationDao
+    - com.dwarfeng.subgrade.impl.dao.MyBatisBatchRelationDao
+    - com.dwarfeng.subgrade.impl.dao.MyBatisBatchWriteDao
+    - com.dwarfeng.subgrade.impl.dao.MyBatisBatchWriteDao
+    - com.dwarfeng.subgrade.impl.dao.MyBatisEntireLookupDao
+    - com.dwarfeng.subgrade.impl.dao.MyBatisPresetLookupDao
+    
   - 其余的数据访问层框架使用情况极少或几乎没有使用，非常有可能存在bug。
   
 - 缓存框架。

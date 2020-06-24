@@ -102,6 +102,15 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>dutil-develop</artifactId>
         </dependency>
+        <!-- mybatis组件 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
         <!-- 程序自身组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>

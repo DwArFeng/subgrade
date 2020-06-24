@@ -7,6 +7,15 @@
 - com.dwarfeng.subgrade.sdk.jdbc 包结构调整。
   - 该调整将会导致此版本与 Release_1.1.0_20200611_build_A 不兼容。
 - 更改 README.md 的`推荐使用版本`条目，并且移除 git 中 Release_1.1.0_20200611_build_A 的版本标签。
+- 添加 MyBatis 数据访问层支持。
+  - com.dwarfeng.subgrade.impl.dao.MyBatisBaseDao
+  - com.dwarfeng.subgrade.impl.dao.MyBatisBatchBaseDao
+  - com.dwarfeng.subgrade.impl.dao.MyBatisRelationDao
+  - com.dwarfeng.subgrade.impl.dao.MyBatisBatchRelationDao
+  - com.dwarfeng.subgrade.impl.dao.MyBatisBatchWriteDao
+  - com.dwarfeng.subgrade.impl.dao.MyBatisBatchWriteDao
+  - com.dwarfeng.subgrade.impl.dao.MyBatisEntireLookupDao
+  - com.dwarfeng.subgrade.impl.dao.MyBatisPresetLookupDao
 
 #### Bug修复
 
