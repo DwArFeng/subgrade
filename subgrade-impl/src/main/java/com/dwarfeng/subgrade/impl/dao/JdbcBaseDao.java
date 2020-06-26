@@ -1,20 +1,14 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.mapper.CrudMapper;
-import com.dwarfeng.subgrade.sdk.jdbc.mapper.ResultMapper;
-import com.dwarfeng.subgrade.sdk.jdbc.template.CreateTableTemplate;
-import com.dwarfeng.subgrade.sdk.jdbc.template.CrudTemplate;
+import com.dwarfeng.subgrade.sdk.jdbc.JdbcBaseProcessor;
+import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.NonNull;
 
-import java.sql.ResultSet;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,59 +21,33 @@ import java.util.Objects;
 @SuppressWarnings("DuplicatedCode")
 public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<K, E> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcBaseDao.class);
+    private JdbcTemplate template;
+    private JdbcBaseProcessor<K, E> processor;
 
-    private JdbcTemplate jdbcTemplate;
-    private CrudTemplate crudTemplate;
-    private CrudMapper<K, E> crudMapper;
-    private ResultMapper<E> resultMapper;
-
-    public JdbcBaseDao(
-            @NonNull JdbcTemplate jdbcTemplate,
-            @NonNull CrudTemplate crudTemplate,
-            @NonNull CrudMapper<K, E> crudMapper,
-            @NonNull ResultMapper<E> resultMapper) {
-        this(jdbcTemplate, crudTemplate, crudMapper, resultMapper, null);
-    }
-
-    public JdbcBaseDao(
-            @NonNull JdbcTemplate jdbcTemplate,
-            @NonNull CrudTemplate crudTemplate,
-            @NonNull CrudMapper<K, E> crudMapper,
-            @NonNull ResultMapper<E> resultMapper,
-            CreateTableTemplate createTableTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.crudTemplate = crudTemplate;
-        this.crudMapper = crudMapper;
-        this.resultMapper = resultMapper;
-        if (Objects.nonNull(createTableTemplate)) {
-            creatTable(createTableTemplate);
-        }
-    }
-
-    private void creatTable(CreateTableTemplate createTableTemplate) {
-        List<String> crateTableSQLList = createTableTemplate.createTableSQL();
-        for (String crateTableSQL : crateTableSQLList) {
-            jdbcTemplate.execute(crateTableSQL);
-        }
+    public JdbcBaseDao(@NonNull JdbcTemplate template, @NonNull JdbcBaseProcessor<K, E> processor) {
+        this.template = template;
+        this.processor = processor;
     }
 
     @Override
-    public K insert(E entity) throws DaoException {
+    public K insert(E element) throws DaoException {
         try {
-            String insertSQL = crudTemplate.insertSQL();
-            jdbcTemplate.update(insertSQL, crudMapper.insert2Args(entity));
-            return entity.getKey();
+            if (Objects.isNull(element.getKey())) {
+                throw new UnsupportedOperationException("暂不支持实体对象没有主键/数据表主键自增的情形");
+            }
+            SQLAndParameter sqlAndParameter = processor.provideInsert(element);
+            template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+            return element.getKey();
         } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
     @Override
-    public void update(E entity) throws DaoException {
+    public void update(E element) throws DaoException {
         try {
-            String updateSQL = crudTemplate.updateSQL();
-            jdbcTemplate.update(updateSQL, crudMapper.update2Args(entity));
+            SQLAndParameter sqlAndParameter = processor.provideUpdate(element);
+            template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -88,8 +56,8 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     @Override
     public void delete(K key) throws DaoException {
         try {
-            String deleteSQL = crudTemplate.deleteSQL();
-            jdbcTemplate.update(deleteSQL, crudMapper.delete2Args(key));
+            SQLAndParameter sqlAndParameter = processor.provideDelete(key);
+            template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -98,10 +66,11 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     @Override
     public boolean exists(K key) throws DaoException {
         try {
-            String existsSQL = crudTemplate.existsSQL();
-            Boolean exists = jdbcTemplate.query(existsSQL, crudMapper.exists2Args(key), ResultSet::next);
-            assert exists != null;
-            return exists;
+            SQLAndParameter sqlAndParameter = processor.provideExists(key);
+            Boolean flag = template.query(
+                    sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveExists);
+            assert flag != null;
+            return flag;
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -110,48 +79,26 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     @Override
     public E get(K key) throws DaoException {
         try {
-            String getSQL = crudTemplate.getSQL();
-            return jdbcTemplate.query(getSQL, crudMapper.get2Args(key), rs -> {
-                if (rs.next()) {
-                    return resultMapper.result2Entity(rs);
-                } else {
-                    return null;
-                }
-            });
+            SQLAndParameter sqlAndParameter = processor.provideGet(key);
+            return template.query(sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveGet);
         } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
+    public JdbcTemplate getTemplate() {
+        return template;
     }
 
-    public void setJdbcTemplate(@NonNull JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public void setTemplate(JdbcTemplate template) {
+        this.template = template;
     }
 
-    public CrudTemplate getCrudTemplate() {
-        return crudTemplate;
+    public JdbcBaseProcessor<K, E> getProcessor() {
+        return processor;
     }
 
-    public void setCrudTemplate(@NonNull CrudTemplate crudTemplate) {
-        this.crudTemplate = crudTemplate;
-    }
-
-    public CrudMapper<K, E> getCrudMapper() {
-        return crudMapper;
-    }
-
-    public void setCrudMapper(@NonNull CrudMapper<K, E> crudMapper) {
-        this.crudMapper = crudMapper;
-    }
-
-    public ResultMapper<E> getResultMapper() {
-        return resultMapper;
-    }
-
-    public void setResultMapper(@NonNull ResultMapper<E> resultMapper) {
-        this.resultMapper = resultMapper;
+    public void setProcessor(JdbcBaseProcessor<K, E> processor) {
+        this.processor = processor;
     }
 }

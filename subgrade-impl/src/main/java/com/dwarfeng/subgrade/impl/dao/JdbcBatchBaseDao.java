@@ -1,19 +1,14 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.mapper.CrudMapper;
-import com.dwarfeng.subgrade.sdk.jdbc.mapper.ResultMapper;
-import com.dwarfeng.subgrade.sdk.jdbc.template.CreateTableTemplate;
-import com.dwarfeng.subgrade.sdk.jdbc.template.CrudTemplate;
+import com.dwarfeng.subgrade.sdk.jdbc.JdbcBatchBaseProcessor;
+import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.NonNull;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,72 +24,58 @@ import java.util.stream.Collectors;
 @SuppressWarnings("DuplicatedCode")
 public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements BatchBaseDao<K, E> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcBatchBaseDao.class);
+    private JdbcTemplate template;
+    private JdbcBatchBaseProcessor<K, E> processor;
 
-    private JdbcTemplate jdbcTemplate;
-    private CrudTemplate crudTemplate;
-    private CrudMapper<K, E> crudMapper;
-    private ResultMapper<E> resultMapper;
-
-    public JdbcBatchBaseDao(
-            @NonNull JdbcTemplate jdbcTemplate,
-            @NonNull CrudTemplate crudTemplate,
-            @NonNull CrudMapper<K, E> crudMapper,
-            @NonNull ResultMapper<E> resultMapper) {
-        this(jdbcTemplate, crudTemplate, crudMapper, resultMapper, null);
-    }
-
-    public JdbcBatchBaseDao(
-            @NonNull JdbcTemplate jdbcTemplate,
-            @NonNull CrudTemplate crudTemplate,
-            @NonNull CrudMapper<K, E> crudMapper,
-            @NonNull ResultMapper<E> resultMapper,
-            CreateTableTemplate createTableTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.crudTemplate = crudTemplate;
-        this.crudMapper = crudMapper;
-        this.resultMapper = resultMapper;
-        if (Objects.nonNull(createTableTemplate)) {
-            creatTable(createTableTemplate);
-        }
-    }
-
-    private void creatTable(CreateTableTemplate createTableTemplate) {
-        List<String> crateTableSQLList = createTableTemplate.createTableSQL();
-        for (String crateTableSQL : crateTableSQLList) {
-            jdbcTemplate.execute(crateTableSQL);
-        }
+    public JdbcBatchBaseDao(@NonNull JdbcTemplate template, @NonNull JdbcBatchBaseProcessor<K, E> processor) {
+        this.template = template;
+        this.processor = processor;
     }
 
     @Override
-    public K insert(E entity) throws DaoException {
+    public K insert(E element) throws DaoException {
         try {
-            String insertSQL = crudTemplate.insertSQL();
-            jdbcTemplate.update(insertSQL, crudMapper.insert2Args(entity));
-            return entity.getKey();
+            if (Objects.isNull(element.getKey())) {
+                throw new UnsupportedOperationException("暂不支持实体对象没有主键/数据表主键自增的情形");
+            }
+            return internalInsert(element);
         } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
+    private K internalInsert(E element) {
+        SQLAndParameter sqlAndParameter = processor.provideInsert(element);
+        template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+        return element.getKey();
+    }
+
     @Override
-    public void update(E entity) throws DaoException {
+    public void update(E element) throws DaoException {
         try {
-            String updateSQL = crudTemplate.updateSQL();
-            jdbcTemplate.update(updateSQL, crudMapper.update2Args(entity));
+            internalUpdate(element);
         } catch (Exception e) {
             throw new DaoException(e);
         }
+    }
+
+    private void internalUpdate(E element) {
+        SQLAndParameter sqlAndParameter = processor.provideUpdate(element);
+        template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
     }
 
     @Override
     public void delete(K key) throws DaoException {
         try {
-            String deleteSQL = crudTemplate.deleteSQL();
-            jdbcTemplate.update(deleteSQL, crudMapper.delete2Args(key));
+            internalDelete(key);
         } catch (Exception e) {
             throw new DaoException(e);
         }
+    }
+
+    private void internalDelete(K key) {
+        SQLAndParameter sqlAndParameter = processor.provideDelete(key);
+        template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
     }
 
     @Override
@@ -107,10 +88,11 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
     }
 
     private boolean internalExists(K key) {
-        String existsSQL = crudTemplate.existsSQL();
-        Boolean exists = jdbcTemplate.query(existsSQL, crudMapper.exists2Args(key), ResultSet::next);
-        assert exists != null;
-        return exists;
+        SQLAndParameter sqlAndParameter = processor.provideExists(key);
+        Boolean flag = template.query(
+                sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveExists);
+        assert flag != null;
+        return flag;
     }
 
     @Override
@@ -123,34 +105,49 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
     }
 
     private E internalGet(K key) {
-        String getSQL = crudTemplate.getSQL();
-        return jdbcTemplate.query(getSQL, crudMapper.get2Args(key), rs -> {
-            if (rs.next()) {
-                return resultMapper.result2Entity(rs);
-            } else {
-                return null;
-            }
-        });
+        SQLAndParameter sqlAndParameter = processor.provideGet(key);
+        return template.query(sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveGet);
     }
 
     @Override
-    public List<K> batchInsert(List<E> entities) throws DaoException {
+    public List<K> batchInsert(List<E> elements) throws DaoException {
         try {
-            String insertSQL = crudTemplate.insertSQL();
-            jdbcTemplate.batchUpdate(insertSQL,
-                    entities.stream().map(crudMapper::insert2Args).collect(Collectors.toList()));
-            return entities.stream().map(Entity::getKey).collect(Collectors.toList());
+            if (elements.stream().anyMatch(element -> Objects.isNull(element.getKey()))) {
+                throw new UnsupportedOperationException("暂不支持实体对象没有主键/数据表主键自增的情形");
+            }
+            if (processor.loopInsert()) {
+                for (E element : elements) {
+                    internalInsert(element);
+                }
+            } else {
+                SQLAndParameter sqlAndParameter = processor.provideBatchInsert(elements);
+                if (Objects.nonNull(sqlAndParameter.getParametersList())) {
+                    template.batchUpdate(sqlAndParameter.getSql(), sqlAndParameter.getParametersList());
+                } else {
+                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+                }
+            }
+            return elements.stream().map(Entity::getKey).collect(Collectors.toList());
         } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
     @Override
-    public void batchUpdate(List<E> entities) throws DaoException {
+    public void batchUpdate(List<E> elements) throws DaoException {
         try {
-            String updateSQL = crudTemplate.updateSQL();
-            jdbcTemplate.batchUpdate(updateSQL,
-                    entities.stream().map(crudMapper::update2Args).collect(Collectors.toList()));
+            if (processor.loopUpdate()) {
+                for (E element : elements) {
+                    internalUpdate(element);
+                }
+            } else {
+                SQLAndParameter sqlAndParameter = processor.provideBatchUpdate(elements);
+                if (Objects.nonNull(sqlAndParameter.getParametersList())) {
+                    template.batchUpdate(sqlAndParameter.getSql(), sqlAndParameter.getParametersList());
+                } else {
+                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+                }
+            }
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -159,9 +156,18 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
     @Override
     public void batchDelete(List<K> keys) throws DaoException {
         try {
-            String deleteSQL = crudTemplate.deleteSQL();
-            jdbcTemplate.batchUpdate(deleteSQL,
-                    keys.stream().map(crudMapper::delete2Args).collect(Collectors.toList()));
+            if (processor.loopDelete()) {
+                for (K key : keys) {
+                    internalDelete(key);
+                }
+            } else {
+                SQLAndParameter sqlAndParameter = processor.provideBatchDelete(keys);
+                if (Objects.nonNull(sqlAndParameter.getParametersList())) {
+                    template.batchUpdate(sqlAndParameter.getSql(), sqlAndParameter.getParametersList());
+                } else {
+                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+                }
+            }
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -170,10 +176,18 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
     @Override
     public boolean allExists(List<K> keys) throws DaoException {
         try {
-            for (K key : keys) {
-                if (!internalExists(key)) return false;
+            if (processor.loopExists()) {
+                for (K key : keys) {
+                    if (!internalExists(key)) return false;
+                }
+                return true;
+            } else {
+                SQLAndParameter sqlAndParameter = processor.provideAllExists(keys);
+                Boolean result = template.query(
+                        sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveAllExists);
+                assert result != null;
+                return result;
             }
-            return true;
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -182,10 +196,18 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
     @Override
     public boolean nonExists(List<K> keys) throws DaoException {
         try {
-            for (K key : keys) {
-                if (internalExists(key)) return false;
+            if (processor.loopExists()) {
+                for (K key : keys) {
+                    if (internalExists(key)) return false;
+                }
+                return true;
+            } else {
+                SQLAndParameter sqlAndParameter = processor.provideNonExists(keys);
+                Boolean result = template.query(
+                        sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveNonExists);
+                assert result != null;
+                return result;
             }
-            return true;
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -194,45 +216,35 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
     @Override
     public List<E> batchGet(List<K> keys) throws DaoException {
         try {
-            List<E> list = new ArrayList<>();
-            for (K key : keys) {
-                list.add(internalGet(key));
+            if (processor.loopGet()) {
+                List<E> elements = new ArrayList<>();
+                for (K key : keys) {
+                    elements.add(internalGet(key));
+                }
+                return elements;
+            } else {
+                SQLAndParameter sqlAndParameter = processor.provideBatchGet(keys);
+                return template.query(
+                        sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveBatchGet);
             }
-            return list;
         } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
+    public JdbcTemplate getTemplate() {
+        return template;
     }
 
-    public void setJdbcTemplate(@NonNull JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public void setTemplate(JdbcTemplate template) {
+        this.template = template;
     }
 
-    public CrudTemplate getCrudTemplate() {
-        return crudTemplate;
+    public JdbcBatchBaseProcessor<K, E> getProcessor() {
+        return processor;
     }
 
-    public void setCrudTemplate(@NonNull CrudTemplate crudTemplate) {
-        this.crudTemplate = crudTemplate;
-    }
-
-    public CrudMapper<K, E> getCrudMapper() {
-        return crudMapper;
-    }
-
-    public void setCrudMapper(@NonNull CrudMapper<K, E> crudMapper) {
-        this.crudMapper = crudMapper;
-    }
-
-    public ResultMapper<E> getResultMapper() {
-        return resultMapper;
-    }
-
-    public void setResultMapper(@NonNull ResultMapper<E> resultMapper) {
-        this.resultMapper = resultMapper;
+    public void setProcessor(JdbcBatchBaseProcessor<K, E> processor) {
+        this.processor = processor;
     }
 }
