@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.JdbcBatchWriteProcessor;
+import com.dwarfeng.subgrade.sdk.jdbc.BatchWriteProcessor;
 import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.BatchWriteDao;
@@ -22,9 +22,9 @@ import java.util.Objects;
 public class JdbcBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> {
 
     private JdbcTemplate template;
-    private JdbcBatchWriteProcessor<E> processor;
+    private BatchWriteProcessor<E> processor;
 
-    public JdbcBatchWriteDao(@NonNull JdbcTemplate template, @NonNull JdbcBatchWriteProcessor<E> processor) {
+    public JdbcBatchWriteDao(@NonNull JdbcTemplate template, @NonNull BatchWriteProcessor<E> processor) {
         this.template = template;
         this.processor = processor;
     }
@@ -67,15 +67,15 @@ public class JdbcBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> 
         return template;
     }
 
-    public void setTemplate(JdbcTemplate template) {
+    public void setTemplate(@NonNull JdbcTemplate template) {
         this.template = template;
     }
 
-    public JdbcBatchWriteProcessor<E> getProcessor() {
+    public BatchWriteProcessor<E> getProcessor() {
         return processor;
     }
 
-    public void setProcessor(JdbcBatchWriteProcessor<E> processor) {
+    public void setProcessor(@NonNull BatchWriteProcessor<E> processor) {
         this.processor = processor;
     }
 }

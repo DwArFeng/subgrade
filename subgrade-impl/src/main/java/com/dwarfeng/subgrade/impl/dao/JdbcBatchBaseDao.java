@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.JdbcBatchBaseProcessor;
+import com.dwarfeng.subgrade.sdk.jdbc.BatchBaseProcessor;
 import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
 public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements BatchBaseDao<K, E> {
 
     private JdbcTemplate template;
-    private JdbcBatchBaseProcessor<K, E> processor;
+    private BatchBaseProcessor<K, E> processor;
 
-    public JdbcBatchBaseDao(@NonNull JdbcTemplate template, @NonNull JdbcBatchBaseProcessor<K, E> processor) {
+    public JdbcBatchBaseDao(@NonNull JdbcTemplate template, @NonNull BatchBaseProcessor<K, E> processor) {
         this.template = template;
         this.processor = processor;
     }
@@ -236,15 +236,15 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
         return template;
     }
 
-    public void setTemplate(JdbcTemplate template) {
+    public void setTemplate(@NonNull JdbcTemplate template) {
         this.template = template;
     }
 
-    public JdbcBatchBaseProcessor<K, E> getProcessor() {
+    public BatchBaseProcessor<K, E> getProcessor() {
         return processor;
     }
 
-    public void setProcessor(JdbcBatchBaseProcessor<K, E> processor) {
+    public void setProcessor(@NonNull BatchBaseProcessor<K, E> processor) {
         this.processor = processor;
     }
 }

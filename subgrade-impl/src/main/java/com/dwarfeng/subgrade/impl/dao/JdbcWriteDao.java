@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.JdbcWriteProcessor;
 import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
+import com.dwarfeng.subgrade.sdk.jdbc.WriteProcessor;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.WriteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
@@ -19,9 +19,9 @@ import org.springframework.lang.NonNull;
 public class JdbcWriteDao<E extends Entity<?>> implements WriteDao<E> {
 
     private JdbcTemplate template;
-    private JdbcWriteProcessor<E> processor;
+    private WriteProcessor<E> processor;
 
-    public JdbcWriteDao(@NonNull JdbcTemplate template, @NonNull JdbcWriteProcessor<E> processor) {
+    public JdbcWriteDao(@NonNull JdbcTemplate template, @NonNull WriteProcessor<E> processor) {
         this.template = template;
         this.processor = processor;
     }
@@ -40,15 +40,15 @@ public class JdbcWriteDao<E extends Entity<?>> implements WriteDao<E> {
         return template;
     }
 
-    public void setTemplate(JdbcTemplate template) {
+    public void setTemplate(@NonNull JdbcTemplate template) {
         this.template = template;
     }
 
-    public JdbcWriteProcessor<E> getProcessor() {
+    public WriteProcessor<E> getProcessor() {
         return processor;
     }
 
-    public void setProcessor(JdbcWriteProcessor<E> processor) {
+    public void setProcessor(@NonNull WriteProcessor<E> processor) {
         this.processor = processor;
     }
 }

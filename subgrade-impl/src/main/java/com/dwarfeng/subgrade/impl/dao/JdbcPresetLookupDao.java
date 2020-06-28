@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.JdbcPresetLookupProcessor;
+import com.dwarfeng.subgrade.sdk.jdbc.PresetLookupProcessor;
 import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
@@ -21,9 +21,9 @@ import java.util.List;
 public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao<E> {
 
     private JdbcTemplate template;
-    private JdbcPresetLookupProcessor<E> processor;
+    private PresetLookupProcessor<E> processor;
 
-    public JdbcPresetLookupDao(@NonNull JdbcTemplate template, @NonNull JdbcPresetLookupProcessor<E> processor) {
+    public JdbcPresetLookupDao(@NonNull JdbcTemplate template, @NonNull PresetLookupProcessor<E> processor) {
         this.template = template;
         this.processor = processor;
     }
@@ -67,15 +67,15 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         return template;
     }
 
-    public void setTemplate(JdbcTemplate template) {
+    public void setTemplate(@NonNull JdbcTemplate template) {
         this.template = template;
     }
 
-    public JdbcPresetLookupProcessor<E> getProcessor() {
+    public PresetLookupProcessor<E> getProcessor() {
         return processor;
     }
 
-    public void setProcessor(JdbcPresetLookupProcessor<E> processor) {
+    public void setProcessor(@NonNull PresetLookupProcessor<E> processor) {
         this.processor = processor;
     }
 }

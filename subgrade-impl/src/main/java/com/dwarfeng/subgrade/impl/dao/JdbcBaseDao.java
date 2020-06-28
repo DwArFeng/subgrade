@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.JdbcBaseProcessor;
+import com.dwarfeng.subgrade.sdk.jdbc.BaseProcessor;
 import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
@@ -22,9 +22,9 @@ import java.util.Objects;
 public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<K, E> {
 
     private JdbcTemplate template;
-    private JdbcBaseProcessor<K, E> processor;
+    private BaseProcessor<K, E> processor;
 
-    public JdbcBaseDao(@NonNull JdbcTemplate template, @NonNull JdbcBaseProcessor<K, E> processor) {
+    public JdbcBaseDao(@NonNull JdbcTemplate template, @NonNull BaseProcessor<K, E> processor) {
         this.template = template;
         this.processor = processor;
     }
@@ -90,15 +90,15 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         return template;
     }
 
-    public void setTemplate(JdbcTemplate template) {
+    public void setTemplate(@NonNull JdbcTemplate template) {
         this.template = template;
     }
 
-    public JdbcBaseProcessor<K, E> getProcessor() {
+    public BaseProcessor<K, E> getProcessor() {
         return processor;
     }
 
-    public void setProcessor(JdbcBaseProcessor<K, E> processor) {
+    public void setProcessor(@NonNull BaseProcessor<K, E> processor) {
         this.processor = processor;
     }
 }

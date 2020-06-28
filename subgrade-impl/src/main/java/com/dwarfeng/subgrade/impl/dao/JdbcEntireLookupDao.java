@@ -1,12 +1,13 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.JdbcEntireLookupProcessor;
+import com.dwarfeng.subgrade.sdk.jdbc.EntireLookupProcessor;
 import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.lang.NonNull;
 
 import java.util.List;
 
@@ -20,7 +21,12 @@ import java.util.List;
 public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao<E> {
 
     private JdbcTemplate template;
-    private JdbcEntireLookupProcessor<E> processor;
+    private EntireLookupProcessor<E> processor;
+
+    public JdbcEntireLookupDao(@NonNull JdbcTemplate template, @NonNull EntireLookupProcessor<E> processor) {
+        this.template = template;
+        this.processor = processor;
+    }
 
     @Override
     public List<E> lookup() throws DaoException {
@@ -55,5 +61,21 @@ public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao
         } catch (Exception e) {
             throw new DaoException(e);
         }
+    }
+
+    public JdbcTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(@NonNull JdbcTemplate template) {
+        this.template = template;
+    }
+
+    public EntireLookupProcessor<E> getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(@NonNull EntireLookupProcessor<E> processor) {
+        this.processor = processor;
     }
 }
