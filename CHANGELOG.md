@@ -26,7 +26,12 @@
   - com.dwarfeng.subgrade.impl.dao.JdbcBatchWriteDao
   - com.dwarfeng.subgrade.impl.dao.JdbcEntireLookupDao
   - com.dwarfeng.subgrade.impl.dao.JdbcPresetLookupDao
-  
+- 重写 com.dwarfeng.subgrade.sdk.database.definition 包中的内容
+  - com.dwarfeng.subgrade.sdk.database.definition.ColumnDefinition
+  - com.dwarfeng.subgrade.sdk.database.definition.ColumnTypes
+  - com.dwarfeng.subgrade.sdk.database.definition.OptionalDefinition
+  - com.dwarfeng.subgrade.sdk.database.definition.TableDefinition
+
 #### Bug修复
 
 - 修复使用jdbc框架进行 Apache Phoenix 分页查询时生成错误的 SQL 语句的bug。
