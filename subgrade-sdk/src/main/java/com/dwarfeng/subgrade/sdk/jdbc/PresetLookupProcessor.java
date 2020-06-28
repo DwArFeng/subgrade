@@ -11,7 +11,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 1.1.1
  */
-public interface JdbcPresetLookupProcessor<E extends Entity<?>> {
+public interface PresetLookupProcessor<E extends Entity<?>> {
 
     SQLAndParameter providePresetLookup(String preset, Object[] objs);
 

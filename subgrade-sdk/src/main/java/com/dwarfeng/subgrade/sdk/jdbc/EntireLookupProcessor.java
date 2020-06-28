@@ -11,7 +11,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 1.1.1
  */
-public interface JdbcEntireLookupProcessor<E extends Entity<?>> {
+public interface EntireLookupProcessor<E extends Entity<?>> {
 
     SQLAndParameter provideEntireLookup();
 

@@ -8,10 +8,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
+ * 批量基础处理器。
+ *
  * @author DwArFeng
  * @since 1.1.1
  */
-public interface JdbcBatchBaseProcessor<K extends Key, E extends Entity<K>> extends JdbcBaseProcessor<K, E> {
+public interface BatchBaseProcessor<K extends Key, E extends Entity<K>> extends BaseProcessor<K, E> {
 
     boolean loopInsert();
 

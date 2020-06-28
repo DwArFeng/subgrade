@@ -7,10 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * 基础处理器。
+ *
  * @author DwArFeng
  * @since 1.1.1
  */
-public interface JdbcBaseProcessor<K extends Key, E extends Entity<K>> {
+public interface BaseProcessor<K extends Key, E extends Entity<K>> {
 
     SQLAndParameter provideInsert(E element);
 

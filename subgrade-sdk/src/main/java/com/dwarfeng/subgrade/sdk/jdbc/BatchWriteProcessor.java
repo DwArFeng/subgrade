@@ -5,10 +5,12 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import java.util.List;
 
 /**
+ * 批量写入处理器。
+ *
  * @author DwArFeng
  * @since 1.1.1
  */
-public interface JdbcBatchWriteProcessor<E extends Entity<?>> extends JdbcWriteProcessor<E> {
+public interface BatchWriteProcessor<E extends Entity<?>> extends WriteProcessor<E> {
 
     boolean loopWrite();
 

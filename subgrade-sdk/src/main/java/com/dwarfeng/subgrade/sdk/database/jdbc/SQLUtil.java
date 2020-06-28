@@ -1,17 +1,18 @@
-package com.dwarfeng.subgrade.sdk.jdbc.definition;
+package com.dwarfeng.subgrade.sdk.database.jdbc;
+
+import com.dwarfeng.subgrade.sdk.database.definition.ColumnDefinition;
+import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
 
 import java.util.List;
 import java.util.Objects;
 
-import static com.dwarfeng.subgrade.sdk.jdbc.definition.TableDefinition.ColumnDefinition;
-
 /**
- * 数据库表定义的工具类。
+ * SQL工具类。
  *
  * @author DwArFeng
  * @since 1.1.0
  */
-public final class TableDefinitionUtil {
+public final class SQLUtil {
 
     /**
      * 获取指定的数据库表定义对应的全序列对应的SQL语句。
