@@ -313,14 +313,15 @@ public class PhoenixHelper {
         tableDefinition.putProperty(CUSTOM_SPLIT_POINT, Arrays.asList(columnNames));
     }
 
-    public static void addIndex(@NonNull TableDefinition tableDefinition, @NonNull List<String> columnNames) {
-        addIndex(tableDefinition, columnNames, null, null, null, null, null);
+    public static void addIndex(
+            @NonNull TableDefinition tableDefinition, @NonNull String indexName, @NonNull List<String> columnNames) {
+        addIndex(tableDefinition, indexName, columnNames, null, null, null, null, null);
     }
 
     public static void addIndex(
-            @NonNull TableDefinition tableDefinition, @NonNull List<String> columnNames, IndexType indexType,
-            List<String> ascColumnNames, List<String> descColumnNames, List<String> includeColumnNames,
-            IndexAsyncType indexAsyncType) {
+            @NonNull TableDefinition tableDefinition, @NonNull String indexName, @NonNull List<String> columnNames,
+            IndexType indexType, List<String> ascColumnNames, List<String> descColumnNames,
+            List<String> includeColumnNames, IndexAsyncType indexAsyncType) {
         makeSureAllColumnExists(tableDefinition, columnNames);
         if (Objects.nonNull(ascColumnNames)) {
             makeSureAllColumnExists(tableDefinition, ascColumnNames);
@@ -333,6 +334,8 @@ public class PhoenixHelper {
         }
 
         OptionalDefinition optionalDefinition = new OptionalDefinition();
+        optionalDefinition.setName(indexName);
+        optionalDefinition.setType(OPTIONAL_TYPE_INDEX);
         optionalDefinition.putProperty(CUSTOM_CONTEXT_COLUMNS, new ArrayList<>(columnNames));
         optionalDefinition.putPropertyIfNotNull(CUSTOM_INDEX_TYPE, indexType);
         if (Objects.nonNull(ascColumnNames)) {
@@ -524,7 +527,7 @@ public class PhoenixHelper {
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_SPLIT_POINT, Arrays.asList(columnNames));
     }
 
-    public static void makeSurePrimaryKey(@NonNull TableDefinition tableDefinition) {
+    private static void makeSurePrimaryKey(@NonNull TableDefinition tableDefinition) {
         List<OptionalDefinition> optionalDefinitions = tableDefinition.getOptionalDefinitions(OPTIONAL_TYPE_PRIMARY_KEY);
         if (optionalDefinitions.isEmpty()) {
             throw new IllegalArgumentException("参数 tableDefinition 不含有主键");
