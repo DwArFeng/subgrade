@@ -18,7 +18,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class MyBatisBatchRelationDao<PK extends Key, CK extends Key> implements BatchRelationDao<PK, CK> {
+public class MybatisBatchRelationDao<PK extends Key, CK extends Key> implements BatchRelationDao<PK, CK> {
 
     public static final String DEFAULT_EXISTS_RELATION_ID = "existsRelation";
     public static final String DEFAULT_ADD_RELATION_ID = "addRelation";
@@ -38,7 +38,7 @@ public class MyBatisBatchRelationDao<PK extends Key, CK extends Key> implements 
     private String batchAddRelationId;
     private String batchDeleteRelationId;
 
-    public MyBatisBatchRelationDao(SqlSessionTemplate template, String namespace, boolean defaultBatchOperation) {
+    public MybatisBatchRelationDao(SqlSessionTemplate template, String namespace, boolean defaultBatchOperation) {
         this(
                 template, namespace, DEFAULT_EXISTS_RELATION_ID,
                 DEFAULT_ADD_RELATION_ID, DEFAULT_DELETE_RELATION_ID,
@@ -48,7 +48,7 @@ public class MyBatisBatchRelationDao<PK extends Key, CK extends Key> implements 
                 defaultBatchOperation ? DEFAULT_DELETE_RELATION_ID : DEFAULT_BATCH_DELETE_RELATION_ID);
     }
 
-    public MyBatisBatchRelationDao(
+    public MybatisBatchRelationDao(
             @NonNull SqlSessionTemplate template,
             @NonNull String namespace,
             @NonNull String existsRelationId,

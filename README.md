@@ -93,14 +93,14 @@
     - com.dwarfeng.subgrade.impl.dao.JdbcBatchBaseDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBatchWriteDao
     - com.dwarfeng.subgrade.impl.dao.JdbcWriteDao
-    - com.dwarfeng.subgrade.impl.dao.MyBatisBaseDao
-    - com.dwarfeng.subgrade.impl.dao.MyBatisBatchBaseDao
-    - com.dwarfeng.subgrade.impl.dao.MyBatisRelationDao
-    - com.dwarfeng.subgrade.impl.dao.MyBatisBatchRelationDao
-    - com.dwarfeng.subgrade.impl.dao.MyBatisBatchWriteDao
-    - com.dwarfeng.subgrade.impl.dao.MyBatisBatchWriteDao
-    - com.dwarfeng.subgrade.impl.dao.MyBatisEntireLookupDao
-    - com.dwarfeng.subgrade.impl.dao.MyBatisPresetLookupDao
+    - com.dwarfeng.subgrade.impl.dao.MybatisBaseDao
+    - com.dwarfeng.subgrade.impl.dao.MybatisBatchBaseDao
+    - com.dwarfeng.subgrade.impl.dao.MybatisRelationDao
+    - com.dwarfeng.subgrade.impl.dao.MybatisBatchRelationDao
+    - com.dwarfeng.subgrade.impl.dao.MybatisBatchWriteDao
+    - com.dwarfeng.subgrade.impl.dao.MybatisBatchWriteDao
+    - com.dwarfeng.subgrade.impl.dao.MybatisEntireLookupDao
+    - com.dwarfeng.subgrade.impl.dao.MybatisPresetLookupDao
     
   - 其余的数据访问层框架使用情况极少或几乎没有使用，非常有可能存在bug。
   

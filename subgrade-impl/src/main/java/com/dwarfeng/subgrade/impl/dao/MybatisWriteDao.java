@@ -13,7 +13,7 @@ import org.springframework.lang.NonNull;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class MyBatisWriteDao<E extends Entity<?>> implements WriteDao<E> {
+public class MybatisWriteDao<E extends Entity<?>> implements WriteDao<E> {
 
     public static final String DEFAULT_WRITE_ID = "write";
 
@@ -21,11 +21,11 @@ public class MyBatisWriteDao<E extends Entity<?>> implements WriteDao<E> {
     private String namespace;
     private String writeId;
 
-    public MyBatisWriteDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
+    public MybatisWriteDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
         this(template, namespace, DEFAULT_WRITE_ID);
     }
 
-    public MyBatisWriteDao(
+    public MybatisWriteDao(
             @NonNull SqlSessionTemplate template,
             @NonNull String namespace,
             @NonNull String writeId) {

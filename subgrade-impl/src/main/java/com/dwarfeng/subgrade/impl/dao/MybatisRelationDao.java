@@ -14,7 +14,7 @@ import org.springframework.lang.NonNull;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class MyBatisRelationDao<PK extends Key, CK extends Key> implements RelationDao<PK, CK> {
+public class MybatisRelationDao<PK extends Key, CK extends Key> implements RelationDao<PK, CK> {
 
     public static final String DEFAULT_EXISTS_RELATION_ID = "existsRelation";
     public static final String DEFAULT_ADD_RELATION_ID = "addRelation";
@@ -26,11 +26,11 @@ public class MyBatisRelationDao<PK extends Key, CK extends Key> implements Relat
     private String addRelationId;
     private String deleteRelationId;
 
-    public MyBatisRelationDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
+    public MybatisRelationDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
         this(template, namespace, DEFAULT_EXISTS_RELATION_ID, DEFAULT_ADD_RELATION_ID, DEFAULT_DELETE_RELATION_ID);
     }
 
-    public MyBatisRelationDao(
+    public MybatisRelationDao(
             @NonNull SqlSessionTemplate template,
             @NonNull String namespace,
             @NonNull String existsRelationId,

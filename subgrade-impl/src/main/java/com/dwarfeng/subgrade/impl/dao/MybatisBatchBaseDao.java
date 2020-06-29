@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class MyBatisBatchBaseDao<K extends Key, E extends Entity<K>> implements BatchBaseDao<K, E> {
+public class MybatisBatchBaseDao<K extends Key, E extends Entity<K>> implements BatchBaseDao<K, E> {
 
     public static final String DEFAULT_INSERT_ID = "insert";
     public static final String DEFAULT_UPDATE_ID = "update";
@@ -47,7 +47,7 @@ public class MyBatisBatchBaseDao<K extends Key, E extends Entity<K>> implements 
     private String allExistsId;
     private String batchGetId;
 
-    public MyBatisBatchBaseDao(
+    public MybatisBatchBaseDao(
             @NonNull SqlSessionTemplate template, @NonNull String namespace, boolean defaultBatchOperation) {
         this(
                 template, namespace, DEFAULT_INSERT_ID, DEFAULT_UPDATE_ID,
@@ -61,7 +61,7 @@ public class MyBatisBatchBaseDao<K extends Key, E extends Entity<K>> implements 
         );
     }
 
-    public MyBatisBatchBaseDao(
+    public MybatisBatchBaseDao(
             @NonNull SqlSessionTemplate template, @NonNull String namespace, @NonNull String insertId,
             @NonNull String updateId, @NonNull String deleteId, @NonNull String existsId,
             @NonNull String getId, @NonNull String batchInsertId, @NonNull String batchUpdateId,

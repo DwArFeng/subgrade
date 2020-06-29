@@ -14,7 +14,7 @@ import org.springframework.lang.NonNull;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class MyBatisBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<K, E> {
+public class MybatisBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<K, E> {
 
     public static final String DEFAULT_INSERT_ID = "insert";
     public static final String DEFAULT_UPDATE_ID = "update";
@@ -30,12 +30,12 @@ public class MyBatisBaseDao<K extends Key, E extends Entity<K>> implements BaseD
     private String existsId;
     private String getId;
 
-    public MyBatisBaseDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
+    public MybatisBaseDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
         this(template, namespace, DEFAULT_INSERT_ID, DEFAULT_UPDATE_ID, DEFAULT_DELETE_ID, DEFAULT_EXISTS_ID,
                 DEFAULT_GET_ID);
     }
 
-    public MyBatisBaseDao(
+    public MybatisBaseDao(
             @NonNull SqlSessionTemplate template,
             @NonNull String namespace,
             @NonNull String insertId,

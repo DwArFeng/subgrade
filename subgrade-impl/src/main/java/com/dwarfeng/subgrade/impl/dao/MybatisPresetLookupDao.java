@@ -17,7 +17,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class MyBatisPresetLookupDao<E extends Entity<?>> implements PresetLookupDao<E> {
+public class MybatisPresetLookupDao<E extends Entity<?>> implements PresetLookupDao<E> {
 
     public static final String DEFAULT_PRESET_LOOKUP_ID = "presetLookup";
     public static final String DEFAULT_PRESET_PAGING_ID = "presetPaging";
@@ -29,11 +29,11 @@ public class MyBatisPresetLookupDao<E extends Entity<?>> implements PresetLookup
     private String presetPagingId;
     private String presetCountId;
 
-    public MyBatisPresetLookupDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
+    public MybatisPresetLookupDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
         this(template, namespace, DEFAULT_PRESET_LOOKUP_ID, DEFAULT_PRESET_PAGING_ID, DEFAULT_PRESET_COUNT_ID);
     }
 
-    public MyBatisPresetLookupDao(
+    public MybatisPresetLookupDao(
             @NonNull SqlSessionTemplate template,
             @NonNull String namespace,
             @NonNull String presetLookupId,

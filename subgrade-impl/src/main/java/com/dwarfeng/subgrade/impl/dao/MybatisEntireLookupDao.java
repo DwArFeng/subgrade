@@ -16,7 +16,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class MyBatisEntireLookupDao<E extends Entity<?>> implements EntireLookupDao<E> {
+public class MybatisEntireLookupDao<E extends Entity<?>> implements EntireLookupDao<E> {
 
     public static final String DEFAULT_ENTIRE_LOOKUP_ID = "entireLookup";
     public static final String DEFAULT_ENTIRE_PAGING_ID = "entirePaging";
@@ -28,11 +28,11 @@ public class MyBatisEntireLookupDao<E extends Entity<?>> implements EntireLookup
     private String entirePagingId;
     private String entireCountId;
 
-    public MyBatisEntireLookupDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
+    public MybatisEntireLookupDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
         this(template, namespace, DEFAULT_ENTIRE_LOOKUP_ID, DEFAULT_ENTIRE_PAGING_ID, DEFAULT_ENTIRE_COUNT_ID);
     }
 
-    public MyBatisEntireLookupDao(
+    public MybatisEntireLookupDao(
             @NonNull SqlSessionTemplate template,
             @NonNull String namespace,
             @NonNull String entireLookupId,

@@ -16,7 +16,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class MyBatisBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> {
+public class MybatisBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> {
 
     public static final String DEFAULT_WRITE_ID = "write";
     public static final String DEFAULT_BATCH_WRITE_ID = "batchWrite";
@@ -26,7 +26,7 @@ public class MyBatisBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<
     private String writeId;
     private String batchWriteId;
 
-    public MyBatisBatchWriteDao(
+    public MybatisBatchWriteDao(
             @NonNull SqlSessionTemplate template, @NonNull String namespace, boolean defaultBatchOperation) {
         this(
                 template, namespace, DEFAULT_WRITE_ID,
@@ -34,7 +34,7 @@ public class MyBatisBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<
         );
     }
 
-    public MyBatisBatchWriteDao(
+    public MybatisBatchWriteDao(
             @NonNull SqlSessionTemplate template,
             @NonNull String namespace,
             @NonNull String writeId,
