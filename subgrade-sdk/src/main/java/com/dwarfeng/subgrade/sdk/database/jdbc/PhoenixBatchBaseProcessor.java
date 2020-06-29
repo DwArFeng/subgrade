@@ -32,12 +32,12 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
     private static final String CACHE_SQL_GET = "CACHE_SQL_GET";
 
     private TableDefinition tableDefinition;
-    private EntityHandle<K, E> entityHandle;
+    private BaseHandle<K, E> handle;
 
     public PhoenixBatchBaseProcessor(
-            @NonNull TableDefinition tableDefinition, @NonNull EntityHandle<K, E> entityHandle) {
+            @NonNull TableDefinition tableDefinition, @NonNull BaseHandle<K, E> handle) {
         this.tableDefinition = tableDefinition;
-        this.entityHandle = entityHandle;
+        this.handle = handle;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         List<ColumnDefinition> columnDefinitions = tableDefinition.getColumnDefinitions();
         Object[] parameters = new Object[columnDefinitions.size()];
         for (int i = 0; i < columnDefinitions.size(); i++) {
-            parameters[i] = entityHandle.getEntityProperty(element, columnDefinitions.get(i));
+            parameters[i] = handle.getEntityProperty(element, columnDefinitions.get(i));
         }
         return new SQLAndParameter(sql, parameters, null);
     }
@@ -87,7 +87,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         for (E element : elements) {
             Object[] parameters = new Object[columnDefinitions.size()];
             for (int i = 0; i < columnDefinitions.size(); i++) {
-                parameters[i] = entityHandle.getEntityProperty(element, columnDefinitions.get(i));
+                parameters[i] = handle.getEntityProperty(element, columnDefinitions.get(i));
             }
             parametersList.add(parameters);
         }
@@ -107,7 +107,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         List<ColumnDefinition> columnDefinitions = PhoenixHelper.getPrimaryKeyColumns(tableDefinition);
         Object[] parameters = new Object[columnDefinitions.size()];
         for (int i = 0; i < columnDefinitions.size(); i++) {
-            parameters[i] = entityHandle.getKeyProperty(key, columnDefinitions.get(i));
+            parameters[i] = handle.getKeyProperty(key, columnDefinitions.get(i));
         }
         return new SQLAndParameter(sql, parameters, null);
     }
@@ -125,7 +125,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         for (K key : keys) {
             Object[] parameters = new Object[columnDefinitions.size()];
             for (int i = 0; i < columnDefinitions.size(); i++) {
-                parameters[i] = entityHandle.getKeyProperty(key, columnDefinitions.get(i));
+                parameters[i] = handle.getKeyProperty(key, columnDefinitions.get(i));
             }
             parametersList.add(parameters);
         }
@@ -144,7 +144,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         List<ColumnDefinition> columnDefinitions = PhoenixHelper.getPrimaryKeyColumns(tableDefinition);
         Object[] parameters = new Object[columnDefinitions.size()];
         for (int i = 0; i < columnDefinitions.size(); i++) {
-            parameters[i] = entityHandle.getKeyProperty(key, columnDefinitions.get(i));
+            parameters[i] = handle.getKeyProperty(key, columnDefinitions.get(i));
         }
         return new SQLAndParameter(sql, parameters, null);
     }
@@ -191,17 +191,18 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         List<ColumnDefinition> columnDefinitions = PhoenixHelper.getPrimaryKeyColumns(tableDefinition);
         Object[] parameters = new Object[columnDefinitions.size()];
         for (int i = 0; i < columnDefinitions.size(); i++) {
-            parameters[i] = entityHandle.getKeyProperty(key, columnDefinitions.get(i));
+            parameters[i] = handle.getKeyProperty(key, columnDefinitions.get(i));
         }
         return new SQLAndParameter(sql, parameters, null);
     }
 
     @Override
     public E resolveGet(ResultSet resultSet) throws SQLException {
-        E entity = entityHandle.newInstance();
+        resultSet.next();
+        E entity = handle.newInstance();
         List<ColumnDefinition> columnDefinitions = tableDefinition.getColumnDefinitions();
         for (int i = 0; i < columnDefinitions.size(); i++) {
-            entityHandle.setProperty(entity, columnDefinitions.get(i), resultSet, i + 1);
+            handle.setProperty(entity, columnDefinitions.get(i), resultSet, i + 1);
         }
         return entity;
     }
@@ -236,11 +237,11 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         this.tableDefinition = tableDefinition;
     }
 
-    public EntityHandle<K, E> getEntityHandle() {
-        return entityHandle;
+    public BaseHandle<K, E> getHandle() {
+        return handle;
     }
 
-    public void setEntityHandle(@NonNull EntityHandle<K, E> entityHandle) {
-        this.entityHandle = entityHandle;
+    public void setHandle(@NonNull BaseHandle<K, E> handle) {
+        this.handle = handle;
     }
 }

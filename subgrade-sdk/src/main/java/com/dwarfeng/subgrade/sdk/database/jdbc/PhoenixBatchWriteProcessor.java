@@ -5,7 +5,6 @@ import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
 import com.dwarfeng.subgrade.sdk.jdbc.BatchWriteProcessor;
 import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
-import com.dwarfeng.subgrade.stack.bean.key.Key;
 import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;
@@ -21,17 +20,17 @@ import java.util.List;
  * @since 1.1.1
  */
 @SuppressWarnings("DuplicatedCode")
-public class PhoenixBatchWriteProcessor<K extends Key, E extends Entity<K>> implements BatchWriteProcessor<E> {
+public class PhoenixBatchWriteProcessor<E extends Entity<?>> implements BatchWriteProcessor<E> {
 
     private static final String CACHE_SQL_WRITE = "CACHE_SQL_WRITE";
 
     private TableDefinition tableDefinition;
-    private EntityHandle<K, E> entityHandle;
+    private WriteHandle<E> handle;
 
     public PhoenixBatchWriteProcessor(
-            @NonNull TableDefinition tableDefinition, @NonNull EntityHandle<K, E> entityHandle) {
+            @NonNull TableDefinition tableDefinition, @NonNull WriteHandle<E> handle) {
         this.tableDefinition = tableDefinition;
-        this.entityHandle = entityHandle;
+        this.handle = handle;
     }
 
     @Override
@@ -40,7 +39,7 @@ public class PhoenixBatchWriteProcessor<K extends Key, E extends Entity<K>> impl
         List<ColumnDefinition> columnDefinitions = tableDefinition.getColumnDefinitions();
         Object[] parameters = new Object[columnDefinitions.size()];
         for (int i = 0; i < columnDefinitions.size(); i++) {
-            parameters[i] = entityHandle.getEntityProperty(element, columnDefinitions.get(i));
+            parameters[i] = handle.getEntityProperty(element, columnDefinitions.get(i));
         }
         return new SQLAndParameter(sql, parameters, null);
     }
@@ -58,7 +57,7 @@ public class PhoenixBatchWriteProcessor<K extends Key, E extends Entity<K>> impl
         for (E element : elements) {
             Object[] parameters = new Object[columnDefinitions.size()];
             for (int i = 0; i < columnDefinitions.size(); i++) {
-                parameters[i] = entityHandle.getEntityProperty(element, columnDefinitions.get(i));
+                parameters[i] = handle.getEntityProperty(element, columnDefinitions.get(i));
             }
             parametersList.add(parameters);
         }
@@ -80,11 +79,11 @@ public class PhoenixBatchWriteProcessor<K extends Key, E extends Entity<K>> impl
         this.tableDefinition = tableDefinition;
     }
 
-    public EntityHandle<K, E> getEntityHandle() {
-        return entityHandle;
+    public WriteHandle<E> getHandle() {
+        return handle;
     }
 
-    public void setEntityHandle(@NonNull EntityHandle<K, E> entityHandle) {
-        this.entityHandle = entityHandle;
+    public void setHandle(@NonNull WriteHandle<E> handle) {
+        this.handle = handle;
     }
 }

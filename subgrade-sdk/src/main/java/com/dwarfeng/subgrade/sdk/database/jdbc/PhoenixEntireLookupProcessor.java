@@ -7,7 +7,6 @@ import com.dwarfeng.subgrade.sdk.jdbc.EntireLookupProcessor;
 import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
-import com.dwarfeng.subgrade.stack.bean.key.Key;
 import org.springframework.lang.NonNull;
 
 import java.sql.ResultSet;
@@ -24,19 +23,19 @@ import java.util.List;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class PhoenixEntireLookupProcessor<K extends Key, E extends Entity<K>> implements EntireLookupProcessor<E> {
+public class PhoenixEntireLookupProcessor<E extends Entity<?>> implements EntireLookupProcessor<E> {
 
     private static final String CACHE_SQL_ENTIRE_LOOKUP = "CACHE_SQL_ENTIRE_LOOKUP";
     private static final String CACHE_SQL_ENTIRE_PAGING = "CACHE_SQL_ENTIRE_PAGING";
     private static final String CACHE_SQL_ENTIRE_COUNT = "CACHE_SQL_ENTIRE_COUNT";
 
     private TableDefinition tableDefinition;
-    private EntityHandle<K, E> entityHandle;
+    private ResultHandle<E> handle;
 
     public PhoenixEntireLookupProcessor(
-            @NonNull TableDefinition tableDefinition, @NonNull EntityHandle<K, E> entityHandle) {
+            @NonNull TableDefinition tableDefinition, @NonNull ResultHandle<E> resultHandle) {
         this.tableDefinition = tableDefinition;
-        this.entityHandle = entityHandle;
+        this.handle = resultHandle;
     }
 
     @Override
@@ -65,16 +64,16 @@ public class PhoenixEntireLookupProcessor<K extends Key, E extends Entity<K>> im
     }
 
     @Override
-    public int resolveEntireCount(ResultSet resultSet) throws SQLException {
-        resultSet.next();
-        return new Long(resultSet.getLong(1)).intValue();
-    }
-
-    @Override
     public SQLAndParameter provideEntireCount() {
         String sql = (String) tableDefinition.getOrPutCache(CACHE_SQL_ENTIRE_COUNT, provideEntireCountSQL());
         Object[] parameters = new Object[0];
         return new SQLAndParameter(sql, parameters, null);
+    }
+
+    @Override
+    public int resolveEntireCount(ResultSet resultSet) throws SQLException {
+        resultSet.next();
+        return new Long(resultSet.getLong(1)).intValue();
     }
 
     private String provideEntireLookupSQL() {
@@ -95,13 +94,14 @@ public class PhoenixEntireLookupProcessor<K extends Key, E extends Entity<K>> im
                 SQLUtil.fullTableName(tableDefinition));
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private List<E> resolveEntity(ResultSet resultSet) throws SQLException {
         List<E> entities = new ArrayList<>();
         while (resultSet.next()) {
-            E entity = entityHandle.newInstance();
+            E entity = handle.newInstance();
             List<ColumnDefinition> columnDefinitions = tableDefinition.getColumnDefinitions();
             for (int i = 0; i < columnDefinitions.size(); i++) {
-                entityHandle.setProperty(entity, columnDefinitions.get(i), resultSet, i + 1);
+                handle.setProperty(entity, columnDefinitions.get(i), resultSet, i + 1);
             }
             entities.add(entity);
         }
@@ -116,11 +116,11 @@ public class PhoenixEntireLookupProcessor<K extends Key, E extends Entity<K>> im
         this.tableDefinition = tableDefinition;
     }
 
-    public EntityHandle<K, E> getEntityHandle() {
-        return entityHandle;
+    public ResultHandle<E> getHandle() {
+        return handle;
     }
 
-    public void setEntityHandle(@NonNull EntityHandle<K, E> entityHandle) {
-        this.entityHandle = entityHandle;
+    public void setHandle(@NonNull ResultHandle<E> handle) {
+        this.handle = handle;
     }
 }

@@ -118,6 +118,8 @@ public class PhoenixHelper {
             ColumnNullable columnNullable, String defaultValue) {
         makeSureAllColumnNotExists(tableDefinition, Collections.singletonList(columnName));
         ColumnDefinition columnDefinition = new ColumnDefinition();
+        columnDefinition.setName(columnName);
+        columnDefinition.setType(type);
         if (Objects.nonNull(columnNullable)) {
             switch (columnNullable) {
                 case NULL:
@@ -345,7 +347,7 @@ public class PhoenixHelper {
             optionalDefinition.putProperty(CUSTOM_DESC_COLUMNS, new HashSet<>(descColumnNames));
         }
         if (Objects.nonNull(includeColumnNames)) {
-            optionalDefinition.putProperty(CUSTOM_INCLUDE_COLUMNS, new HashSet<>(descColumnNames));
+            optionalDefinition.putProperty(CUSTOM_INCLUDE_COLUMNS, new HashSet<>(includeColumnNames));
         }
         optionalDefinition.putPropertyIfNotNull(CUSTOM_ASYNC_TYPE, indexAsyncType);
         tableDefinition.addOptionalDefinition(optionalDefinition);
