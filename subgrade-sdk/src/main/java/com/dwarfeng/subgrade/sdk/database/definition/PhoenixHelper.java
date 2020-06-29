@@ -1,8 +1,5 @@
-package com.dwarfeng.subgrade.sdk.database.helper;
+package com.dwarfeng.subgrade.sdk.database.definition;
 
-import com.dwarfeng.subgrade.sdk.database.definition.ColumnDefinition;
-import com.dwarfeng.subgrade.sdk.database.definition.OptionalDefinition;
-import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
 import org.springframework.lang.NonNull;
 
 import java.util.*;
