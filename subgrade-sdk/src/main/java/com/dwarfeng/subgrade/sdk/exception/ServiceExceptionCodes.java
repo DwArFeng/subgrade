@@ -74,6 +74,12 @@ public final class ServiceExceptionCodes {
     public static final ServiceException.Code LOGIN_FAILED =
             new ServiceException.Code(offset(90), "login failed");
 
+    /**
+     * 数据库失败。
+     */
+    public static final ServiceException.Code DATABASE_FAILED =
+            new ServiceException.Code(offset(100), "database failed");
+
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
     }

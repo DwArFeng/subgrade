@@ -79,19 +79,19 @@ public class PhoenixEntireLookupProcessor<E extends Entity<?>> implements Entire
     private String provideEntireLookupSQL() {
         return String.format("SELECT %s FROM %s",
                 SQLUtil.fullColumnSerial(tableDefinition),
-                SQLUtil.fullTableName(tableDefinition));
+                PhoenixHelper.getFullTableName(tableDefinition));
     }
 
     private String provideEntirePagingSQL() {
         return String.format("SELECT %s FROM %s LIMIT ? OFFSET ?",
                 SQLUtil.fullColumnSerial(tableDefinition),
-                SQLUtil.fullTableName(tableDefinition));
+                PhoenixHelper.getFullTableName(tableDefinition));
     }
 
     private String provideEntireCountSQL() {
         return String.format("SELECT COUNT(%s) FROM %s",
                 SQLUtil.columnSerial(PhoenixHelper.getPrimaryKeyColumns(tableDefinition)),
-                SQLUtil.fullTableName(tableDefinition));
+                PhoenixHelper.getFullTableName(tableDefinition));
     }
 
     @SuppressWarnings("DuplicatedCode")

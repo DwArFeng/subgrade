@@ -97,7 +97,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
     private String providePresetLookupFragment() {
         return String.format("SELECT %s FROM %s",
                 SQLUtil.fullColumnSerial(tableDefinition),
-                SQLUtil.fullTableName(tableDefinition));
+                PhoenixHelper.getFullTableName(tableDefinition));
     }
 
     private String providePresetPagingFragment() {
@@ -107,7 +107,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
     private String providePresetCountFragment() {
         return String.format("SELECT COUNT(%s) FROM %s",
                 SQLUtil.columnSerial(PhoenixHelper.getPrimaryKeyColumns(tableDefinition)),
-                SQLUtil.fullTableName(tableDefinition));
+                PhoenixHelper.getFullTableName(tableDefinition));
     }
 
     @SuppressWarnings("DuplicatedCode")

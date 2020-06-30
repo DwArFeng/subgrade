@@ -29,7 +29,7 @@ public class PhoenixHelper {
     private static final String CUSTOM_SALT_BUCKETS = "SALT_BUCKETS";
     private static final String CUSTOM_DISABLE_WAL = "DISABLE_WAL";
     private static final String CUSTOM_IMMUTABLE_ROWS = "IMMUTABLE_ROWS";
-    private static final String CUSTOM_MULTI_TENANT = "MULTI_TENANT";
+    private static final String CUSTOM_MULTI_TELNET = "MULTI_TENANT";
     private static final String CUSTOM_DEFAULT_COLUMN_FAMILY = "DEFAULT_COLUMN_FAMILY";
     private static final String CUSTOM_STORE_NULLS = "STORE_NULLS";
     private static final String CUSTOM_TRANSACTIONAL = "TRANSACTIONAL";
@@ -42,38 +42,50 @@ public class PhoenixHelper {
     private static final String CUSTOM_ASYNC_TYPE = "ASYNC_TYPE";
     private static final String CACHE_PRIMARY_COLUMNS = "PRIMARY_COLUMNS";
     private static final String CACHE_NON_PRIMARY_COLUMNS = "NON_PRIMARY_COLUMNS";
+    private static final String CACHE_FULL_TABLE_NAME = "FULL_TABLE_NAME";
 
     public enum ColumnNullable {
         NULL("NULL"),
         NOT_NULL("NOT NULL");
 
-        private final String name;
+        private final String sqlFragment;
 
-        ColumnNullable(String name) {
-            this.name = name;
+        ColumnNullable(String sqlFragment) {
+            this.sqlFragment = sqlFragment;
         }
 
-        public String getName() {
-            return name;
+        public String sqlFragment() {
+            return sqlFragment;
         }
     }
 
     public enum UpdateCacheFrequency {
-        ALWAYS, NEVER
+        ALWAYS("ALWAYS"),
+        NEVER("NEVER");
+
+        private final String sqlFragment;
+
+        UpdateCacheFrequency(String sqlFragment) {
+            this.sqlFragment = sqlFragment;
+        }
+
+        public String sqlFragment() {
+            return sqlFragment;
+        }
     }
 
     public enum IndexType {
         GLOBAL("GLOBAL"),
         LOCAL("LOCAL");
 
-        private final String name;
+        private final String sqlFragment;
 
-        IndexType(String name) {
-            this.name = name;
+        IndexType(String sqlFragment) {
+            this.sqlFragment = sqlFragment;
         }
 
-        public String getName() {
-            return name;
+        public String sqlFragment() {
+            return sqlFragment;
         }
     }
 
@@ -81,14 +93,64 @@ public class PhoenixHelper {
         ASYNC("ASYNC"),
         NOT_ASYNC("");
 
-        private final String name;
+        private final String sqlFragment;
 
-        IndexAsyncType(String name) {
-            this.name = name;
+        IndexAsyncType(String sqlFragment) {
+            this.sqlFragment = sqlFragment;
         }
 
-        public String getName() {
-            return name;
+        public String sqlFragment() {
+            return sqlFragment;
+        }
+    }
+
+    public static class UpdateCacheFrequencyInfo {
+
+        private final boolean matchLong;
+        private final Long longValue;
+        private final boolean matchUpdateCacheFrequency;
+        private final UpdateCacheFrequency updateCacheFrequencyValue;
+
+        public UpdateCacheFrequencyInfo(Object object) {
+            if (object instanceof Long) {
+                this.matchLong = true;
+                this.longValue = (Long) object;
+                this.matchUpdateCacheFrequency = false;
+                this.updateCacheFrequencyValue = null;
+            } else if (object instanceof UpdateCacheFrequency) {
+                this.matchLong = false;
+                this.longValue = null;
+                this.matchUpdateCacheFrequency = true;
+                this.updateCacheFrequencyValue = (UpdateCacheFrequency) object;
+            } else {
+                throw new IllegalArgumentException("入口参数 object 的类型非法: " + object.getClass().getCanonicalName());
+            }
+        }
+
+        public boolean isMatchLong() {
+            return matchLong;
+        }
+
+        public Long getLongValue() {
+            return longValue;
+        }
+
+        public boolean isMatchUpdateCacheFrequency() {
+            return matchUpdateCacheFrequency;
+        }
+
+        public UpdateCacheFrequency getUpdateCacheFrequencyValue() {
+            return updateCacheFrequencyValue;
+        }
+
+        @Override
+        public String toString() {
+            return "UpdateCacheFrequencyInfo{" +
+                    "matchLong=" + matchLong +
+                    ", longValue=" + longValue +
+                    ", matchUpdateCacheFrequency=" + matchUpdateCacheFrequency +
+                    ", updateCacheFrequencyValue=" + updateCacheFrequencyValue +
+                    '}';
         }
     }
 
@@ -117,18 +179,35 @@ public class PhoenixHelper {
         ColumnDefinition columnDefinition = new ColumnDefinition();
         columnDefinition.setName(columnName);
         columnDefinition.setType(type);
-        if (Objects.nonNull(columnNullable)) {
-            switch (columnNullable) {
-                case NULL:
-                    columnDefinition.putProperty(CUSTOM_NULLABLE, ColumnNullable.NULL);
-                    break;
-                case NOT_NULL:
-                    columnDefinition.putProperty(CUSTOM_NULLABLE, ColumnNullable.NOT_NULL);
-                    break;
-            }
-        }
+        columnDefinition.putPropertyIfNotNull(CUSTOM_NULLABLE, columnNullable);
         columnDefinition.putPropertyIfNotNull(CUSTOM_DEFAULT, defaultValue);
         tableDefinition.addColumnDefinition(columnDefinition);
+    }
+
+    /**
+     * 获取指定的列定义的 Nullable 属性。
+     *
+     * <p>
+     * 当该属性未定义时返回 null。
+     *
+     * @param columnDefinition 指定的列定义。
+     * @return 指定列定义的 Nullable 属性。
+     */
+    public static ColumnNullable getColumnNullable(@NonNull ColumnDefinition columnDefinition) {
+        return (ColumnNullable) columnDefinition.getProperty(CUSTOM_NULLABLE, null);
+    }
+
+    /**
+     * 获取指定的列定义的 默认值。
+     *
+     * <p>
+     * 当该属性未定义时返回 null。
+     *
+     * @param columnDefinition 指定的列定义。
+     * @return 指定列定义的 默认值。
+     */
+    public static String getColumnDefaultValue(@NonNull ColumnDefinition columnDefinition) {
+        return (String) columnDefinition.getProperty(CUSTOM_DEFAULT, null);
     }
 
     public static void setPrimaryKey(@NonNull TableDefinition tableDefinition, @NonNull String... columnNames) {
@@ -164,6 +243,59 @@ public class PhoenixHelper {
     }
 
     /**
+     * 获取指定数据表定义中主键的升序列名称。
+     *
+     * <p>
+     * 该方法不会返回 null，当数据表定义中没有升序列或者未指定升序列时，返回空集合。
+     *
+     * @param tableDefinition 指定的数据表定义。
+     * @return 升序列名称组成的集合。
+     */
+    public static Set<String> getPrimaryKeyAscColumnNames(@NonNull TableDefinition tableDefinition) {
+        OptionalDefinition primaryKeyOptionalDefinition = getPrimaryKeyOptionalDefinition(tableDefinition);
+        @SuppressWarnings("unchecked")
+        Set<String> property = (Set<String>) primaryKeyOptionalDefinition.getProperty(
+                CUSTOM_ASC_COLUMNS, Collections.emptySet());
+        return property;
+    }
+
+    /**
+     * 获取指定数据表定义中主键的降序列名称。
+     *
+     * <p>
+     * 该方法不会返回 null，当数据表定义中没有降序列或者未指定降序列时，返回空集合。
+     *
+     * @param tableDefinition 指定的数据表定义。
+     * @return 降序列名称组成的集合。
+     */
+    public static Set<String> getPrimaryKeyDescColumnNames(@NonNull TableDefinition tableDefinition) {
+        OptionalDefinition primaryKeyOptionalDefinition = getPrimaryKeyOptionalDefinition(tableDefinition);
+        @SuppressWarnings("unchecked")
+        Set<String> property = (Set<String>) primaryKeyOptionalDefinition.getProperty(
+                CUSTOM_DESC_COLUMNS, Collections.emptySet());
+        return property;
+    }
+
+    /**
+     * 获取指定数据表定义的 RowTimestamp 所在列名称。
+     *
+     * <p>
+     * 当该属性未被指定时，返回 null。
+     *
+     * @param tableDefinition 指定的数据表定义。
+     * @return 指定数据表定义的 RowTimestamp 所在列名称。
+     */
+    public static String getPrimaryKeyRowTimestampColumn(@NonNull TableDefinition tableDefinition) {
+        OptionalDefinition primaryKeyOptionalDefinition = getPrimaryKeyOptionalDefinition(tableDefinition);
+        return (String) primaryKeyOptionalDefinition.getProperty(CUSTOM_ROW_TIMESTAMP_COLUMN, null);
+    }
+
+    private static OptionalDefinition getPrimaryKeyOptionalDefinition(@NonNull TableDefinition tableDefinition) {
+        return tableDefinition.getOptionalDefinitions(OPTIONAL_TYPE_PRIMARY_KEY)
+                .stream().findAny().orElseThrow(() -> new IllegalArgumentException("参数 tableDefinition 不含有主键"));
+    }
+
+    /**
      * numeric property causes an extra byte to be transparently prepended to every row key to ensure an evenly
      * distributed read and write load across all region servers. This is especially useful when your row key is always
      * monotonically increasing and causing hot spotting on a single region server. However, even if it's not, it often
@@ -181,13 +313,21 @@ public class PhoenixHelper {
         tableDefinition.putProperty(CUSTOM_SALT_BUCKETS, val);
     }
 
+    public static Integer getTableSaltBuckets(@NonNull TableDefinition tableDefinition) {
+        return (Integer) tableDefinition.getProperty(CUSTOM_SALT_BUCKETS, null);
+    }
+
     /**
      * boolean option when true causes HBase not to write data to the write-ahead-log, thus making updates faster at
      * the expense of potentially losing data in the event of a region server failure. This option is useful when
      * updating a table which is not the source-of-truth and thus making the lose of data acceptable.
      */
-    public static void setTableDisableVal(@NonNull TableDefinition tableDefinition, Boolean val) {
+    public static void setTableDisableWal(@NonNull TableDefinition tableDefinition, Boolean val) {
         tableDefinition.putProperty(CUSTOM_DISABLE_WAL, val);
+    }
+
+    public static Boolean getTableDisableWal(@NonNull TableDefinition tableDefinition) {
+        return (Boolean) tableDefinition.getProperty(CUSTOM_DISABLE_WAL, null);
     }
 
     /**
@@ -204,6 +344,10 @@ public class PhoenixHelper {
         tableDefinition.putProperty(CUSTOM_IMMUTABLE_ROWS, val);
     }
 
+    public static Boolean getTableImmutableRows(@NonNull TableDefinition tableDefinition) {
+        return (Boolean) tableDefinition.getProperty(CUSTOM_IMMUTABLE_ROWS, null);
+    }
+
     /**
      * boolean option when true enables views to be created over the table across different tenants. This option is
      * useful to share the same physical HBase table across many different tenants. For more information, see
@@ -211,7 +355,11 @@ public class PhoenixHelper {
      * http://phoenix.incubator.apache.org/multi-tenancy.html</a>
      */
     public static void setTableMultiTelnet(@NonNull TableDefinition tableDefinition, Boolean val) {
-        tableDefinition.putProperty(CUSTOM_MULTI_TENANT, val);
+        tableDefinition.putProperty(CUSTOM_MULTI_TELNET, val);
+    }
+
+    public static Boolean getTableMultiTelnet(@NonNull TableDefinition tableDefinition) {
+        return (Boolean) tableDefinition.getProperty(CUSTOM_MULTI_TELNET, null);
     }
 
     /**
@@ -225,6 +373,10 @@ public class PhoenixHelper {
         tableDefinition.putProperty(CUSTOM_DEFAULT_COLUMN_FAMILY, val);
     }
 
+    public static String getTableDefaultColumnFamily(@NonNull TableDefinition tableDefinition) {
+        return (String) tableDefinition.getProperty(CUSTOM_DEFAULT_COLUMN_FAMILY, null);
+    }
+
     /**
      * boolean option (available as of Phoenix 4.3) determines whether or not null values should be explicitly stored
      * in HBase. This option is generally only useful if a table is configured to store multiple versions in order to
@@ -232,6 +384,10 @@ public class PhoenixHelper {
      */
     public static void setTableStoreNulls(@NonNull TableDefinition tableDefinition, Boolean val) {
         tableDefinition.putProperty(CUSTOM_STORE_NULLS, val);
+    }
+
+    public static Boolean getTableStoreNulls(@NonNull TableDefinition tableDefinition) {
+        return (Boolean) tableDefinition.getProperty(CUSTOM_STORE_NULLS, null);
     }
 
     /**
@@ -243,6 +399,10 @@ public class PhoenixHelper {
      */
     public static void setTableTransactional(@NonNull TableDefinition tableDefinition, Boolean val) {
         tableDefinition.putProperty(CUSTOM_TRANSACTIONAL, val);
+    }
+
+    public static Boolean getTableTransactional(@NonNull TableDefinition tableDefinition) {
+        return (Boolean) tableDefinition.getProperty(CUSTOM_TRANSACTIONAL, null);
     }
 
     /**
@@ -267,6 +427,14 @@ public class PhoenixHelper {
         tableDefinition.putProperty(CUSTOM_UPDATE_CACHE_FREQUENCY, val);
     }
 
+    public static Object getTableUpdateCacheFrequency(@NonNull TableDefinition tableDefinition) {
+        Object property = tableDefinition.getProperty(CUSTOM_UPDATE_CACHE_FREQUENCY, null);
+        if (Objects.isNull(property)) {
+            return null;
+        }
+        return new UpdateCacheFrequencyInfo(property);
+    }
+
     /**
      * boolean option (available as of Phoenix 4.8) when true declares that columns will only be added but never
      * removed from a table. With this option set we can prevent the RPC from the client to the server to fetch the
@@ -274,6 +442,10 @@ public class PhoenixHelper {
      */
     public static void setTableAppendOnlySchema(@NonNull TableDefinition tableDefinition, Boolean val) {
         tableDefinition.putProperty(CUSTOM_APPEND_ONLY_SCHEMA, val);
+    }
+
+    public static Boolean getTableAppendOnlySchema(@NonNull TableDefinition tableDefinition) {
+        return (Boolean) tableDefinition.getProperty(CUSTOM_APPEND_ONLY_SCHEMA, null);
     }
 
     /**
@@ -286,6 +458,10 @@ public class PhoenixHelper {
             throw new IllegalArgumentException("AUTO_PARTITION_SEQ 不能为 null 或空字符串");
         }
         tableDefinition.putProperty(CUSTOM_AUTO_PARTITION_SEQ, val);
+    }
+
+    public static String getTableAutoPartitionSeq(@NonNull TableDefinition tableDefinition) {
+        return (String) tableDefinition.getProperty(CUSTOM_AUTO_PARTITION_SEQ, null);
     }
 
     /**
@@ -302,6 +478,10 @@ public class PhoenixHelper {
         tableDefinition.putProperty(CUSTOM_GUIDE_POSTS_WIDTH, val);
     }
 
+    public static Integer getTableGuidPostsWidth(@NonNull TableDefinition tableDefinition) {
+        return (Integer) tableDefinition.getProperty(CUSTOM_GUIDE_POSTS_WIDTH, null);
+    }
+
     /**
      * 设置数据表的分割点。
      *
@@ -310,6 +490,12 @@ public class PhoenixHelper {
     public static void setTableSplitPoint(@NonNull TableDefinition tableDefinition, String... columnNames) {
         makeSureAllColumnExists(tableDefinition, Arrays.asList(columnNames));
         tableDefinition.putProperty(CUSTOM_SPLIT_POINT, Arrays.asList(columnNames));
+    }
+
+    public static List<String> getTableSplitPoint(@NonNull TableDefinition tableDefinition) {
+        @SuppressWarnings("unchecked")
+        List<String> property = (List<String>) tableDefinition.getProperty(CUSTOM_SPLIT_POINT, Collections.emptyList());
+        return property;
     }
 
     public static void addIndex(
@@ -344,10 +530,66 @@ public class PhoenixHelper {
             optionalDefinition.putProperty(CUSTOM_DESC_COLUMNS, new HashSet<>(descColumnNames));
         }
         if (Objects.nonNull(includeColumnNames)) {
-            optionalDefinition.putProperty(CUSTOM_INCLUDE_COLUMNS, new HashSet<>(includeColumnNames));
+            optionalDefinition.putProperty(CUSTOM_INCLUDE_COLUMNS, new ArrayList<>(includeColumnNames));
         }
         optionalDefinition.putPropertyIfNotNull(CUSTOM_ASYNC_TYPE, indexAsyncType);
         tableDefinition.addOptionalDefinition(optionalDefinition);
+    }
+
+    public static List<OptionalDefinition> getIndexes(@NonNull TableDefinition tableDefinition) {
+        return tableDefinition.getOptionalDefinitions(OPTIONAL_TYPE_INDEX);
+    }
+
+    public static IndexType getIndexType(@NonNull OptionalDefinition optionalDefinition) {
+        return (IndexType) optionalDefinition.getProperty(CUSTOM_INDEX_TYPE, null);
+    }
+
+    public static List<String> getIndexContextColumnNames(@NonNull OptionalDefinition optionalDefinition) {
+        @SuppressWarnings("unchecked")
+        List<String> property =
+                (List<String>) optionalDefinition.getProperty(CUSTOM_CONTEXT_COLUMNS, Collections.emptyList());
+        return property;
+    }
+
+    /**
+     * 获取指定索引的升序列名称。
+     *
+     * <p>
+     * 该方法不会返回 null，当数据表定义中没有升序列或者未指定升序列时，返回空集合。
+     *
+     * @param optionalDefinition 指定的数据表定义。
+     * @return 升序列名称组成的集合。
+     */
+    public static Set<String> getIndexAscColumnNames(@NonNull OptionalDefinition optionalDefinition) {
+        @SuppressWarnings("unchecked")
+        Set<String> property = (Set<String>) optionalDefinition.getProperty(CUSTOM_ASC_COLUMNS, Collections.emptySet());
+        return property;
+    }
+
+    /**
+     * 获取指定索引的降序列名称。
+     *
+     * <p>
+     * 该方法不会返回 null，当数据表定义中没有降序列或者未指定降序列时，返回空集合。
+     *
+     * @param optionalDefinition 指定的数据表定义。
+     * @return 降序列名称组成的集合。
+     */
+    public static Set<String> getIndexDescColumnNames(@NonNull OptionalDefinition optionalDefinition) {
+        @SuppressWarnings("unchecked")
+        Set<String> property = (Set<String>) optionalDefinition.getProperty(CUSTOM_DESC_COLUMNS, Collections.emptySet());
+        return property;
+    }
+
+    public static List<String> getIndexIncludeColumnNames(@NonNull OptionalDefinition optionalDefinition) {
+        @SuppressWarnings("unchecked")
+        List<String> property =
+                (List<String>) optionalDefinition.getProperty(CUSTOM_INCLUDE_COLUMNS, Collections.emptyList());
+        return property;
+    }
+
+    public static IndexAsyncType getIndexAsyncType(@NonNull OptionalDefinition optionalDefinition) {
+        return (IndexAsyncType) optionalDefinition.getProperty(CUSTOM_ASYNC_TYPE, null);
     }
 
     /**
@@ -370,6 +612,10 @@ public class PhoenixHelper {
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_SALT_BUCKETS, val);
     }
 
+    public static Integer getIndexSaltBuckets(@NonNull OptionalDefinition optionalDefinition) {
+        return (Integer) optionalDefinition.getProperty(CUSTOM_SALT_BUCKETS, null);
+    }
+
     /**
      * boolean option when true causes HBase not to write data to the write-ahead-log, thus making updates faster at
      * the expense of potentially losing data in the event of a region server failure. This option is useful when
@@ -379,6 +625,10 @@ public class PhoenixHelper {
             @NonNull TableDefinition tableDefinition, @NonNull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_DISABLE_WAL, val);
+    }
+
+    public static Boolean getIndexDisableWal(@NonNull OptionalDefinition optionalDefinition) {
+        return (Boolean) optionalDefinition.getProperty(CUSTOM_DISABLE_WAL, null);
     }
 
     /**
@@ -397,6 +647,10 @@ public class PhoenixHelper {
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_IMMUTABLE_ROWS, val);
     }
 
+    public static Boolean getIndexImmutableRows(@NonNull OptionalDefinition optionalDefinition) {
+        return (Boolean) optionalDefinition.getProperty(CUSTOM_IMMUTABLE_ROWS, null);
+    }
+
     /**
      * boolean option when true enables views to be created over the table across different tenants. This option is
      * useful to share the same physical HBase table across many different tenants. For more information, see
@@ -406,7 +660,11 @@ public class PhoenixHelper {
     public static void setIndexMultiTelnet(
             @NonNull TableDefinition tableDefinition, @NonNull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);
-        tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_MULTI_TENANT, val);
+        tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_MULTI_TELNET, val);
+    }
+
+    public static Boolean getIndexMultiTelnet(@NonNull OptionalDefinition optionalDefinition) {
+        return (Boolean) optionalDefinition.getProperty(CUSTOM_MULTI_TELNET, null);
     }
 
     /**
@@ -422,6 +680,10 @@ public class PhoenixHelper {
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_DEFAULT_COLUMN_FAMILY, val);
     }
 
+    public static String getIndexDefaultColumnFamily(@NonNull OptionalDefinition optionalDefinition) {
+        return (String) optionalDefinition.getProperty(CUSTOM_DEFAULT_COLUMN_FAMILY, null);
+    }
+
     /**
      * boolean option (available as of Phoenix 4.3) determines whether or not null values should be explicitly stored
      * in HBase. This option is generally only useful if a table is configured to store multiple versions in order to
@@ -431,6 +693,10 @@ public class PhoenixHelper {
             @NonNull TableDefinition tableDefinition, @NonNull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_STORE_NULLS, val);
+    }
+
+    public static Boolean getIndexStoreNulls(@NonNull OptionalDefinition optionalDefinition) {
+        return (Boolean) optionalDefinition.getProperty(CUSTOM_STORE_NULLS, null);
     }
 
     /**
@@ -444,6 +710,10 @@ public class PhoenixHelper {
             @NonNull TableDefinition tableDefinition, @NonNull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_TRANSACTIONAL, val);
+    }
+
+    public static Boolean getIndexTransactional(@NonNull OptionalDefinition optionalDefinition) {
+        return (Boolean) optionalDefinition.getProperty(CUSTOM_TRANSACTIONAL, null);
     }
 
     /**
@@ -472,6 +742,14 @@ public class PhoenixHelper {
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_UPDATE_CACHE_FREQUENCY, val);
     }
 
+    public static Object getIndexUpdateCacheFrequency(@NonNull OptionalDefinition optionalDefinition) {
+        Object property = optionalDefinition.getProperty(CUSTOM_UPDATE_CACHE_FREQUENCY, null);
+        if (Objects.isNull(property)) {
+            return null;
+        }
+        return new UpdateCacheFrequencyInfo(property);
+    }
+
     /**
      * boolean option (available as of Phoenix 4.8) when true declares that columns will only be added but never
      * removed from a table. With this option set we can prevent the RPC from the client to the server to fetch the
@@ -481,6 +759,10 @@ public class PhoenixHelper {
             @NonNull TableDefinition tableDefinition, @NonNull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_APPEND_ONLY_SCHEMA, val);
+    }
+
+    public static Boolean getIndexAppendOnlySchema(@NonNull OptionalDefinition optionalDefinition) {
+        return (Boolean) optionalDefinition.getProperty(CUSTOM_APPEND_ONLY_SCHEMA, null);
     }
 
     /**
@@ -495,6 +777,10 @@ public class PhoenixHelper {
             throw new IllegalArgumentException("AUTO_PARTITION_SEQ 不能为 null 或空字符串");
         }
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_AUTO_PARTITION_SEQ, val);
+    }
+
+    public static String getIndexAutoPartitionSeq(@NonNull OptionalDefinition optionalDefinition) {
+        return (String) optionalDefinition.getProperty(CUSTOM_AUTO_PARTITION_SEQ, null);
     }
 
     /**
@@ -513,6 +799,10 @@ public class PhoenixHelper {
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_GUIDE_POSTS_WIDTH, val);
     }
 
+    public static Integer getIndexGuidPostsWidth(@NonNull OptionalDefinition optionalDefinition) {
+        return (Integer) optionalDefinition.getProperty(CUSTOM_GUIDE_POSTS_WIDTH, null);
+    }
+
     /**
      * 设置索引的分割点。
      *
@@ -524,6 +814,12 @@ public class PhoenixHelper {
         makeSureIndexExists(tableDefinition, indexName);
         makeSureAllColumnExists(tableDefinition, Arrays.asList(columnNames));
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_SPLIT_POINT, Arrays.asList(columnNames));
+    }
+
+    public static List<String> getIndexSplitPoint(@NonNull OptionalDefinition optionalDefinition) {
+        @SuppressWarnings("unchecked")
+        List<String> property = (List<String>) optionalDefinition.getProperty(CUSTOM_SPLIT_POINT, Collections.emptyList());
+        return property;
     }
 
     private static void makeSurePrimaryKey(@NonNull TableDefinition tableDefinition) {
@@ -542,7 +838,8 @@ public class PhoenixHelper {
                 CACHE_PRIMARY_COLUMNS, nonCachePrimaryKeyColumns(tableDefinition));
     }
 
-    private static List<ColumnDefinition> nonCachePrimaryKeyColumns(@NonNull TableDefinition tableDefinition) {
+
+    private static List<ColumnDefinition> nonCachePrimaryKeyColumns(TableDefinition tableDefinition) {
         List<ColumnDefinition> columnDefinitions = tableDefinition.getOptionalDefinitions(OPTIONAL_TYPE_PRIMARY_KEY)
                 .stream().map(o -> {
                     @SuppressWarnings("unchecked")
@@ -558,13 +855,32 @@ public class PhoenixHelper {
                 CACHE_NON_PRIMARY_COLUMNS, nonCacheNonPrimaryKeyColumns(tableDefinition));
     }
 
-    private static List<ColumnDefinition> nonCacheNonPrimaryKeyColumns(@NonNull TableDefinition tableDefinition) {
+    private static List<ColumnDefinition> nonCacheNonPrimaryKeyColumns(TableDefinition tableDefinition) {
         List<ColumnDefinition> primaryKeyColumns = getPrimaryKeyColumns(tableDefinition);
         List<ColumnDefinition> result = new ArrayList<>();
         for (ColumnDefinition columnDefinition : tableDefinition.getColumnDefinitions()) {
             if (!primaryKeyColumns.contains(columnDefinition)) result.add(columnDefinition);
         }
         return Collections.unmodifiableList(result);
+    }
+
+    /**
+     * 获取指定数据表定义的完全表名称。
+     *
+     * @param tableDefinition 指定的数据表定义。
+     * @return 数据表定义的完全数据表名称。
+     */
+    public static String getFullTableName(@NonNull TableDefinition tableDefinition) {
+        return (String) tableDefinition.getOrPutCache(CACHE_FULL_TABLE_NAME, nonCacheFullTableName(tableDefinition));
+    }
+
+    private static Object nonCacheFullTableName(TableDefinition tableDefinition) {
+        StringBuilder sb = new StringBuilder();
+        if (Objects.nonNull(tableDefinition.getSchemaName())) {
+            sb.append(tableDefinition.getSchemaName()).append('.');
+        }
+        sb.append(tableDefinition.getTableName());
+        return sb.toString();
     }
 
     private static void makeSureAllColumnNotExists(TableDefinition tableDefinition, Iterable<String> nameList) {

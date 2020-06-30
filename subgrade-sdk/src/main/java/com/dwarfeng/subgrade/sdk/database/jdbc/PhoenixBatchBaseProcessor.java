@@ -96,7 +96,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
 
     private String provideUpsertSQL() {
         return String.format("UPSERT INTO %s(%s) VALUES (%s)",
-                SQLUtil.fullTableName(tableDefinition),
+                PhoenixHelper.getFullTableName(tableDefinition),
                 SQLUtil.fullColumnSerial(tableDefinition),
                 SQLUtil.fullColumnPlaceHolder(tableDefinition));
     }
@@ -134,7 +134,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
 
     private String provideDeleteSQL() {
         return String.format("DELETE FROM %s WHERE %s",
-                SQLUtil.fullTableName(tableDefinition),
+                PhoenixHelper.getFullTableName(tableDefinition),
                 SQLUtil.searchFragment(PhoenixHelper.getPrimaryKeyColumns(tableDefinition)));
     }
 
@@ -181,7 +181,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
 
     private String provideExistsSQL() {
         return String.format("SELECT 1 FROM %s WHERE %s",
-                SQLUtil.fullTableName(tableDefinition),
+                PhoenixHelper.getFullTableName(tableDefinition),
                 SQLUtil.searchFragment(PhoenixHelper.getPrimaryKeyColumns(tableDefinition)));
     }
 
@@ -225,7 +225,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
     private String provideGetSQL() {
         return String.format("SELECT %s FROM %s WHERE %s",
                 SQLUtil.fullColumnSerial(tableDefinition),
-                SQLUtil.fullTableName(tableDefinition),
+                PhoenixHelper.getFullTableName(tableDefinition),
                 SQLUtil.searchFragment(PhoenixHelper.getPrimaryKeyColumns(tableDefinition)));
     }
 

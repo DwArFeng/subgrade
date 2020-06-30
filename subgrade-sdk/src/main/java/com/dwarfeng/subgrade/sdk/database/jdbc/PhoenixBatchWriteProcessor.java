@@ -1,6 +1,7 @@
 package com.dwarfeng.subgrade.sdk.database.jdbc;
 
 import com.dwarfeng.subgrade.sdk.database.definition.ColumnDefinition;
+import com.dwarfeng.subgrade.sdk.database.definition.PhoenixHelper;
 import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
 import com.dwarfeng.subgrade.sdk.jdbc.BatchWriteProcessor;
 import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
@@ -66,7 +67,7 @@ public class PhoenixBatchWriteProcessor<E extends Entity<?>> implements BatchWri
 
     private String provideWriteSQL() {
         return String.format("UPSERT INTO %s(%s) VALUES (%s)",
-                SQLUtil.fullTableName(tableDefinition),
+                PhoenixHelper.getFullTableName(tableDefinition),
                 SQLUtil.fullColumnSerial(tableDefinition),
                 SQLUtil.fullColumnPlaceHolder(tableDefinition));
     }
