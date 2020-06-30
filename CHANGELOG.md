@@ -26,13 +26,13 @@
   - com.dwarfeng.subgrade.impl.dao.JdbcBatchWriteDao
   - com.dwarfeng.subgrade.impl.dao.JdbcEntireLookupDao
   - com.dwarfeng.subgrade.impl.dao.JdbcPresetLookupDao
-- 重写 com.dwarfeng.subgrade.sdk.database.definition 包中的内容
+- 重写 com.dwarfeng.subgrade.sdk.database.definition 包中的内容。
   - com.dwarfeng.subgrade.sdk.database.definition.ColumnDefinition
   - com.dwarfeng.subgrade.sdk.database.definition.ColumnTypes
   - com.dwarfeng.subgrade.sdk.database.definition.OptionalDefinition
   - com.dwarfeng.subgrade.sdk.database.definition.TableDefinition
-- 开发 com.dwarfeng.subgrade.sdk.database.executor 实现数据库语句执行接口
-- 开发 com.dwarfeng.subgrade.sdk.database.ddl 实现部分数据库的建表执行任务
+- 开发 com.dwarfeng.subgrade.sdk.database.executor 实现数据库语句执行接口。
+- 开发 com.dwarfeng.subgrade.sdk.database.ddl 实现部分数据库的建表执行任务。
   - com.dwarfeng.subgrade.sdk.database.ddl.PhoenixCreateTableDatabaseTask
 
 #### Bug修复
