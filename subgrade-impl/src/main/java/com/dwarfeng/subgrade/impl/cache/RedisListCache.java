@@ -58,11 +58,11 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     @Override
     public List<E> get() throws CacheException {
         try {
-            Long totleSize = template.opsForList().size(key);
-            if (totleSize == 0) {
+            Long totalSize = template.opsForList().size(key);
+            if (totalSize == 0) {
                 return new ArrayList<>();
             } else {
-                List<JE> range = template.opsForList().range(key, 0, totleSize - 1);
+                List<JE> range = template.opsForList().range(key, 0, totalSize - 1);
                 return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
             }
         } catch (Exception e) {
@@ -83,9 +83,9 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     @Override
     public List<E> get(PagingInfo pagingInfo) throws CacheException {
         try {
-            Long totleSize = template.opsForList().size(key);
+            Long totalSize = template.opsForList().size(key);
             long beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
-            long endIndex = Math.min(totleSize, beginIndex + pagingInfo.getRows()) - 1;
+            long endIndex = Math.min(totalSize, beginIndex + pagingInfo.getRows()) - 1;
             List<JE> range = template.opsForList().range(key, beginIndex, endIndex);
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {

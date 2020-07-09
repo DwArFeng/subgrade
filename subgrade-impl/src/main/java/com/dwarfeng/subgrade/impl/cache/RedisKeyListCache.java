@@ -62,11 +62,11 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
     public List<E> get(K key) throws CacheException {
         try {
             String formatKey = formatKey(key);
-            Long totleSize = template.opsForList().size(formatKey);
-            if (totleSize == 0) {
+            Long totalSize = template.opsForList().size(formatKey);
+            if (totalSize == 0) {
                 return new ArrayList<>();
             } else {
-                List<JE> range = template.opsForList().range(formatKey, 0, totleSize - 1);
+                List<JE> range = template.opsForList().range(formatKey, 0, totalSize - 1);
                 return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
             }
         } catch (Exception e) {
@@ -89,9 +89,9 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
     public List<E> get(K key, PagingInfo pagingInfo) throws CacheException {
         try {
             String formatKey = formatKey(key);
-            Long totleSize = template.opsForList().size(formatKey);
+            Long totalSize = template.opsForList().size(formatKey);
             long beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
-            long endIndex = Math.min(totleSize, beginIndex + pagingInfo.getRows()) - 1;
+            long endIndex = Math.min(totalSize, beginIndex + pagingInfo.getRows()) - 1;
             List<JE> range = template.opsForList().range(formatKey, beginIndex, endIndex);
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
