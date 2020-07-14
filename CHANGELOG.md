@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复在某些情况下 com.dwarfeng.subgrade.impl.exception.MapServiceExceptionMapper 映射错误的 bug。
 
 #### 功能移除
 

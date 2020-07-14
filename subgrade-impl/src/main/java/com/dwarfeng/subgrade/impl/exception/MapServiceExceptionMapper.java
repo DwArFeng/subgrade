@@ -17,7 +17,7 @@ public class MapServiceExceptionMapper implements ServiceExceptionMapper {
 
     private Map<Class<? extends Exception>, ServiceException.Code> destination;
     private ServiceException.Code defaultCode;
-    private Map<Class<? extends Exception>, ServiceException.Code> router = new HashMap<>();
+    private final Map<Class<? extends Exception>, ServiceException.Code> router = new HashMap<>();
 
     public MapServiceExceptionMapper(Map<Class<? extends Exception>, ServiceException.Code> destination, ServiceException.Code defaultCode) {
         this.destination = destination;
@@ -30,11 +30,17 @@ public class MapServiceExceptionMapper implements ServiceExceptionMapper {
         if (Objects.isNull(e)) {
             return null;
         }
-        //如果异常本身属于ServiceException则直接返回异常本身。
-        if (e instanceof ServiceException) {
-            return (ServiceException) e;
+        //如果异常本身属于 ServiceException 则试图获取其错误代码。如果没有错误代码，按照普通异常处理。
+        if (e instanceof ServiceException && Objects.nonNull(((ServiceException) e).getCode())) {
+            return new ServiceException(((ServiceException) e).getCode());
         }
 
+        //如果 destination 中有关于异常的直接定义，则返回直接定义。
+        if (destination.containsKey(e.getClass())) {
+            return new ServiceException(destination.get(e.getClass()));
+        }
+
+        //如果 destination 中没有关于异常的直接定义，则进行父类寻找，并且使用 router 缓存结果。
         if (router.containsKey(e.getClass())) {
             return new ServiceException(router.get(e.getClass()));
         }
@@ -44,6 +50,7 @@ public class MapServiceExceptionMapper implements ServiceExceptionMapper {
                 return new ServiceException(entry.getValue());
             }
         }
+        // 如果父类寻找也找不到匹配项，则返回默认的异常代码。
         router.put(e.getClass(), defaultCode);
         return new ServiceException(defaultCode);
     }
