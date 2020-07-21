@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
  * @author DwArFeng
  * @since 0.0.1-beta
  */
+@SuppressWarnings("DuplicatedCode")
 public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> implements BatchCrudService<K, E> {
 
     private BatchBaseDao<K, E> dao;
@@ -42,7 +43,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             @NonNull KeyFetcher<K> keyFetcher,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel,
-            @NonNull long cacheTimeout) {
+            long cacheTimeout) {
         this.dao = dao;
         this.cache = cache;
         this.keyFetcher = keyFetcher;
@@ -262,7 +263,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
 
     private List<K> internalBatchInsert(List<E> elements) throws Exception {
         List<K> collect = elements.stream().filter(e -> Objects.nonNull(e.getKey())).map(E::getKey).collect(Collectors.toList());
-        if (internalNonExists(collect)) {
+        if (!internalNonExists(collect)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }
 
@@ -477,7 +478,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         return cacheTimeout;
     }
 
-    public void setCacheTimeout(@NonNull long cacheTimeout) {
+    public void setCacheTimeout(long cacheTimeout) {
         this.cacheTimeout = cacheTimeout;
     }
 }

@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  * @author DwArFeng
  * @since 0.2.1-beta
  */
+@SuppressWarnings("DuplicatedCode")
 public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implements BatchCrudService<K, E> {
 
     private BatchCrudOperation<K, E> operation;

@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复 GeneralBatchCrudService 在批量插入时行为不正常的 bug。
 
 #### 功能移除
 
