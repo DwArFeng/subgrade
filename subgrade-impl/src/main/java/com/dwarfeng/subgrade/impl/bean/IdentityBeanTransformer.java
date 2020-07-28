@@ -5,6 +5,7 @@ import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 
 /**
  * 本征 BeanMapper。
+ *
  * <p>将对象本身映射为自己的 BeanMapper</p>
  *
  * @author DwArFeng

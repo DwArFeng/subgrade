@@ -6,6 +6,7 @@
 
 - 添加主键抓取器。
   - com.dwarfeng.subgrade.impl.bean.key.NullValueKeyFetcher
+- 优化部分文档注释。
 
 #### Bug修复
 
