@@ -6,6 +6,8 @@
 
 - 添加主键抓取器。
   - com.dwarfeng.subgrade.impl.bean.key.NullValueKeyFetcher
+  - com.dwarfeng.subgrade.impl.bean.key.DenseUuidStringKeyFetcher
+  - com.dwarfeng.subgrade.impl.bean.key.UuidStringKeyFetcher
 - 优化部分文档注释。
 
 #### Bug修复

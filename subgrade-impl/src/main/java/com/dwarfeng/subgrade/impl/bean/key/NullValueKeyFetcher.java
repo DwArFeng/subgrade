@@ -11,7 +11,7 @@ import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
  * 使用该抓取器抓取主键后，实体的主键为 <code>null</code>，数据访问层插入该实体时会使用自身的主键生成机制。
  *
  * @author DwArFeng
- * @since 1.1.1
+ * @since 1.1.3
  */
 public class NullValueKeyFetcher<K extends Key> implements KeyFetcher<K> {
 
