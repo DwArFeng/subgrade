@@ -9,6 +9,8 @@
   - com.dwarfeng.subgrade.impl.bean.key.DenseUuidStringKeyFetcher
   - com.dwarfeng.subgrade.impl.bean.key.UuidStringKeyFetcher
 - 优化部分文档注释。
+- 添加工具类方法。
+  - com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper.mapAndThrow
 
 #### Bug修复
 

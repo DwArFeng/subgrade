@@ -6,6 +6,7 @@ import com.dwarfeng.subgrade.stack.exception.*;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -59,13 +60,11 @@ public final class ServiceExceptionHelper {
      * @param logLevel 日志的等级。
      * @param mapper   指定的异常映射器。
      * @param e        指定的异常。
-     * @return ServiceException 转化后抛出的服务异常。
+     * @return 转化后抛出的服务异常。
      */
-    public static ServiceException logAndThrow(String message, LogLevel logLevel, ServiceExceptionMapper mapper, Exception e) {
-        Objects.requireNonNull(message, "入口参数 message 不能为 null");
-        Objects.requireNonNull(logLevel, "入口参数 logLevel 不能为 null");
-        Objects.requireNonNull(mapper, "入口参数 mapper 不能为 null");
-        Objects.requireNonNull(e, "入口参数 e 不能为 null");
+    public static ServiceException logAndThrow(
+            @NonNull String message, @NonNull LogLevel logLevel, @NonNull ServiceExceptionMapper mapper,
+            @NonNull Exception e) {
         switch (logLevel) {
             case DEBUG:
                 LOGGER.debug(message, e);
@@ -80,6 +79,18 @@ public final class ServiceExceptionHelper {
                 LOGGER.error(message, e);
                 break;
         }
+        return mapper.map(e);
+    }
+
+    /**
+     * 映射指定的异常，并抛出映射后的新异常。
+     *
+     * @param mapper 指定的异常映射器。
+     * @param e      指定的异常。
+     * @return 转化后抛出的服务异常。
+     */
+    public static ServiceException mapAndThrow(
+            @NonNull ServiceExceptionMapper mapper, @NonNull Exception e) {
         return mapper.map(e);
     }
 }
