@@ -120,12 +120,10 @@
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-stack</artifactId>
-            <version>1.1.4.a-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-sdk</artifactId>
-            <version>1.1.4.a-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
