@@ -6,6 +6,8 @@
 
 - 升级log4j2依赖版本至2.13.3。
 - 规范subgrade-impl模块pom.xml引用坐标格式。
+- 新增文本格式化转换器。
+  - com.dwarfeng.subgrade.sdk.redis.formatter.IntegerIdStringKeyFormatter
 
 #### Bug修复
 
