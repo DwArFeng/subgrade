@@ -4,7 +4,11 @@
 
 #### 功能构建
 
-- (无)
+- 增强枚举的序列化能力。
+  - com.dwarfeng.subgrade.sdk.enumeration.IndexedEnum
+  - com.dwarfeng.subgrade.sdk.enumeration.LabeledEnum
+  - com.dwarfeng.subgrade.sdk.hibernate.converter.IndexedEnumConverter
+  - com.dwarfeng.subgrade.sdk.fastjson.serialize.LabeledEnumCodec
 
 #### Bug修复
 
