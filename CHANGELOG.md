@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 添加主键抓取器。
+  - com.dwarfeng.subgrade.impl.bean.key.TimeBasedSerialCodeKeyFetcher
 
 #### Bug修复
 
