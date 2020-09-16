@@ -30,7 +30,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
             @NonNull SingleObjectCache<E> cache,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel,
-            @NonNull long cacheTimeout) {
+            long cacheTimeout) {
         this.dao = dao;
         this.cache = cache;
         this.sem = sem;
@@ -124,7 +124,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
         return cacheTimeout;
     }
 
-    public void setCacheTimeout(@NonNull long cacheTimeout) {
+    public void setCacheTimeout(long cacheTimeout) {
         this.cacheTimeout = cacheTimeout;
     }
 }

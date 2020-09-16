@@ -163,6 +163,7 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public K insertOrUpdate(E element) throws ServiceException {
         try {

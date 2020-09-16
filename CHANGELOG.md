@@ -4,19 +4,19 @@
 
 #### 功能构建
 
-- (无)
+- 去除代码中的部分警告。
 
 #### Bug修复
-
-- (无)
-
-#### 功能移除
 
 - 修复以下对象插入主键为 null 的元素时行为异常的 bug。
   - com.dwarfeng.subgrade.impl.service.DaoOnlyCrudService
   - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchCrudService
   - com.dwarfeng.subgrade.impl.service.GeneralCrudService
   - com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService
+
+#### 功能移除
+
+- (无)
 
 ---
 

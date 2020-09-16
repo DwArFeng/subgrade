@@ -36,7 +36,7 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
             @NonNull ListCache<E> cache,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel,
-            @NonNull long cacheTimeout) {
+            long cacheTimeout) {
         this.dao = dao;
         this.cache = cache;
         this.sem = sem;
@@ -108,7 +108,7 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
         return cacheTimeout;
     }
 
-    public void setCacheTimeout(@NonNull long cacheTimeout) {
+    public void setCacheTimeout(long cacheTimeout) {
         this.cacheTimeout = cacheTimeout;
     }
 }

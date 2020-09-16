@@ -183,6 +183,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public K insertOrUpdate(E element) throws ServiceException {
         try {
