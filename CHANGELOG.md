@@ -1,5 +1,25 @@
 # ChangeLog
 
+### Release_1.1.7_20200916_build_A
+
+#### 功能构建
+
+- (无)
+
+#### Bug修复
+
+- (无)
+
+#### 功能移除
+
+- 修复以下对象插入主键为 null 的元素时行为异常的 bug。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyCrudService
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchCrudService
+  - com.dwarfeng.subgrade.impl.service.GeneralCrudService
+  - com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService
+
+---
+
 ### Release_1.1.6_20200912_build_A
 
 #### 功能构建

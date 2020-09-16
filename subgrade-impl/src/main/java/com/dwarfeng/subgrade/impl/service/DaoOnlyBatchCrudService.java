@@ -72,12 +72,10 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private K internalInsert(E element) throws Exception {
-        if (Objects.nonNull(element.getKey()) && internalExists(element.getKey())) {
-            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
-        }
-
         if (Objects.isNull(element.getKey())) {
             element.setKey(keyFetcher.fetchKey());
+        } else if (internalExists(element.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }
         return dao.insert(element);
     }
@@ -159,6 +157,7 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public K insertOrUpdate(E element) throws ServiceException {
         try {

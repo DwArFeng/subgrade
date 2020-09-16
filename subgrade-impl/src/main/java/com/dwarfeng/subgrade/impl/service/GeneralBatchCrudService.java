@@ -80,12 +80,10 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private K internalInsert(E element) throws Exception {
-        if (Objects.nonNull(element.getKey()) && internalExists(element.getKey())) {
-            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
-        }
-
         if (Objects.isNull(element.getKey())) {
             element.setKey(keyFetcher.fetchKey());
+        } else if (internalExists(element.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }
         K key = dao.insert(element);
         cache.push(element, cacheTimeout);

@@ -39,7 +39,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
             @NonNull KeyFetcher<K> keyFetcher,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel,
-            @NonNull long cacheTimeout) {
+            long cacheTimeout) {
         this.dao = dao;
         this.cache = cache;
         this.keyFetcher = keyFetcher;
@@ -92,12 +92,10 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
     }
 
     private K internalInsert(E element) throws Exception {
-        if (Objects.nonNull(element.getKey()) && internalExists(element.getKey())) {
-            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
-        }
-
         if (Objects.isNull(element.getKey())) {
             element.setKey(keyFetcher.fetchKey());
+        } else if (internalExists(element.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }
         K key = dao.insert(element);
         cache.push(element, cacheTimeout);
@@ -263,7 +261,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
         return cacheTimeout;
     }
 
-    public void setCacheTimeout(@NonNull long cacheTimeout) {
+    public void setCacheTimeout(long cacheTimeout) {
         this.cacheTimeout = cacheTimeout;
     }
 }
