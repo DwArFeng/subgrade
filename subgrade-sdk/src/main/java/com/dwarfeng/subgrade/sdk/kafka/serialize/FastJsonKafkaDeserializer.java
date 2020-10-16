@@ -25,4 +25,12 @@ public class FastJsonKafkaDeserializer<T> implements Deserializer<T> {
         String str = new String(bytes);
         return JSON.parseObject(str, clazz);
     }
+
+    public Class<T> getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Class<T> clazz) {
+        this.clazz = clazz;
+    }
 }
