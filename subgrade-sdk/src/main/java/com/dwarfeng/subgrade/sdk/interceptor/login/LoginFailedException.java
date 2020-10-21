@@ -12,7 +12,7 @@ public class LoginFailedException extends Exception {
 
     private static final long serialVersionUID = 6241543379412106596L;
 
-    private LongIdKey loginId;
+    private final LongIdKey loginId;
 
     public LoginFailedException(LongIdKey loginId) {
         this.loginId = loginId;

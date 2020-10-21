@@ -5,6 +5,7 @@
 #### 功能构建
 
 - 为 FastJsonKafkaDeserializer.clazz 增加 get 和 set 方法。
+- 设置 LoginFailedException.loginId 字段为 final 字段。
 
 #### Bug修复
 
