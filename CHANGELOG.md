@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 为 FastJsonKafkaDeserializer.clazz 增加 get 和 set 方法。
 
 #### Bug修复
 
