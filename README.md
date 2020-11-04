@@ -67,19 +67,20 @@
   - 在使用的过程中，多数bug出现在此，意味着该框架仍然拥有潜在的不成熟的因素。但是几乎所有项目都会使用
   此框架，因此任何不成熟的因素都会更快的被发现。
   
-  - 数据访问层框架被最大量使用的是Hibernate的数据访问层框架
+  - 数据访问层框架被最大量使用的是Hibernate的数据访问层框架，十分成熟。
     - com.dwarfeng.subgrade.impl.dao.HibernateBaseDao
     - com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao
     - com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao
     - com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao
+  - 数据写入访问层在多个项目中被高强度调用，十分成熟。
+    - com.dwarfeng.subgrade.impl.dao.BatchWriteDao
+    - com.dwarfeng.subgrade.impl.dao.HibernateBatchWriteDao
     
   - 除此之外，通过Redis进行持久化的数据访问层也偶尔被使用
     - com.dwarfeng.subgrade.impl.dao.RedisBaseDao
     - com.dwarfeng.subgrade.impl.dao.RedisBatchBaseDao
     
-  - 刚刚开发的框架，在至少一个项目中使用
-    - com.dwarfeng.subgrade.impl.dao.BatchWriteDao
-    - com.dwarfeng.subgrade.impl.dao.HibernateBatchWriteDao
+  - 刚刚开发的框架，在至少一个项目中使用。
     - com.dwarfeng.subgrade.impl.dao.JdbcBaseDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBatchBaseDao
     - com.dwarfeng.subgrade.impl.dao.JdbcWriteDao
@@ -87,7 +88,7 @@
     - com.dwarfeng.subgrade.impl.dao.JdbcEntireLookupDao
     - com.dwarfeng.subgrade.impl.dao.JdbcPresetLookupDao
 
-  - 刚刚开发的框架，且从来没有被使用过
+  - 刚刚开发的框架，且从来没有被使用过。
     - com.dwarfeng.subgrade.impl.dao.HibernateOptionalLookupDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBaseDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBatchBaseDao
@@ -121,7 +122,7 @@
   
 - 服务框架。
 
-  - 最常用的服务框架几乎没有任何问题。
+  - 以下服务框架在多个项目中被高强度调用，十分成熟。
     - com.dwarfeng.subgrade.impl.service.CustomCrudService
     - com.dwarfeng.subgrade.impl.service.CustomBatchCrudService
     - com.dwarfeng.subgrade.impl.service.DaoOnlyCrudService
@@ -197,8 +198,8 @@
 
 ## 推荐使用版本
 
-- 对于任何的新项目，使用不低于1.1.3.a的版本。
-- 低于1.1.3.a的版本包含以下已经发现的 bug，如果项目使用到了下述模块，则需要将 subgrade 版本升级至1.1.3.a。
-  - GeneralBatchCrudService 在批量插入时行为不正常，数据不能正常插入。
-- 对于任何使用 subgrade 旧版本的项目，请酌情将 subgrade 版本升级至1.1.3.a。
-- 所有项目勿使用1.1.0.a的版本。
+- 对于任何的新项目，使用不低于1.1.8.a的版本。
+- 低于1.1.8.a的版本包含以下已经发现的 bug，如果项目使用到了下述模块，则需要将 subgrade 版本升级至1.1.8.a。
+  - com.dwarfeng.subgrade.stack.service.CrudService.get 部分实现当实体不存在时抛出意料之外的异常的 bug。
+- 对于任何使用 subgrade 旧版本的项目，请酌情将 subgrade 版本升级至1.1.8.a。
+- 所有项目勿使用1.1.0.a的版本，此版本存在严重的兼容性问题。
