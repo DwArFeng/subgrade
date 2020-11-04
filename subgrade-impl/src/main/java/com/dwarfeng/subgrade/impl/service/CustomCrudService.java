@@ -21,6 +21,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.2.1-beta
  */
+@SuppressWarnings("DuplicatedCode")
 public class CustomCrudService<K extends Key, E extends Entity<K>> implements CrudService<K, E> {
 
     private CrudOperation<K, E> operation;
@@ -62,11 +63,10 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
     }
 
     private E internalGet(K key) throws Exception {
-        E e = operation.get(key);
-        if (Objects.isNull(e)) {
+        if (!operation.exists(key)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
-        return e;
+        return operation.get(key);
     }
 
     @Override
@@ -163,7 +163,6 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public K insertOrUpdate(E element) throws ServiceException {
         try {

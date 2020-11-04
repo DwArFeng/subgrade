@@ -24,6 +24,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.0.1-beta
  */
+@SuppressWarnings("DuplicatedCode")
 public class GeneralCrudService<K extends Key, E extends Entity<K>> implements CrudService<K, E> {
 
     private BaseDao<K, E> dao;
@@ -76,6 +77,9 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
     private E internalGet(K key) throws Exception {
         if (cache.exists(key)) {
             return cache.get(key);
+        }
+        if (!dao.exists(key)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
         E entity = dao.get(key);
         cache.push(entity, cacheTimeout);
@@ -183,7 +187,6 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public K insertOrUpdate(E element) throws ServiceException {
         try {

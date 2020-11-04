@@ -196,6 +196,9 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         if (cache.exists(key)) {
             return cache.get(key);
         }
+        if (!dao.exists(key)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
         E entity = dao.get(key);
         cache.push(entity, cacheTimeout);
         return entity;

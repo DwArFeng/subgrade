@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
  * @author DwArFeng
  * @since 0.0.1-beta
  */
+@SuppressWarnings("DuplicatedCode")
 public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> implements BatchCrudService<K, E> {
 
     private BatchBaseDao<K, E> dao;
@@ -157,7 +158,6 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public K insertOrUpdate(E element) throws ServiceException {
         try {
@@ -177,6 +177,9 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private E internalGet(K key) throws Exception {
+        if (!dao.exists(key)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
         return dao.get(key);
     }
 

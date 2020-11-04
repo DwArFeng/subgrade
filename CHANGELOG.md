@@ -12,7 +12,8 @@
 
 #### Bug修复
 
-- (无)
+- 修复 CrudService 实现类的 bug。
+  - 修复 com.dwarfeng.subgrade.stack.service.CrudService.get 部分实现当实体不存在时抛出意料之外的异常的 bug。
 
 #### 功能移除
 

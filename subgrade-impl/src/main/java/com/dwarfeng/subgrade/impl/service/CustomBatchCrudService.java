@@ -66,11 +66,10 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
     }
 
     private E internalGet(K key) throws Exception {
-        E e = operation.get(key);
-        if (Objects.isNull(e)) {
+        if (!operation.exists(key)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
-        return e;
+        return operation.get(key);
     }
 
     @Override
@@ -217,11 +216,10 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
     }
 
     private List<E> internalBatchGet(List<K> keys) throws Exception {
-        List<E> elements = operation.batchGet(keys);
-        if (Objects.isNull(elements)) {
+        if (!operation.allExists(keys)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
-        return elements;
+        return operation.batchGet(keys);
     }
 
     @Override
