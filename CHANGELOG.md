@@ -6,6 +6,9 @@
 
 - 为 FastJsonKafkaDeserializer.clazz 增加 get 和 set 方法。
 - 设置 LoginFailedException.loginId 字段为 final 字段。
+- 新增 com.dwarfeng.subgrade.stack.exception.DaoException 的子类，与异常代码对应。
+  - com.dwarfeng.subgrade.stack.exception.EntityExistedException
+  - com.dwarfeng.subgrade.stack.exception.EntityNotExistException
 
 #### Bug修复
 

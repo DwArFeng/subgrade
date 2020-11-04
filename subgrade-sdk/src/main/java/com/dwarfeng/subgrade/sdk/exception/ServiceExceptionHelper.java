@@ -43,6 +43,8 @@ public final class ServiceExceptionHelper {
         map.put(KeyFetchException.class, ServiceExceptionCodes.KEY_FETCH_FAILED);
         map.put(CacheException.class, ServiceExceptionCodes.CACHE_FAILED);
         map.put(DaoException.class, ServiceExceptionCodes.DAO_FAILED);
+        map.put(EntityNotExistException.class, ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        map.put(EntityExistedException.class, ServiceExceptionCodes.ENTITY_EXISTED);
         map.put(ValidationException.class, ServiceExceptionCodes.PARAM_VALIDATION_FAILED);
         map.put(IOException.class, ServiceExceptionCodes.IO_EXCEPTION);
         map.put(ProcessException.class, ServiceExceptionCodes.PROCESS_FAILED);
