@@ -2,9 +2,10 @@ package com.dwarfeng.subgrade.sdk.exception;
 
 import com.dwarfeng.dutil.basic.prog.ProcessException;
 import com.dwarfeng.subgrade.sdk.interceptor.login.LoginFailedException;
+import com.dwarfeng.subgrade.sdk.log.SingleLevelLoggerFactory;
 import com.dwarfeng.subgrade.stack.exception.*;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import org.slf4j.Logger;
+import com.dwarfeng.subgrade.stack.log.SingleLevelLogger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 
@@ -21,7 +22,11 @@ import java.util.Objects;
  */
 public final class ServiceExceptionHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceExceptionHelper.class);
+    /**
+     * @since 1.2.0
+     */
+    private static final Map<LogLevel, SingleLevelLogger> LOGGER_MAP =
+            SingleLevelLoggerFactory.newInstanceMap(LoggerFactory.getLogger(ServiceExceptionHelper.class));
 
     private ServiceExceptionHelper() {
         throw new IllegalStateException("禁止外部实例化");
@@ -67,20 +72,7 @@ public final class ServiceExceptionHelper {
     public static ServiceException logAndThrow(
             @NonNull String message, @NonNull LogLevel logLevel, @NonNull ServiceExceptionMapper mapper,
             @NonNull Exception e) {
-        switch (logLevel) {
-            case DEBUG:
-                LOGGER.debug(message, e);
-                break;
-            case INFO:
-                LOGGER.info(message, e);
-                break;
-            case WARN:
-                LOGGER.warn(message, e);
-                break;
-            case ERROR:
-                LOGGER.error(message, e);
-                break;
-        }
+        LOGGER_MAP.get(logLevel).log(message, e);
         return mapper.map(e);
     }
 
