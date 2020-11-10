@@ -89,7 +89,6 @@
     - com.dwarfeng.subgrade.impl.dao.JdbcPresetLookupDao
 
   - 刚刚开发的框架，且从来没有被使用过。
-    - com.dwarfeng.subgrade.impl.dao.HibernateOptionalLookupDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBaseDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBatchBaseDao
     - com.dwarfeng.subgrade.impl.dao.JdbcBatchWriteDao
@@ -139,9 +138,6 @@
   - 刚刚开发的框架，在至少一个项目中使用
     - com.dwarfeng.subgrade.impl.service.DaoOnlyWriteService
     - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService
-    
-  - 刚刚开发的框架，且从来没有被使用过
-    - com.dwarfeng.subgrade.impl.service.DaoOnlyOptionalLookupService
     
 - Interceptor
 

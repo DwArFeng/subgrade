@@ -9,6 +9,7 @@
 #### Bug修复
 
 - 修复 BehaviorAnalyse AOP 日志输出接口/父类类名而不是直接类名的 bug。
+- 移除 README.md 中关于 OptionalLookupService 的成熟度说明。
 
 #### 功能移除
 
