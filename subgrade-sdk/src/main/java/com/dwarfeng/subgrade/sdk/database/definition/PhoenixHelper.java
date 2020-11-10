@@ -838,7 +838,6 @@ public class PhoenixHelper {
                 CACHE_PRIMARY_COLUMNS, nonCachePrimaryKeyColumns(tableDefinition));
     }
 
-
     private static List<ColumnDefinition> nonCachePrimaryKeyColumns(TableDefinition tableDefinition) {
         List<ColumnDefinition> columnDefinitions = tableDefinition.getOptionalDefinitions(OPTIONAL_TYPE_PRIMARY_KEY)
                 .stream().map(o -> {
