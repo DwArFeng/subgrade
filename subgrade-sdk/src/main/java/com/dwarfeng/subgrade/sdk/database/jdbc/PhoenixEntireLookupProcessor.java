@@ -42,7 +42,7 @@ public class PhoenixEntireLookupProcessor<E extends Entity<?>> implements Entire
     public SQLAndParameter provideEntireLookup() {
         String sql = (String) tableDefinition.getOrPutCache(CACHE_SQL_ENTIRE_LOOKUP, provideEntireLookupSQL());
         Object[] parameters = new Object[0];
-        return new SQLAndParameter(sql, parameters, null);
+        return new SQLAndParameter(sql, parameters);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PhoenixEntireLookupProcessor<E extends Entity<?>> implements Entire
         String sql = (String) tableDefinition.getOrPutCache(CACHE_SQL_ENTIRE_PAGING, provideEntirePagingSQL());
         Object[] parameters = new Object[]{
                 Math.max(0, pagingInfo.getRows()), Math.max(0, pagingInfo.getRows() * pagingInfo.getPage())};
-        return new SQLAndParameter(sql, parameters, null);
+        return new SQLAndParameter(sql, parameters);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class PhoenixEntireLookupProcessor<E extends Entity<?>> implements Entire
     public SQLAndParameter provideEntireCount() {
         String sql = (String) tableDefinition.getOrPutCache(CACHE_SQL_ENTIRE_COUNT, provideEntireCountSQL());
         Object[] parameters = new Object[0];
-        return new SQLAndParameter(sql, parameters, null);
+        return new SQLAndParameter(sql, parameters);
     }
 
     @Override

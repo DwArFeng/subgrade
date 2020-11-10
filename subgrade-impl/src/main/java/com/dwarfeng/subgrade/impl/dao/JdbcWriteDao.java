@@ -30,7 +30,7 @@ public class JdbcWriteDao<E extends Entity<?>> implements WriteDao<E> {
     public void write(E element) throws DaoException {
         try {
             SQLAndParameter sqlAndParameter = processor.provideWrite(element);
-            template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+            template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
         } catch (Exception e) {
             throw new DaoException(e);
         }

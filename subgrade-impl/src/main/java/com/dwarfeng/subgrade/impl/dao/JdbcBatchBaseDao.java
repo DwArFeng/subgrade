@@ -46,7 +46,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
 
     private K internalInsert(E element) {
         SQLAndParameter sqlAndParameter = processor.provideInsert(element);
-        template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+        template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
         return element.getKey();
     }
 
@@ -61,7 +61,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
 
     private void internalUpdate(E element) {
         SQLAndParameter sqlAndParameter = processor.provideUpdate(element);
-        template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+        template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
     }
 
     @Override
@@ -75,7 +75,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
 
     private void internalDelete(K key) {
         SQLAndParameter sqlAndParameter = processor.provideDelete(key);
-        template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+        template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
     }
 
     @Override
@@ -90,7 +90,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
     private boolean internalExists(K key) {
         SQLAndParameter sqlAndParameter = processor.provideExists(key);
         Boolean flag = template.query(
-                sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveExists);
+                sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveExists);
         assert flag != null;
         return flag;
     }
@@ -106,7 +106,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
 
     private E internalGet(K key) {
         SQLAndParameter sqlAndParameter = processor.provideGet(key);
-        return template.query(sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveGet);
+        return template.query(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveGet);
     }
 
     @Override
@@ -124,7 +124,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
                 if (Objects.nonNull(sqlAndParameter.getParametersList())) {
                     template.batchUpdate(sqlAndParameter.getSql(), sqlAndParameter.getParametersList());
                 } else {
-                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
                 }
             }
             return elements.stream().map(Entity::getKey).collect(Collectors.toList());
@@ -145,7 +145,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
                 if (Objects.nonNull(sqlAndParameter.getParametersList())) {
                     template.batchUpdate(sqlAndParameter.getSql(), sqlAndParameter.getParametersList());
                 } else {
-                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
                 }
             }
         } catch (Exception e) {
@@ -165,7 +165,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
                 if (Objects.nonNull(sqlAndParameter.getParametersList())) {
                     template.batchUpdate(sqlAndParameter.getSql(), sqlAndParameter.getParametersList());
                 } else {
-                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
                 }
             }
         } catch (Exception e) {
@@ -184,7 +184,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
             } else {
                 SQLAndParameter sqlAndParameter = processor.provideAllExists(keys);
                 Boolean result = template.query(
-                        sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveAllExists);
+                        sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveAllExists);
                 assert result != null;
                 return result;
             }
@@ -204,7 +204,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
             } else {
                 SQLAndParameter sqlAndParameter = processor.provideNonExists(keys);
                 Boolean result = template.query(
-                        sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveNonExists);
+                        sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveNonExists);
                 assert result != null;
                 return result;
             }
@@ -225,7 +225,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
             } else {
                 SQLAndParameter sqlAndParameter = processor.provideBatchGet(keys);
                 return template.query(
-                        sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveBatchGet);
+                        sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveBatchGet);
             }
         } catch (Exception e) {
             throw new DaoException(e);

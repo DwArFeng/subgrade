@@ -57,7 +57,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         for (int i = 0; i < columnDefinitions.size(); i++) {
             parameters[i] = handle.getEntityProperty(element, columnDefinitions.get(i));
         }
-        return new SQLAndParameter(sql, parameters, null);
+        return new SQLAndParameter(sql, parameters);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
             }
             parametersList.add(parameters);
         }
-        return new SQLAndParameter(sql, null, parametersList);
+        return new SQLAndParameter(sql, parametersList);
     }
 
     private String provideUpsertSQL() {
@@ -109,7 +109,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         for (int i = 0; i < columnDefinitions.size(); i++) {
             parameters[i] = handle.getKeyProperty(key, columnDefinitions.get(i));
         }
-        return new SQLAndParameter(sql, parameters, null);
+        return new SQLAndParameter(sql, parameters);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
             }
             parametersList.add(parameters);
         }
-        return new SQLAndParameter(sql, null, parametersList);
+        return new SQLAndParameter(sql, parametersList);
     }
 
     private String provideDeleteSQL() {
@@ -146,7 +146,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         for (int i = 0; i < columnDefinitions.size(); i++) {
             parameters[i] = handle.getKeyProperty(key, columnDefinitions.get(i));
         }
-        return new SQLAndParameter(sql, parameters, null);
+        return new SQLAndParameter(sql, parameters);
     }
 
     @Override
@@ -193,7 +193,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         for (int i = 0; i < columnDefinitions.size(); i++) {
             parameters[i] = handle.getKeyProperty(key, columnDefinitions.get(i));
         }
-        return new SQLAndParameter(sql, parameters, null);
+        return new SQLAndParameter(sql, parameters);
     }
 
     @Override

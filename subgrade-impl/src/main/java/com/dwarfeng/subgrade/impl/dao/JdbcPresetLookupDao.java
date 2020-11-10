@@ -33,7 +33,7 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.providePresetLookup(preset, objs);
             return template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolvePresetLookup);
+                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolvePresetLookup);
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -44,7 +44,7 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.providePresetPaging(preset, objs, pagingInfo);
             return template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolvePresetPaging);
+                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolvePresetPaging);
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -55,7 +55,7 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.providePresetCount(preset, objs);
             Integer result = template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolvePresetCount);
+                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolvePresetCount);
             assert result != null;
             return result;
         } catch (Exception e) {

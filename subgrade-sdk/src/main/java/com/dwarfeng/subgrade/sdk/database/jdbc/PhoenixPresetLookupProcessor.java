@@ -47,7 +47,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
         StringBuilder whereClause = whereClause(queryInfo);
         StringBuilder orderClause = orderClause(queryInfo);
         String sql = lookupFragment + whereClause.toString() + orderClause.toString();
-        return new SQLAndParameter(sql, queryInfo.getParameters(), null);
+        return new SQLAndParameter(sql, queryInfo.getParameters());
     }
 
     @Override
@@ -69,7 +69,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
         System.arraycopy(queryInfo.getParameters(), 0, parameters, 0, queryInfo.getParameters().length);
         parameters[parameters.length - 2] = Math.max(0, pagingInfo.getRows());
         parameters[parameters.length - 1] = Math.max(0, pagingInfo.getRows() * pagingInfo.getPage());
-        return new SQLAndParameter(sql, parameters, null);
+        return new SQLAndParameter(sql, parameters);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
         StringBuilder whereClause = whereClause(queryInfo);
         StringBuilder orderClause = orderClause(queryInfo);
         String sql = countFragment + whereClause.toString() + orderClause.toString();
-        return new SQLAndParameter(sql, queryInfo.getParameters(), null);
+        return new SQLAndParameter(sql, queryInfo.getParameters());
     }
 
     @Override

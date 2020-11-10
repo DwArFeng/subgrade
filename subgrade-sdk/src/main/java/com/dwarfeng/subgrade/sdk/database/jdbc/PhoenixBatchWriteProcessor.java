@@ -42,7 +42,7 @@ public class PhoenixBatchWriteProcessor<E extends Entity<?>> implements BatchWri
         for (int i = 0; i < columnDefinitions.size(); i++) {
             parameters[i] = handle.getEntityProperty(element, columnDefinitions.get(i));
         }
-        return new SQLAndParameter(sql, parameters, null);
+        return new SQLAndParameter(sql, parameters);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class PhoenixBatchWriteProcessor<E extends Entity<?>> implements BatchWri
             }
             parametersList.add(parameters);
         }
-        return new SQLAndParameter(sql, null, parametersList);
+        return new SQLAndParameter(sql, parametersList);
     }
 
     private String provideWriteSQL() {

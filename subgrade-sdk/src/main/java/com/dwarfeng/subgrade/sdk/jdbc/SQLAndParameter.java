@@ -2,7 +2,8 @@ package com.dwarfeng.subgrade.sdk.jdbc;
 
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 
-import java.util.Arrays;
+import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,18 +14,55 @@ import java.util.List;
  */
 public class SQLAndParameter implements Dto {
 
-    private static final long serialVersionUID = -794551499863792624L;
+    private static final long serialVersionUID = 292554407540297775L;
 
     private String sql;
-    private Object[] parameters;
     private List<Object[]> parametersList;
 
     public SQLAndParameter() {
     }
 
-    public SQLAndParameter(String sql, Object[] parameters, List<Object[]> parametersList) {
+    /**
+     * 生成只有 SQL 的新实例。
+     *
+     * <p>
+     * 该方法会生成一个默认的参数组，参数组中含有 0 个元素。
+     *
+     * @param sql sql。
+     * @since 1.2.0
+     */
+    public SQLAndParameter(String sql) {
         this.sql = sql;
-        this.parameters = parameters;
+        this.parametersList = Collections.singletonList(new Object[0]);
+    }
+
+    /**
+     * 生成含有一个参数组的新实例。
+     *
+     * <p>
+     * 参数 parameter 禁止为 <code>null</code>。
+     *
+     * @param sql       sql。
+     * @param parameter parameter。
+     * @since 1.2.0
+     */
+    public SQLAndParameter(String sql, @Nonnull Object[] parameter) {
+        this.sql = sql;
+        this.parametersList = Collections.singletonList(parameter);
+    }
+
+    /**
+     * 生成含有多个参数组的新实例。
+     *
+     * <p>
+     * 参数 parametersList 中不允许含有 <code>null</code> 元素。
+     *
+     * @param sql            sql。
+     * @param parametersList parametersList。
+     * @since 1.2.0
+     */
+    public SQLAndParameter(String sql, @Nonnull List<Object[]> parametersList) {
+        this.sql = sql;
         this.parametersList = parametersList;
     }
 
@@ -36,14 +74,6 @@ public class SQLAndParameter implements Dto {
         this.sql = sql;
     }
 
-    public Object[] getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(Object[] parameters) {
-        this.parameters = parameters;
-    }
-
     public List<Object[]> getParametersList() {
         return parametersList;
     }
@@ -52,11 +82,24 @@ public class SQLAndParameter implements Dto {
         this.parametersList = parametersList;
     }
 
+    /**
+     * 获取第一个参数组。
+     *
+     * @return 第一个参数组，如果没有，则返回一个长度为 0 的数组。
+     * @since 1.2.0
+     */
+    public Object[] getFirstParameters() {
+        if (this.parametersList.isEmpty()) {
+            return null;
+        } else {
+            return this.parametersList.get(0);
+        }
+    }
+
     @Override
     public String toString() {
         return "SQLAndParameter{" +
                 "sql='" + sql + '\'' +
-                ", parameters=" + Arrays.toString(parameters) +
                 ", parametersList=" + parametersList +
                 '}';
     }

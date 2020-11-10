@@ -36,7 +36,7 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
                 throw new UnsupportedOperationException("暂不支持实体对象没有主键/数据表主键自增的情形");
             }
             SQLAndParameter sqlAndParameter = processor.provideInsert(element);
-            template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+            template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
             return element.getKey();
         } catch (Exception e) {
             throw new DaoException(e);
@@ -47,7 +47,7 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     public void update(E element) throws DaoException {
         try {
             SQLAndParameter sqlAndParameter = processor.provideUpdate(element);
-            template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+            template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -57,7 +57,7 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     public void delete(K key) throws DaoException {
         try {
             SQLAndParameter sqlAndParameter = processor.provideDelete(key);
-            template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+            template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -68,7 +68,7 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         try {
             SQLAndParameter sqlAndParameter = processor.provideExists(key);
             Boolean flag = template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveExists);
+                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveExists);
             assert flag != null;
             return flag;
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     public E get(K key) throws DaoException {
         try {
             SQLAndParameter sqlAndParameter = processor.provideGet(key);
-            return template.query(sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveGet);
+            return template.query(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveGet);
         } catch (Exception e) {
             throw new DaoException(e);
         }

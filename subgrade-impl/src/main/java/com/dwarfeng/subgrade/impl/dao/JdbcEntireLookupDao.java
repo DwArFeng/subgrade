@@ -33,7 +33,7 @@ public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.provideEntireLookup();
             return template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveEntireLookup);
+                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveEntireLookup);
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -44,7 +44,7 @@ public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.provideEntirePaging(pagingInfo);
             return template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveEntirePaging);
+                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveEntirePaging);
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -55,7 +55,7 @@ public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.provideEntireCount();
             Integer result = template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getParameters(), processor::resolveEntireCount);
+                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveEntireCount);
             assert result != null;
             return result;
         } catch (Exception e) {

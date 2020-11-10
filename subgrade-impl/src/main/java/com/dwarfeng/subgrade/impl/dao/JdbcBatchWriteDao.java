@@ -40,7 +40,7 @@ public class JdbcBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> 
 
     private void internalWrite(E element) {
         SQLAndParameter sqlAndParameter = processor.provideWrite(element);
-        template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+        template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class JdbcBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> 
                 if (Objects.nonNull(sqlAndParameter.getParametersList())) {
                     template.batchUpdate(sqlAndParameter.getSql(), sqlAndParameter.getParametersList());
                 } else {
-                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getParameters());
+                    template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
                 }
             }
         } catch (Exception e) {
