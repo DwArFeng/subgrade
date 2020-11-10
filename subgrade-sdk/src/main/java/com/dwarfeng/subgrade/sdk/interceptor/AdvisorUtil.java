@@ -5,6 +5,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 
 /**
  * 增强工具类。
@@ -162,6 +163,18 @@ public final class AdvisorUtil {
             array[i] = method.getParameters()[i].getAnnotationsByType(annotationClass);
         }
         return array;
+    }
+
+    /**
+     * 获取 ProceedingJoinPoint 的直接方法的参数。
+     *
+     * <p> 获取被代理的对象的直接方法的参数，而不是父接口/父类方法的参数。
+     *
+     * @param pjp ProceedingJoinPoint。
+     * @return ProceedingJoinPoint 的直接方法的参数。
+     */
+    public static Parameter[] directParameters(ProceedingJoinPoint pjp) {
+        return directMethod(pjp).getParameters();
     }
 
     private AdvisorUtil() {

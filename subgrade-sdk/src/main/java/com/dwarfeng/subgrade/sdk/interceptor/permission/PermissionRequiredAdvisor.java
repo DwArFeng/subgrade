@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.sdk.interceptor.permission;
 
+import com.dwarfeng.subgrade.sdk.interceptor.AdvisorUtil;
 import com.dwarfeng.subgrade.sdk.interceptor.ExceptionContext;
 import com.dwarfeng.subgrade.sdk.interceptor.ExceptionContextUtil;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -8,13 +9,11 @@ import com.dwarfeng.subgrade.stack.handler.PermissionHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,18 +44,15 @@ public class PermissionRequiredAdvisor {
     private Object[] beforeProcess(ProceedingJoinPoint pjp) {
         LOGGER.debug("开始检查权限...");
         Object[] args = pjp.getArgs();
-        //获取方法，此处可将signature强转为MethodSignature
-        MethodSignature signature = (MethodSignature) pjp.getSignature();
-        Method method = signature.getMethod();
         //获取方法所需的执行权限。
         LOGGER.debug("扫描 @PermissionRequired 注解，获取方法执行所需的权限");
-        PermissionRequired permissionRequired = method.getAnnotationsByType(PermissionRequired.class)[0];
+        PermissionRequired permissionRequired = AdvisorUtil.directMethodAnnotation(pjp, PermissionRequired.class);
         LOGGER.debug("所需的权限");
         for (String s : permissionRequired.value()) {
             LOGGER.debug("\t" + s);
         }
         //获取方法的参数。
-        Parameter[] parameters = method.getParameters();
+        Parameter[] parameters = AdvisorUtil.directParameters(pjp);
         //寻找User注解和PermissionMissingInfo类所在的参数所在的index。
         LOGGER.debug("扫描方法的参数，找出 @RequestUser 注解和 ExceptionContext 类所在的位置...");
         int requestUserIndex = -1;
