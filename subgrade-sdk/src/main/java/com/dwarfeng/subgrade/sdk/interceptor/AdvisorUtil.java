@@ -33,7 +33,7 @@ public final class AdvisorUtil {
      * @param pjp ProceedingJoinPoint。
      * @return ProceedingJoinPoint 的直接类。
      */
-    public static Class<?> originClass(ProceedingJoinPoint pjp) {
+    public static Class<?> directClass(ProceedingJoinPoint pjp) {
         return pjp.getTarget().getClass();
     }
 
@@ -54,7 +54,7 @@ public final class AdvisorUtil {
         Method method = null;
         try {
             // 通过反射获得拦截的method
-            method = originClass(pjp).getMethod(methodName, parameterTypes);
+            method = directClass(pjp).getMethod(methodName, parameterTypes);
         } catch (NoSuchMethodException ignored) {
             // 可以保证方法一定存在。
         }

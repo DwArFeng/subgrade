@@ -52,8 +52,8 @@ public class BehaviorAnalyseAdvisor {
         );
         // 进行行为分析。
         logger.log("进入增强方法");
-        String className = AdvisorUtil.methodSignature(pjp).getDeclaringTypeName();
-        String methodName = AdvisorUtil.methodSignature(pjp).getName();
+        String className = AdvisorUtil.directClass(pjp).getCanonicalName();
+        String methodName = AdvisorUtil.directMethod(pjp).getName();
         Object result = null;
         logger.log("获得方法名称 " + methodName);
         logger.log("获得方法参数");
