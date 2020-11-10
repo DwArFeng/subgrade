@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.database.executor;
+package com.dwarfeng.subgrade.stack.exception;
 
 /**
  * 数据库异常。
@@ -6,9 +6,9 @@ package com.dwarfeng.subgrade.sdk.database.executor;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class DatabaseException extends RuntimeException {
+public class DatabaseException extends HandlerException {
 
-    private static final long serialVersionUID = -438119495183581948L;
+    private static final long serialVersionUID = -3223441677014919224L;
 
     public DatabaseException() {
     }

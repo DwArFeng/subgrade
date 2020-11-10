@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.sdk.database.ddl;
 
 import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
-import com.dwarfeng.subgrade.sdk.database.executor.DatabaseTask;
+import com.dwarfeng.subgrade.stack.handler.DatabaseTask;
 import org.springframework.lang.NonNull;
 
 import java.sql.Connection;

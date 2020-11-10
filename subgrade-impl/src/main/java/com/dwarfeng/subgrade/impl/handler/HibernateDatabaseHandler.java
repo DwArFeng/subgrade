@@ -1,25 +1,29 @@
-package com.dwarfeng.subgrade.sdk.database.executor;
+package com.dwarfeng.subgrade.impl.handler;
 
+import com.dwarfeng.subgrade.stack.exception.DatabaseException;
+import com.dwarfeng.subgrade.stack.handler.DatabaseHandler;
+import com.dwarfeng.subgrade.stack.handler.DatabaseTask;
 import org.hibernate.HibernateException;
-import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+
+import javax.annotation.Nonnull;
 
 /**
  * 使用 Hibernate 实现的数据库执行器。
  *
  * @author DwArFeng
- * @since 1.1.1
+ * @since 1.2.0
  */
-public class HibernateDatabaseExecutor<T> implements DatabaseExecutor<T> {
+public class HibernateDatabaseHandler<T> implements DatabaseHandler<T> {
 
     private HibernateTemplate hibernateTemplate;
 
-    public HibernateDatabaseExecutor(@NonNull HibernateTemplate hibernateTemplate) {
+    public HibernateDatabaseHandler(@Nonnull HibernateTemplate hibernateTemplate) {
         this.hibernateTemplate = hibernateTemplate;
     }
 
     @Override
-    public T executeTask(@NonNull DatabaseTask<? extends T> databaseTask) throws DatabaseException {
+    public T executeTask(@Nonnull DatabaseTask<? extends T> databaseTask) throws DatabaseException {
         try {
             return hibernateTemplate.executeWithNativeSession(session -> session.doReturningWork(
                     connection -> {
@@ -39,7 +43,7 @@ public class HibernateDatabaseExecutor<T> implements DatabaseExecutor<T> {
         return hibernateTemplate;
     }
 
-    public void setHibernateTemplate(@NonNull HibernateTemplate hibernateTemplate) {
+    public void setHibernateTemplate(@Nonnull HibernateTemplate hibernateTemplate) {
         this.hibernateTemplate = hibernateTemplate;
     }
 }

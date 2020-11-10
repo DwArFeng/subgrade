@@ -1,28 +1,31 @@
-package com.dwarfeng.subgrade.sdk.database.executor;
+package com.dwarfeng.subgrade.impl.handler;
 
+import com.dwarfeng.subgrade.stack.exception.DatabaseException;
+import com.dwarfeng.subgrade.stack.handler.DatabaseHandler;
+import com.dwarfeng.subgrade.stack.handler.DatabaseTask;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.sql.SQLException;
 
 /**
  * 使用 Jdbc 实现的数据库执行器。
  *
  * @author DwArFeng
- * @since 1.1.1
+ * @since 1.2.0
  */
-public class JdbcDatabaseExecutor<T> implements DatabaseExecutor<T> {
+public class JdbcDatabaseHandler<T> implements DatabaseHandler<T> {
 
     private JdbcTemplate jdbcTemplate;
 
-    public JdbcDatabaseExecutor(@NonNull JdbcTemplate jdbcTemplate) {
+    public JdbcDatabaseHandler(@Nonnull JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public T executeTask(@NonNull DatabaseTask<? extends T> databaseTask) throws DatabaseException {
+    public T executeTask(@Nonnull DatabaseTask<? extends T> databaseTask) throws DatabaseException {
         try {
             return jdbcTemplate.execute((ConnectionCallback<T>) con -> {
                 try {
@@ -42,7 +45,7 @@ public class JdbcDatabaseExecutor<T> implements DatabaseExecutor<T> {
         return jdbcTemplate;
     }
 
-    public void setJdbcTemplate(@NonNull JdbcTemplate jdbcTemplate) {
+    public void setJdbcTemplate(@Nonnull JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 }

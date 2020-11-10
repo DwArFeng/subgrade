@@ -9,7 +9,9 @@
 - 优化 com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter 的代码结构。
 - 大幅调整 com.dwarfeng.subgrade.sdk.jdbc 包的结构。
   - 这将导致该项目与旧版本的直接不兼容。
-
+- 大幅调整数据库处理器机制。
+  - 这将导致该项目与旧版本的直接不兼容。
+  
 #### Bug修复
 
 - 修复 Friendly AOP 注解使用在接口/父类上时抛出异常的 bug。
