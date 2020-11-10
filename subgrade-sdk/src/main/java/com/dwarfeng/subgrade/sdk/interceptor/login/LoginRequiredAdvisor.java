@@ -1,19 +1,17 @@
 package com.dwarfeng.subgrade.sdk.interceptor.login;
 
+import com.dwarfeng.subgrade.sdk.interceptor.AdvisorUtil;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.handler.LoginHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
 
 /**
  * 登录需求增强。
@@ -63,12 +61,9 @@ public class LoginRequiredAdvisor {
     }
 
     private boolean isPostpone(ProceedingJoinPoint pjp) {
-        //获取方法，此处可将signature强转为MethodSignature
-        MethodSignature signature = (MethodSignature) pjp.getSignature();
-        Method method = signature.getMethod();
         //获取方法所需的执行登录。
         LOGGER.debug("扫描 @LoginRequired 注解，获取方法执行所需的登录");
-        LoginRequired loginRequired = method.getAnnotationsByType(LoginRequired.class)[0];
+        LoginRequired loginRequired = AdvisorUtil.directMethodAnnotation(pjp, LoginRequired.class);
         return loginRequired.postpone();
     }
 
@@ -87,5 +82,4 @@ public class LoginRequiredAdvisor {
     public void setManager(LoginRequiredAopManager manager) {
         this.manager = manager;
     }
-
 }

@@ -9,11 +9,12 @@
 
 #### Bug修复
 
-- (无)
+- 修复 Friendly AOP 注解使用在接口/父类上时抛出异常的 bug。
+- 修复 LoginRequired AOP 注解使用在接口/父类上时抛出异常的 bug。
 
 #### 功能移除
 
-- 修复 Friendly AOP 注解使用在接口/父类上时抛出异常的 bug。
+- (无)
 
 ---
 
