@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
-import com.dwarfeng.subgrade.sdk.jdbc.WriteProcessor;
+import com.dwarfeng.subgrade.sdk.jdbc.processor.SQLAndParameter;
+import com.dwarfeng.subgrade.sdk.jdbc.processor.WriteProcessor;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.WriteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;

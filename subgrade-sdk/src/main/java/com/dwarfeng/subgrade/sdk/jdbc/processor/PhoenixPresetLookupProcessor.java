@@ -1,10 +1,10 @@
-package com.dwarfeng.subgrade.sdk.database.jdbc;
+package com.dwarfeng.subgrade.sdk.jdbc.processor;
 
 import com.dwarfeng.subgrade.sdk.database.definition.ColumnDefinition;
 import com.dwarfeng.subgrade.sdk.database.definition.PhoenixHelper;
 import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
-import com.dwarfeng.subgrade.sdk.jdbc.PresetLookupProcessor;
-import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
+import com.dwarfeng.subgrade.sdk.jdbc.handle.PresetLookupHandle;
+import com.dwarfeng.subgrade.sdk.jdbc.handle.QueryInfo;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import org.springframework.lang.NonNull;
@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -135,13 +136,22 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
 
     private StringBuilder orderClause(QueryInfo queryInfo) {
         StringBuilder orderClause = new StringBuilder();
-        if (Objects.nonNull(queryInfo.getOrders())) {
+        if (Objects.nonNull(queryInfo.getOrderingMap()) && !queryInfo.getOrderingMap().isEmpty()) {
             orderClause = new StringBuilder(" ORDER BY ");
-            for (int i = 0; i < queryInfo.getOrders().size(); i++) {
-                if (i != 0) {
+            int i = 0;
+            for (Map.Entry<String, QueryInfo.Ordering> entry : queryInfo.getOrderingMap().entrySet()) {
+                if (i++ != 0) {
                     orderClause.append(", ");
                 }
-                orderClause.append(queryInfo.getOrders().get(i));
+                orderClause.append(entry.getKey()).append(" ");
+                switch (entry.getValue()) {
+                    case ASC:
+                        orderClause.append("ASC");
+                        break;
+                    case DESC:
+                        orderClause.append("DESC");
+                        break;
+                }
             }
         }
         return orderClause;

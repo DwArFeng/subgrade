@@ -7,6 +7,8 @@
 - 对项目中的单级日志相关功能提供了框架级别的功能更新。
 - BehaviorAnalyse AOP 功能增强。
 - 优化 com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter 的代码结构。
+- 大幅调整 com.dwarfeng.subgrade.sdk.jdbc 包的结构。
+  - 这将导致该项目与旧版本的直接不兼容。
 
 #### Bug修复
 

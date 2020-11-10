@@ -1,10 +1,9 @@
-package com.dwarfeng.subgrade.sdk.database.jdbc;
+package com.dwarfeng.subgrade.sdk.jdbc.processor;
 
 import com.dwarfeng.subgrade.sdk.database.definition.ColumnDefinition;
 import com.dwarfeng.subgrade.sdk.database.definition.PhoenixHelper;
 import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
-import com.dwarfeng.subgrade.sdk.jdbc.BatchWriteProcessor;
-import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
+import com.dwarfeng.subgrade.sdk.jdbc.handle.WriteHandle;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import org.springframework.lang.NonNull;
 

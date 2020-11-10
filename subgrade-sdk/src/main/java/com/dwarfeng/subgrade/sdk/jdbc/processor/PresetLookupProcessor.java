@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.jdbc;
+package com.dwarfeng.subgrade.sdk.jdbc.processor;
 
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;

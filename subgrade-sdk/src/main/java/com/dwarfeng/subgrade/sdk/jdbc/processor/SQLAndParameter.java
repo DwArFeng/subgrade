@@ -1,6 +1,4 @@
-package com.dwarfeng.subgrade.sdk.jdbc;
-
-import com.dwarfeng.subgrade.stack.bean.dto.Dto;
+package com.dwarfeng.subgrade.sdk.jdbc.processor;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -12,15 +10,10 @@ import java.util.List;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class SQLAndParameter implements Dto {
+public class SQLAndParameter {
 
-    private static final long serialVersionUID = 292554407540297775L;
-
-    private String sql;
-    private List<Object[]> parametersList;
-
-    public SQLAndParameter() {
-    }
+    private final String sql;
+    private final List<Object[]> parametersList;
 
     /**
      * 生成只有 SQL 的新实例。
@@ -70,16 +63,8 @@ public class SQLAndParameter implements Dto {
         return sql;
     }
 
-    public void setSql(String sql) {
-        this.sql = sql;
-    }
-
     public List<Object[]> getParametersList() {
         return parametersList;
-    }
-
-    public void setParametersList(List<Object[]> parametersList) {
-        this.parametersList = parametersList;
     }
 
     /**

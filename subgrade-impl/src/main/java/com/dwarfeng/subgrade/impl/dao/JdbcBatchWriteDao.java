@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.BatchWriteProcessor;
-import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
+import com.dwarfeng.subgrade.sdk.jdbc.processor.BatchWriteProcessor;
+import com.dwarfeng.subgrade.sdk.jdbc.processor.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.BatchWriteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;

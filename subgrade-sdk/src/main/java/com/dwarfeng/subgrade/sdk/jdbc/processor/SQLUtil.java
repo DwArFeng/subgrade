@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.database.jdbc;
+package com.dwarfeng.subgrade.sdk.jdbc.processor;
 
 import com.dwarfeng.subgrade.sdk.database.definition.ColumnDefinition;
 import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;

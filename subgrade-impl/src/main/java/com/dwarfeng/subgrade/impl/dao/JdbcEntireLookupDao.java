@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.impl.dao;
 
-import com.dwarfeng.subgrade.sdk.jdbc.EntireLookupProcessor;
-import com.dwarfeng.subgrade.sdk.jdbc.SQLAndParameter;
+import com.dwarfeng.subgrade.sdk.jdbc.processor.EntireLookupProcessor;
+import com.dwarfeng.subgrade.sdk.jdbc.processor.SQLAndParameter;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
