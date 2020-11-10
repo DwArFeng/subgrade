@@ -18,7 +18,8 @@
 
 #### 功能移除
 
-- (无)
+- ~~移除已经过时的接口 com.dwarfeng.subgrade.stack.dao.ReadOnlyBatchDao。~~
+  - 该接口已经过时很久，删除不会导致新项目的不兼容。
 
 ---
 
