@@ -20,6 +20,9 @@
 
 - ~~移除已经过时的接口 com.dwarfeng.subgrade.stack.dao.ReadOnlyBatchDao。~~
   - 该接口已经过时很久，删除不会导致新项目的不兼容。
+- ~~移除查询服务 com.dwarfeng.subgrade.stack.service.OptionalLookupService。~~
+  - 预设查询接口 com.dwarfeng.subgrade.stack.service.PresetLookupService 能够完全实现功能，不需要该接口额外提供功能支持。
+  - 迄今为止所有的项目均无该接口依赖，删除不会导致兼容性问题。
 
 ---
 
