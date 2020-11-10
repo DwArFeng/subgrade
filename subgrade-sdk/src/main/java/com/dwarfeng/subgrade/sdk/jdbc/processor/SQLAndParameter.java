@@ -1,5 +1,7 @@
 package com.dwarfeng.subgrade.sdk.jdbc.processor;
 
+import com.dwarfeng.subgrade.stack.bean.dto.Dto;
+
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
@@ -10,10 +12,15 @@ import java.util.List;
  * @author DwArFeng
  * @since 1.1.1
  */
-public class SQLAndParameter {
+public class SQLAndParameter implements Dto {
 
-    private final String sql;
-    private final List<Object[]> parametersList;
+    private static final long serialVersionUID = 7911220001330046975L;
+
+    private String sql;
+    private List<Object[]> parametersList;
+
+    public SQLAndParameter() {
+    }
 
     /**
      * 生成只有 SQL 的新实例。
@@ -39,7 +46,7 @@ public class SQLAndParameter {
      * @param parameter parameter。
      * @since 1.2.0
      */
-    public SQLAndParameter(String sql, @Nonnull Object[] parameter) {
+    public SQLAndParameter(@Nonnull String sql, @Nonnull Object[] parameter) {
         this.sql = sql;
         this.parametersList = Collections.singletonList(parameter);
     }
@@ -54,7 +61,7 @@ public class SQLAndParameter {
      * @param parametersList parametersList。
      * @since 1.2.0
      */
-    public SQLAndParameter(String sql, @Nonnull List<Object[]> parametersList) {
+    public SQLAndParameter(@Nonnull String sql, @Nonnull List<Object[]> parametersList) {
         this.sql = sql;
         this.parametersList = parametersList;
     }
@@ -63,8 +70,24 @@ public class SQLAndParameter {
         return sql;
     }
 
+    public void setSql(@Nonnull String sql) {
+        this.sql = sql;
+    }
+
     public List<Object[]> getParametersList() {
         return parametersList;
+    }
+
+    /**
+     * setParametersList。
+     *
+     * <p>
+     * 参数 parametersList 中不允许含有 <code>null</code> 元素。
+     *
+     * @param parametersList parametersList。
+     */
+    public void setParametersList(@Nonnull List<Object[]> parametersList) {
+        this.parametersList = parametersList;
     }
 
     /**
