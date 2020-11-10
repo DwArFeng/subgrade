@@ -1,5 +1,7 @@
 package com.dwarfeng.subgrade.sdk.interceptor.analyse;
 
+import com.dwarfeng.subgrade.stack.log.LogLevel;
+
 import java.lang.annotation.*;
 
 /**
@@ -13,4 +15,10 @@ import java.lang.annotation.*;
 @Documented
 public @interface BehaviorAnalyse {
 
+    /**
+     * 日志等级，默认为 <code>LogLevel.DEBUG</code>。
+     *
+     * @since 1.2.0
+     */
+    LogLevel logLevel() default LogLevel.DEBUG;
 }
