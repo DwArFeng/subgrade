@@ -6,7 +6,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>subgrade</artifactId>
-    <version>1.2.0.b-SNAPSHOT</version>
+    <version>1.2.0.b</version>
 
     <packaging>pom</packaging>
 
@@ -426,17 +426,17 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>subgrade-stack</artifactId>
-                <version>1.2.0.b-SNAPSHOT</version>
+                <version>1.2.0.b</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>subgrade-sdk</artifactId>
-                <version>1.2.0.b-SNAPSHOT</version>
+                <version>1.2.0.b</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>subgrade-impl</artifactId>
-                <version>1.2.0.b-SNAPSHOT</version>
+                <version>1.2.0.b</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
