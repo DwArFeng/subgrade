@@ -1,19 +1,19 @@
 package com.dwarfeng.subgrade.sdk.interceptor.friendly;
 
+import com.dwarfeng.subgrade.sdk.interceptor.AdvisorUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EmbeddedValueResolverAware;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringValueResolver;
 
-import java.lang.reflect.Method;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -143,16 +143,17 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
+    public void setApplicationContext(@Nonnull ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
+    @Nullable
     public StringValueResolver getEmbeddedValueResolver() {
         return embeddedValueResolver;
     }
 
     @Override
-    public void setEmbeddedValueResolver(StringValueResolver resolver) {
+    public void setEmbeddedValueResolver(@Nonnull StringValueResolver resolver) {
         this.embeddedValueResolver = resolver;
     }
 
@@ -160,27 +161,23 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
         List<Friendly> friendlies = new ArrayList<>();
         //获取类中的 @FriendlyList 注解。
         LOGGER.debug("扫描方类中的 @FriendlyList 注解...");
-        Class<?> clazz = pjp.getTarget().getClass();
-        FriendlyList friendlyList = clazz.getAnnotation(FriendlyList.class);
+        FriendlyList friendlyList = AdvisorUtil.directClassAnnotation(pjp, FriendlyList.class);
         if (Objects.nonNull(friendlyList)) {
             LOGGER.debug("类中存在 @FriendlyList 注解...");
             friendlies.addAll(Arrays.asList(friendlyList.value()));
         } else {
             LOGGER.debug("类中不存在 @FriendlyList 注解，继续扫描方类中的 @Friendly 注解...");
-            friendlies.addAll(Arrays.asList(clazz.getAnnotationsByType(Friendly.class)));
+            friendlies.addAll(Arrays.asList(AdvisorUtil.directClassAnnotations(pjp, Friendly.class)));
         }
-        //获取方法，此处可将signature强转为MethodSignature
-        MethodSignature signature = (MethodSignature) pjp.getSignature();
-        Method method = signature.getMethod();
         //获取方法中的 @FriendlyList 注解。
         LOGGER.debug("扫描方法中的 @FriendlyList 注解...");
-        friendlyList = method.getAnnotation(FriendlyList.class);
+        friendlyList = AdvisorUtil.directMethodAnnotation(pjp, FriendlyList.class);
         if (Objects.nonNull(friendlyList)) {
             LOGGER.debug("方法中存在 @FriendlyList 注解...");
             friendlies.addAll(Arrays.asList(friendlyList.value()));
         } else {
             LOGGER.debug("方法中存在 @FriendlyList 注解，继续扫描方法中的 @Friendly 注解...");
-            friendlies.addAll(Arrays.asList(method.getAnnotationsByType(Friendly.class)));
+            friendlies.addAll(Arrays.asList(AdvisorUtil.directMethodAnnotations(pjp, Friendly.class)));
         }
         return friendlies;
     }
