@@ -84,8 +84,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
                 providePresetCountFragment());
         QueryInfo queryInfo = handle.getQueryInfo(preset, objs);
         StringBuilder whereClause = whereClause(queryInfo);
-        StringBuilder orderClause = orderClause(queryInfo);
-        String sql = countFragment + whereClause.toString() + orderClause.toString();
+        String sql = countFragment + whereClause.toString();
         return new SQLAndParameter(sql, queryInfo.getParameters());
     }
 

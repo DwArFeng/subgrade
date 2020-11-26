@@ -8,7 +8,7 @@
   
 #### Bug修复
 
-- (无)
+- 修复了 PhoenixPresetLookupProcessor.providePresetCount 方法处理含有排序的 QueryInfo 时生成错误 SQL 语句的错误。
 
 #### 功能移除
 
