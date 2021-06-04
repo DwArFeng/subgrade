@@ -43,7 +43,7 @@
         <netty.version>4.1.43.Final</netty.version>
         <curator.version>4.2.0</curator.version>
         <zkclient.version>0.11</zkclient.version>
-        <httpcomponents.version>4.4.1</httpcomponents.version>
+        <httpcomponents.version>4.5.13</httpcomponents.version>
         <noggit.version>0.6</noggit.version>
         <zookeeper.version>3.4.14</zookeeper.version>
         <aspectj.version>1.8.2</aspectj.version>
