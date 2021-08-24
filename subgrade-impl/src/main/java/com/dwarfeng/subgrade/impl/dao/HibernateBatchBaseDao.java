@@ -81,6 +81,18 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE,
             @NonNull DeletionMod<PE> deletionMod,
+            int batchSize
+    ) {
+        this(template, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod,
+                batchSize, Collections.emptySet());
+    }
+
+    public HibernateBatchBaseDao(
+            @NonNull HibernateTemplate template,
+            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
+            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
+            @NonNull Class<PE> classPE,
+            @NonNull DeletionMod<PE> deletionMod,
             int batchSize,
             @NonNull Collection<String> updateKeepFields
     ) {
@@ -238,18 +250,26 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     @Override
     public void batchDelete(List<K> keys) throws DaoException {
         try {
+            List<Object> objectsToUpdate = new ArrayList<>();
+            List<PE> pesToDelete = new ArrayList<>();
             for (int i = 0; i < keys.size(); i++) {
                 if (i % batchSize == 0) {
+                    template.clear();
+                    objectsToUpdate.forEach(template::update);
+                    pesToDelete.forEach(template::delete);
                     template.flush();
                     template.clear();
+                    objectsToUpdate.clear();
+                    pesToDelete.clear();
                 }
                 K key = keys.get(i);
                 PE pe = internalGet(key);
-                List<Object> objects = deletionMod.updateBeforeDelete(pe);
-                template.clear();
-                objects.forEach(template::update);
-                template.delete(pe);
+                objectsToUpdate.addAll(deletionMod.updateBeforeDelete(pe));
+                pesToDelete.add(pe);
             }
+            template.clear();
+            objectsToUpdate.forEach(template::update);
+            pesToDelete.forEach(template::delete);
             template.flush();
             template.clear();
         } catch (Exception e) {
