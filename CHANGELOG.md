@@ -1,11 +1,27 @@
 # ChangeLog
 
+### Release_1.2.2_20210804_build_A
+
+#### 功能构建
+
+- (无)
+
+#### Bug修复
+
+- (无)
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Release_1.2.1_20201126_build_A
 
 #### 功能构建
 
 - (无)
-  
+
 #### Bug修复
 
 - 修复了 PhoenixPresetLookupProcessor.providePresetCount 方法处理含有排序的 QueryInfo 时生成错误 SQL 语句的错误。
