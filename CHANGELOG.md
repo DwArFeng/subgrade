@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 为 HibernateBaseDao 以及 HibernateBatchBaseDao 增加字段 updateKeepFields，解决实体更新时多对多信息丢失的问题。
 
 #### Bug修复
 

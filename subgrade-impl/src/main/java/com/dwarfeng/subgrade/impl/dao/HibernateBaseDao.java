@@ -8,9 +8,12 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,17 +32,15 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     private BeanTransformer<E, PE> entityBeanTransformer;
     private Class<PE> classPE;
     private DeletionMod<PE> deletionMod;
+    private Collection<String> updateKeepFields;
 
     public HibernateBaseDao(
             @NonNull HibernateTemplate template,
             @NonNull BeanTransformer<K, PK> keyBeanTransformer,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE) {
-        this.template = template;
-        this.keyBeanTransformer = keyBeanTransformer;
-        this.entityBeanTransformer = entityBeanTransformer;
-        this.classPE = classPE;
-        deletionMod = new DefaultDeletionMod<>();
+        this(template, keyBeanTransformer, entityBeanTransformer, classPE,
+                new DefaultDeletionMod<>(), Collections.emptySet());
     }
 
     public HibernateBaseDao(
@@ -47,12 +48,15 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
             @NonNull BeanTransformer<K, PK> keyBeanTransformer,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE,
-            @NonNull DeletionMod<PE> deletionMod) {
+            @NonNull DeletionMod<PE> deletionMod,
+            @NonNull Collection<String> updateKeepFields
+    ) {
         this.template = template;
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
         this.deletionMod = deletionMod;
+        this.updateKeepFields = updateKeepFields;
     }
 
     @Override
@@ -75,6 +79,13 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     public void update(E element) throws DaoException {
         try {
             PE pe = transformEntity(element);
+            if (!updateKeepFields.isEmpty()) {
+                PE oldPe = internalGet(element.getKey());
+                for (String updateKeepField : updateKeepFields) {
+                    Object oldValue = PropertyUtils.getProperty(oldPe, updateKeepField);
+                    PropertyUtils.setProperty(pe, updateKeepField, oldValue);
+                }
+            }
             template.clear();
             template.update(pe);
             template.flush();
@@ -89,6 +100,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         try {
             PE pe = internalGet(key);
             List<Object> objects = deletionMod.updateBeforeDelete(pe);
+            template.clear();
             objects.forEach(template::update);
             template.delete(pe);
             template.flush();
@@ -176,5 +188,13 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
 
     public void setDeletionMod(@NonNull DeletionMod<PE> deletionMod) {
         this.deletionMod = deletionMod;
+    }
+
+    public Collection<String> getUpdateKeepFields() {
+        return updateKeepFields;
+    }
+
+    public void setUpdateKeepFields(Collection<String> updateKeepFields) {
+        this.updateKeepFields = updateKeepFields;
     }
 }

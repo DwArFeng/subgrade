@@ -8,12 +8,12 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import javax.annotation.Nonnull;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -39,14 +39,16 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     private Class<PE> classPE;
     private DeletionMod<PE> deletionMod;
     private int batchSize;
+    private Collection<String> updateKeepFields;
 
     public HibernateBatchBaseDao(
             @NonNull HibernateTemplate template,
             @NonNull BeanTransformer<K, PK> keyBeanTransformer,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE) {
+            @NonNull Class<PE> classPE
+    ) {
         this(template, keyBeanTransformer, entityBeanTransformer, classPE, new DefaultDeletionMod<>(),
-                DEFAULT_BATCH_SIZE);
+                DEFAULT_BATCH_SIZE, Collections.emptySet());
     }
 
     public HibernateBatchBaseDao(
@@ -54,8 +56,10 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @NonNull BeanTransformer<K, PK> keyBeanTransformer,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE,
-            @NonNull DeletionMod<PE> deletionMod) {
-        this(template, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod, DEFAULT_BATCH_SIZE);
+            @NonNull DeletionMod<PE> deletionMod
+    ) {
+        this(template, keyBeanTransformer, entityBeanTransformer,
+                classPE, deletionMod, DEFAULT_BATCH_SIZE, Collections.emptySet());
     }
 
     public HibernateBatchBaseDao(
@@ -64,7 +68,22 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE,
             @NonNull DeletionMod<PE> deletionMod,
-            int batchSize) {
+            @NonNull Collection<String> updateKeepFields
+
+    ) {
+        this(template, keyBeanTransformer, entityBeanTransformer,
+                classPE, deletionMod, DEFAULT_BATCH_SIZE, updateKeepFields);
+    }
+
+    public HibernateBatchBaseDao(
+            @NonNull HibernateTemplate template,
+            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
+            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
+            @NonNull Class<PE> classPE,
+            @NonNull DeletionMod<PE> deletionMod,
+            int batchSize,
+            @NonNull Collection<String> updateKeepFields
+    ) {
         if (batchSize <= 0) {
             throw new IllegalArgumentException("参数 batchSize 必须为正数");
         }
@@ -74,6 +93,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         this.classPE = classPE;
         this.deletionMod = deletionMod;
         this.batchSize = batchSize;
+        this.updateKeepFields = updateKeepFields;
     }
 
     @Override
@@ -96,6 +116,13 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     public void update(E element) throws DaoException {
         try {
             PE pe = transformEntity(element);
+            if (!updateKeepFields.isEmpty()) {
+                PE oldPe = internalGet(element.getKey());
+                for (String updateKeepField : updateKeepFields) {
+                    Object oldValue = PropertyUtils.getProperty(oldPe, updateKeepField);
+                    PropertyUtils.setProperty(pe, updateKeepField, oldValue);
+                }
+            }
             template.clear();
             template.update(pe);
             template.flush();
@@ -110,6 +137,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         try {
             PE pe = internalGet(key);
             List<Object> objects = deletionMod.updateBeforeDelete(pe);
+            template.clear();
             objects.forEach(template::update);
             template.delete(pe);
             template.flush();
@@ -179,16 +207,27 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         try {
             template.clear();
             List<PE> collect = elements.stream().map(entityBeanTransformer::transform).collect(Collectors.toList());
+            List<PE> pesToUpdate = new ArrayList<>();
             for (int i = 0; i < collect.size(); i++) {
                 if (i % batchSize == 0) {
+                    template.clear();
+                    pesToUpdate.forEach(template::update);
                     template.flush();
                     template.clear();
+                    pesToUpdate.clear();
                 }
                 PE pe = collect.get(i);
-                List<Object> objects = deletionMod.updateBeforeDelete(pe);
-                objects.forEach(template::update);
-                template.update(pe);
+                if (!updateKeepFields.isEmpty()) {
+                    PE oldPe = internalGet(elements.get(i).getKey());
+                    for (String updateKeepField : updateKeepFields) {
+                        Object oldValue = PropertyUtils.getProperty(oldPe, updateKeepField);
+                        PropertyUtils.setProperty(pe, updateKeepField, oldValue);
+                    }
+                }
+                pesToUpdate.add(pe);
             }
+            template.clear();
+            pesToUpdate.forEach(template::update);
             template.flush();
             template.clear();
         } catch (Exception e) {
@@ -206,6 +245,9 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
                 }
                 K key = keys.get(i);
                 PE pe = internalGet(key);
+                List<Object> objects = deletionMod.updateBeforeDelete(pe);
+                template.clear();
+                objects.forEach(template::update);
                 template.delete(pe);
             }
             template.flush();
@@ -314,5 +356,13 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
 
     public void setBatchSize(int batchSize) {
         this.batchSize = batchSize;
+    }
+
+    public Collection<String> getUpdateKeepFields() {
+        return updateKeepFields;
+    }
+
+    public void setUpdateKeepFields(@Nonnull Collection<String> updateKeepFields) {
+        this.updateKeepFields = updateKeepFields;
     }
 }
