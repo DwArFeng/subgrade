@@ -5,6 +5,7 @@
 #### 功能构建
 
 - 为 HibernateBaseDao 以及 HibernateBatchBaseDao 增加字段 updateKeepFields，解决实体更新时多对多信息丢失的问题。
+- 升级 mybatis 版本。
 
 #### Bug修复
 
