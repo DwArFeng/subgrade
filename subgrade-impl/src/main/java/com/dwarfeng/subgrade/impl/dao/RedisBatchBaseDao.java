@@ -31,16 +31,16 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
     private String dbKey;
 
     public RedisBatchBaseDao(
-            @NonNull RedisTemplate<String, JE> template,
-            @NonNull StringKeyFormatter<K> formatter,
-            @NonNull BeanTransformer<E, JE> transformer,
-            @NotNull String dbKey) {
+            @NonNull RedisTemplate<String, JE> template, @NonNull StringKeyFormatter<K> formatter,
+            @NonNull BeanTransformer<E, JE> transformer, @NotNull String dbKey
+    ) {
         this.template = template;
         this.formatter = formatter;
         this.transformer = transformer;
         this.dbKey = dbKey;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public K insert(E element) throws DaoException {
         try {
@@ -105,6 +105,7 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public List<K> batchInsert(List<E> elements) throws DaoException {
         try {
@@ -124,6 +125,7 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void batchUpdate(List<E> elements) throws DaoException {
         try {
@@ -148,8 +150,8 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
             if (!internalAllExists(keys)) {
                 throw new DaoException("至少一个元素的主键不存在");
             }
-            List<String> formats = keys.stream().map(formatter::format).collect(Collectors.toList());
-            template.delete(formats);
+            Object[] formats = keys.stream().map(formatter::format).toArray();
+            template.opsForHash().delete(dbKey, formats);
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -225,5 +227,13 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
 
     public void setTransformer(@NonNull BeanTransformer<E, JE> transformer) {
         this.transformer = transformer;
+    }
+
+    public String getDbKey() {
+        return dbKey;
+    }
+
+    public void setDbKey(String dbKey) {
+        this.dbKey = dbKey;
     }
 }

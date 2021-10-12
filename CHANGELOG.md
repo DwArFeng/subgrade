@@ -11,7 +11,7 @@
 
 #### Bug修复
 
-- (无)
+- 修正 `RedisBatchBaseDao` 执行 `batchDelete` 方法时无法删除实体的 bug。
 
 #### 功能移除
 

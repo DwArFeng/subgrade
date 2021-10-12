@@ -26,16 +26,16 @@ public class RedisBaseDao<K extends Key, E extends Entity<K>, JE extends Bean> i
     private String dbKey;
 
     public RedisBaseDao(
-            @NonNull RedisTemplate<String, JE> template,
-            @NonNull StringKeyFormatter<K> formatter,
-            @NonNull BeanTransformer<E, JE> transformer,
-            @NonNull String dbKey) {
+            @NonNull RedisTemplate<String, JE> template, @NonNull StringKeyFormatter<K> formatter,
+            @NonNull BeanTransformer<E, JE> transformer, @NonNull String dbKey
+    ) {
         this.template = template;
         this.formatter = formatter;
         this.transformer = transformer;
         this.dbKey = dbKey;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public K insert(E element) throws DaoException {
         try {
