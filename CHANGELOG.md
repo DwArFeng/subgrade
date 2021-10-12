@@ -4,7 +4,10 @@
 
 #### 功能构建
 
-- (无)
+- 升级部分依赖至新版本。
+  - dubbo.version: `2.7.1` - `2.7.13`。
+  - httpcomponents.version: `4.4.1` - `4.5.13`。
+  - hibernate-validator.version `6.0.18.Final` - `6.0.20.Final`。
 
 #### Bug修复
 
