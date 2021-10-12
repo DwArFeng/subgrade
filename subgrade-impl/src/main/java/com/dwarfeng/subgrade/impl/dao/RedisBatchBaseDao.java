@@ -151,7 +151,9 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
                 throw new DaoException("至少一个元素的主键不存在");
             }
             Object[] formats = keys.stream().map(formatter::format).toArray();
-            template.opsForHash().delete(dbKey, formats);
+            if (formats.length > 0) {
+                template.opsForHash().delete(dbKey, formats);
+            }
         } catch (Exception e) {
             throw new DaoException(e);
         }

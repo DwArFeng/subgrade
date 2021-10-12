@@ -12,7 +12,7 @@
 
 #### 功能移除
 
-- (无)
+- 修正 `RedisBatchBaseDao` 执行 `batchDelete` 方法时当入口参数长度为 0 时行为异常的 bug。
 
 ---
 
