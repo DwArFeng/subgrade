@@ -49,7 +49,7 @@
         <aspectj.version>1.8.2</aspectj.version>
         <aopalliance.version>1.0</aopalliance.version>
         <spring.data.redis.version>1.7.11.RELEASE</spring.data.redis.version>
-        <hibernate.version>5.3.13.Final</hibernate.version>
+        <hibernate.version>5.4.24.Final</hibernate.version>
         <jboss-logging.version>3.3.2.Final</jboss-logging.version>
         <el.version>3.0.0</el.version>
         <hibernate-validator.version>6.0.20.Final</hibernate-validator.version>
