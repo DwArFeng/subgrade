@@ -12,6 +12,8 @@ import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.lang.NonNull;
 
+import java.util.List;
+
 /**
  * 仅通过数据访问层实现的预设实体查询服务。
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
@@ -28,7 +30,8 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
     public DaoOnlyPresetLookupService(
             @NonNull PresetLookupDao<E> dao,
             @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel) {
+            @NonNull LogLevel exceptionLogLevel
+    ) {
         this.dao = dao;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
@@ -47,6 +50,30 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
     public PagedData<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         try {
             return PagingUtil.pagedData(pagingInfo, dao.lookupCount(preset, objs), dao.lookup(preset, objs, pagingInfo));
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询预设实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    /**
+     * @since 1.2.4
+     */
+    @Override
+    public List<E> lookupAsList(String preset, Object[] objs) throws ServiceException {
+        try {
+            return dao.lookup(preset, objs);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询预设实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    /**
+     * @since 1.2.4
+     */
+    @Override
+    public List<E> lookupAsList(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
+        try {
+            return dao.lookup(preset, objs, pagingInfo);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("查询预设实体时发生异常", exceptionLogLevel, sem, e);
         }

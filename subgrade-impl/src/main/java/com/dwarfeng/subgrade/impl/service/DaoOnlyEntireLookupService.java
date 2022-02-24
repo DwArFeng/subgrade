@@ -12,6 +12,8 @@ import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import org.springframework.lang.NonNull;
 
+import java.util.List;
+
 /**
  * 仅通过数据访问层实现的全体实体查询服务。
  * <p>该类同时使用数据访问层和缓存实现实体的查询方法。</p>
@@ -29,7 +31,8 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
     public DaoOnlyEntireLookupService(
             @NonNull EntireLookupDao<E> dao,
             @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel) {
+            @NonNull LogLevel exceptionLogLevel
+    ) {
         this.dao = dao;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
@@ -48,6 +51,30 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
     public PagedData<E> lookup(PagingInfo pagingInfo) throws ServiceException {
         try {
             return PagingUtil.pagedData(pagingInfo, dao.lookupCount(), dao.lookup(pagingInfo));
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    /**
+     * @since 1.2.4
+     */
+    @Override
+    public List<E> lookupAsList() throws ServiceException {
+        try {
+            return dao.lookup();
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    /**
+     * @since 1.2.4
+     */
+    @Override
+    public List<E> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
+        try {
+            return dao.lookup(pagingInfo);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
         }

@@ -36,7 +36,8 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
             @NonNull ListCache<E> cache,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel,
-            long cacheTimeout) {
+            long cacheTimeout
+    ) {
         this.dao = dao;
         this.cache = cache;
         this.sem = sem;
@@ -67,6 +68,40 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
             List<E> lookup = dao.lookup();
             cache.set(lookup, cacheTimeout);
             return PagingUtil.pagedData(pagingInfo, cache.size(), cache.get(pagingInfo));
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    /**
+     * @since 1.2.4
+     */
+    @Override
+    public List<E> lookupAsList() throws ServiceException {
+        try {
+            if (cache.exists()) {
+                return cache.get();
+            }
+            List<E> lookup = dao.lookup();
+            cache.set(lookup, cacheTimeout);
+            return lookup;
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
+    /**
+     * @since 1.2.4
+     */
+    @Override
+    public List<E> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
+        try {
+            if (cache.exists()) {
+                return cache.get(pagingInfo);
+            }
+            List<E> lookup = dao.lookup();
+            cache.set(lookup, cacheTimeout);
+            return cache.get(pagingInfo);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
         }

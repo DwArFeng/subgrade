@@ -10,6 +10,12 @@
 
 - 升级部分依赖的版本。
 
+- 添加查询服务的方法，优化了在部分场景下的查询速度。
+  - `EntireLookupService#lookupAsList()`。
+  - `EntireLookupService#lookupAsList(PagingInfo)`。
+  - `PresetLookupService#lookupAsList(java.lang.String, java.lang.Object[])`。
+  - `PresetLookupService#lookupAsList(java.lang.String, java.lang.Object[], PagingInfo)`。
+
 #### Bug修复
 
 - (无)
