@@ -24,10 +24,9 @@
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.13.1</junit.version>
         <spring.version>5.3.19</spring.version>
-        <spring-kafka.version>2.2.11.RELEASE</spring-kafka.version>
-        <mysql.version>8.0.16</mysql.version>
-        <fastJson.version>1.2.47</fastJson.version>
-        <druid.version>1.0.9</druid.version>
+        <spring-kafka.version>2.3.6.RELEASE</spring-kafka.version>
+        <fastjson.version>1.2.83</fastjson.version>
+        <druid.version>1.1.20</druid.version>
         <servlet-api.version>2.5</servlet-api.version>
         <joda-time.version>2.5</joda-time.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
@@ -40,7 +39,7 @@
         <jedis.version>2.9.0</jedis.version>
         <solrj.version>4.10.3</solrj.version>
         <dubbo.version>2.7.15</dubbo.version>
-        <netty.version>4.1.43.Final</netty.version>
+        <netty.version>4.1.77.Final</netty.version>
         <curator.version>4.2.0</curator.version>
         <zkclient.version>0.11</zkclient.version>
         <httpcomponents.version>4.5.13</httpcomponents.version>
@@ -109,7 +108,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>${fastJson.version}</version>
+                <version>${fastjson.version}</version>
             </dependency>
             <!-- Dubbo分布式包 -->
             <dependency>
@@ -160,12 +159,6 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
-            </dependency>
-            <!-- MySql连接器 -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
             </dependency>
             <!-- Druid连接池 -->
             <dependency>
