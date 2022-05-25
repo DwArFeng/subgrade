@@ -26,7 +26,7 @@ public interface PresetLookupService<E extends Entity<?>> extends Service {
     PagedData<E> lookup(String preset, Object[] objs) throws ServiceException;
 
     /**
-     * 查询数据访问层中满足指定预设的所有对象，，并以列表的形式返回。。
+     * 查询数据访问层中满足指定预设的所有对象，并以列表的形式返回。
      *
      * <p>
      * 在该接口的大量实践中发现，当数据量过大时，使用 {@link #lookup(String, Object[])}
@@ -57,7 +57,7 @@ public interface PresetLookupService<E extends Entity<?>> extends Service {
     PagedData<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException;
 
     /**
-     * 查询数据访问层中满足指定预设的所有对象，，并以列表的形式返回。。
+     * 查询数据访问层中满足指定预设的所有对象，并以列表的形式返回。
      *
      * <p>
      * 在该接口的大量实践中发现，当数据量过大时，使用 {@link #lookup(String, Object[], PagingInfo)}
