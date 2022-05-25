@@ -23,10 +23,11 @@
         <!-- 进行版本声明 -->
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.13.1</junit.version>
-        <spring.version>5.3.19</spring.version>
-        <spring-kafka.version>2.3.6.RELEASE</spring-kafka.version>
+        <spring.version>5.3.20</spring.version>
+        <spring-kafka.version>2.2.11.RELEASE</spring-kafka.version>
+        <mysql.version>8.0.16</mysql.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <druid.version>1.1.20</druid.version>
+        <druid.version>1.0.9</druid.version>
         <servlet-api.version>2.5</servlet-api.version>
         <joda-time.version>2.5</joda-time.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
