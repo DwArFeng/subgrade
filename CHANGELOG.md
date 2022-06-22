@@ -12,7 +12,17 @@
 
 #### 功能移除
 
-- (无)
+- 删除不需要的依赖。
+  - 删除 `joda-time` 依赖。
+  - 删除 `commons-lang3` 依赖。
+  - 删除 `commons-io` 依赖。
+  - 删除 `commons-net` 依赖。
+  - 删除 `pagehelper` 依赖。
+  - 删除 `jsqlparser` 依赖。
+  - 删除 `commons-fileupload` 依赖。
+  - 删除 `http-components` 依赖。
+  - 删除 `noggit` 依赖。
+  - 删除 `jboss-logging` 依赖。
 
 ---
 

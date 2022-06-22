@@ -28,6 +28,11 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
         </dependency>
+        <!-- Apache工具组件 -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
         <!-- Spring框架 -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -77,11 +82,6 @@
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.el</artifactId>
-        </dependency>
-        <!-- jboss组件 -->
-        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
         </dependency>
         <!-- hibernate组件 -->
         <dependency>
