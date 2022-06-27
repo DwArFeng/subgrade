@@ -17,7 +17,9 @@ import java.util.stream.Collectors;
 
 /**
  * 使用 Hibernate 实现的 PresetLookupDao。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
@@ -33,13 +35,15 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
             @NonNull HibernateTemplate template,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
             @NonNull Class<PE> classPE,
-            @NonNull PresetCriteriaMaker presetCriteriaMaker) {
+            @NonNull PresetCriteriaMaker presetCriteriaMaker
+    ) {
         this.template = template;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
         this.presetCriteriaMaker = presetCriteriaMaker;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public List<E> lookup(String preset, Object[] objs) throws DaoException {
         try {
@@ -53,6 +57,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public List<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
         try {

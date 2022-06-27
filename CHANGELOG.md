@@ -7,6 +7,12 @@
 - 依赖升级。
   - 升级 `dutil` 依赖版本为 `beta-0.3.0`。
 
+- 新增 `Hibernate` 基于本地 SQL 查询加速的 `PresetLookupDao` 的实现。
+  - com.dwarfeng.subgrade.impl.dao.HibernateAcceleratePresetLookupDao。
+
+- 新增基于 `Hibernate` 实现的 `PresetLookupDao` 的工厂类。
+  - com.dwarfeng.subgrade.impl.dao.HibernateDaoFactory。
+
 #### Bug修复
 
 - (无)
