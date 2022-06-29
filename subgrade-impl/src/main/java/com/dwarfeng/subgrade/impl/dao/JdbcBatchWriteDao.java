@@ -18,7 +18,6 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 1.1.0
  */
-@SuppressWarnings("DuplicatedCode")
 public class JdbcBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> {
 
     private JdbcTemplate template;

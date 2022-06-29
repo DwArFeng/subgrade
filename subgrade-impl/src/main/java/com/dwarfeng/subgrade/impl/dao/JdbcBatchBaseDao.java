@@ -6,6 +6,7 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
+import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.NonNull;
 
@@ -21,7 +22,6 @@ import java.util.stream.Collectors;
  * @author DwArFeng
  * @since 1.1.0
  */
-@SuppressWarnings("DuplicatedCode")
 public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements BatchBaseDao<K, E> {
 
     private JdbcTemplate template;
@@ -90,7 +90,10 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
     private boolean internalExists(K key) {
         SQLAndParameter sqlAndParameter = processor.provideExists(key);
         Boolean flag = template.query(
-                sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveExists);
+                sqlAndParameter.getSql(),
+                new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                processor::resolveExists
+        );
         assert flag != null;
         return flag;
     }
@@ -106,7 +109,11 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
 
     private E internalGet(K key) {
         SQLAndParameter sqlAndParameter = processor.provideGet(key);
-        return template.query(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveGet);
+        return template.query(
+                sqlAndParameter.getSql(),
+                new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                processor::resolveGet
+        );
     }
 
     @Override
@@ -184,7 +191,10 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
             } else {
                 SQLAndParameter sqlAndParameter = processor.provideAllExists(keys);
                 Boolean result = template.query(
-                        sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveAllExists);
+                        sqlAndParameter.getSql(),
+                        new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                        processor::resolveAllExists
+                );
                 assert result != null;
                 return result;
             }
@@ -204,7 +214,10 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
             } else {
                 SQLAndParameter sqlAndParameter = processor.provideNonExists(keys);
                 Boolean result = template.query(
-                        sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveNonExists);
+                        sqlAndParameter.getSql(),
+                        new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                        processor::resolveNonExists
+                );
                 assert result != null;
                 return result;
             }
@@ -225,7 +238,10 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
             } else {
                 SQLAndParameter sqlAndParameter = processor.provideBatchGet(keys);
                 return template.query(
-                        sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveBatchGet);
+                        sqlAndParameter.getSql(),
+                        new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                        processor::resolveBatchGet
+                );
             }
         } catch (Exception e) {
             throw new DaoException(e);

@@ -95,7 +95,7 @@ public class MemoryBatchBaseDao<K extends Key, E extends Entity<K>> implements B
 
     @Override
     public void batchDelete(List<K> keys) {
-        memory.keySet().removeAll(keys);
+        keys.forEach(memory.keySet()::remove);
     }
 
     @Override

@@ -15,7 +15,6 @@ import org.springframework.lang.NonNull;
  * @author DwArFeng
  * @since 1.1.0
  */
-@SuppressWarnings("DuplicatedCode")
 public class JdbcWriteDao<E extends Entity<?>> implements WriteDao<E> {
 
     private JdbcTemplate template;

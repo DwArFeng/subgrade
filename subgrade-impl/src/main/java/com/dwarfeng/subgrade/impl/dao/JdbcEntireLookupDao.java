@@ -6,6 +6,7 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
+import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.NonNull;
 
@@ -33,7 +34,10 @@ public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.provideEntireLookup();
             return template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveEntireLookup);
+                    sqlAndParameter.getSql(),
+                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                    processor::resolveEntireLookup
+            );
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -44,7 +48,10 @@ public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.provideEntirePaging(pagingInfo);
             return template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveEntirePaging);
+                    sqlAndParameter.getSql(),
+                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                    processor::resolveEntirePaging
+            );
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -55,7 +62,10 @@ public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.provideEntireCount();
             Integer result = template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveEntireCount);
+                    sqlAndParameter.getSql(),
+                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                    processor::resolveEntireCount
+            );
             assert result != null;
             return result;
         } catch (Exception e) {

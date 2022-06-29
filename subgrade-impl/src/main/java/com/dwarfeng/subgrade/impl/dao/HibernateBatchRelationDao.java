@@ -11,6 +11,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -78,6 +79,7 @@ public class HibernateBatchRelationDao<
         this.joinType = joinType;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public boolean existsRelation(PK pk, CK ck) throws DaoException {
         try {
@@ -98,6 +100,7 @@ public class HibernateBatchRelationDao<
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void addRelation(PK pk, CK ck) throws DaoException {
         try {
@@ -128,6 +131,7 @@ public class HibernateBatchRelationDao<
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void deleteRelation(PK pk, CK ck) throws DaoException {
         try {
@@ -158,6 +162,7 @@ public class HibernateBatchRelationDao<
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public boolean existsAllRelations(PK pk, List<CK> cks) throws DaoException {
         try {
@@ -167,12 +172,13 @@ public class HibernateBatchRelationDao<
             @SuppressWarnings("unchecked")
             Collection<PCE> pces = (Collection<PCE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(ppe, parentProperty);
             List<CK> collect = pces.stream().map(ceTransformer::reverseTransform).map(CE::getKey).collect(Collectors.toList());
-            return collect.containsAll(cks);
+            return new HashSet<>(collect).containsAll(cks);
         } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public boolean existsNonRelations(PK pk, List<CK> cks) throws DaoException {
         try {
@@ -193,6 +199,7 @@ public class HibernateBatchRelationDao<
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void batchAddRelations(PK pk, List<CK> cks) throws DaoException {
         try {
@@ -224,6 +231,7 @@ public class HibernateBatchRelationDao<
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void batchDeleteRelations(PK pk, List<CK> cks) throws DaoException {
         try {

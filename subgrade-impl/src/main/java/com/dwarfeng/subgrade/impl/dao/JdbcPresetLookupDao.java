@@ -6,6 +6,7 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
+import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.NonNull;
 
@@ -33,7 +34,10 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.providePresetLookup(preset, objs);
             return template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolvePresetLookup);
+                    sqlAndParameter.getSql(),
+                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                    processor::resolvePresetLookup
+            );
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -44,7 +48,10 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.providePresetPaging(preset, objs, pagingInfo);
             return template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolvePresetPaging);
+                    sqlAndParameter.getSql(),
+                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                    processor::resolvePresetPaging
+            );
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -55,7 +62,10 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         try {
             SQLAndParameter sqlAndParameter = processor.providePresetCount(preset, objs);
             Integer result = template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolvePresetCount);
+                    sqlAndParameter.getSql(),
+                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                    processor::resolvePresetCount
+            );
             assert result != null;
             return result;
         } catch (Exception e) {

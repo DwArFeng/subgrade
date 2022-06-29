@@ -100,14 +100,6 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
         return keyBeanTransformer.transform(k);
     }
 
-    private K reverseTransformKey(PK pk) {
-        return keyBeanTransformer.reverseTransform(pk);
-    }
-
-    private PE transformEntity(E entity) {
-        return entityBeanTransformer.transform(entity);
-    }
-
     private E reverseTransformEntity(PE persistenceEntity) {
         return entityBeanTransformer.reverseTransform(persistenceEntity);
     }

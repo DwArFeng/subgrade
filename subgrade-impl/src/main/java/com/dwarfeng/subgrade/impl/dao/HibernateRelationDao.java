@@ -76,6 +76,7 @@ public class HibernateRelationDao<
         this.joinType = joinType;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public boolean existsRelation(PK pk, CK ck) throws DaoException {
         try {
@@ -96,6 +97,7 @@ public class HibernateRelationDao<
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void addRelation(PK pk, CK ck) throws DaoException {
         try {
@@ -126,6 +128,7 @@ public class HibernateRelationDao<
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void deleteRelation(PK pk, CK ck) throws DaoException {
         try {

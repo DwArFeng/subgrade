@@ -6,6 +6,7 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
+import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.NonNull;
 
@@ -18,7 +19,6 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 1.1.0
  */
-@SuppressWarnings("DuplicatedCode")
 public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<K, E> {
 
     private JdbcTemplate template;
@@ -68,7 +68,10 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         try {
             SQLAndParameter sqlAndParameter = processor.provideExists(key);
             Boolean flag = template.query(
-                    sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveExists);
+                    sqlAndParameter.getSql(),
+                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                    processor::resolveExists
+            );
             assert flag != null;
             return flag;
         } catch (Exception e) {
@@ -80,7 +83,11 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     public E get(K key) throws DaoException {
         try {
             SQLAndParameter sqlAndParameter = processor.provideGet(key);
-            return template.query(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters(), processor::resolveGet);
+            return template.query(
+                    sqlAndParameter.getSql(),
+                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                    processor::resolveGet
+            );
         } catch (Exception e) {
             throw new DaoException(e);
         }

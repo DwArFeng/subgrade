@@ -55,6 +55,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public List<E> get() throws CacheException {
         try {
@@ -80,11 +81,12 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public List<E> get(PagingInfo pagingInfo) throws CacheException {
         try {
             Long totalSize = template.opsForList().size(key);
-            long beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
+            long beginIndex = (long) pagingInfo.getRows() * pagingInfo.getPage();
             long endIndex = Math.min(totalSize, beginIndex + pagingInfo.getRows()) - 1;
             List<JE> range = template.opsForList().range(key, beginIndex, endIndex);
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
