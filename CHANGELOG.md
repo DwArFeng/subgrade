@@ -13,6 +13,10 @@
 - 新增基于 `Hibernate` 实现的 `PresetLookupDao` 的工厂类。
   - com.dwarfeng.subgrade.impl.dao.HibernateDaoFactory。
 
+- 改进 `ResponseDataUtil` 中的方法。
+  - 过时调一些有不必要参数的方法。
+  - 新增入口参数简化的方法。
+
 #### Bug修复
 
 - 解决部分代码调用过时的 API 的问题。

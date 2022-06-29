@@ -20,6 +20,6 @@ public class DefaultBindingCheckAopManager implements BindingCheckAopManager {
     @Override
     public Object onHasError(ProceedingJoinPoint pjp, BindingResult bindingResult) {
         return FastJsonResponseData.of(
-                ResponseDataUtil.bad(Object.class, new ServiceException(ServiceExceptionCodes.PARAM_VALIDATION_FAILED)));
+                ResponseDataUtil.bad(new ServiceException(ServiceExceptionCodes.PARAM_VALIDATION_FAILED)));
     }
 }

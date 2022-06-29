@@ -35,9 +35,13 @@ public final class ResponseDataUtil {
      * @param e     元数据对应的服务异常。
      * @param <T>   泛型的类。
      * @return 指定数据类型且元数据对应服务异常的响应数据。
+     * @see #bad(ServiceException)
+     * @deprecated 有多余的入口参数，已被 {@link #bad(ServiceException)} 代替。
      */
-    public static <T> ResponseData<T> bad(Class<? super T> clazz, ServiceException e) {
-        return new ResponseData<>(null, new Meta(e.getCode().getCode(), e.getCode().getTip()));
+    public static <T> ResponseData<T> bad(
+            @SuppressWarnings("unused") Class<? super T> clazz, ServiceException e
+    ) {
+        return bad(e);
     }
 
     /**
@@ -48,8 +52,37 @@ public final class ResponseDataUtil {
      * @param sem   服务异常映射器。
      * @param <T>   泛型的类。
      * @return 指定数据类型且元数据对应服务异常的响应数据。
+     * @see #bad(Exception, ServiceExceptionMapper)
+     * @deprecated 有多余的入口参数，已被 {@link #bad(Exception, ServiceExceptionMapper)} 代替。
      */
-    public static <T> ResponseData<T> bad(Class<? super T> clazz, Exception e, ServiceExceptionMapper sem) {
-        return bad(clazz, sem.map(e));
+    public static <T> ResponseData<T> bad(
+            @SuppressWarnings("unused") Class<? super T> clazz, Exception e, ServiceExceptionMapper sem
+    ) {
+        return bad(sem.map(e));
+    }
+
+    /**
+     * 生成一个指定数据类型且元数据对应服务异常的响应数据。
+     *
+     * @param e   元数据对应的服务异常。
+     * @param <T> 泛型的类。
+     * @return 指定数据类型且元数据对应服务异常的响应数据。
+     * @since 1.2.8
+     */
+    public static <T> ResponseData<T> bad(ServiceException e) {
+        return new ResponseData<>(null, new Meta(e.getCode().getCode(), e.getCode().getTip()));
+    }
+
+    /**
+     * 生成一个指定数据类型且元数据对应任何异常的响应数据。
+     *
+     * @param e   元数据对应的任何异常。
+     * @param sem 服务异常映射器。
+     * @param <T> 泛型的类。
+     * @return 指定数据类型且元数据对应服务异常的响应数据。
+     * @since 1.2.8
+     */
+    public static <T> ResponseData<T> bad(Exception e, ServiceExceptionMapper sem) {
+        return bad(sem.map(e));
     }
 }
