@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.hibernate.nativesql;
+package com.dwarfeng.subgrade.sdk.hibernate.nativelookup;
 
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import org.hibernate.dialect.Dialect;
@@ -9,7 +9,7 @@ import org.hibernate.dialect.Dialect;
  * @author DwArFeng
  * @since 1.2.8
  */
-public interface DialectNativeSqlLookup<PE extends Bean> extends NativeSqlLookup<PE> {
+public interface DialectNativeLookup<PE extends Bean> extends NativeLookup<PE> {
 
     /**
      * 返回此本地查询是否支持某个方言。

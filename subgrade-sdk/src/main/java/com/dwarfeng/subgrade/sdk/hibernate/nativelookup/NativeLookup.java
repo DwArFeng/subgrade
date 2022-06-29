@@ -1,18 +1,19 @@
-package com.dwarfeng.subgrade.sdk.hibernate.nativesql;
+package com.dwarfeng.subgrade.sdk.hibernate.nativelookup;
 
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
- * 本地 SQL 查询。
+ * 本地查询。
  *
  * @author DwArFeng
  * @since 1.2.8
  */
-public interface NativeSqlLookup<PE extends Bean> {
+public interface NativeLookup<PE extends Bean> {
 
     /**
      * 初始化本地 SQL 查询。
@@ -24,9 +25,10 @@ public interface NativeSqlLookup<PE extends Bean> {
      * 如果方法在执行过程中发生了任何自定义的异常（如参数错误等），请抛出 {@link RuntimeException}。
      *
      * @param connection JDBC连接。
+     * @throws SQLException     SQL语句异常。
      * @throws RuntimeException 方法执行过程中发生的任何自定义异常。
      */
-    void init(Connection connection) throws RuntimeException;
+    void init(Connection connection) throws SQLException;
 
     /**
      * 查询实体。
@@ -41,9 +43,10 @@ public interface NativeSqlLookup<PE extends Bean> {
      * @param preset     预设名称。
      * @param args       参数。
      * @return 实体组成的列表，或者是 null。
+     * @throws SQLException     SQL语句异常。
      * @throws RuntimeException 方法执行过程中发生的任何自定义异常。
      */
-    List<PE> lookupEntity(Connection connection, String preset, Object[] args) throws RuntimeException;
+    List<PE> lookupEntity(Connection connection, String preset, Object[] args) throws SQLException;
 
     /**
      * 查询实体。
@@ -59,10 +62,11 @@ public interface NativeSqlLookup<PE extends Bean> {
      * @param args       参数。
      * @param pagingInfo 分页信息。
      * @return 实体组成的列表，或者是 null。
+     * @throws SQLException     SQL语句异常。
      * @throws RuntimeException 方法执行过程中发生的任何自定义异常。
      */
     List<PE> lookupEntity(Connection connection, String preset, Object[] args, PagingInfo pagingInfo)
-            throws RuntimeException;
+            throws SQLException;
 
     /**
      * 查询实体数量。
@@ -77,7 +81,8 @@ public interface NativeSqlLookup<PE extends Bean> {
      * @param preset     预设名称。
      * @param args       参数。
      * @return 实体的数量值，或者是 null。
+     * @throws SQLException     SQL语句异常。
      * @throws RuntimeException 方法执行过程中发生的任何自定义异常。
      */
-    int lookupCount(Connection connection, String preset, Object[] args) throws RuntimeException;
+    int lookupCount(Connection connection, String preset, Object[] args) throws SQLException;
 }

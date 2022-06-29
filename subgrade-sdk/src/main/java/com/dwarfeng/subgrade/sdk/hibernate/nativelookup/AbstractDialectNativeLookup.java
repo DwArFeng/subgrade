@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.sdk.hibernate.nativesql;
+package com.dwarfeng.subgrade.sdk.hibernate.nativelookup;
 
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
@@ -6,16 +6,16 @@ import java.sql.Connection;
 import java.util.Objects;
 
 /**
- * DialectNativeSqlLookup 的抽象实现。
+ * DialectNativeLookup 的抽象实现。
  *
  * @author DwArFeng
  * @since 1.2.8
  */
-public abstract class AbstractDialectNativeSqlLookup<PE extends Bean> implements DialectNativeSqlLookup<PE> {
+public abstract class AbstractDialectNativeLookup<PE extends Bean> implements DialectNativeLookup<PE> {
 
     protected final String supportDialect;
 
-    public AbstractDialectNativeSqlLookup(String supportDialect) {
+    public AbstractDialectNativeLookup(String supportDialect) {
         this.supportDialect = supportDialect;
     }
 
