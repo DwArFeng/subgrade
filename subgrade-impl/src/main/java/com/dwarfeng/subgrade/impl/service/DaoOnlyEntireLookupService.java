@@ -80,6 +80,18 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
         }
     }
 
+    /**
+     * @since 1.2.8
+     */
+    @Override
+    public E lookupFirst() throws ServiceException {
+        try {
+            return dao.lookupFirst();
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
     public EntireLookupDao<E> getDao() {
         return dao;
     }

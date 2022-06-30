@@ -8,6 +8,8 @@ package com.dwarfeng.subgrade.stack.bean.dto;
  */
 public class PagingInfo implements Dto {
 
+    public static final PagingInfo FIRST_ONE = new PagingInfo(0, 1);
+
     private static final long serialVersionUID = -5393564201402936618L;
 
     /**

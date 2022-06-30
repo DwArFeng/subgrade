@@ -73,6 +73,21 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
         }
     }
 
+    /**
+     * @since 1.2.8
+     */
+    @Override
+    public E lookupFirst() throws DaoException {
+        try {
+            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
+            @SuppressWarnings("unchecked")
+            List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria, 0, 1);
+            return byCriteria.stream().findFirst().map(entityBeanTransformer::reverseTransform).orElse(null);
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
     public HibernateTemplate getTemplate() {
         return template;
     }

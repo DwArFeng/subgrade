@@ -77,4 +77,20 @@ public interface PresetLookupService<E extends Entity<?>> extends Service {
     default List<E> lookupAsList(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         return lookup(preset, objs, pagingInfo).getData();
     }
+
+    /**
+     * 查询某个预设的第一个元素。
+     *
+     * <p>
+     * 当预设中存在数据时，返回第一个数据；当预设中不存在数据时，返回 null。
+     *
+     * @param preset 指定的预设名称。
+     * @param objs   预设对应的对象数组。
+     * @return 数据访问层中满足预设的第一个对象，或者是 null。
+     * @throws ServiceException 服务异常。
+     * @since 1.2.8
+     */
+    default E lookupFirst(String preset, Object[] objs) throws ServiceException {
+        return lookup(preset, objs, PagingInfo.FIRST_ONE).getData().stream().findFirst().orElse(null);
+    }
 }

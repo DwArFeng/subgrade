@@ -124,8 +124,9 @@ public class HibernateAcceleratePresetLookupDao<E extends Entity<?>, PE extends 
             DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
             presetCriteriaMaker.makeCriteria(criteria, preset, objs);
             @SuppressWarnings("unchecked")
-            List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria,
-                    pagingInfo.getPage() * pagingInfo.getRows(), pagingInfo.getRows());
+            List<PE> byCriteria = (List<PE>) template.findByCriteria(
+                    criteria, pagingInfo.getPage() * pagingInfo.getRows(), pagingInfo.getRows()
+            );
             return byCriteria.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
             throw new DaoException(e);
@@ -152,6 +153,32 @@ public class HibernateAcceleratePresetLookupDao<E extends Entity<?>, PE extends 
             criteria.setProjection(Projections.rowCount());
             return template.findByCriteria(criteria).stream().findFirst().map(Long.class::cast)
                     .map(Long::intValue).orElse(0);
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @Override
+    public E lookupFirst(String preset, Object[] objs) throws DaoException {
+        try {
+            try {
+                List<E> result = template.executeWithNativeSession(session -> session.doReturningWork(
+                        connection -> this.nativeLookup.lookupEntity(connection, preset, objs, PagingInfo.FIRST_ONE)
+                ));
+                assert result != null;
+                return result.stream().findFirst().orElse(null);
+            } catch (Exception e) {
+                LOGGER.warn(
+                        "使用本地查询时发生异常，本次将使用 Criteria 进行查询。预设: " + preset +
+                                ", 参数: " + Arrays.toString(objs) + ", 异常信息如下:", e
+                );
+            }
+            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
+            presetCriteriaMaker.makeCriteria(criteria, preset, objs);
+            @SuppressWarnings("unchecked")
+            List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria, 0, 1);
+            return byCriteria.stream().findFirst().map(entityBeanTransformer::reverseTransform).orElse(null);
         } catch (Exception e) {
             throw new DaoException(e);
         }

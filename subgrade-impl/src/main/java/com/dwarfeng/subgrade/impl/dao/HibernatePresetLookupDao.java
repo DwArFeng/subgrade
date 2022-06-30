@@ -64,8 +64,9 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
             DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
             presetCriteriaMaker.makeCriteria(criteria, preset, objs);
             @SuppressWarnings("unchecked")
-            List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria,
-                    pagingInfo.getPage() * pagingInfo.getRows(), pagingInfo.getRows());
+            List<PE> byCriteria = (List<PE>) template.findByCriteria(
+                    criteria, pagingInfo.getPage() * pagingInfo.getRows(), pagingInfo.getRows()
+            );
             return byCriteria.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
             throw new DaoException(e);
@@ -80,6 +81,23 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
             criteria.setProjection(Projections.rowCount());
             return template.findByCriteria(criteria).stream().findFirst().map(Long.class::cast)
                     .map(Long::intValue).orElse(0);
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    /**
+     * @since 1.2.8
+     */
+    @SuppressWarnings("DuplicatedCode")
+    @Override
+    public E lookupFirst(String preset, Object[] objs) throws DaoException {
+        try {
+            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
+            presetCriteriaMaker.makeCriteria(criteria, preset, objs);
+            @SuppressWarnings("unchecked")
+            List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria, 0, 1);
+            return byCriteria.stream().findFirst().map(entityBeanTransformer::reverseTransform).orElse(null);
         } catch (Exception e) {
             throw new DaoException(e);
         }

@@ -33,7 +33,8 @@ public class RedisEntireLookupDao<K extends Key, E extends Entity<K>, JE extends
             @NonNull RedisTemplate<String, JE> template,
             @NonNull StringKeyFormatter<K> formatter,
             @NonNull BeanTransformer<E, JE> transformer,
-            @NonNull String dbKey) {
+            @NonNull String dbKey
+    ) {
         this.template = template;
         this.formatter = formatter;
         this.transformer = transformer;
@@ -71,6 +72,20 @@ public class RedisEntireLookupDao<K extends Key, E extends Entity<K>, JE extends
     public int lookupCount() throws DaoException {
         try {
             return template.opsForHash().size(dbKey).intValue();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    /**
+     * @since 1.2.8
+     */
+    @Override
+    public E lookupFirst() throws DaoException {
+        try {
+            @SuppressWarnings("unchecked") E result = template.opsForHash().values(dbKey).stream().findFirst()
+                    .map(o -> transformer.reverseTransform((JE) o)).orElse(null);
+            return result;
         } catch (Exception e) {
             throw new DaoException(e);
         }

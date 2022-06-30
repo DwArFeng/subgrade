@@ -38,4 +38,18 @@ public interface EntireLookupDao<E extends Entity<?>> extends Dao {
      * @throws DaoException 数据访问异常。
      */
     int lookupCount() throws DaoException;
+
+    /**
+     * 查询数据访问层中的第一个元素。
+     *
+     * <p>
+     * 当数据访问层中存在数据时，返回第一个数据；当数据访问层中不存在数据时，返回 null。
+     *
+     * @return 数据访问层中的第一个对象，或者是 null。
+     * @throws DaoException 数据访问异常。
+     * @since 1.2.8
+     */
+    default E lookupFirst() throws DaoException {
+        return lookup(PagingInfo.FIRST_ONE).stream().findFirst().orElse(null);
+    }
 }

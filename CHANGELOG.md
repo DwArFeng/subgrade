@@ -17,6 +17,12 @@
   - 过时调一些有不必要参数的方法。
   - 新增入口参数简化的方法。
 
+- 在实体的查询数据访问层、查询服务借口添加默认方法，并在一些实现中提供优化的实现。
+  - com.dwarfeng.subgrade.stack.dao.EntireLookupDao.lookupFirst。
+  - com.dwarfeng.subgrade.stack.dao.PresetLookupDao.lookupFirst。
+  - com.dwarfeng.subgrade.stack.service.EntireLookupService.lookupFirst。
+  - com.dwarfeng.subgrade.stack.service.PresetLookupService.lookupFirst。
+
 #### Bug修复
 
 - 解决部分代码调用过时的 API 的问题。

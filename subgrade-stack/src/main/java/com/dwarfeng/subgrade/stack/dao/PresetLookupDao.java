@@ -45,4 +45,20 @@ public interface PresetLookupDao<E extends Entity<?>> extends Dao {
      * @throws DaoException 数据访问异常。
      */
     int lookupCount(String preset, Object[] objs) throws DaoException;
+
+    /**
+     * 查询某个预设的第一个元素。
+     *
+     * <p>
+     * 当预设中存在数据时，返回第一个数据；当预设中不存在数据时，返回 null。
+     *
+     * @param preset 指定的预设名称。
+     * @param objs   预设对应的对象数组。
+     * @return 数据访问层中满足预设的第一个对象，或者是 null。
+     * @throws DaoException 数据访问异常。
+     * @since 1.2.8
+     */
+    default E lookupFirst(String preset, Object[] objs) throws DaoException {
+        return lookup(preset, objs, PagingInfo.FIRST_ONE).stream().findFirst().orElse(null);
+    }
 }

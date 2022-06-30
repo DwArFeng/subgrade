@@ -67,4 +67,18 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
     default List<E> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
         return lookup(pagingInfo).getData();
     }
+
+    /**
+     * 查询数据访问层中的第一个元素。
+     *
+     * <p>
+     * 当数据访问层中存在数据时，返回第一个数据；当数据访问层中不存在数据时，返回 null。
+     *
+     * @return 数据访问层中的第一个对象，或者是 null。
+     * @throws ServiceException 服务异常。
+     * @since 1.2.8
+     */
+    default E lookupFirst() throws ServiceException {
+        return lookup(PagingInfo.FIRST_ONE).getData().stream().findFirst().orElse(null);
+    }
 }

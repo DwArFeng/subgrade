@@ -81,6 +81,26 @@ public class RedisPresetLookupDao<K extends Key, E extends Entity<K>, JE extends
         return es.stream().filter(e -> filter.accept(e, preset, objs)).collect(Collectors.toList());
     }
 
+    /**
+     * @since 1.2.8
+     */
+    @Override
+    public E lookupFirst(String preset, Object[] objs) throws DaoException {
+        try {
+            @SuppressWarnings("unchecked")
+            List<JE> jes = template.opsForHash().values(dbKey).stream().map(o -> (JE) o).collect(Collectors.toList());
+            List<E> es = jes.stream().map(transformer::reverseTransform).collect(Collectors.toList());
+            for (E e : es) {
+                if (filter.accept(e, preset, objs)) {
+                    return e;
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
     public RedisTemplate<String, JE> getTemplate() {
         return template;
     }
