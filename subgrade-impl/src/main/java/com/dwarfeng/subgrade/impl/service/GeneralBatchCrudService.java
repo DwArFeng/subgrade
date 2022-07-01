@@ -43,7 +43,8 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             @NonNull KeyFetcher<K> keyFetcher,
             @NonNull ServiceExceptionMapper sem,
             @NonNull LogLevel exceptionLogLevel,
-            long cacheTimeout) {
+            long cacheTimeout
+    ) {
         this.dao = dao;
         this.cache = cache;
         this.keyFetcher = keyFetcher;
@@ -263,15 +264,17 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private List<K> internalBatchInsert(List<E> elements) throws Exception {
-        List<K> collect = elements.stream().filter(e -> Objects.nonNull(e.getKey())).map(E::getKey).collect(Collectors.toList());
+        List<K> collect = elements.stream().filter(
+                e -> Objects.nonNull(e.getKey())).map(E::getKey).collect(Collectors.toList()
+        );
         if (!internalNonExists(collect)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }
 
-        for (E element : elements) {
-            if (Objects.isNull(element.getKey())) {
-                element.setKey(keyFetcher.fetchKey());
-            }
+        List<E> nonKeyElements = elements.stream().filter(e -> Objects.isNull(e.getKey())).collect(Collectors.toList());
+        List<K> generatedKeys = keyFetcher.batchFetchKey(nonKeyElements.size());
+        for (int i = 0; i < nonKeyElements.size(); i++) {
+            nonKeyElements.get(i).setKey(generatedKeys.get(i));
         }
 
         List<K> ks = dao.batchInsert(elements);

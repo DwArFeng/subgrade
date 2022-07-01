@@ -2,6 +2,9 @@ package com.dwarfeng.subgrade.stack.bean.key;
 
 import com.dwarfeng.subgrade.stack.exception.KeyFetchException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 主键抓取器。
  *
@@ -22,4 +25,20 @@ public interface KeyFetcher<K extends Key> {
      * @throws KeyFetchException 主键抓取失败异常。
      */
     K fetchKey() throws KeyFetchException;
+
+    /**
+     * 抓取多个新的主键。
+     *
+     * @param size 抓取的主键的数量。
+     * @return 新的主键组成的列表。
+     * @throws KeyFetchException 主键抓取失败异常。
+     * @since 1.2.8
+     */
+    default List<K> batchFetchKey(int size) throws KeyFetchException {
+        List<K> result = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            result.add(fetchKey());
+        }
+        return result;
+    }
 }

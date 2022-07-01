@@ -36,7 +36,8 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
             @NonNull BatchCrudOperation<K, E> operation,
             @NonNull KeyFetcher<K> keyFetcher,
             @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel) {
+            @NonNull LogLevel exceptionLogLevel
+    ) {
         this.operation = operation;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
@@ -237,10 +238,10 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
             throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }
 
-        for (E element : elements) {
-            if (Objects.isNull(element.getKey())) {
-                element.setKey(keyFetcher.fetchKey());
-            }
+        List<E> nonKeyElements = elements.stream().filter(e -> Objects.isNull(e.getKey())).collect(Collectors.toList());
+        List<K> generatedKeys = keyFetcher.batchFetchKey(nonKeyElements.size());
+        for (int i = 0; i < nonKeyElements.size(); i++) {
+            nonKeyElements.get(i).setKey(generatedKeys.get(i));
         }
 
         return operation.batchInsert(elements);

@@ -23,6 +23,9 @@
   - com.dwarfeng.subgrade.stack.service.EntireLookupService.lookupFirst。
   - com.dwarfeng.subgrade.stack.service.PresetLookupService.lookupFirst。
 
+- 主键抓取器新增批量抓取功能。
+  - com.dwarfeng.subgrade.stack.bean.key.KeyFetcher.batchFetchKey。
+
 #### Bug修复
 
 - 解决部分代码调用过时的 API 的问题。
