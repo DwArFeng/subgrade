@@ -44,6 +44,7 @@
 
 - 轻松的完成实体的维护接口。
 - 性能分析注解对程序调试、调优的极为便利的支持。
+- 主流的设计有实际项目支持，每一个 API 都是经过实战检验的。
 
 ---
 
@@ -128,8 +129,8 @@
   - 没有任何问题的框架。
     - com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyseAdvisor
     - com.dwarfeng.subgrade.sdk.interceptor.http.BindingCheckAdvisor
-  - `com.dwarfeng.subgrade.sdk.interceptor.login.LoginRequiredAdvisor` 在web后端被偶尔使用， 暂时没有发现问题，不过随着使用频率的升高，我也许会考虑此框架的表现。
-  - `com.dwarfeng.subgrade.sdk.interceptor.permission.PermissionRequiredAdvisor` 未被使用过， 其成熟度未知。
+  - com.dwarfeng.subgrade.sdk.interceptor.login.LoginRequiredAdvisor 在web后端被偶尔使用， 暂时没有发现问题，不过随着使用频率的升高，我也许会考虑此框架的表现。
+  - com.dwarfeng.subgrade.sdk.interceptor.permission.PermissionRequiredAdvisor 未被使用过， 其成熟度未知。
   - 刚刚开发的框架，在至少一个项目中使用
     - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyAdvisor
 
@@ -170,7 +171,8 @@
 
 ## 推荐使用版本
 
-- 对于任何的新项目，使用不低于 `1.2.3.b` 的版本，推荐使用 `1.2.4.a`。
+- 对于任何的新项目，使用不低于 `1.2.7.a` 的版本，推荐使用 `1.2.8.a`。
+- 低于 `1.2.7.a` 的版本，部分关键依赖有严重等级的 bug，使用可能会造成安全问题。
 - 低于 `1.2.3.b` 的版本包含以下已经发现的 bug，如果项目使用到了下述模块，则需要将 subgrade 版本升级至 `1.2.3.b`。
   - `RedisBatchBaseDao` 执行 `batchDelete` 存在执行不成功或行为异常的 bug。
 - 低于 `1.1.8.a` 的版本包含以下已经发现的 bug，如果项目使用到了下述模块，则需要将 subgrade 版本升级至 `1.1.8.a`。
