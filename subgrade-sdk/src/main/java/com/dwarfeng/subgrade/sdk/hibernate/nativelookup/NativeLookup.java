@@ -16,6 +16,14 @@ import java.util.List;
 public interface NativeLookup<PE extends Bean> {
 
     /**
+     * 返回此本地查询是否支持某个预设。
+     *
+     * @param preset 指定的预设。
+     * @return 是否支持此预设。
+     */
+    boolean supportPreset(String preset);
+
+    /**
      * 初始化本地 SQL 查询。
      *
      * <p>
