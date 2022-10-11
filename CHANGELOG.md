@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- 改进数据访问层。
+  - com.dwarfeng.subgrade.impl.dao.MemoryBatchBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.MemoryBaseDao。
 
 #### Bug修复
 
