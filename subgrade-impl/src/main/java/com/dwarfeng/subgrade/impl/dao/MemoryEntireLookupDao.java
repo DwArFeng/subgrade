@@ -47,11 +47,21 @@ public class MemoryEntireLookupDao<K extends Key, E extends Entity<K>> implement
         return new ArrayList<>(memory.values());
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public List<E> lookup(PagingInfo pagingInfo) {
         int beginIndex = pagingInfo.getPage() * pagingInfo.getRows();
         int endIndex = beginIndex + pagingInfo.getRows();
-        return new ArrayList<>(memory.values()).subList(beginIndex, endIndex);
+        List<E> list = new ArrayList<>(memory.values());
+
+        // 修正 beginIndex 和 endIndex，使得 list.subList 方法不抛出 IndexOutOfBoundsException 异常。
+        int size = list.size();
+        beginIndex = Math.max(beginIndex, 0);
+        beginIndex = Math.min(beginIndex, size);
+        endIndex = Math.max(endIndex, beginIndex);
+        endIndex = Math.min(endIndex, size);
+
+        return list.subList(beginIndex, endIndex);
     }
 
     @Override

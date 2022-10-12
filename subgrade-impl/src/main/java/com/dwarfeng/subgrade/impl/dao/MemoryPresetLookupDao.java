@@ -53,12 +53,22 @@ public class MemoryPresetLookupDao<K extends Key, E extends Entity<K>> implement
         return memory.values().stream().filter(e -> filter.accept(e, preset, objs)).collect(Collectors.toList());
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public List<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) {
         int beginIndex = pagingInfo.getPage() * pagingInfo.getRows();
         int endIndex = beginIndex + pagingInfo.getRows();
-        List<E> collect = memory.values().stream().filter(e -> filter.accept(e, preset, objs)).collect(Collectors.toList());
-        return collect.subList(beginIndex, endIndex);
+        List<E> list = memory.values().stream().filter(e -> filter.accept(e, preset, objs))
+                .collect(Collectors.toList());
+
+        // 修正 beginIndex 和 endIndex，使得 list.subList 方法不抛出 IndexOutOfBoundsException 异常。
+        int size = list.size();
+        beginIndex = Math.max(beginIndex, 0);
+        beginIndex = Math.min(beginIndex, size);
+        endIndex = Math.max(endIndex, beginIndex);
+        endIndex = Math.min(endIndex, size);
+
+        return list.subList(beginIndex, endIndex);
     }
 
     @Override

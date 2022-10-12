@@ -8,7 +8,9 @@
 
 #### Bug修复
 
-- (无)
+- 修正部分数据访问层在进行分页查询时抛出异常的 bug。
+  - com.dwarfeng.subgrade.impl.dao.MemoryEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.MemoryPresetLookupDao。
 
 #### 功能移除
 
