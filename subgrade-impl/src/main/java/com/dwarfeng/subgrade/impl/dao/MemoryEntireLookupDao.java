@@ -5,18 +5,26 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * 通过内存实现的 EntireLookupDao。
+ *
  * <p>该类只提供最基本的方法实现，没有添加同步锁或其它的安全性一致性保证，请通过代理的方式在代理类中添加。</p>
  * <p>该类的查询效率较低，不应该应用在大数据量的场景中。</p>
- * <p>该类可以通过 MapResourceBridge 对内存映射进行外部资源桥接。
- * 在数据访问层启动前读取资源数据，在结束之后保存数据，即可实现内存数据的持久化。</p>
+ *
+ * <p>
+ * 该类可以通过 MapResourceBridge 对内存映射进行外部资源桥接。
+ * 在数据访问层启动前读取资源数据，在结束之后保存数据，即可实现内存数据的持久化。<br>
+ * 如果该数据访问层单独使用，可以利用 {@link #fillData(MapResourceBridge)} 初始化内存。<br>
+ * 如果该数据访问层和其它数据访问层组合使用，则需要和其它数据访问层共享 memory，
+ * 此时宜在外部持有 memory 的引用，并在外部初始化。
  *
  * @author DwArFeng
  * @see MapResourceBridge
@@ -25,6 +33,10 @@ import java.util.Map;
 public class MemoryEntireLookupDao<K extends Key, E extends Entity<K>> implements EntireLookupDao<E> {
 
     private Map<K, E> memory;
+
+    public MemoryEntireLookupDao() {
+        this(new LinkedHashMap<>());
+    }
 
     public MemoryEntireLookupDao(@NonNull Map<K, E> memory) {
         this.memory = memory;
@@ -45,6 +57,20 @@ public class MemoryEntireLookupDao<K extends Key, E extends Entity<K>> implement
     @Override
     public int lookupCount() {
         return memory.size();
+    }
+
+    /**
+     * 填充数据。
+     *
+     * @param mrb 映射资源桥。
+     * @throws DaoException 数据访问层异常。
+     */
+    public void fillData(@NonNull MapResourceBridge<K, E> mrb) throws DaoException {
+        try {
+            mrb.fillMap(this.memory);
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
     }
 
     public Map<K, E> getMemory() {

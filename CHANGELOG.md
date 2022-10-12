@@ -4,7 +4,11 @@
 
 #### 功能构建
 
-- (无)
+- 改进数据访问层，完善文档注释。
+  - com.dwarfeng.subgrade.impl.dao.MemoryBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.MemoryBatchBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.MemoryEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.MemoryPresetLookupDao。
 
 #### Bug修复
 

@@ -14,6 +14,7 @@ import java.util.Objects;
 
 /**
  * 通过 Hibernate 实现的单对象数据访问层。
+ *
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *
  * @author DwArFeng
@@ -31,7 +32,9 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
             @NonNull HibernateTemplate template,
             @NonNull BeanTransformer<K, PK> keyBeanTransformer,
             @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull K key, Class<PE> classPE) {
+            @NonNull K key,
+            Class<PE> classPE
+    ) {
         this.template = template;
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;

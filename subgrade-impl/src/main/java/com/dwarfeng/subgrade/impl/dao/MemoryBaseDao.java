@@ -7,15 +7,21 @@ import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.lang.NonNull;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * 通过内存实现的基础数据访问层。
  *
  * <p>该类只提供最基本的方法实现，没有添加同步锁或其它的安全性一致性保证，请通过代理的方式在代理类中添加。</p>
- * <p>该类可以通过 MapResourceBridge 对内存映射进行外部资源桥接。
- * 在数据访问层启动前读取资源数据，在结束之后保存数据，即可实现内存数据的持久化。</p>
+ *
+ * <p>
+ * 该类可以通过 MapResourceBridge 对内存映射进行外部资源桥接。
+ * 在数据访问层启动前读取资源数据，在结束之后保存数据，即可实现内存数据的持久化。<br>
+ * 如果该数据访问层单独使用，可以利用 {@link #fillData(MapResourceBridge)} 初始化内存，
+ * 或利用 {@link #saveData(MapResourceBridge)} 保存内存数据。<br>
+ * 如果该数据访问层和其它数据访问层组合使用，则需要和其它数据访问层共享 memory，
+ * 此时宜在外部持有 memory 的引用，并在外部初始化或是保存。
  *
  * @author DwArFeng
  * @see MapResourceBridge
@@ -26,7 +32,7 @@ public class MemoryBaseDao<K extends Key, E extends Entity<K>> implements BaseDa
     private Map<K, E> memory;
 
     public MemoryBaseDao() {
-        this(new HashMap<>());
+        this(new LinkedHashMap<>());
     }
 
     public MemoryBaseDao(@NonNull Map<K, E> memory) {

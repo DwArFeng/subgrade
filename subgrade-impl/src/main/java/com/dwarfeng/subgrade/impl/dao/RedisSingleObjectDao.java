@@ -13,6 +13,7 @@ import org.springframework.lang.NonNull;
 
 /**
  * 通过 Redis 实现的单对象数据访问层。
+ *
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *
  * @author DwArFeng
@@ -29,7 +30,8 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
             @NonNull RedisTemplate<String, JE> template,
             @NonNull StringKeyFormatter<K> formatter,
             @NonNull BeanTransformer<E, JE> transformer,
-            @NonNull K key) {
+            @NonNull K key
+    ) {
         this.template = template;
         this.formatter = formatter;
         this.transformer = transformer;

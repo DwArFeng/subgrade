@@ -10,6 +10,7 @@ import org.springframework.lang.NonNull;
 
 /**
  * 通过内存引用模型实现的单对象数据访问层。
+ *
  * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
  *
  * @author DwArFeng
@@ -22,7 +23,8 @@ public class MemorySingleObjectDao<K extends Key, E extends Entity<K>> implement
 
     public MemorySingleObjectDao(
             @NonNull ReferenceModel<E> memory,
-            @NonNull K key) {
+            @NonNull K key
+    ) {
         this.memory = memory;
         this.key = key;
     }
