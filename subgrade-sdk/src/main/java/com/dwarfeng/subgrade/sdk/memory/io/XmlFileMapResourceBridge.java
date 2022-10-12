@@ -19,13 +19,15 @@ import java.util.stream.Collectors;
 
 /**
  * XML文件资源映射桥。
- * <p>将XML文件资源与映射进行桥接的映射桥实现。</p>
+ *
+ * <p>
+ * 将XML文件资源与映射进行桥接的映射桥实现。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE extends Bean, XR extends XmlFileMapResourceBridge.Root<XE>>
-        implements MapResourceBridge<K, E> {
+public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE extends Bean,
+        XR extends XmlFileMapResourceBridge.Root<XE>> implements MapResourceBridge<K, E> {
 
     private File file;
     private BeanTransformer<E, XE> transformer;
@@ -35,7 +37,8 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
             @NonNull File file,
             @NonNull BeanTransformer<E, XE> transformer,
             @NonNull Class<XE> classXE,
-            @NonNull Class<XR> classXR) {
+            @NonNull Class<XR> classXR
+    ) {
         this.file = file;
         this.transformer = transformer;
         this.classXR = classXR;

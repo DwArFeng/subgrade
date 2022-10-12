@@ -8,8 +8,12 @@ import java.util.Map;
 
 /**
  * 映射资源桥。
- * <p>该接口用于将外部的资源映射到内存 Map 中，或者将内存 Map 中的数据保存到资源中。</p>
- * <p>对于某些只读的资源，不支持 saveMap 方法，调用该方法会抛出 UnsupportedOperationException 异常。</p>
+ *
+ * <p>
+ * 该接口用于将外部的资源映射到内存 Map 中，或者将内存 Map 中的数据保存到资源中。
+ *
+ * <p>
+ * 对于某些只读的资源，不支持 saveMap 方法，调用该方法会抛出 UnsupportedOperationException 异常。
  *
  * @author DwArFeng
  * @since 0.0.3-beta

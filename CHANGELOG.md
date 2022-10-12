@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- 优化部分代码的文档注释。
+
 - 改进数据访问层。
   - com.dwarfeng.subgrade.impl.dao.MemorySingleObjectDao。
 

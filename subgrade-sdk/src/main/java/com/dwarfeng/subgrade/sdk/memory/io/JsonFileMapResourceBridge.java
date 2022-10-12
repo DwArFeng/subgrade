@@ -25,7 +25,9 @@ import java.util.stream.Collectors;
 
 /**
  * JSON文件资源映射桥。
- * <p>将JSON文件资源与映射进行桥接的映射桥实现。</p>
+ *
+ * <p>
+ * 将JSON文件资源与映射进行桥接的映射桥实现。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
@@ -39,7 +41,8 @@ public class JsonFileMapResourceBridge<K extends Key, E extends Entity<K>, JE ex
     public JsonFileMapResourceBridge(
             @NonNull File file,
             @NonNull BeanTransformer<E, JE> transformer,
-            @NonNull Class<JE> classJE) {
+            @NonNull Class<JE> classJE
+    ) {
         this.file = file;
         this.transformer = transformer;
         this.classJE = classJE;

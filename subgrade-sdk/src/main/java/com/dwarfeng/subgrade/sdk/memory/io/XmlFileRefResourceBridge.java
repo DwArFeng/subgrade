@@ -16,7 +16,9 @@ import java.io.IOException;
 
 /**
  * XML文件资源映射桥。
- * <p>将XML文件资源与映射进行桥接的映射桥实现。</p>
+ *
+ * <p>
+ * 将XML文件资源与映射进行桥接的映射桥实现。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
@@ -30,7 +32,8 @@ public class XmlFileRefResourceBridge<K extends Key, E extends Entity<K>, XE ext
     public XmlFileRefResourceBridge(
             @NonNull File file,
             @NonNull BeanTransformer<E, XE> transformer,
-            @NonNull Class<XE> classXE) {
+            @NonNull Class<XE> classXE
+    ) {
         this.file = file;
         this.transformer = transformer;
         this.classXE = classXE;
