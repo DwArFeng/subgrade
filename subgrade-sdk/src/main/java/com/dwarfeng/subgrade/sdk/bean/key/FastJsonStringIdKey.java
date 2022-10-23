@@ -29,6 +29,23 @@ public class FastJsonStringIdKey implements Key {
         return new FastJsonStringIdKey(stringIdKey.getStringId());
     }
 
+    /**
+     * 根据指定的 FastJsonStringIdKey 生成 StringIdKey。
+     *
+     * @param fastJsonStringIdKey 指定的 FastJsonStringIdKey。
+     * @return 通过指定的 FastJsonStringIdKey 生成的 StringIdKey。
+     * @since 1.2.13
+     */
+    public static StringIdKey toStackBean(FastJsonStringIdKey fastJsonStringIdKey) {
+        if (Objects.isNull(fastJsonStringIdKey)) {
+            return null;
+        } else {
+            return new StringIdKey(
+                    fastJsonStringIdKey.getStringId()
+            );
+        }
+    }
+
     @JSONField(name = "string_id", ordinal = 1)
     private String stringId;
 

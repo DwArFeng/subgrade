@@ -29,6 +29,23 @@ public class FastJsonIntegerIdKey implements Key {
         return new FastJsonIntegerIdKey(integerIdKey.getIntegerId());
     }
 
+    /**
+     * 根据指定的 FastJsonIntegerIdKey 生成 IntegerIdKey。
+     *
+     * @param fastJsonIntegerIdKey 指定的 FastJsonIntegerIdKey。
+     * @return 通过指定的 FastJsonIntegerIdKey 生成的 IntegerIdKey。
+     * @since 1.2.13
+     */
+    public static IntegerIdKey toStackBean(FastJsonIntegerIdKey fastJsonIntegerIdKey) {
+        if (Objects.isNull(fastJsonIntegerIdKey)) {
+            return null;
+        } else {
+            return new IntegerIdKey(
+                    fastJsonIntegerIdKey.getIntegerId()
+            );
+        }
+    }
+
     @JSONField(name = "integer_id", ordinal = 1)
     private int integerId;
 

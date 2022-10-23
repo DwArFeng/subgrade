@@ -29,6 +29,23 @@ public class FastJsonByteIdKey implements Key {
         return new FastJsonByteIdKey(byteIdKey.getByteId());
     }
 
+    /**
+     * 根据指定的 FastJsonByteIdKey 生成 ByteIdKey。
+     *
+     * @param fastJsonByteIdKey 指定的 FastJsonByteIdKey。
+     * @return 通过指定的 FastJsonByteIdKey 生成的 ByteIdKey。
+     * @since 1.2.13
+     */
+    public static ByteIdKey toStackBean(FastJsonByteIdKey fastJsonByteIdKey) {
+        if (Objects.isNull(fastJsonByteIdKey)) {
+            return null;
+        } else {
+            return new ByteIdKey(
+                    fastJsonByteIdKey.getByteId()
+            );
+        }
+    }
+
     @JSONField(name = "byte_id", ordinal = 1)
     private byte byteId;
 

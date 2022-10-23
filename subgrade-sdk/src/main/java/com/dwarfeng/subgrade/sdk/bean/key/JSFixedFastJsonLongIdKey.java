@@ -30,6 +30,23 @@ public class JSFixedFastJsonLongIdKey implements Bean {
         return new JSFixedFastJsonLongIdKey(longIdKey.getLongId());
     }
 
+    /**
+     * 根据指定的 JSFixedFastJsonLongIdKey 生成 LongIdKey。
+     *
+     * @param fastJsonLongIdKey 指定的 JSFixedFastJsonLongIdKey。
+     * @return 通过指定的 JSFixedFastJsonLongIdKey 生成的 LongIdKey。
+     * @since 1.2.13
+     */
+    public static JSFixedFastJsonLongIdKey toStackBean(JSFixedFastJsonLongIdKey fastJsonLongIdKey) {
+        if (Objects.isNull(fastJsonLongIdKey)) {
+            return null;
+        } else {
+            return new JSFixedFastJsonLongIdKey(
+                    fastJsonLongIdKey.getLongId()
+            );
+        }
+    }
+
     @JSONField(name = "long_id", ordinal = 1, serializeUsing = ToStringSerializer.class)
     private long longId;
 

@@ -9,6 +9,15 @@
 - 改进数据访问层。
   - com.dwarfeng.subgrade.impl.dao.MemorySingleObjectDao。
 
+- FastJson/JSFixedFastJson 实体增加 `toStackBean` 方法。
+  - com.dwarfeng.subgrade.sdk.bean.key.FastJsonByteIdKey。
+  - com.dwarfeng.subgrade.sdk.bean.key.FastJsonDenseUuidKey。
+  - com.dwarfeng.subgrade.sdk.bean.key.FastJsonIntegerIdKey。
+  - com.dwarfeng.subgrade.sdk.bean.key.FastJsonLongIdKey。
+  - com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey。
+  - com.dwarfeng.subgrade.sdk.bean.key.FastJsonUuidKey。
+  - com.dwarfeng.subgrade.sdk.bean.key.JSFixedFastJsonLongIdKey。
+
 #### Bug修复
 
 - 修正部分数据访问层在进行分页查询时抛出异常的 bug。

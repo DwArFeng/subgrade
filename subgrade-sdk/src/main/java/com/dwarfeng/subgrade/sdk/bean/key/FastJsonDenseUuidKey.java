@@ -29,6 +29,23 @@ public class FastJsonDenseUuidKey implements Key {
         return new FastJsonDenseUuidKey(denseUuidKey.getUuid());
     }
 
+    /**
+     * 根据指定的 FastJsonDenseUuidKey 生成 DenseUuidKey。
+     *
+     * @param fastJsonDenseUuidKey 指定的 FastJsonDenseUuidKey。
+     * @return 通过指定的 FastJsonDenseUuidKey 生成的 DenseUuidKey。
+     * @since 1.2.13
+     */
+    public static DenseUuidKey toStackBean(FastJsonDenseUuidKey fastJsonDenseUuidKey) {
+        if (Objects.isNull(fastJsonDenseUuidKey)) {
+            return null;
+        } else {
+            return new DenseUuidKey(
+                    fastJsonDenseUuidKey.getUuid()
+            );
+        }
+    }
+
     @JSONField(name = "uuid", ordinal = 1)
     private String uuid;
 

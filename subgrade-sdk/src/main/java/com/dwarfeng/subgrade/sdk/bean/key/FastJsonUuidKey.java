@@ -29,6 +29,23 @@ public class FastJsonUuidKey implements Key {
         return new FastJsonUuidKey(uuidKey.getUuid());
     }
 
+    /**
+     * 根据指定的 FastJsonUuidKey 生成 UuidKey。
+     *
+     * @param fastJsonUuidKey 指定的 FastJsonUuidKey。
+     * @return 通过指定的 FastJsonUuidKey 生成的 UuidKey。
+     * @since 1.2.13
+     */
+    public static UuidKey toStackBean(FastJsonUuidKey fastJsonUuidKey) {
+        if (Objects.isNull(fastJsonUuidKey)) {
+            return null;
+        } else {
+            return new UuidKey(
+                    fastJsonUuidKey.getUuid()
+            );
+        }
+    }
+
     @JSONField(name = "uuid", ordinal = 1)
     private String uuid;
 
