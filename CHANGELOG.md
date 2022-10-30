@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 依赖升级。
+  - 兼容性替换 `javax.servlet:servlet-api:2.5` 为 `javax.servlet:javax.servlet-api:4.0.1`。
 
 #### Bug修复
 

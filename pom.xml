@@ -28,7 +28,7 @@
         <mysql.version>8.0.16</mysql.version>
         <fastjson.version>1.2.83</fastjson.version>
         <druid.version>1.0.9</druid.version>
-        <servlet-api.version>2.5</servlet-api.version>
+        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <jedis.version>2.9.0</jedis.version>
         <dubbo.version>2.7.18</dubbo.version>
@@ -246,8 +246,8 @@
             <!-- Servlet相关 -->
             <dependency>
                 <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>${servlet-api.version}</version>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
             </dependency>
             <!-- Redis客户端 -->
             <dependency>
