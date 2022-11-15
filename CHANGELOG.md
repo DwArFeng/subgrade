@@ -6,6 +6,8 @@
 
 - 依赖升级。
   - 兼容性替换 `javax.servlet:servlet-api:2.5` 为 `javax.servlet:javax.servlet-api:4.0.1`。
+  - 升级 `annotations` 依赖版本为 `3.0.1` 以规避漏洞。
+  - 升级 `dutil` 依赖版本为 `beta-0.3.2.a` 以规避漏洞。
 
 #### Bug修复
 
