@@ -30,6 +30,7 @@
         <druid.version>1.0.9</druid.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
         <jedis.version>2.9.0</jedis.version>
         <dubbo.version>2.7.18</dubbo.version>
         <netty.version>4.1.77.Final</netty.version>
@@ -77,6 +78,11 @@
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>${commons-beanutils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
             <!-- FastJson Json 处理工具包 -->
             <dependency>
@@ -302,6 +308,10 @@
                     <exclusion>
                         <artifactId>commons-beanutils</artifactId>
                         <groupId>commons-beanutils</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>commons-lang3</artifactId>
+                        <groupId>org.apache.commons</groupId>
                     </exclusion>
                 </exclusions>
             </dependency>

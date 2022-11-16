@@ -6,6 +6,7 @@
 
 - 增加依赖。
   - 增加依赖 `jsr305` 以规避依赖冲突，版本为 `3.0.2`。
+  - 增加依赖 `commons-lang3` 以规避漏洞，版本为 `3.12.0`。
 
 - 依赖升级。
   - 兼容性替换 `javax.servlet:servlet-api:2.5` 为 `javax.servlet:javax.servlet-api:4.0.1`。
