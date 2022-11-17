@@ -7,11 +7,13 @@
 - 增加依赖。
   - 增加依赖 `jsr305` 以规避依赖冲突，版本为 `3.0.2`。
   - 增加依赖 `commons-lang3` 以规避漏洞，版本为 `3.12.0`。
+  - 增加依赖 `commons-collections4` 以规避漏洞，版本为 `4.4`。
 
 - 依赖升级。
   - 兼容性替换 `javax.servlet:servlet-api:2.5` 为 `javax.servlet:javax.servlet-api:4.0.1`。
   - 升级 `annotations` 依赖版本为 `3.0.1` 以规避漏洞。
   - 升级 `spring-kafka` 依赖版本为 `2.8.10` 以规避漏洞。
+  - 升级 `kafka` 依赖版本为 `2.6.3` 以规避漏洞。
   - 升级 `spring-data-redis` 依赖版本为 `2.7.5` 以规避漏洞。
   - 升级 `dutil` 依赖版本为 `beta-0.3.2.a` 以规避漏洞。
 
@@ -23,6 +25,7 @@
 
 - 删除不需要的依赖。
   - 删除 `el` 依赖。
+  - 删除 `zkclient` 依赖。
 
 ---
 
