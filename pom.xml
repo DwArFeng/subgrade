@@ -42,7 +42,7 @@
         <zookeeper.version>3.5.7</zookeeper.version>
         <guava.version>31.1-jre</guava.version>
         <curator.version>4.3.0</curator.version>
-        <aspectj.version>1.8.2</aspectj.version>
+        <aspectj.version>1.9.7</aspectj.version>
         <aopalliance.version>1.0</aopalliance.version>
         <hibernate.version>5.6.7.Final</hibernate.version>
         <hibernate-validator.version>6.0.21.Final</hibernate-validator.version>
