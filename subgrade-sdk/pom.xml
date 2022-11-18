@@ -59,34 +59,39 @@
             <artifactId>spring-aspects</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <scope>test</scope>
         </dependency>
-        <!-- Spring集成Kafka组件 -->
+        <!-- Redis 客户端 -->
         <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
         </dependency>
-        <!-- Kafka 组件 -->
+        <!-- Spring 集成 Redis 组件 -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
+        <!-- Kafka 客户端 -->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
         </dependency>
-        <!-- FastJson Json处理工具包 -->
+        <!-- Spring 集成 Kafka 组件 -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <!-- FastJson Json 处理工具包 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-        <!-- Hibernate验证器 -->
+        <!-- Hibernate 验证器 -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -107,22 +112,22 @@
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer-spring</artifactId>
         </dependency>
-        <!-- Jaxb组件组件 -->
+        <!-- Jaxb 组件组件 -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
         </dependency>
-        <!-- Servlet相关 -->
+        <!-- Servlet 相关 -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
-        <!-- dutil组件 -->
+        <!-- dutil 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>dutil-basic</artifactId>
         </dependency>
-        <!-- mybatis组件 -->
+        <!-- mybatis 组件 -->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -131,20 +136,10 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
         </dependency>
-        <!-- annotations组件 -->
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>jsr305</artifactId>
-        </dependency>
         <!-- 程序自身组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-stack</artifactId>
-            <version>1.2.14.a-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

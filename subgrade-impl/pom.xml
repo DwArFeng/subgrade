@@ -23,67 +23,12 @@
     </properties>
 
     <dependencies>
-        <!-- AspectJ框架 -->
+        <!-- dutil 组件 -->
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dutil-develop</artifactId>
         </dependency>
-        <!-- Spring框架 -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Apache工具组件 -->
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <!-- Spring集成Kafka组件 -->
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>
-        <!-- FastJson Json处理工具包 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-        <!-- Hibernate验证器 -->
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
-        <!-- hibernate组件 -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-        </dependency>
-        <!-- Dozer模块 -->
+        <!-- Dozer 模块 -->
         <!-- Dozer 已经停止维护，仅在打包时引用此依赖编译相关代码，已在说明中提醒开发人员手动排除该依赖。 -->
         <!--suppress VulnerableLibrariesLocal -->
         <dependency>
@@ -94,38 +39,7 @@
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer-spring</artifactId>
         </dependency>
-        <!-- dutil组件 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>dutil-basic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>dutil-develop</artifactId>
-        </dependency>
-        <!-- mybatis组件 -->
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-        </dependency>
-        <!-- annotations组件 -->
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>jsr305</artifactId>
-        </dependency>
         <!-- 程序自身组件 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>subgrade-stack</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-sdk</artifactId>
