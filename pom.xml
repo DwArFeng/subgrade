@@ -78,6 +78,10 @@
                         <artifactId>commons-collections</artifactId>
                         <groupId>commons-collections</groupId>
                     </exclusion>
+                    <exclusion>
+                        <artifactId>commons-logging</artifactId>
+                        <groupId>commons-logging</groupId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
@@ -337,6 +341,12 @@
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>jboss-logging</artifactId>
+                        <groupId>org.jboss.logging</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- Dozer 模块 -->
             <dependency>
@@ -374,6 +384,10 @@
                 <artifactId>dutil-develop</artifactId>
                 <version>${dutil.version}</version>
                 <exclusions>
+                    <exclusion>
+                        <artifactId>log4j-core</artifactId>
+                        <groupId>org.apache.logging.log4j</groupId>
+                    </exclusion>
                     <exclusion>
                         <artifactId>log4j-api</artifactId>
                         <groupId>org.apache.logging.log4j</groupId>
