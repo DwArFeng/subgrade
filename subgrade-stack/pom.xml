@@ -23,7 +23,7 @@
     </properties>
 
     <dependencies>
-        <!-- annotations组件 -->
+        <!-- annotations 组件 -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>annotations</artifactId>
