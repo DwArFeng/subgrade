@@ -23,14 +23,14 @@
     </properties>
 
     <dependencies>
-        <!-- dutil 组件 -->
+        <!-- Dutil 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>dutil-develop</artifactId>
         </dependency>
         <!-- Dozer 模块 -->
         <!-- Dozer 已经停止维护，仅在打包时引用此依赖编译相关代码，已在说明中提醒开发人员手动排除该依赖。 -->
-        <!--suppress VulnerableLibrariesLocal -->
+        <!--suppress VulnerableLibrariesLocal-->
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>

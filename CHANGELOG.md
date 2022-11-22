@@ -4,7 +4,13 @@
 
 #### 功能构建
 
-- (无)
+- BeanTransformer 更新。
+  - 引入 `MapStruct` 框架，实现 com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer。
+  - 过期 com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer。
+
+- 依赖优化。
+  - 更改 `dozer` 依赖 `scope` 类型为 `provided`, 停止默认引入。
+  - 更改 `dozer-spring` 依赖 `scope` 类型为 `provided`, 停止默认引入。
 
 #### Bug修复
 

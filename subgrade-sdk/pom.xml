@@ -23,12 +23,12 @@
     </properties>
 
     <dependencies>
-        <!-- AspectJ框架 -->
+        <!-- AspectJ 框架 -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
         </dependency>
-        <!-- Apache工具组件 -->
+        <!-- Apache 工具组件 -->
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
@@ -96,14 +96,14 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-        <!-- hibernate 组件 -->
+        <!-- Hibernate 组件 -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
         </dependency>
         <!-- Dozer 模块 -->
         <!-- Dozer 已经停止维护，仅在打包时引用此依赖编译相关代码，已在说明中提醒开发人员手动排除该依赖。 -->
-        <!--suppress VulnerableLibrariesLocal -->
+        <!--suppress VulnerableLibrariesLocal-->
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
@@ -111,6 +111,11 @@
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer-spring</artifactId>
+        </dependency>
+        <!-- MapStruct 框架 -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
         </dependency>
         <!-- Jaxb 组件组件 -->
         <dependency>
@@ -122,12 +127,12 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
-        <!-- dutil 组件 -->
+        <!-- Dutil 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>dutil-basic</artifactId>
         </dependency>
-        <!-- mybatis 组件 -->
+        <!-- Mybatis 组件 -->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>

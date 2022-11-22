@@ -46,6 +46,7 @@
         <hibernate-validator.version>6.0.21.Final</hibernate-validator.version>
         <slf4j.version>1.7.5</slf4j.version>
         <dozer.version>5.5.1</dozer.version>
+        <mapstruct.version>1.5.3.Final</mapstruct.version>
         <dutil.version>beta-0.3.2.a</dutil.version>
         <jaxb.version>2.3.1</jaxb.version>
         <mybatis.version>3.5.6</mybatis.version>
@@ -353,6 +354,7 @@
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
                 <version>${dozer.version}</version>
+                <scope>provided</scope>
                 <exclusions>
                     <exclusion>
                         <artifactId>jcl-over-slf4j</artifactId>
@@ -372,6 +374,13 @@
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer-spring</artifactId>
                 <version>${dozer.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- MapStruct 框架 -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
             <!-- dutil 组件 -->
             <dependency>
