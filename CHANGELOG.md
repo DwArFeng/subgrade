@@ -4,6 +4,12 @@
 
 #### 功能构建
 
+- Handler 更新。
+  - com.dwarfeng.subgrade.stack.handler.DistributedLockHandler。
+  - com.dwarfeng.subgrade.stack.handler.LocalCacheHandler。
+  - com.dwarfeng.subgrade.stack.handler.OnlineHandler。
+  - com.dwarfeng.subgrade.stack.handler.StartableHandler。
+
 - BeanTransformer 更新。
   - 引入 `MapStruct` 框架，实现 com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer。
   - 过期 com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer。
