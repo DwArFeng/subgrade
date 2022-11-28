@@ -83,7 +83,7 @@ public class MapStructBeanTransformer<U extends Bean, V extends Bean> implements
 
         if (classU.isAssignableFrom(parameterClass) && classV.isAssignableFrom(returnClass)) {
             // 日志输出。
-            LOGGER.error(
+            LOGGER.debug(
                     "找到适配的变换方法, 方法名: {}, 入参类型: {}, 返回值类型: {}",
                     method.getName(), parameterClass.getCanonicalName(), returnClass.getCanonicalName()
             );
@@ -103,7 +103,7 @@ public class MapStructBeanTransformer<U extends Bean, V extends Bean> implements
 
         if (classV.isAssignableFrom(parameterClass) && classU.isAssignableFrom(returnClass)) {
             // 日志输出。
-            LOGGER.error(
+            LOGGER.debug(
                     "找到适配的逆变换方法, 方法名: {}, 入参类型: {}, 返回值类型: {}",
                     method.getName(), parameterClass.getCanonicalName(), returnClass.getCanonicalName()
             );
