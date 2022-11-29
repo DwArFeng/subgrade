@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- `README.md` 优化。
+  - 重新排版。
+  - 删除 `使用概况与成熟度`，后期将单独建立说明文件。
+
 - Handler 更新。
   - com.dwarfeng.subgrade.stack.handler.DistributedLockHandler。
   - com.dwarfeng.subgrade.stack.handler.LocalCacheHandler。
