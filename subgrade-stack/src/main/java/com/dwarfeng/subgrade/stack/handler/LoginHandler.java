@@ -4,6 +4,8 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
+import java.util.Map;
+
 /**
  * 登录处理器。
  *
@@ -27,10 +29,25 @@ public interface LoginHandler extends Handler {
      *
      * @param userKey  指定的用户名。
      * @param password 指定的密码。
-     * @return 登录ID。
+     * @return 登录 ID。
      * @throws HandlerException 处理器异常。
      */
     LongIdKey login(StringIdKey userKey, String password) throws HandlerException;
+
+    /**
+     * 登录。
+     *
+     * @param userKey       指定的用户名。
+     * @param password      指定的密码。
+     * @param extraParamMap 额外参数。
+     * @return 登陆 ID。
+     * @throws HandlerException 处理器异常。
+     * @since 1.3.1
+     */
+    default LongIdKey login(StringIdKey userKey, String password, Map<String, String> extraParamMap)
+            throws HandlerException {
+        return login(userKey, password);
+    }
 
     /**
      * 登出。

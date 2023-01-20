@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 登陆处理器扩展方法。
+  - LoginHandler.login(StringIdKey, String, Map<String,String>) throws HandlerException。
+
 - 依赖升级。
   - 升级 `netty` 依赖版本为 `4.1.86.Final` 以规避漏洞。
 
