@@ -1,6 +1,5 @@
 package com.dwarfeng.subgrade.stack.handler;
 
-import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
 /**
@@ -12,7 +11,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
  * @author DwArFeng
  * @since 1.3.0
  */
-public interface LocalCacheHandler<K extends Key, V> {
+public interface LocalCacheHandler<K, V> {
 
     /**
      * 获取指定的键对应的值是否存在。

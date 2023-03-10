@@ -1,6 +1,5 @@
 package com.dwarfeng.subgrade.impl.handler;
 
-import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.LocalCacheHandler;
 import org.slf4j.Logger;
@@ -22,7 +21,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @author DwArFeng
  * @since 1.3.0
  */
-public class GeneralLocalCacheHandler<K extends Key, V> implements LocalCacheHandler<K, V> {
+public class GeneralLocalCacheHandler<K, V> implements LocalCacheHandler<K, V> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneralLocalCacheHandler.class);
 

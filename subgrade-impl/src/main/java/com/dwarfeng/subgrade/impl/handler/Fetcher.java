@@ -1,14 +1,12 @@
 package com.dwarfeng.subgrade.impl.handler;
 
-import com.dwarfeng.subgrade.stack.bean.key.Key;
-
 /**
  * 抓取器。
  *
  * @author DwArFeng
  * @since 1.3.0
  */
-public interface Fetcher<K extends Key, V> {
+public interface Fetcher<K, V> {
 
     /**
      * 判断指定的键对应的值是否存在。

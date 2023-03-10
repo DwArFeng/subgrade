@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- 放宽 LocalCacheHandler 的泛型约束。
+
 - 登陆处理器扩展方法。
   - LoginHandler.login(StringIdKey, String, Map<String,String>) throws HandlerException。
 
