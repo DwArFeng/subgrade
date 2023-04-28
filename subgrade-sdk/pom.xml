@@ -126,11 +126,6 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
         </dependency>
-        <!-- Servlet 相关 -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
         <!-- Dutil 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>

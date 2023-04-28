@@ -3,10 +3,10 @@ package com.dwarfeng.subgrade.sdk.interceptor.login;
 import com.dwarfeng.subgrade.sdk.bean.dto.FastJsonResponseData;
 import com.dwarfeng.subgrade.stack.bean.dto.ResponseData;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.handler.TokenHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
 import static com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.LOGIN_FAILED;
 import static com.dwarfeng.subgrade.stack.bean.dto.ResponseData.Meta;
@@ -21,9 +21,9 @@ import static com.dwarfeng.subgrade.stack.bean.dto.ResponseData.Meta;
  * @author DwArFeng
  * @since 0.3.0-beta
  */
-public class HttpLoginRequiredAopManager implements LoginRequiredAopManager {
+public class TokenHandlerLoginRequiredAopManager implements LoginRequiredAopManager {
 
-    private String tokenKey;
+    private TokenHandler tokenHandler;
 
     @Override
     public LongIdKey getLoginId(ProceedingJoinPoint pjp) {
@@ -36,17 +36,11 @@ public class HttpLoginRequiredAopManager implements LoginRequiredAopManager {
             if (!(arg instanceof HttpServletRequest)) {
                 continue;
             }
-            // 如果是 HttpServletRequest 对象，则获取 header 中的 tokenKey 对应的值。
-            String header = ((HttpServletRequest) arg).getHeader(tokenKey);
-            if (Objects.isNull(header)) {
-                throw new IllegalArgumentException("HttpServletRequest 对象没有名称为 " + tokenKey + " 的 header");
-            }
+            // 如果是 HttpServletRequest 对象，则调用 tokenHandler 获取登录 ID。
             try {
-                return new LongIdKey(Long.parseLong(header));
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException(
-                        "Header " + tokenKey + " 对应的值 " + header + " 无法转换成 Long 对象"
-                );
+                return tokenHandler.getLoginKey((HttpServletRequest) arg);
+            } catch (Exception e) {
+                throw new IllegalArgumentException("TokenHandler 获取登录 ID 失败，异常信息如下：", e);
             }
         }
 
@@ -63,11 +57,11 @@ public class HttpLoginRequiredAopManager implements LoginRequiredAopManager {
         ));
     }
 
-    public String getTokenKey() {
-        return tokenKey;
+    public TokenHandler getTokenHandler() {
+        return tokenHandler;
     }
 
-    public void setTokenKey(String tokenKey) {
-        this.tokenKey = tokenKey;
+    public void setTokenHandler(TokenHandler tokenHandler) {
+        this.tokenHandler = tokenHandler;
     }
 }

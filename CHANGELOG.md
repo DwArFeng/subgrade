@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- AOP 调度逻辑优化。
+  - 强化 LoginRequiredAdvisor 调度逻辑。
+  - 强化 PermissionRequiredAdvisor 调度逻辑（**不兼容更新**）。
 
 #### Bug修复
 
