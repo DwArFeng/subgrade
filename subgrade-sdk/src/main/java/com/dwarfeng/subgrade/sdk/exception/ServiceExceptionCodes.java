@@ -13,6 +13,12 @@ public final class ServiceExceptionCodes {
     private static int EXCEPTION_CODE_OFFSET = 0;
 
     /**
+     * 未定义错误代码，代表未定义的错误。
+     */
+    public static final ServiceException.Code UNDEFINE =
+            new ServiceException.Code(offset(1), "undefine");
+
+    /**
      * 主键获取失败
      */
     public static final ServiceException.Code KEY_FETCH_FAILED =
@@ -23,12 +29,6 @@ public final class ServiceExceptionCodes {
      */
     public static final ServiceException.Code CACHE_FAILED =
             new ServiceException.Code(offset(20), "cache failed");
-
-    /**
-     * 未定义错误代码，代表未定义的错误。
-     */
-    public static final ServiceException.Code UNDEFINE =
-            new ServiceException.Code(offset(1), "undefine");
 
     /**
      * 数据访问层异常。
@@ -90,6 +90,12 @@ public final class ServiceExceptionCodes {
     public static final ServiceException.Code DATABASE_FAILED =
             new ServiceException.Code(offset(100), "database failed");
 
+    /**
+     * 未实现。
+     */
+    public static final ServiceException.Code NOT_IMPLEMENTED_YET =
+            new ServiceException.Code(offset(110), "not implemented yet");
+
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
     }
@@ -109,7 +115,24 @@ public final class ServiceExceptionCodes {
      * @param exceptionCodeOffset 指定的异常代号的偏移量。
      */
     public static void setExceptionCodeOffset(int exceptionCodeOffset) {
+        // 设置 EXCEPTION_CODE_OFFSET 的值。
         EXCEPTION_CODE_OFFSET = exceptionCodeOffset;
+
+        // 以新的 EXCEPTION_CODE_OFFSET 为基准，更新异常代码的值。
+        UNDEFINE.setCode(offset(1));
+        KEY_FETCH_FAILED.setCode(offset(10));
+        CACHE_FAILED.setCode(offset(20));
+        DAO_FAILED.setCode(offset(30));
+        ENTITY_EXISTED.setCode(offset(31));
+        ENTITY_NOT_EXIST.setCode(offset(32));
+        PARAM_VALIDATION_FAILED.setCode(offset(40));
+        IO_EXCEPTION.setCode(offset(50));
+        PROCESS_FAILED.setCode(offset(60));
+        HANDLER_FAILED.setCode(offset(70));
+        PERMISSION_DENIED.setCode(offset(80));
+        LOGIN_FAILED.setCode(offset(90));
+        DATABASE_FAILED.setCode(offset(100));
+        NOT_IMPLEMENTED_YET.setCode(offset(110));
     }
 
     private ServiceExceptionCodes() {

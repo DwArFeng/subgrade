@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- 优化 ServiceExceptionCodes 类。
+  - 增加异常代码 ServiceExceptionCodes.NOT_IMPLEMENTED_YET。
+  - 设置异常代号的偏移量时，以新的 EXCEPTION_CODE_OFFSET 为基准，更新异常代码的值。
+
 - AOP 调度逻辑优化。
   - 强化 LoginRequiredAdvisor 调度逻辑。
   - 强化 PermissionRequiredAdvisor 调度逻辑（**不兼容更新**）。
