@@ -91,6 +91,18 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         }
     }
 
+    /**
+     * @since 1.4.1
+     */
+    @Override
+    public int lookupCount(String preset, Object[] objs) throws ServiceException {
+        try {
+            return dao.lookupCount(preset, objs);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询预设实体数量时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
     public PresetLookupDao<E> getDao() {
         return dao;
     }

@@ -93,4 +93,27 @@ public interface PresetLookupService<E extends Entity<?>> extends Service {
     default E lookupFirst(String preset, Object[] objs) throws ServiceException {
         return lookup(preset, objs, PagingInfo.FIRST_ONE).getData().stream().findFirst().orElse(null);
     }
+
+    /**
+     * 查询数据访问层中满足指定预设的所有对象的总数量。
+     *
+     * <p>
+     * 在该接口的大量实践中发现，许多场景只需要获取元素的数量，而不需要获取元素列表。
+     * 使用 {@link #lookup(String, Object[])} 或 {@link #lookup(String, Object[], PagingInfo)}
+     * 方法查询会造成不必要的性能浪费。<br>
+     * 该方法可以直接返回数据总量，在部分场景下使用该方法可以提高查询的效率。
+     *
+     * <p>
+     * 该接口方法拥有默认实现，其效率与 {@link #lookup(String, Object[], PagingInfo)} 相同，需要实现类重写，
+     * 以满足到提高效率的需求。
+     *
+     * @param preset 指定的预设名称。
+     * @param objs   预设对应的对象数组。
+     * @return 元素的数量。
+     * @throws ServiceException 服务异常。
+     * @since 1.4.1
+     */
+    default int lookupCount(String preset, Object[] objs) throws ServiceException {
+        return (int) lookup(preset, objs, PagingInfo.FIRST_ONE).getCount();
+    }
 }

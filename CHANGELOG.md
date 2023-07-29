@@ -6,6 +6,7 @@
 
 - 增加接口方法及其实现。
   - com.dwarfeng.subgrade.stack.service.EntireLookupService.lookupCount。
+  - com.dwarfeng.subgrade.stack.service.PresetLookupService.lookupCount。
 
 #### Bug修复
 
