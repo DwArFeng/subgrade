@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 增加接口方法及其实现。
+  - com.dwarfeng.subgrade.stack.service.EntireLookupService.lookupCount。
 
 #### Bug修复
 

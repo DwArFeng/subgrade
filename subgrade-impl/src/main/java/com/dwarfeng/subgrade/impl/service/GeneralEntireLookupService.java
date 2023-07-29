@@ -124,6 +124,23 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
         }
     }
 
+    /**
+     * @since 1.4.1
+     */
+    @Override
+    public int lookupCount() throws ServiceException {
+        try {
+            if (cache.exists()) {
+                return cache.get().size();
+            }
+            List<E> lookup = dao.lookup();
+            cache.set(lookup, cacheTimeout);
+            return lookup.size();
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询全部实体数量时发生异常", exceptionLogLevel, sem, e);
+        }
+    }
+
     public EntireLookupDao<E> getDao() {
         return dao;
     }
