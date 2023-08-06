@@ -7,13 +7,16 @@ import com.dwarfeng.subgrade.stack.dao.BatchWriteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * 使用 Hibernate 实现的 BatchWriteDao。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 1.1.0
@@ -25,8 +28,11 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
      */
     public static final int DEFAULT_BATCH_SIZE = 100;
 
+    @Nonnull
     private HibernateTemplate template;
+    @Nonnull
     private BeanTransformer<E, PE> entityBeanTransformer;
+    @Nonnegative
     private int batchSize;
 
     public HibernateBatchWriteDao(
@@ -39,7 +45,7 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
     public HibernateBatchWriteDao(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
-            int batchSize
+            @Nonnegative int batchSize
     ) {
         this.template = template;
         this.entityBeanTransformer = entityBeanTransformer;
@@ -77,6 +83,11 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
         }
     }
 
+    private PE transformEntity(E entity) {
+        return entityBeanTransformer.transform(entity);
+    }
+
+    @Nonnull
     public HibernateTemplate getTemplate() {
         return template;
     }
@@ -85,6 +96,7 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
         this.template = template;
     }
 
+    @Nonnull
     public BeanTransformer<E, PE> getEntityBeanTransformer() {
         return entityBeanTransformer;
     }
@@ -93,15 +105,21 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
+    @Nonnegative
     public int getBatchSize() {
         return batchSize;
     }
 
-    public void setBatchSize(int batchSize) {
+    public void setBatchSize(@Nonnegative int batchSize) {
         this.batchSize = batchSize;
     }
 
-    private PE transformEntity(E entity) {
-        return entityBeanTransformer.transform(entity);
+    @Override
+    public String toString() {
+        return "HibernateBatchWriteDao{" +
+                "template=" + template +
+                ", entityBeanTransformer=" + entityBeanTransformer +
+                ", batchSize=" + batchSize +
+                '}';
     }
 }

@@ -11,13 +11,16 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * 使用 Hibernate 实现的 BatchBaseDao。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
@@ -32,12 +35,19 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
      */
     public static final int DEFAULT_BATCH_SIZE = 100;
 
+    @Nonnull
     private HibernateTemplate template;
+    @Nonnull
     private BeanTransformer<K, PK> keyBeanTransformer;
+    @Nonnull
     private BeanTransformer<E, PE> entityBeanTransformer;
+    @Nonnull
     private Class<PE> classPE;
+    @Nonnull
     private DeletionMod<PE> deletionMod;
+    @Nonnegative
     private int batchSize;
+    @Nonnull
     private Collection<String> updateKeepFields;
 
     public HibernateBatchBaseDao(
@@ -70,8 +80,10 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @Nonnull Collection<String> updateKeepFields
 
     ) {
-        this(template, keyBeanTransformer, entityBeanTransformer,
-                classPE, deletionMod, DEFAULT_BATCH_SIZE, updateKeepFields);
+        this(
+                template, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod, DEFAULT_BATCH_SIZE,
+                updateKeepFields
+        );
     }
 
     public HibernateBatchBaseDao(
@@ -80,10 +92,12 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
             @Nonnull DeletionMod<PE> deletionMod,
-            int batchSize
+            @Nonnegative int batchSize
     ) {
-        this(template, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod,
-                batchSize, Collections.emptySet());
+        this(
+                template, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod, batchSize,
+                Collections.emptySet()
+        );
     }
 
     public HibernateBatchBaseDao(
@@ -92,12 +106,9 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
             @Nonnull DeletionMod<PE> deletionMod,
-            int batchSize,
+            @Nonnegative int batchSize,
             @Nonnull Collection<String> updateKeepFields
     ) {
-        if (batchSize <= 0) {
-            throw new IllegalArgumentException("参数 batchSize 必须为正数");
-        }
         this.template = template;
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;
@@ -329,6 +340,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         return entityBeanTransformer.reverseTransform(persistenceEntity);
     }
 
+    @Nonnull
     public HibernateTemplate getTemplate() {
         return template;
     }
@@ -337,6 +349,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         this.template = template;
     }
 
+    @Nonnull
     public BeanTransformer<K, PK> getKeyBeanTransformer() {
         return keyBeanTransformer;
     }
@@ -345,6 +358,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         this.keyBeanTransformer = keyBeanTransformer;
     }
 
+    @Nonnull
     public BeanTransformer<E, PE> getEntityBeanTransformer() {
         return entityBeanTransformer;
     }
@@ -353,6 +367,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
+    @Nonnull
     public Class<PE> getClassPE() {
         return classPE;
     }
@@ -361,6 +376,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         this.classPE = classPE;
     }
 
+    @Nonnull
     public DeletionMod<PE> getDeletionMod() {
         return deletionMod;
     }
@@ -369,19 +385,34 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         this.deletionMod = deletionMod;
     }
 
+    @Nonnegative
     public int getBatchSize() {
         return batchSize;
     }
 
-    public void setBatchSize(int batchSize) {
+    public void setBatchSize(@Nonnegative int batchSize) {
         this.batchSize = batchSize;
     }
 
+    @Nonnull
     public Collection<String> getUpdateKeepFields() {
         return updateKeepFields;
     }
 
     public void setUpdateKeepFields(@Nonnull Collection<String> updateKeepFields) {
         this.updateKeepFields = updateKeepFields;
+    }
+
+    @Override
+    public String toString() {
+        return "HibernateBatchBaseDao{" +
+                "template=" + template +
+                ", keyBeanTransformer=" + keyBeanTransformer +
+                ", entityBeanTransformer=" + entityBeanTransformer +
+                ", classPE=" + classPE +
+                ", deletionMod=" + deletionMod +
+                ", batchSize=" + batchSize +
+                ", updateKeepFields=" + updateKeepFields +
+                '}';
     }
 }

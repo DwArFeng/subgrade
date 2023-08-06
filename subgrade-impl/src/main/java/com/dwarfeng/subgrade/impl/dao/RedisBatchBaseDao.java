@@ -10,29 +10,38 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Nonnull;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * 通过 Redis 实现的基础数据访问层。
- * <p>由于数据存放在内存中，请不要使用该数据访问层存储大量的数据。</p>
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 由于数据存放在内存中，请不要使用该数据访问层存储大量的数据。
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
 public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Bean> implements BatchBaseDao<K, E> {
 
+    @Nonnull
     private RedisTemplate<String, JE> template;
+    @Nonnull
     private StringKeyFormatter<K> formatter;
+    @Nonnull
     private BeanTransformer<E, JE> transformer;
+    @Nonnull
     private String dbKey;
 
     public RedisBatchBaseDao(
-            @Nonnull RedisTemplate<String, JE> template, @Nonnull StringKeyFormatter<K> formatter,
-            @Nonnull BeanTransformer<E, JE> transformer, @NotNull String dbKey
+            @Nonnull RedisTemplate<String, JE> template,
+            @Nonnull StringKeyFormatter<K> formatter,
+            @Nonnull BeanTransformer<E, JE> transformer,
+            @Nonnull String dbKey
     ) {
         this.template = template;
         this.formatter = formatter;
@@ -207,6 +216,7 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
         }
     }
 
+    @Nonnull
     public RedisTemplate<String, JE> getTemplate() {
         return template;
     }
@@ -215,6 +225,7 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
         this.template = template;
     }
 
+    @Nonnull
     public StringKeyFormatter<K> getFormatter() {
         return formatter;
     }
@@ -223,6 +234,7 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
         this.formatter = formatter;
     }
 
+    @Nonnull
     public BeanTransformer<E, JE> getTransformer() {
         return transformer;
     }
@@ -231,11 +243,22 @@ public class RedisBatchBaseDao<K extends Key, E extends Entity<K>, JE extends Be
         this.transformer = transformer;
     }
 
+    @Nonnull
     public String getDbKey() {
         return dbKey;
     }
 
-    public void setDbKey(String dbKey) {
+    public void setDbKey(@Nonnull String dbKey) {
         this.dbKey = dbKey;
+    }
+
+    @Override
+    public String toString() {
+        return "RedisBatchBaseDao{" +
+                "template=" + template +
+                ", formatter=" + formatter +
+                ", transformer=" + transformer +
+                ", dbKey='" + dbKey + '\'' +
+                '}';
     }
 }

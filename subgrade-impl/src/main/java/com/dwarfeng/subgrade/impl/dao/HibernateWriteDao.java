@@ -11,19 +11,24 @@ import javax.annotation.Nonnull;
 
 /**
  * 使用 Hibernate 实现的 WriteDao。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 1.1.0
  */
 public class HibernateWriteDao<E extends Entity<?>, PE extends Bean> implements WriteDao<E> {
 
+    @Nonnull
     private HibernateTemplate template;
+    @Nonnull
     private BeanTransformer<E, PE> entityBeanTransformer;
 
     public HibernateWriteDao(
             @Nonnull HibernateTemplate template,
-            @Nonnull BeanTransformer<E, PE> entityBeanTransformer) {
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer
+    ) {
         this.template = template;
         this.entityBeanTransformer = entityBeanTransformer;
     }
@@ -40,6 +45,11 @@ public class HibernateWriteDao<E extends Entity<?>, PE extends Bean> implements 
         }
     }
 
+    private PE transformEntity(E entity) {
+        return entityBeanTransformer.transform(entity);
+    }
+
+    @Nonnull
     public HibernateTemplate getTemplate() {
         return template;
     }
@@ -48,6 +58,7 @@ public class HibernateWriteDao<E extends Entity<?>, PE extends Bean> implements 
         this.template = template;
     }
 
+    @Nonnull
     public BeanTransformer<E, PE> getEntityBeanTransformer() {
         return entityBeanTransformer;
     }
@@ -56,7 +67,11 @@ public class HibernateWriteDao<E extends Entity<?>, PE extends Bean> implements 
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
-    private PE transformEntity(E entity) {
-        return entityBeanTransformer.transform(entity);
+    @Override
+    public String toString() {
+        return "HibernateWriteDao{" +
+                "template=" + template +
+                ", entityBeanTransformer=" + entityBeanTransformer +
+                '}';
     }
 }

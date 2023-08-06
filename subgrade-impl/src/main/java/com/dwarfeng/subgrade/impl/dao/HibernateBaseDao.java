@@ -19,7 +19,9 @@ import java.util.Objects;
 
 /**
  * 使用 Hibernate 实现的 BaseDao。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
@@ -27,11 +29,17 @@ import java.util.Objects;
 @SuppressWarnings("DuplicatedCode")
 public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K>, PE extends Bean> implements BaseDao<K, E> {
 
+    @Nonnull
     private HibernateTemplate template;
+    @Nonnull
     private BeanTransformer<K, PK> keyBeanTransformer;
+    @Nonnull
     private BeanTransformer<E, PE> entityBeanTransformer;
+    @Nonnull
     private Class<PE> classPE;
+    @Nonnull
     private DeletionMod<PE> deletionMod;
+    @Nonnull
     private Collection<String> updateKeepFields;
 
     public HibernateBaseDao(
@@ -39,8 +47,10 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
             @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE) {
-        this(template, keyBeanTransformer, entityBeanTransformer, classPE,
-                new DefaultDeletionMod<>(), Collections.emptySet());
+        this(
+                template, keyBeanTransformer, entityBeanTransformer, classPE, new DefaultDeletionMod<>(),
+                Collections.emptySet()
+        );
     }
 
     public HibernateBaseDao(
@@ -150,6 +160,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         return entityBeanTransformer.reverseTransform(persistenceEntity);
     }
 
+    @Nonnull
     public HibernateTemplate getTemplate() {
         return template;
     }
@@ -158,6 +169,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         this.template = template;
     }
 
+    @Nonnull
     public BeanTransformer<K, PK> getKeyBeanTransformer() {
         return keyBeanTransformer;
     }
@@ -166,6 +178,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         this.keyBeanTransformer = keyBeanTransformer;
     }
 
+    @Nonnull
     public BeanTransformer<E, PE> getEntityBeanTransformer() {
         return entityBeanTransformer;
     }
@@ -174,6 +187,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
+    @Nonnull
     public Class<PE> getClassPE() {
         return classPE;
     }
@@ -182,6 +196,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         this.classPE = classPE;
     }
 
+    @Nonnull
     public DeletionMod<PE> getDeletionMod() {
         return deletionMod;
     }
@@ -190,11 +205,24 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         this.deletionMod = deletionMod;
     }
 
+    @Nonnull
     public Collection<String> getUpdateKeepFields() {
         return updateKeepFields;
     }
 
-    public void setUpdateKeepFields(Collection<String> updateKeepFields) {
+    public void setUpdateKeepFields(@Nonnull Collection<String> updateKeepFields) {
         this.updateKeepFields = updateKeepFields;
+    }
+
+    @Override
+    public String toString() {
+        return "HibernateBaseDao{" +
+                "template=" + template +
+                ", keyBeanTransformer=" + keyBeanTransformer +
+                ", entityBeanTransformer=" + entityBeanTransformer +
+                ", classPE=" + classPE +
+                ", deletionMod=" + deletionMod +
+                ", updateKeepFields=" + updateKeepFields +
+                '}';
     }
 }

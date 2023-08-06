@@ -15,17 +15,24 @@ import java.util.Objects;
 /**
  * 通过 Hibernate 实现的单对象数据访问层。
  *
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK extends Bean, PE extends Bean> implements SingleObjectDao<E> {
+public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK extends Bean, PE extends Bean> implements
+        SingleObjectDao<E> {
 
+    @Nonnull
     private HibernateTemplate template;
+    @Nonnull
     private BeanTransformer<K, PK> keyBeanTransformer;
+    @Nonnull
     private BeanTransformer<E, PE> entityBeanTransformer;
+    @Nonnull
     private K key;
+    @Nonnull
     private Class<PE> classPE;
 
     public HibernateSingleObjectDao(
@@ -33,7 +40,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
             @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull K key,
-            Class<PE> classPE
+            @Nonnull Class<PE> classPE
     ) {
         this.template = template;
         this.keyBeanTransformer = keyBeanTransformer;
@@ -107,6 +114,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
         return entityBeanTransformer.reverseTransform(persistenceEntity);
     }
 
+    @Nonnull
     public HibernateTemplate getTemplate() {
         return template;
     }
@@ -115,6 +123,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
         this.template = template;
     }
 
+    @Nonnull
     public BeanTransformer<K, PK> getKeyBeanTransformer() {
         return keyBeanTransformer;
     }
@@ -123,6 +132,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
         this.keyBeanTransformer = keyBeanTransformer;
     }
 
+    @Nonnull
     public BeanTransformer<E, PE> getEntityBeanTransformer() {
         return entityBeanTransformer;
     }
@@ -131,19 +141,32 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
+    @Nonnull
     public K getKey() {
         return key;
     }
 
-    public void setKey(K key) {
+    public void setKey(@Nonnull K key) {
         this.key = key;
     }
 
+    @Nonnull
     public Class<PE> getClassPE() {
         return classPE;
     }
 
-    public void setClassPE(Class<PE> classPE) {
+    public void setClassPE(@Nonnull Class<PE> classPE) {
         this.classPE = classPE;
+    }
+
+    @Override
+    public String toString() {
+        return "HibernateSingleObjectDao{" +
+                "template=" + template +
+                ", keyBeanTransformer=" + keyBeanTransformer +
+                ", entityBeanTransformer=" + entityBeanTransformer +
+                ", key=" + key +
+                ", classPE=" + classPE +
+                '}';
     }
 }

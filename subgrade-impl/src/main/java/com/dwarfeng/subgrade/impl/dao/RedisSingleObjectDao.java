@@ -15,16 +15,21 @@ import javax.annotation.Nonnull;
 /**
  * 通过 Redis 实现的单对象数据访问层。
  *
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
 public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends Bean> implements SingleObjectDao<E> {
 
+    @Nonnull
     private RedisTemplate<String, JE> template;
+    @Nonnull
     private StringKeyFormatter<K> formatter;
+    @Nonnull
     private BeanTransformer<E, JE> transformer;
+    @Nonnull
     private K key;
 
     public RedisSingleObjectDao(
@@ -49,7 +54,9 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
     }
 
     private boolean internalExists() {
-        return template.hasKey(formatter.format(key));
+        Boolean unboxedResult = template.hasKey(formatter.format(key));
+        // 拆箱。
+        return unboxedResult != null && unboxedResult;
     }
 
     @Override
@@ -82,6 +89,7 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
         }
     }
 
+    @Nonnull
     public RedisTemplate<String, JE> getTemplate() {
         return template;
     }
@@ -90,6 +98,7 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
         this.template = template;
     }
 
+    @Nonnull
     public StringKeyFormatter<K> getFormatter() {
         return formatter;
     }
@@ -98,6 +107,7 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
         this.formatter = formatter;
     }
 
+    @Nonnull
     public BeanTransformer<E, JE> getTransformer() {
         return transformer;
     }
@@ -106,11 +116,22 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
         this.transformer = transformer;
     }
 
+    @Nonnull
     public K getKey() {
         return key;
     }
 
     public void setKey(@Nonnull K key) {
         this.key = key;
+    }
+
+    @Override
+    public String toString() {
+        return "RedisSingleObjectDao{" +
+                "template=" + template +
+                ", formatter=" + formatter +
+                ", transformer=" + transformer +
+                ", key=" + key +
+                '}';
     }
 }

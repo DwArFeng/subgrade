@@ -17,18 +17,27 @@ import java.util.stream.Collectors;
 
 /**
  * 通过 Redis 实现的 PresetLookupDao。
- * <p>由于数据存放在内存中，请不要使用该数据访问层存储大量的数据。</p>
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 由于数据存放在内存中，请不要使用该数据访问层存储大量的数据。
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
 public class RedisPresetLookupDao<K extends Key, E extends Entity<K>, JE extends Bean> implements PresetLookupDao<E> {
 
+    @Nonnull
     private RedisTemplate<String, JE> template;
+    @Nonnull
     private StringKeyFormatter<K> formatter;
+    @Nonnull
     private BeanTransformer<E, JE> transformer;
+    @Nonnull
     private PresetEntityFilter<E> filter;
+    @Nonnull
     private String dbKey;
 
     public RedisPresetLookupDao(
@@ -36,7 +45,8 @@ public class RedisPresetLookupDao<K extends Key, E extends Entity<K>, JE extends
             @Nonnull StringKeyFormatter<K> formatter,
             @Nonnull BeanTransformer<E, JE> transformer,
             @Nonnull PresetEntityFilter<E> filter,
-            @Nonnull String dbKey) {
+            @Nonnull String dbKey
+    ) {
         this.template = template;
         this.formatter = formatter;
         this.transformer = transformer;
@@ -101,6 +111,7 @@ public class RedisPresetLookupDao<K extends Key, E extends Entity<K>, JE extends
         }
     }
 
+    @Nonnull
     public RedisTemplate<String, JE> getTemplate() {
         return template;
     }
@@ -109,6 +120,7 @@ public class RedisPresetLookupDao<K extends Key, E extends Entity<K>, JE extends
         this.template = template;
     }
 
+    @Nonnull
     public StringKeyFormatter<K> getFormatter() {
         return formatter;
     }
@@ -117,6 +129,7 @@ public class RedisPresetLookupDao<K extends Key, E extends Entity<K>, JE extends
         this.formatter = formatter;
     }
 
+    @Nonnull
     public BeanTransformer<E, JE> getTransformer() {
         return transformer;
     }
@@ -125,6 +138,7 @@ public class RedisPresetLookupDao<K extends Key, E extends Entity<K>, JE extends
         this.transformer = transformer;
     }
 
+    @Nonnull
     public PresetEntityFilter<E> getFilter() {
         return filter;
     }
@@ -133,11 +147,23 @@ public class RedisPresetLookupDao<K extends Key, E extends Entity<K>, JE extends
         this.filter = filter;
     }
 
+    @Nonnull
     public String getDbKey() {
         return dbKey;
     }
 
     public void setDbKey(@Nonnull String dbKey) {
         this.dbKey = dbKey;
+    }
+
+    @Override
+    public String toString() {
+        return "RedisPresetLookupDao{" +
+                "template=" + template +
+                ", formatter=" + formatter +
+                ", transformer=" + transformer +
+                ", filter=" + filter +
+                ", dbKey='" + dbKey + '\'' +
+                '}';
     }
 }

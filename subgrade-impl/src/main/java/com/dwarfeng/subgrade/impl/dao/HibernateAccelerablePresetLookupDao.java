@@ -50,10 +50,15 @@ import java.util.stream.Collectors;
 public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends Bean> implements
         PresetLookupDao<E> {
 
+    @Nonnull
     private HibernateTemplate template;
+    @Nonnull
     private BeanTransformer<E, PE> entityBeanTransformer;
+    @Nonnull
     private Class<PE> classPE;
+    @Nonnull
     private NativeLookup<E> nativeLookup;
+    @Nonnull
     private PresetCriteriaMaker presetCriteriaMaker;
 
     public HibernateAccelerablePresetLookupDao(
@@ -159,6 +164,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
         }
     }
 
+    @Nonnull
     public HibernateTemplate getTemplate() {
         return template;
     }
@@ -167,6 +173,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
         this.template = template;
     }
 
+    @Nonnull
     public BeanTransformer<E, PE> getEntityBeanTransformer() {
         return entityBeanTransformer;
     }
@@ -175,6 +182,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
+    @Nonnull
     public Class<PE> getClassPE() {
         return classPE;
     }
@@ -183,6 +191,16 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
         this.classPE = classPE;
     }
 
+    @Nonnull
+    public NativeLookup<E> getNativeLookup() {
+        return nativeLookup;
+    }
+
+    public void setNativeLookup(@Nonnull NativeLookup<E> nativeLookup) {
+        this.nativeLookup = nativeLookup;
+    }
+
+    @Nonnull
     public PresetCriteriaMaker getPresetCriteriaMaker() {
         return presetCriteriaMaker;
     }
@@ -191,11 +209,14 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
         this.presetCriteriaMaker = presetCriteriaMaker;
     }
 
-    public NativeLookup<E> getNativeSqlLookup() {
-        return nativeLookup;
-    }
-
-    public void setNativeSqlLookup(@Nonnull NativeLookup<E> nativeLookup) {
-        this.nativeLookup = nativeLookup;
+    @Override
+    public String toString() {
+        return "HibernateAccelerablePresetLookupDao{" +
+                "template=" + template +
+                ", entityBeanTransformer=" + entityBeanTransformer +
+                ", classPE=" + classPE +
+                ", nativeLookup=" + nativeLookup +
+                ", presetCriteriaMaker=" + presetCriteriaMaker +
+                '}';
     }
 }

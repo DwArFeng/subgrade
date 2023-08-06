@@ -15,7 +15,9 @@ import java.util.Objects;
 
 /**
  * 使用 Hibernate 基于多对多关系实现的 RelationDao。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.2.4-beta
@@ -42,15 +44,25 @@ public class HibernateRelationDao<
         JOIN_BY_CHILD
     }
 
+    @Nonnull
     private HibernateTemplate template;
+    @Nonnull
     private BeanTransformer<PK, PPK> pkTransformer;
+    @Nonnull
     private BeanTransformer<CK, PCK> ckTransformer;
+    @Nonnull
     private BeanTransformer<PE, PPE> peTransformer;
+    @Nonnull
     private BeanTransformer<CE, PCE> ceTransformer;
+    @Nonnull
     private Class<PPE> classPPE;
+    @Nonnull
     private Class<PCE> classPCE;
+    @Nonnull
     private String parentProperty;
+    @Nonnull
     private String childProperty;
+    @Nonnull
     private JoinType joinType;
 
     public HibernateRelationDao(
@@ -63,7 +75,8 @@ public class HibernateRelationDao<
             @Nonnull Class<PCE> classPCE,
             @Nonnull String parentProperty,
             @Nonnull String childProperty,
-            @Nonnull JoinType joinType) {
+            @Nonnull JoinType joinType
+    ) {
         this.template = template;
         this.pkTransformer = pkTransformer;
         this.ckTransformer = ckTransformer;
@@ -159,6 +172,7 @@ public class HibernateRelationDao<
         }
     }
 
+    @Nonnull
     public HibernateTemplate getTemplate() {
         return template;
     }
@@ -167,6 +181,7 @@ public class HibernateRelationDao<
         this.template = template;
     }
 
+    @Nonnull
     public BeanTransformer<PK, PPK> getPkTransformer() {
         return pkTransformer;
     }
@@ -175,6 +190,7 @@ public class HibernateRelationDao<
         this.pkTransformer = pkTransformer;
     }
 
+    @Nonnull
     public BeanTransformer<CK, PCK> getCkTransformer() {
         return ckTransformer;
     }
@@ -183,6 +199,7 @@ public class HibernateRelationDao<
         this.ckTransformer = ckTransformer;
     }
 
+    @Nonnull
     public BeanTransformer<PE, PPE> getPeTransformer() {
         return peTransformer;
     }
@@ -191,6 +208,7 @@ public class HibernateRelationDao<
         this.peTransformer = peTransformer;
     }
 
+    @Nonnull
     public BeanTransformer<CE, PCE> getCeTransformer() {
         return ceTransformer;
     }
@@ -199,6 +217,7 @@ public class HibernateRelationDao<
         this.ceTransformer = ceTransformer;
     }
 
+    @Nonnull
     public Class<PPE> getClassPPE() {
         return classPPE;
     }
@@ -207,6 +226,7 @@ public class HibernateRelationDao<
         this.classPPE = classPPE;
     }
 
+    @Nonnull
     public Class<PCE> getClassPCE() {
         return classPCE;
     }
@@ -215,6 +235,7 @@ public class HibernateRelationDao<
         this.classPCE = classPCE;
     }
 
+    @Nonnull
     public String getParentProperty() {
         return parentProperty;
     }
@@ -223,6 +244,7 @@ public class HibernateRelationDao<
         this.parentProperty = parentProperty;
     }
 
+    @Nonnull
     public String getChildProperty() {
         return childProperty;
     }
@@ -231,6 +253,7 @@ public class HibernateRelationDao<
         this.childProperty = childProperty;
     }
 
+    @Nonnull
     public JoinType getJoinType() {
         return joinType;
     }
@@ -241,7 +264,7 @@ public class HibernateRelationDao<
 
     @Override
     public String toString() {
-        return "HibernateMtmRelationDao{" +
+        return "HibernateRelationDao{" +
                 "template=" + template +
                 ", pkTransformer=" + pkTransformer +
                 ", ckTransformer=" + ckTransformer +

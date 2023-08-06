@@ -26,9 +26,13 @@ import java.util.stream.Collectors;
  */
 public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> implements PresetLookupDao<E> {
 
+    @Nonnull
     private HibernateTemplate template;
+    @Nonnull
     private BeanTransformer<E, PE> entityBeanTransformer;
+    @Nonnull
     private Class<PE> classPE;
+    @Nonnull
     private PresetCriteriaMaker presetCriteriaMaker;
 
     public HibernatePresetLookupDao(
@@ -103,6 +107,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
         }
     }
 
+    @Nonnull
     public HibernateTemplate getTemplate() {
         return template;
     }
@@ -111,6 +116,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
         this.template = template;
     }
 
+    @Nonnull
     public BeanTransformer<E, PE> getEntityBeanTransformer() {
         return entityBeanTransformer;
     }
@@ -119,6 +125,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
+    @Nonnull
     public Class<PE> getClassPE() {
         return classPE;
     }
@@ -127,11 +134,22 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
         this.classPE = classPE;
     }
 
+    @Nonnull
     public PresetCriteriaMaker getPresetCriteriaMaker() {
         return presetCriteriaMaker;
     }
 
     public void setPresetCriteriaMaker(@Nonnull PresetCriteriaMaker presetCriteriaMaker) {
         this.presetCriteriaMaker = presetCriteriaMaker;
+    }
+
+    @Override
+    public String toString() {
+        return "HibernatePresetLookupDao{" +
+                "template=" + template +
+                ", entityBeanTransformer=" + entityBeanTransformer +
+                ", classPE=" + classPE +
+                ", presetCriteriaMaker=" + presetCriteriaMaker +
+                '}';
     }
 }

@@ -4,6 +4,23 @@
 
 #### 功能构建
 
+- 规范代码的注解、注释、toString 方法。
+  - com.dwarfeng.subgrade.impl.dao.HibernateAccelerablePresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateBatchRelationDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateBatchWriteDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateRelationDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateSingleObjectDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateWriteDao。
+  - com.dwarfeng.subgrade.impl.dao.RedisBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.RedisBatchBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.RedisEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.RedisPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.RedisSingleObjectDao。
+
 - 规范约束检查注解。
   - org.springframework.lang.NonNull -> javax.annotation.Nonnull。
   - org.springframework.lang.Nullable -> javax.annotation.Nullable。

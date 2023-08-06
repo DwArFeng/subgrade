@@ -16,21 +16,27 @@ import java.util.stream.Collectors;
 
 /**
  * 使用 Hibernate 实现的 EntireLookupDao。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
 public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> implements EntireLookupDao<E> {
 
+    @Nonnull
     private HibernateTemplate template;
+    @Nonnull
     private BeanTransformer<E, PE> entityBeanTransformer;
+    @Nonnull
     private Class<PE> classPE;
 
     public HibernateEntireLookupDao(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
-            @Nonnull Class<PE> classPE) {
+            @Nonnull Class<PE> classPE
+    ) {
         this.template = template;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
@@ -88,6 +94,7 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
         }
     }
 
+    @Nonnull
     public HibernateTemplate getTemplate() {
         return template;
     }
@@ -96,6 +103,7 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
         this.template = template;
     }
 
+    @Nonnull
     public BeanTransformer<E, PE> getEntityBeanTransformer() {
         return entityBeanTransformer;
     }
@@ -104,11 +112,21 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
+    @Nonnull
     public Class<PE> getClassPE() {
         return classPE;
     }
 
     public void setClassPE(@Nonnull Class<PE> classPE) {
         this.classPE = classPE;
+    }
+
+    @Override
+    public String toString() {
+        return "HibernateEntireLookupDao{" +
+                "template=" + template +
+                ", entityBeanTransformer=" + entityBeanTransformer +
+                ", classPE=" + classPE +
+                '}';
     }
 }
