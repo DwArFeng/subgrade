@@ -188,7 +188,7 @@ public final class HibernateDaoFactory {
         if (Objects.isNull(nativeLookup)) {
             return new HibernatePresetLookupDao<>(template, entityBeanTransformer, classPE, presetCriteriaMaker);
         } else {
-            return new HibernateAcceleratePresetLookupDao<>(
+            return new HibernateAccelerablePresetLookupDao<>(
                     template, entityBeanTransformer, classPE, nativeLookup, presetCriteriaMaker
             );
         }

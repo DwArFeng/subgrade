@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 规范化类名。
+  - HibernateAcceleratePresetLookupDao -> HibernateAccelerablePresetLookupDao，旧类名依然可用，但是已经过时。
 
 - 依赖升级。
   - 升级 `guava` 依赖版本为 `32.0.1-jre` 以规避漏洞。
