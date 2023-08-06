@@ -5,8 +5,9 @@ import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.WriteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+
+import javax.annotation.Nonnull;
 
 /**
  * 使用 Hibernate 实现的 WriteDao。
@@ -21,8 +22,8 @@ public class HibernateWriteDao<E extends Entity<?>, PE extends Bean> implements 
     private BeanTransformer<E, PE> entityBeanTransformer;
 
     public HibernateWriteDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer) {
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer) {
         this.template = template;
         this.entityBeanTransformer = entityBeanTransformer;
     }
@@ -43,7 +44,7 @@ public class HibernateWriteDao<E extends Entity<?>, PE extends Bean> implements 
         return template;
     }
 
-    public void setTemplate(@NonNull HibernateTemplate template) {
+    public void setTemplate(@Nonnull HibernateTemplate template) {
         this.template = template;
     }
 
@@ -51,7 +52,7 @@ public class HibernateWriteDao<E extends Entity<?>, PE extends Bean> implements 
         return entityBeanTransformer;
     }
 
-    public void setEntityBeanTransformer(@NonNull BeanTransformer<E, PE> entityBeanTransformer) {
+    public void setEntityBeanTransformer(@Nonnull BeanTransformer<E, PE> entityBeanTransformer) {
         this.entityBeanTransformer = entityBeanTransformer;
     }
 

@@ -6,8 +6,8 @@ import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
 import com.dwarfeng.subgrade.sdk.jdbc.handle.ResultHandle;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class PhoenixEntireLookupProcessor<E extends Entity<?>> implements Entire
     private ResultHandle<E> handle;
 
     public PhoenixEntireLookupProcessor(
-            @NonNull TableDefinition tableDefinition, @NonNull ResultHandle<E> resultHandle) {
+            @Nonnull TableDefinition tableDefinition, @Nonnull ResultHandle<E> resultHandle) {
         this.tableDefinition = tableDefinition;
         this.handle = resultHandle;
     }
@@ -111,7 +111,7 @@ public class PhoenixEntireLookupProcessor<E extends Entity<?>> implements Entire
         return tableDefinition;
     }
 
-    public void setTableDefinition(@NonNull TableDefinition tableDefinition) {
+    public void setTableDefinition(@Nonnull TableDefinition tableDefinition) {
         this.tableDefinition = tableDefinition;
     }
 
@@ -119,7 +119,7 @@ public class PhoenixEntireLookupProcessor<E extends Entity<?>> implements Entire
         return handle;
     }
 
-    public void setHandle(@NonNull ResultHandle<E> handle) {
+    public void setHandle(@Nonnull ResultHandle<E> handle) {
         this.handle = handle;
     }
 }

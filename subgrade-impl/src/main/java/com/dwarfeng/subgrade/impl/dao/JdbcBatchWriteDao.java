@@ -6,8 +6,8 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.BatchWriteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +23,7 @@ public class JdbcBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> 
     private JdbcTemplate template;
     private BatchWriteProcessor<E> processor;
 
-    public JdbcBatchWriteDao(@NonNull JdbcTemplate template, @NonNull BatchWriteProcessor<E> processor) {
+    public JdbcBatchWriteDao(@Nonnull JdbcTemplate template, @Nonnull BatchWriteProcessor<E> processor) {
         this.template = template;
         this.processor = processor;
     }
@@ -66,7 +66,7 @@ public class JdbcBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> 
         return template;
     }
 
-    public void setTemplate(@NonNull JdbcTemplate template) {
+    public void setTemplate(@Nonnull JdbcTemplate template) {
         this.template = template;
     }
 
@@ -74,7 +74,7 @@ public class JdbcBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> 
         return processor;
     }
 
-    public void setProcessor(@NonNull BatchWriteProcessor<E> processor) {
+    public void setProcessor(@Nonnull BatchWriteProcessor<E> processor) {
         this.processor = processor;
     }
 }

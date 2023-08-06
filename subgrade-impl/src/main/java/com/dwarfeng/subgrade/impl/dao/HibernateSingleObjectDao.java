@@ -7,9 +7,9 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.SingleObjectDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -29,10 +29,10 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
     private Class<PE> classPE;
 
     public HibernateSingleObjectDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull K key,
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull K key,
             Class<PE> classPE
     ) {
         this.template = template;
@@ -111,7 +111,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
         return template;
     }
 
-    public void setTemplate(@NonNull HibernateTemplate template) {
+    public void setTemplate(@Nonnull HibernateTemplate template) {
         this.template = template;
     }
 
@@ -119,7 +119,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
         return keyBeanTransformer;
     }
 
-    public void setKeyBeanTransformer(@NonNull BeanTransformer<K, PK> keyBeanTransformer) {
+    public void setKeyBeanTransformer(@Nonnull BeanTransformer<K, PK> keyBeanTransformer) {
         this.keyBeanTransformer = keyBeanTransformer;
     }
 
@@ -127,7 +127,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
         return entityBeanTransformer;
     }
 
-    public void setEntityBeanTransformer(@NonNull BeanTransformer<E, PE> entityBeanTransformer) {
+    public void setEntityBeanTransformer(@Nonnull BeanTransformer<E, PE> entityBeanTransformer) {
         this.entityBeanTransformer = entityBeanTransformer;
     }
 

@@ -11,8 +11,8 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.BatchCrudService;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,11 +38,11 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     private long cacheTimeout;
 
     public GeneralBatchCrudService(
-            @NonNull BatchBaseDao<K, E> dao,
-            @NonNull BatchBaseCache<K, E> cache,
-            @NonNull KeyFetcher<K> keyFetcher,
-            @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel,
+            @Nonnull BatchBaseDao<K, E> dao,
+            @Nonnull BatchBaseCache<K, E> cache,
+            @Nonnull KeyFetcher<K> keyFetcher,
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel,
             long cacheTimeout
     ) {
         this.dao = dao;
@@ -442,7 +442,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         return dao;
     }
 
-    public void setDao(@NonNull BatchBaseDao<K, E> dao) {
+    public void setDao(@Nonnull BatchBaseDao<K, E> dao) {
         this.dao = dao;
     }
 
@@ -450,7 +450,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         return cache;
     }
 
-    public void setCache(@NonNull BatchBaseCache<K, E> cache) {
+    public void setCache(@Nonnull BatchBaseCache<K, E> cache) {
         this.cache = cache;
     }
 
@@ -458,7 +458,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         return keyFetcher;
     }
 
-    public void setKeyFetcher(@NonNull KeyFetcher<K> keyFetcher) {
+    public void setKeyFetcher(@Nonnull KeyFetcher<K> keyFetcher) {
         this.keyFetcher = keyFetcher;
     }
 
@@ -466,7 +466,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         return sem;
     }
 
-    public void setSem(@NonNull ServiceExceptionMapper sem) {
+    public void setSem(@Nonnull ServiceExceptionMapper sem) {
         this.sem = sem;
     }
 
@@ -474,7 +474,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         return exceptionLogLevel;
     }
 
-    public void setExceptionLogLevel(@NonNull LogLevel exceptionLogLevel) {
+    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
     }
 

@@ -8,9 +8,9 @@ import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
-import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,9 +28,9 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
     private Class<PE> classPE;
 
     public HibernateEntireLookupDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE) {
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE) {
         this.template = template;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
@@ -92,7 +92,7 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
         return template;
     }
 
-    public void setTemplate(@NonNull HibernateTemplate template) {
+    public void setTemplate(@Nonnull HibernateTemplate template) {
         this.template = template;
     }
 
@@ -100,7 +100,7 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
         return entityBeanTransformer;
     }
 
-    public void setEntityBeanTransformer(@NonNull BeanTransformer<E, PE> entityBeanTransformer) {
+    public void setEntityBeanTransformer(@Nonnull BeanTransformer<E, PE> entityBeanTransformer) {
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
@@ -108,7 +108,7 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
         return classPE;
     }
 
-    public void setClassPE(@NonNull Class<PE> classPE) {
+    public void setClassPE(@Nonnull Class<PE> classPE) {
         this.classPE = classPE;
     }
 }

@@ -7,9 +7,9 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.RelationDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -54,16 +54,16 @@ public class HibernateRelationDao<
     private JoinType joinType;
 
     public HibernateRelationDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<PK, PPK> pkTransformer,
-            @NonNull BeanTransformer<CK, PCK> ckTransformer,
-            @NonNull BeanTransformer<PE, PPE> peTransformer,
-            @NonNull BeanTransformer<CE, PCE> ceTransformer,
-            @NonNull Class<PPE> classPPE,
-            @NonNull Class<PCE> classPCE,
-            @NonNull String parentProperty,
-            @NonNull String childProperty,
-            @NonNull JoinType joinType) {
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<PK, PPK> pkTransformer,
+            @Nonnull BeanTransformer<CK, PCK> ckTransformer,
+            @Nonnull BeanTransformer<PE, PPE> peTransformer,
+            @Nonnull BeanTransformer<CE, PCE> ceTransformer,
+            @Nonnull Class<PPE> classPPE,
+            @Nonnull Class<PCE> classPCE,
+            @Nonnull String parentProperty,
+            @Nonnull String childProperty,
+            @Nonnull JoinType joinType) {
         this.template = template;
         this.pkTransformer = pkTransformer;
         this.ckTransformer = ckTransformer;
@@ -163,7 +163,7 @@ public class HibernateRelationDao<
         return template;
     }
 
-    public void setTemplate(@NonNull HibernateTemplate template) {
+    public void setTemplate(@Nonnull HibernateTemplate template) {
         this.template = template;
     }
 
@@ -171,7 +171,7 @@ public class HibernateRelationDao<
         return pkTransformer;
     }
 
-    public void setPkTransformer(@NonNull BeanTransformer<PK, PPK> pkTransformer) {
+    public void setPkTransformer(@Nonnull BeanTransformer<PK, PPK> pkTransformer) {
         this.pkTransformer = pkTransformer;
     }
 
@@ -179,7 +179,7 @@ public class HibernateRelationDao<
         return ckTransformer;
     }
 
-    public void setCkTransformer(@NonNull BeanTransformer<CK, PCK> ckTransformer) {
+    public void setCkTransformer(@Nonnull BeanTransformer<CK, PCK> ckTransformer) {
         this.ckTransformer = ckTransformer;
     }
 
@@ -187,7 +187,7 @@ public class HibernateRelationDao<
         return peTransformer;
     }
 
-    public void setPeTransformer(@NonNull BeanTransformer<PE, PPE> peTransformer) {
+    public void setPeTransformer(@Nonnull BeanTransformer<PE, PPE> peTransformer) {
         this.peTransformer = peTransformer;
     }
 
@@ -195,7 +195,7 @@ public class HibernateRelationDao<
         return ceTransformer;
     }
 
-    public void setCeTransformer(@NonNull BeanTransformer<CE, PCE> ceTransformer) {
+    public void setCeTransformer(@Nonnull BeanTransformer<CE, PCE> ceTransformer) {
         this.ceTransformer = ceTransformer;
     }
 
@@ -203,7 +203,7 @@ public class HibernateRelationDao<
         return classPPE;
     }
 
-    public void setClassPPE(@NonNull Class<PPE> classPPE) {
+    public void setClassPPE(@Nonnull Class<PPE> classPPE) {
         this.classPPE = classPPE;
     }
 
@@ -211,7 +211,7 @@ public class HibernateRelationDao<
         return classPCE;
     }
 
-    public void setClassPCE(@NonNull Class<PCE> classPCE) {
+    public void setClassPCE(@Nonnull Class<PCE> classPCE) {
         this.classPCE = classPCE;
     }
 
@@ -219,7 +219,7 @@ public class HibernateRelationDao<
         return parentProperty;
     }
 
-    public void setParentProperty(@NonNull String parentProperty) {
+    public void setParentProperty(@Nonnull String parentProperty) {
         this.parentProperty = parentProperty;
     }
 
@@ -227,7 +227,7 @@ public class HibernateRelationDao<
         return childProperty;
     }
 
-    public void setChildProperty(@NonNull String childProperty) {
+    public void setChildProperty(@Nonnull String childProperty) {
         this.childProperty = childProperty;
     }
 
@@ -235,7 +235,7 @@ public class HibernateRelationDao<
         return joinType;
     }
 
-    public void setJoinType(@NonNull JoinType joinType) {
+    public void setJoinType(@Nonnull JoinType joinType) {
         this.joinType = joinType;
     }
 

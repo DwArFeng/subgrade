@@ -527,7 +527,7 @@ public class MySQL8Helper {
 //     *
 //     * @param engine 数据库引擎。
 //     */
-//    public void setEngine(@NonNull Engine engine) {
+//    public void setEngine(@Nonnull Engine engine) {
 //        customDefinition.put(MySQL8Constants.CUSTOM_ENGINE, engine);
 //    }
 //
@@ -536,7 +536,7 @@ public class MySQL8Helper {
 //     *
 //     * @param charset 数据库的默认字符集。
 //     */
-//    public void setDefaultCharset(@NonNull Charset charset) {
+//    public void setDefaultCharset(@Nonnull Charset charset) {
 //        customDefinition.put(MySQL8Constants.CUSTOM_DEFAULT_CHARSET, charset);
 //    }
 //
@@ -545,7 +545,7 @@ public class MySQL8Helper {
 //     *
 //     * @param collation 数据库字符的对比方法。
 //     */
-//    public void setCollation(@NonNull Collation collation) {
+//    public void setCollation(@Nonnull Collation collation) {
 //        customDefinition.put(MySQL8Constants.CUSTOM_COLLATION, collation);
 //    }
 //
@@ -564,7 +564,7 @@ public class MySQL8Helper {
 //     * @param columnName 列的名称。
 //     * @param type       列的类型。
 //     */
-//    public void addColumn(@NonNull String columnName, @NonNull String type) {
+//    public void addColumn(@Nonnull String columnName, @Nonnull String type) {
 //        addColumn(columnName, type, null, null, null);
 //    }
 //
@@ -577,7 +577,7 @@ public class MySQL8Helper {
 //     * @param columnProperties 列的属性。
 //     */
 //    public void addColumn(
-//            @NonNull String columnName, @NonNull String type, String defaultValue, Charset characterSet,
+//            @Nonnull String columnName, @Nonnull String type, String defaultValue, Charset characterSet,
 //            Collation collate, ColumnProperty... columnProperties) {
 //        makeSureAllColumnNotExists(Collections.singletonList(columnName));
 //        makeSureColumnPropertiesValid(Arrays.asList(columnProperties));
@@ -618,7 +618,7 @@ public class MySQL8Helper {
 //     * @param indexType   索引的类型。
 //     * @param columnNames 与索引相关的列名称。
 //     */
-//    public void addIndex(@NonNull String name, @NonNull IndexType indexType, @NonNull String... columnNames) {
+//    public void addIndex(@Nonnull String name, @Nonnull IndexType indexType, @Nonnull String... columnNames) {
 //        addIndex(name, indexType, null, null, null, columnNames);
 //    }
 //
@@ -633,8 +633,8 @@ public class MySQL8Helper {
 //     * @param columnNames  与索引有关的列名称。
 //     */
 //    public void addIndex(
-//            @NonNull String name, @NonNull IndexType indexType, IndexStorage indexStorage,
-//            Integer keyBlockSize, String parser, @NonNull String... columnNames) {
+//            @Nonnull String name, @Nonnull IndexType indexType, IndexStorage indexStorage,
+//            Integer keyBlockSize, String parser, @Nonnull String... columnNames) {
 //        List<String> nameList = Arrays.asList(columnNames);
 //        makeSureAllColumnExists(nameList);
 //        Map<String, Object> customDefinition = new HashMap<>();
@@ -664,7 +664,7 @@ public class MySQL8Helper {
 //     * @param length     索引的长度。
 //     */
 //    @SuppressWarnings("unchecked")
-//    public void setIndexLength(@NonNull String indexName, @NonNull String columnName, Integer length) {
+//    public void setIndexLength(@Nonnull String indexName, @Nonnull String columnName, Integer length) {
 //        makeSureIndexExists(indexName);
 //        makeSureAllColumnExists(Collections.singletonList(columnName));
 //        Map<String, Object> customDefinition = indexDefinitionMap.get(indexName).getCustomDefinition();
@@ -684,7 +684,7 @@ public class MySQL8Helper {
 //     * @param columnNames 需要设置索引升序排序的列的名称。
 //     */
 //    @SuppressWarnings("unchecked")
-//    public void setIndexAsc(@NonNull String indexName, @NonNull String... columnNames) {
+//    public void setIndexAsc(@Nonnull String indexName, @Nonnull String... columnNames) {
 //        List<String> columnNameList = Arrays.asList(columnNames);
 //        makeSureIndexExists(indexName);
 //        makeSureAllColumnExists(columnNameList);
@@ -700,7 +700,7 @@ public class MySQL8Helper {
 //     * @param columnNames 需要设置索引降序排序的列的名称。
 //     */
 //    @SuppressWarnings("unchecked")
-//    public void setIndexDesc(@NonNull String indexName, @NonNull String... columnNames) {
+//    public void setIndexDesc(@Nonnull String indexName, @Nonnull String... columnNames) {
 //        List<String> columnNameList = Arrays.asList(columnNames);
 //        makeSureIndexExists(indexName);
 //        makeSureAllColumnExists(columnNameList);
@@ -719,8 +719,8 @@ public class MySQL8Helper {
 //     * @param columnNames    与外键约束有关的列名称。
 //     */
 //    public void addForeignKey(
-//            @NonNull String foreignKeyName, String refSchemaName, @NonNull String refTableName,
-//            @NonNull List<String> refColumnNames, @NonNull List<String> columnNames) {
+//            @Nonnull String foreignKeyName, String refSchemaName, @Nonnull String refTableName,
+//            @Nonnull List<String> refColumnNames, @Nonnull List<String> columnNames) {
 //        addForeignKey(foreignKeyName, refSchemaName, refTableName, refColumnNames, columnNames, null, null);
 //    }
 //
@@ -736,8 +736,8 @@ public class MySQL8Helper {
 //     * @param onDelete       有关列删除时的动作。
 //     */
 //    public void addForeignKey(
-//            @NonNull String foreignKeyName, String refSchemaName, @NonNull String refTableName,
-//            @NonNull List<String> refColumnNames, @NonNull List<String> columnNames, ForeignKeyOption onUpdate,
+//            @Nonnull String foreignKeyName, String refSchemaName, @Nonnull String refTableName,
+//            @Nonnull List<String> refColumnNames, @Nonnull List<String> columnNames, ForeignKeyOption onUpdate,
 //            ForeignKeyOption onDelete) {
 //        makeSureAllColumnExists(columnNames);
 //        Map<String, Object> customDefinition = new HashMap<>();

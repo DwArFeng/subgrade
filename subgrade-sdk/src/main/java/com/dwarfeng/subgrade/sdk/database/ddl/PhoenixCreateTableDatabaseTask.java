@@ -7,8 +7,8 @@ import com.dwarfeng.subgrade.sdk.database.definition.PhoenixHelper.IndexAsyncTyp
 import com.dwarfeng.subgrade.sdk.database.definition.PhoenixHelper.UpdateCacheFrequencyInfo;
 import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
 import com.dwarfeng.subgrade.stack.handler.DatabaseTask;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class PhoenixCreateTableDatabaseTask implements DatabaseTask<Object> {
 
     private TableDefinition tableDefinition;
 
-    public PhoenixCreateTableDatabaseTask(@NonNull TableDefinition tableDefinition) {
+    public PhoenixCreateTableDatabaseTask(@Nonnull TableDefinition tableDefinition) {
         this.tableDefinition = tableDefinition;
     }
 
@@ -312,7 +312,7 @@ public class PhoenixCreateTableDatabaseTask implements DatabaseTask<Object> {
         return tableDefinition;
     }
 
-    public void setTableDefinition(@NonNull TableDefinition tableDefinition) {
+    public void setTableDefinition(@Nonnull TableDefinition tableDefinition) {
         this.tableDefinition = tableDefinition;
     }
 }

@@ -9,9 +9,9 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
-import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,10 +32,10 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
     private PresetCriteriaMaker presetCriteriaMaker;
 
     public HibernatePresetLookupDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull PresetCriteriaMaker presetCriteriaMaker
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull PresetCriteriaMaker presetCriteriaMaker
     ) {
         this.template = template;
         this.entityBeanTransformer = entityBeanTransformer;
@@ -107,7 +107,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
         return template;
     }
 
-    public void setTemplate(@NonNull HibernateTemplate template) {
+    public void setTemplate(@Nonnull HibernateTemplate template) {
         this.template = template;
     }
 
@@ -115,7 +115,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
         return entityBeanTransformer;
     }
 
-    public void setEntityBeanTransformer(@NonNull BeanTransformer<E, PE> entityBeanTransformer) {
+    public void setEntityBeanTransformer(@Nonnull BeanTransformer<E, PE> entityBeanTransformer) {
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
@@ -123,7 +123,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
         return classPE;
     }
 
-    public void setClassPE(@NonNull Class<PE> classPE) {
+    public void setClassPE(@Nonnull Class<PE> classPE) {
         this.classPE = classPE;
     }
 
@@ -131,7 +131,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
         return presetCriteriaMaker;
     }
 
-    public void setPresetCriteriaMaker(@NonNull PresetCriteriaMaker presetCriteriaMaker) {
+    public void setPresetCriteriaMaker(@Nonnull PresetCriteriaMaker presetCriteriaMaker) {
         this.presetCriteriaMaker = presetCriteriaMaker;
     }
 }

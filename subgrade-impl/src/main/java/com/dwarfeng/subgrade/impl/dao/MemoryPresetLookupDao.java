@@ -7,8 +7,8 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,13 +39,13 @@ public class MemoryPresetLookupDao<K extends Key, E extends Entity<K>> implement
     private Map<K, E> memory;
     private PresetEntityFilter<E> filter;
 
-    public MemoryPresetLookupDao(@NonNull PresetEntityFilter<E> filter) {
+    public MemoryPresetLookupDao(@Nonnull PresetEntityFilter<E> filter) {
         this(new LinkedHashMap<>(), filter);
     }
 
     public MemoryPresetLookupDao(
-            @NonNull Map<K, E> memory,
-            @NonNull PresetEntityFilter<E> filter
+            @Nonnull Map<K, E> memory,
+            @Nonnull PresetEntityFilter<E> filter
     ) {
         this.memory = memory;
         this.filter = filter;
@@ -85,7 +85,7 @@ public class MemoryPresetLookupDao<K extends Key, E extends Entity<K>> implement
      * @param mrb 映射资源桥。
      * @throws DaoException 数据访问层异常。
      */
-    public void fillData(@NonNull MapResourceBridge<K, E> mrb) throws DaoException {
+    public void fillData(@Nonnull MapResourceBridge<K, E> mrb) throws DaoException {
         try {
             mrb.fillMap(this.memory);
         } catch (Exception e) {
@@ -97,7 +97,7 @@ public class MemoryPresetLookupDao<K extends Key, E extends Entity<K>> implement
         return memory;
     }
 
-    public void setMemory(@NonNull Map<K, E> memory) {
+    public void setMemory(@Nonnull Map<K, E> memory) {
         this.memory = memory;
     }
 
@@ -105,7 +105,7 @@ public class MemoryPresetLookupDao<K extends Key, E extends Entity<K>> implement
         return filter;
     }
 
-    public void setFilter(@NonNull PresetEntityFilter<E> filter) {
+    public void setFilter(@Nonnull PresetEntityFilter<E> filter) {
         this.filter = filter;
     }
 }

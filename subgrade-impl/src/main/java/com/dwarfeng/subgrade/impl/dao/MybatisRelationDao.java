@@ -5,7 +5,8 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.RelationDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.lang.NonNull;
+
+import javax.annotation.Nonnull;
 
 /**
  * 使用 MyBatis 基于多对多关系实现的 RelationDao。
@@ -26,16 +27,16 @@ public class MybatisRelationDao<PK extends Key, CK extends Key> implements Relat
     private String addRelationId;
     private String deleteRelationId;
 
-    public MybatisRelationDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
+    public MybatisRelationDao(@Nonnull SqlSessionTemplate template, @Nonnull String namespace) {
         this(template, namespace, DEFAULT_EXISTS_RELATION_ID, DEFAULT_ADD_RELATION_ID, DEFAULT_DELETE_RELATION_ID);
     }
 
     public MybatisRelationDao(
-            @NonNull SqlSessionTemplate template,
-            @NonNull String namespace,
-            @NonNull String existsRelationId,
-            @NonNull String addRelationId,
-            @NonNull String deleteRelationId) {
+            @Nonnull SqlSessionTemplate template,
+            @Nonnull String namespace,
+            @Nonnull String existsRelationId,
+            @Nonnull String addRelationId,
+            @Nonnull String deleteRelationId) {
         this.template = template;
         this.namespace = namespace;
         this.existsRelationId = existsRelationId;

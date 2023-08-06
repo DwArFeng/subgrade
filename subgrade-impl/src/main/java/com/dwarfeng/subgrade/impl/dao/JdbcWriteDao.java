@@ -6,7 +6,8 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.WriteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.lang.NonNull;
+
+import javax.annotation.Nonnull;
 
 /**
  * 使用 Jdbc 实现的 WriteDao。
@@ -20,7 +21,7 @@ public class JdbcWriteDao<E extends Entity<?>> implements WriteDao<E> {
     private JdbcTemplate template;
     private WriteProcessor<E> processor;
 
-    public JdbcWriteDao(@NonNull JdbcTemplate template, @NonNull WriteProcessor<E> processor) {
+    public JdbcWriteDao(@Nonnull JdbcTemplate template, @Nonnull WriteProcessor<E> processor) {
         this.template = template;
         this.processor = processor;
     }
@@ -39,7 +40,7 @@ public class JdbcWriteDao<E extends Entity<?>> implements WriteDao<E> {
         return template;
     }
 
-    public void setTemplate(@NonNull JdbcTemplate template) {
+    public void setTemplate(@Nonnull JdbcTemplate template) {
         this.template = template;
     }
 
@@ -47,7 +48,7 @@ public class JdbcWriteDao<E extends Entity<?>> implements WriteDao<E> {
         return processor;
     }
 
-    public void setProcessor(@NonNull WriteProcessor<E> processor) {
+    public void setProcessor(@Nonnull WriteProcessor<E> processor) {
         this.processor = processor;
     }
 }

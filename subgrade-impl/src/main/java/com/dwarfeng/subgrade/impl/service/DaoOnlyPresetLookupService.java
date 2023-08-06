@@ -10,8 +10,8 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.PresetLookupService;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -28,9 +28,9 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
     private LogLevel exceptionLogLevel;
 
     public DaoOnlyPresetLookupService(
-            @NonNull PresetLookupDao<E> dao,
-            @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel
+            @Nonnull PresetLookupDao<E> dao,
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel
     ) {
         this.dao = dao;
         this.sem = sem;
@@ -107,7 +107,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         return dao;
     }
 
-    public void setDao(@NonNull PresetLookupDao<E> dao) {
+    public void setDao(@Nonnull PresetLookupDao<E> dao) {
         this.dao = dao;
     }
 
@@ -115,7 +115,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         return sem;
     }
 
-    public void setSem(@NonNull ServiceExceptionMapper sem) {
+    public void setSem(@Nonnull ServiceExceptionMapper sem) {
         this.sem = sem;
     }
 
@@ -123,7 +123,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         return exceptionLogLevel;
     }
 
-    public void setExceptionLogLevel(@NonNull LogLevel exceptionLogLevel) {
+    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
     }
 }

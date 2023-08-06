@@ -7,8 +7,8 @@ import com.dwarfeng.subgrade.sdk.jdbc.handle.PresetLookupHandle;
 import com.dwarfeng.subgrade.sdk.jdbc.handle.QueryInfo;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
     private PresetLookupHandle<E> handle;
 
     public PhoenixPresetLookupProcessor(
-            @NonNull TableDefinition tableDefinition, @NonNull PresetLookupHandle<E> handle) {
+            @Nonnull TableDefinition tableDefinition, @Nonnull PresetLookupHandle<E> handle) {
         this.tableDefinition = tableDefinition;
         this.handle = handle;
     }
@@ -47,7 +47,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
         QueryInfo queryInfo = handle.getQueryInfo(preset, objs);
         StringBuilder whereClause = whereClause(queryInfo);
         StringBuilder orderClause = orderClause(queryInfo);
-        String sql = lookupFragment + whereClause.toString() + orderClause.toString();
+        String sql = lookupFragment + whereClause + orderClause.toString();
         return new SQLAndParameter(sql, queryInfo.getParameters());
     }
 
@@ -65,7 +65,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
         QueryInfo queryInfo = handle.getQueryInfo(preset, objs);
         StringBuilder whereClause = whereClause(queryInfo);
         StringBuilder orderClause = orderClause(queryInfo);
-        String sql = lookupFragment + whereClause.toString() + orderClause.toString() + " " + pagingFragment;
+        String sql = lookupFragment + whereClause + orderClause.toString() + " " + pagingFragment;
         Object[] parameters = new Object[queryInfo.getParameters().length + 2];
         System.arraycopy(queryInfo.getParameters(), 0, parameters, 0, queryInfo.getParameters().length);
         parameters[parameters.length - 2] = Math.max(0, pagingInfo.getRows());
@@ -84,7 +84,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
                 providePresetCountFragment());
         QueryInfo queryInfo = handle.getQueryInfo(preset, objs);
         StringBuilder whereClause = whereClause(queryInfo);
-        String sql = countFragment + whereClause.toString();
+        String sql = countFragment + whereClause;
         return new SQLAndParameter(sql, queryInfo.getParameters());
     }
 
@@ -160,7 +160,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
         return tableDefinition;
     }
 
-    public void setTableDefinition(@NonNull TableDefinition tableDefinition) {
+    public void setTableDefinition(@Nonnull TableDefinition tableDefinition) {
         this.tableDefinition = tableDefinition;
     }
 
@@ -168,7 +168,7 @@ public class PhoenixPresetLookupProcessor<E extends Entity<?>> implements Preset
         return handle;
     }
 
-    public void setHandle(@NonNull PresetLookupHandle<E> handle) {
+    public void setHandle(@Nonnull PresetLookupHandle<E> handle) {
         this.handle = handle;
     }
 }

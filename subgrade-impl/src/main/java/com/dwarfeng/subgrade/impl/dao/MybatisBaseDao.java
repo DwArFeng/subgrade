@@ -5,7 +5,8 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.lang.NonNull;
+
+import javax.annotation.Nonnull;
 
 /**
  * 使用 MyBatis 实现的 BaseDao。
@@ -30,19 +31,19 @@ public class MybatisBaseDao<K extends Key, E extends Entity<K>> implements BaseD
     private String existsId;
     private String getId;
 
-    public MybatisBaseDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
+    public MybatisBaseDao(@Nonnull SqlSessionTemplate template, @Nonnull String namespace) {
         this(template, namespace, DEFAULT_INSERT_ID, DEFAULT_UPDATE_ID, DEFAULT_DELETE_ID, DEFAULT_EXISTS_ID,
                 DEFAULT_GET_ID);
     }
 
     public MybatisBaseDao(
-            @NonNull SqlSessionTemplate template,
-            @NonNull String namespace,
-            @NonNull String insertId,
-            @NonNull String updateId,
-            @NonNull String deleteId,
-            @NonNull String existsId,
-            @NonNull String getId) {
+            @Nonnull SqlSessionTemplate template,
+            @Nonnull String namespace,
+            @Nonnull String insertId,
+            @Nonnull String updateId,
+            @Nonnull String deleteId,
+            @Nonnull String existsId,
+            @Nonnull String getId) {
         this.template = template;
         this.namespace = namespace;
         this.insertId = insertId;

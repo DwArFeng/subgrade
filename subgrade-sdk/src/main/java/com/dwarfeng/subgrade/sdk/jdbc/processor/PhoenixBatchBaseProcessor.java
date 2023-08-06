@@ -6,8 +6,8 @@ import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
 import com.dwarfeng.subgrade.sdk.jdbc.handle.BaseHandle;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
     private BaseHandle<K, E> handle;
 
     public PhoenixBatchBaseProcessor(
-            @NonNull TableDefinition tableDefinition, @NonNull BaseHandle<K, E> handle) {
+            @Nonnull TableDefinition tableDefinition, @Nonnull BaseHandle<K, E> handle) {
         this.tableDefinition = tableDefinition;
         this.handle = handle;
     }
@@ -232,7 +232,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         return tableDefinition;
     }
 
-    public void setTableDefinition(@NonNull TableDefinition tableDefinition) {
+    public void setTableDefinition(@Nonnull TableDefinition tableDefinition) {
         this.tableDefinition = tableDefinition;
     }
 
@@ -240,7 +240,7 @@ public class PhoenixBatchBaseProcessor<K extends Key, E extends Entity<K>> imple
         return handle;
     }
 
-    public void setHandle(@NonNull BaseHandle<K, E> handle) {
+    public void setHandle(@Nonnull BaseHandle<K, E> handle) {
         this.handle = handle;
     }
 }

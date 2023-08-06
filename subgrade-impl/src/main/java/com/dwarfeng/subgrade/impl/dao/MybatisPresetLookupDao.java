@@ -6,8 +6,8 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -29,16 +29,16 @@ public class MybatisPresetLookupDao<E extends Entity<?>> implements PresetLookup
     private String presetPagingId;
     private String presetCountId;
 
-    public MybatisPresetLookupDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
+    public MybatisPresetLookupDao(@Nonnull SqlSessionTemplate template, @Nonnull String namespace) {
         this(template, namespace, DEFAULT_PRESET_LOOKUP_ID, DEFAULT_PRESET_PAGING_ID, DEFAULT_PRESET_COUNT_ID);
     }
 
     public MybatisPresetLookupDao(
-            @NonNull SqlSessionTemplate template,
-            @NonNull String namespace,
-            @NonNull String presetLookupId,
-            @NonNull String presetPagingId,
-            @NonNull String presetCountId) {
+            @Nonnull SqlSessionTemplate template,
+            @Nonnull String namespace,
+            @Nonnull String presetLookupId,
+            @Nonnull String presetPagingId,
+            @Nonnull String presetCountId) {
         this.template = template;
         this.namespace = namespace;
         this.presetLookupId = presetLookupId;

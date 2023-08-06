@@ -6,8 +6,8 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BatchRelationDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,15 +49,15 @@ public class MybatisBatchRelationDao<PK extends Key, CK extends Key> implements 
     }
 
     public MybatisBatchRelationDao(
-            @NonNull SqlSessionTemplate template,
-            @NonNull String namespace,
-            @NonNull String existsRelationId,
-            @NonNull String addRelationId,
-            @NonNull String deleteRelationId,
-            @NonNull String existsAllRelationId,
-            @NonNull String existsNonRelationId,
-            @NonNull String batchAddRelationId,
-            @NonNull String batchDeleteRelationId) {
+            @Nonnull SqlSessionTemplate template,
+            @Nonnull String namespace,
+            @Nonnull String existsRelationId,
+            @Nonnull String addRelationId,
+            @Nonnull String deleteRelationId,
+            @Nonnull String existsAllRelationId,
+            @Nonnull String existsNonRelationId,
+            @Nonnull String batchAddRelationId,
+            @Nonnull String batchDeleteRelationId) {
         this.template = template;
         this.namespace = namespace;
         this.existsRelationId = existsRelationId;

@@ -8,8 +8,8 @@ import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +27,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
     private JdbcTemplate template;
     private BatchBaseProcessor<K, E> processor;
 
-    public JdbcBatchBaseDao(@NonNull JdbcTemplate template, @NonNull BatchBaseProcessor<K, E> processor) {
+    public JdbcBatchBaseDao(@Nonnull JdbcTemplate template, @Nonnull BatchBaseProcessor<K, E> processor) {
         this.template = template;
         this.processor = processor;
     }
@@ -252,7 +252,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
         return template;
     }
 
-    public void setTemplate(@NonNull JdbcTemplate template) {
+    public void setTemplate(@Nonnull JdbcTemplate template) {
         this.template = template;
     }
 
@@ -260,7 +260,7 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
         return processor;
     }
 
-    public void setProcessor(@NonNull BatchBaseProcessor<K, E> processor) {
+    public void setProcessor(@Nonnull BatchBaseProcessor<K, E> processor) {
         this.processor = processor;
     }
 }

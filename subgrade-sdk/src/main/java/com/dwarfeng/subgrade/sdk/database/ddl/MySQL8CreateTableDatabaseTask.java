@@ -2,8 +2,8 @@ package com.dwarfeng.subgrade.sdk.database.ddl;
 
 import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
 import com.dwarfeng.subgrade.stack.handler.DatabaseTask;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -23,7 +23,7 @@ public class MySQL8CreateTableDatabaseTask implements DatabaseTask<Object> {
 
     private TableDefinition tableDefinition;
 
-    public MySQL8CreateTableDatabaseTask(@NonNull TableDefinition tableDefinition) {
+    public MySQL8CreateTableDatabaseTask(@Nonnull TableDefinition tableDefinition) {
         this.tableDefinition = tableDefinition;
     }
 
@@ -66,7 +66,7 @@ public class MySQL8CreateTableDatabaseTask implements DatabaseTask<Object> {
         return tableDefinition;
     }
 
-    public void setTableDefinition(@NonNull TableDefinition tableDefinition) {
+    public void setTableDefinition(@Nonnull TableDefinition tableDefinition) {
         this.tableDefinition = tableDefinition;
     }
 }

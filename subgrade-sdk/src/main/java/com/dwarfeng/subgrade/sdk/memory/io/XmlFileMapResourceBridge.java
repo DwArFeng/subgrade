@@ -6,8 +6,8 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import java.io.File;
@@ -34,10 +34,10 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
     private Class<XR> classXR;
 
     public XmlFileMapResourceBridge(
-            @NonNull File file,
-            @NonNull BeanTransformer<E, XE> transformer,
-            @NonNull Class<XE> classXE,
-            @NonNull Class<XR> classXR
+            @Nonnull File file,
+            @Nonnull BeanTransformer<E, XE> transformer,
+            @Nonnull Class<XE> classXE,
+            @Nonnull Class<XR> classXR
     ) {
         this.file = file;
         this.transformer = transformer;
@@ -83,7 +83,7 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
         return file;
     }
 
-    public void setFile(@NonNull File file) {
+    public void setFile(@Nonnull File file) {
         this.file = file;
     }
 
@@ -91,7 +91,7 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
         return transformer;
     }
 
-    public void setTransformer(@NonNull BeanTransformer<E, XE> transformer) {
+    public void setTransformer(@Nonnull BeanTransformer<E, XE> transformer) {
         this.transformer = transformer;
     }
 
@@ -99,7 +99,7 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
         return classXR;
     }
 
-    public void setClassXR(@NonNull Class<XR> classXR) {
+    public void setClassXR(@Nonnull Class<XR> classXR) {
         this.classXR = classXR;
     }
 

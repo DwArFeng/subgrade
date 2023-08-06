@@ -5,8 +5,8 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -36,7 +36,7 @@ public class MemoryBaseDao<K extends Key, E extends Entity<K>> implements BaseDa
         this(new LinkedHashMap<>());
     }
 
-    public MemoryBaseDao(@NonNull Map<K, E> memory) {
+    public MemoryBaseDao(@Nonnull Map<K, E> memory) {
         this.memory = memory;
     }
 
@@ -86,7 +86,7 @@ public class MemoryBaseDao<K extends Key, E extends Entity<K>> implements BaseDa
      * @param mrb 映射资源桥。
      * @throws DaoException 数据访问层异常。
      */
-    public void fillData(@NonNull MapResourceBridge<K, E> mrb) throws DaoException {
+    public void fillData(@Nonnull MapResourceBridge<K, E> mrb) throws DaoException {
         try {
             mrb.fillMap(this.memory);
         } catch (Exception e) {
@@ -100,7 +100,7 @@ public class MemoryBaseDao<K extends Key, E extends Entity<K>> implements BaseDa
      * @param mrb 映射资源桥。
      * @throws DaoException 数据访问层异常。
      */
-    public void saveData(@NonNull MapResourceBridge<K, E> mrb) throws DaoException {
+    public void saveData(@Nonnull MapResourceBridge<K, E> mrb) throws DaoException {
         try {
             mrb.saveMap(this.memory);
         } catch (Exception e) {
@@ -112,7 +112,7 @@ public class MemoryBaseDao<K extends Key, E extends Entity<K>> implements BaseDa
         return memory;
     }
 
-    public void setMemory(@NonNull Map<K, E> memory) {
+    public void setMemory(@Nonnull Map<K, E> memory) {
         this.memory = memory;
     }
 }

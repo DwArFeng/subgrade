@@ -10,8 +10,8 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.BatchCrudService;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,10 +33,10 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
     private LogLevel exceptionLogLevel;
 
     public CustomBatchCrudService(
-            @NonNull BatchCrudOperation<K, E> operation,
-            @NonNull KeyFetcher<K> keyFetcher,
-            @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel
+            @Nonnull BatchCrudOperation<K, E> operation,
+            @Nonnull KeyFetcher<K> keyFetcher,
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel
     ) {
         this.operation = operation;
         this.keyFetcher = keyFetcher;
@@ -365,7 +365,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
         return operation;
     }
 
-    public void setOperation(@NonNull BatchCrudOperation<K, E> operation) {
+    public void setOperation(@Nonnull BatchCrudOperation<K, E> operation) {
         this.operation = operation;
     }
 
@@ -373,7 +373,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
         return keyFetcher;
     }
 
-    public void setKeyFetcher(@NonNull KeyFetcher<K> keyFetcher) {
+    public void setKeyFetcher(@Nonnull KeyFetcher<K> keyFetcher) {
         this.keyFetcher = keyFetcher;
     }
 
@@ -381,7 +381,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
         return sem;
     }
 
-    public void setSem(@NonNull ServiceExceptionMapper sem) {
+    public void setSem(@Nonnull ServiceExceptionMapper sem) {
         this.sem = sem;
     }
 
@@ -389,7 +389,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
         return exceptionLogLevel;
     }
 
-    public void setExceptionLogLevel(@NonNull LogLevel exceptionLogLevel) {
+    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
     }
 }

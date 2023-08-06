@@ -9,7 +9,8 @@ import com.dwarfeng.subgrade.stack.dao.SingleObjectDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.lang.NonNull;
+
+import javax.annotation.Nonnull;
 
 /**
  * 通过 Redis 实现的单对象数据访问层。
@@ -27,10 +28,10 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
     private K key;
 
     public RedisSingleObjectDao(
-            @NonNull RedisTemplate<String, JE> template,
-            @NonNull StringKeyFormatter<K> formatter,
-            @NonNull BeanTransformer<E, JE> transformer,
-            @NonNull K key
+            @Nonnull RedisTemplate<String, JE> template,
+            @Nonnull StringKeyFormatter<K> formatter,
+            @Nonnull BeanTransformer<E, JE> transformer,
+            @Nonnull K key
     ) {
         this.template = template;
         this.formatter = formatter;
@@ -85,7 +86,7 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
         return template;
     }
 
-    public void setTemplate(@NonNull RedisTemplate<String, JE> template) {
+    public void setTemplate(@Nonnull RedisTemplate<String, JE> template) {
         this.template = template;
     }
 
@@ -93,7 +94,7 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
         return formatter;
     }
 
-    public void setFormatter(@NonNull StringKeyFormatter<K> formatter) {
+    public void setFormatter(@Nonnull StringKeyFormatter<K> formatter) {
         this.formatter = formatter;
     }
 
@@ -101,7 +102,7 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
         return transformer;
     }
 
-    public void setTransformer(@NonNull BeanTransformer<E, JE> transformer) {
+    public void setTransformer(@Nonnull BeanTransformer<E, JE> transformer) {
         this.transformer = transformer;
     }
 
@@ -109,7 +110,7 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
         return key;
     }
 
-    public void setKey(@NonNull K key) {
+    public void setKey(@Nonnull K key) {
         this.key = key;
     }
 }

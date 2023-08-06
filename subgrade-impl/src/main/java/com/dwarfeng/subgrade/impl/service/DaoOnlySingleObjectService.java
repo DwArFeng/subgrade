@@ -7,7 +7,8 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.SingleObjectService;
-import org.springframework.lang.NonNull;
+
+import javax.annotation.Nonnull;
 
 /**
  * 仅通过数据访问层实现的单对象服务。
@@ -23,9 +24,9 @@ public class DaoOnlySingleObjectService<E extends Entity<?>> implements SingleOb
     private LogLevel exceptionLogLevel;
 
     public DaoOnlySingleObjectService(
-            @NonNull SingleObjectDao<E> dao,
-            @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel) {
+            @Nonnull SingleObjectDao<E> dao,
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel) {
         this.dao = dao;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
@@ -71,7 +72,7 @@ public class DaoOnlySingleObjectService<E extends Entity<?>> implements SingleOb
         return dao;
     }
 
-    public void setDao(@NonNull SingleObjectDao<E> dao) {
+    public void setDao(@Nonnull SingleObjectDao<E> dao) {
         this.dao = dao;
     }
 
@@ -79,7 +80,7 @@ public class DaoOnlySingleObjectService<E extends Entity<?>> implements SingleOb
         return sem;
     }
 
-    public void setSem(@NonNull ServiceExceptionMapper sem) {
+    public void setSem(@Nonnull ServiceExceptionMapper sem) {
         this.sem = sem;
     }
 
@@ -87,7 +88,7 @@ public class DaoOnlySingleObjectService<E extends Entity<?>> implements SingleOb
         return exceptionLogLevel;
     }
 
-    public void setExceptionLogLevel(@NonNull LogLevel exceptionLogLevel) {
+    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
     }
 }

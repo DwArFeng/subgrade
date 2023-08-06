@@ -10,8 +10,8 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.CrudService;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -30,10 +30,10 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
     private LogLevel exceptionLogLevel;
 
     public CustomCrudService(
-            @NonNull CrudOperation<K, E> operation,
-            @NonNull KeyFetcher<K> keyFetcher,
-            @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel) {
+            @Nonnull CrudOperation<K, E> operation,
+            @Nonnull KeyFetcher<K> keyFetcher,
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel) {
         this.operation = operation;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
@@ -181,7 +181,7 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
         return operation;
     }
 
-    public void setOperation(@NonNull CrudOperation<K, E> operation) {
+    public void setOperation(@Nonnull CrudOperation<K, E> operation) {
         this.operation = operation;
     }
 
@@ -189,7 +189,7 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
         return keyFetcher;
     }
 
-    public void setKeyFetcher(@NonNull KeyFetcher<K> keyFetcher) {
+    public void setKeyFetcher(@Nonnull KeyFetcher<K> keyFetcher) {
         this.keyFetcher = keyFetcher;
     }
 
@@ -197,7 +197,7 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
         return sem;
     }
 
-    public void setSem(@NonNull ServiceExceptionMapper sem) {
+    public void setSem(@Nonnull ServiceExceptionMapper sem) {
         this.sem = sem;
     }
 
@@ -205,7 +205,7 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
         return exceptionLogLevel;
     }
 
-    public void setExceptionLogLevel(@NonNull LogLevel exceptionLogLevel) {
+    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
     }
 }

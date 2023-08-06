@@ -5,8 +5,8 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -48,7 +48,7 @@ public class MybatisBatchBaseDao<K extends Key, E extends Entity<K>> implements 
     private String batchGetId;
 
     public MybatisBatchBaseDao(
-            @NonNull SqlSessionTemplate template, @NonNull String namespace, boolean defaultBatchOperation) {
+            @Nonnull SqlSessionTemplate template, @Nonnull String namespace, boolean defaultBatchOperation) {
         this(
                 template, namespace, DEFAULT_INSERT_ID, DEFAULT_UPDATE_ID,
                 DEFAULT_DELETE_ID, DEFAULT_EXIST_ID, DEFAULT_GET_ID,
@@ -62,11 +62,11 @@ public class MybatisBatchBaseDao<K extends Key, E extends Entity<K>> implements 
     }
 
     public MybatisBatchBaseDao(
-            @NonNull SqlSessionTemplate template, @NonNull String namespace, @NonNull String insertId,
-            @NonNull String updateId, @NonNull String deleteId, @NonNull String existsId,
-            @NonNull String getId, @NonNull String batchInsertId, @NonNull String batchUpdateId,
-            @NonNull String batchDeleteId, @NonNull String nonExistsId, @NonNull String allExistsId,
-            @NonNull String batchGetId) {
+            @Nonnull SqlSessionTemplate template, @Nonnull String namespace, @Nonnull String insertId,
+            @Nonnull String updateId, @Nonnull String deleteId, @Nonnull String existsId,
+            @Nonnull String getId, @Nonnull String batchInsertId, @Nonnull String batchUpdateId,
+            @Nonnull String batchDeleteId, @Nonnull String nonExistsId, @Nonnull String allExistsId,
+            @Nonnull String batchGetId) {
         this.template = template;
         this.namespace = namespace;
         this.insertId = insertId;

@@ -4,8 +4,8 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.BatchWriteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +27,7 @@ public class MybatisBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<
     private String batchWriteId;
 
     public MybatisBatchWriteDao(
-            @NonNull SqlSessionTemplate template, @NonNull String namespace, boolean defaultBatchOperation) {
+            @Nonnull SqlSessionTemplate template, @Nonnull String namespace, boolean defaultBatchOperation) {
         this(
                 template, namespace, DEFAULT_WRITE_ID,
                 defaultBatchOperation ? DEFAULT_WRITE_ID : DEFAULT_BATCH_WRITE_ID
@@ -35,10 +35,10 @@ public class MybatisBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<
     }
 
     public MybatisBatchWriteDao(
-            @NonNull SqlSessionTemplate template,
-            @NonNull String namespace,
-            @NonNull String writeId,
-            @NonNull String batchWriteId) {
+            @Nonnull SqlSessionTemplate template,
+            @Nonnull String namespace,
+            @Nonnull String writeId,
+            @Nonnull String batchWriteId) {
         this.template = template;
         this.namespace = namespace;
         this.writeId = writeId;

@@ -11,9 +11,9 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
-import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,11 +57,11 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
     private PresetCriteriaMaker presetCriteriaMaker;
 
     public HibernateAccelerablePresetLookupDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull NativeLookup<E> nativeLookup,
-            @NonNull PresetCriteriaMaker presetCriteriaMaker
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull NativeLookup<E> nativeLookup,
+            @Nonnull PresetCriteriaMaker presetCriteriaMaker
     ) {
         this.template = template;
         this.entityBeanTransformer = entityBeanTransformer;
@@ -163,7 +163,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
         return template;
     }
 
-    public void setTemplate(@NonNull HibernateTemplate template) {
+    public void setTemplate(@Nonnull HibernateTemplate template) {
         this.template = template;
     }
 
@@ -171,7 +171,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
         return entityBeanTransformer;
     }
 
-    public void setEntityBeanTransformer(@NonNull BeanTransformer<E, PE> entityBeanTransformer) {
+    public void setEntityBeanTransformer(@Nonnull BeanTransformer<E, PE> entityBeanTransformer) {
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
@@ -179,7 +179,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
         return classPE;
     }
 
-    public void setClassPE(@NonNull Class<PE> classPE) {
+    public void setClassPE(@Nonnull Class<PE> classPE) {
         this.classPE = classPE;
     }
 
@@ -187,7 +187,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
         return presetCriteriaMaker;
     }
 
-    public void setPresetCriteriaMaker(@NonNull PresetCriteriaMaker presetCriteriaMaker) {
+    public void setPresetCriteriaMaker(@Nonnull PresetCriteriaMaker presetCriteriaMaker) {
         this.presetCriteriaMaker = presetCriteriaMaker;
     }
 
@@ -195,7 +195,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
         return nativeLookup;
     }
 
-    public void setNativeSqlLookup(@NonNull NativeLookup<E> nativeLookup) {
+    public void setNativeSqlLookup(@Nonnull NativeLookup<E> nativeLookup) {
         this.nativeLookup = nativeLookup;
     }
 }

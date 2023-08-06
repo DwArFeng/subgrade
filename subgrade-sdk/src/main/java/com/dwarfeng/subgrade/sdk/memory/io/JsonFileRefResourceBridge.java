@@ -12,8 +12,8 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -37,9 +37,9 @@ public class JsonFileRefResourceBridge<K extends Key, E extends Entity<K>, JE ex
     private Class<JE> classJE;
 
     public JsonFileRefResourceBridge(
-            @NonNull File file,
-            @NonNull BeanTransformer<E, JE> transformer,
-            @NonNull Class<JE> classJE
+            @Nonnull File file,
+            @Nonnull BeanTransformer<E, JE> transformer,
+            @Nonnull Class<JE> classJE
     ) {
         this.file = file;
         this.transformer = transformer;
@@ -110,7 +110,7 @@ public class JsonFileRefResourceBridge<K extends Key, E extends Entity<K>, JE ex
         return file;
     }
 
-    public void setFile(@NonNull File file) {
+    public void setFile(@Nonnull File file) {
         this.file = file;
     }
 
@@ -118,7 +118,7 @@ public class JsonFileRefResourceBridge<K extends Key, E extends Entity<K>, JE ex
         return transformer;
     }
 
-    public void setTransformer(@NonNull BeanTransformer<E, JE> transformer) {
+    public void setTransformer(@Nonnull BeanTransformer<E, JE> transformer) {
         this.transformer = transformer;
     }
 
@@ -126,7 +126,7 @@ public class JsonFileRefResourceBridge<K extends Key, E extends Entity<K>, JE ex
         return classJE;
     }
 
-    public void setClassJE(@NonNull Class<JE> classJE) {
+    public void setClassJE(@Nonnull Class<JE> classJE) {
         this.classJE = classJE;
     }
 }

@@ -8,8 +8,8 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -24,7 +24,7 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
     private JdbcTemplate template;
     private PresetLookupProcessor<E> processor;
 
-    public JdbcPresetLookupDao(@NonNull JdbcTemplate template, @NonNull PresetLookupProcessor<E> processor) {
+    public JdbcPresetLookupDao(@Nonnull JdbcTemplate template, @Nonnull PresetLookupProcessor<E> processor) {
         this.template = template;
         this.processor = processor;
     }
@@ -77,7 +77,7 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         return template;
     }
 
-    public void setTemplate(@NonNull JdbcTemplate template) {
+    public void setTemplate(@Nonnull JdbcTemplate template) {
         this.template = template;
     }
 
@@ -85,7 +85,7 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         return processor;
     }
 
-    public void setProcessor(@NonNull PresetLookupProcessor<E> processor) {
+    public void setProcessor(@Nonnull PresetLookupProcessor<E> processor) {
         this.processor = processor;
     }
 }

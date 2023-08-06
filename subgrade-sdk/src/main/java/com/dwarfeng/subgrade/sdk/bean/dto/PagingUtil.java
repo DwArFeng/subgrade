@@ -4,8 +4,8 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,7 +107,7 @@ public final class PagingUtil {
      */
     @Deprecated
     public static LongIndexBounds longIndexBound(PagingInfo pagingInfo, long totalSize) {
-        long beginIndex = pagingInfo.getRows() * pagingInfo.getPage();
+        long beginIndex = (long) pagingInfo.getRows() * pagingInfo.getPage();
         long endIndex = Math.min(totalSize, beginIndex + pagingInfo.getRows()) - 1;
         return new LongIndexBounds(beginIndex, endIndex);
     }
@@ -184,7 +184,7 @@ public final class PagingUtil {
      * @return 第二个类型的PagedData。
      */
     public static <U extends Bean, V extends Bean> PagedData<V>
-    transform(@NonNull PagedData<U> pagedData, @NonNull BeanTransformer<U, V> transformer) {
+    transform(@Nonnull PagedData<U> pagedData, @Nonnull BeanTransformer<U, V> transformer) {
         PagedData<V> p = new PagedData<>();
         p.setCount(pagedData.getCount());
         p.setCurrentPage(pagedData.getCurrentPage());
@@ -204,7 +204,7 @@ public final class PagingUtil {
      * @return 第一个类型的PagedData。
      */
     public static <U extends Bean, V extends Bean> PagedData<U>
-    reverseTransform(@NonNull PagedData<V> pagedData, @NonNull BeanTransformer<U, V> transformer) {
+    reverseTransform(@Nonnull PagedData<V> pagedData, @Nonnull BeanTransformer<U, V> transformer) {
         PagedData<U> p = new PagedData<>();
         p.setCount(pagedData.getCount());
         p.setCurrentPage(pagedData.getCurrentPage());

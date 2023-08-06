@@ -5,9 +5,9 @@ import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.BatchWriteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,15 +30,15 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
     private int batchSize;
 
     public HibernateBatchWriteDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer
     ) {
         this(template, entityBeanTransformer, DEFAULT_BATCH_SIZE);
     }
 
     public HibernateBatchWriteDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             int batchSize
     ) {
         this.template = template;
@@ -81,7 +81,7 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
         return template;
     }
 
-    public void setTemplate(@NonNull HibernateTemplate template) {
+    public void setTemplate(@Nonnull HibernateTemplate template) {
         this.template = template;
     }
 
@@ -89,7 +89,7 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
         return entityBeanTransformer;
     }
 
-    public void setEntityBeanTransformer(@NonNull BeanTransformer<E, PE> entityBeanTransformer) {
+    public void setEntityBeanTransformer(@Nonnull BeanTransformer<E, PE> entityBeanTransformer) {
         this.entityBeanTransformer = entityBeanTransformer;
     }
 

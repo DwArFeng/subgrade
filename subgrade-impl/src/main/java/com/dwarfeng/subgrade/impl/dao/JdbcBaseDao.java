@@ -8,8 +8,8 @@ import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -24,7 +24,7 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
     private JdbcTemplate template;
     private BaseProcessor<K, E> processor;
 
-    public JdbcBaseDao(@NonNull JdbcTemplate template, @NonNull BaseProcessor<K, E> processor) {
+    public JdbcBaseDao(@Nonnull JdbcTemplate template, @Nonnull BaseProcessor<K, E> processor) {
         this.template = template;
         this.processor = processor;
     }
@@ -97,7 +97,7 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         return template;
     }
 
-    public void setTemplate(@NonNull JdbcTemplate template) {
+    public void setTemplate(@Nonnull JdbcTemplate template) {
         this.template = template;
     }
 
@@ -105,7 +105,7 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         return processor;
     }
 
-    public void setProcessor(@NonNull BaseProcessor<K, E> processor) {
+    public void setProcessor(@Nonnull BaseProcessor<K, E> processor) {
         this.processor = processor;
     }
 }

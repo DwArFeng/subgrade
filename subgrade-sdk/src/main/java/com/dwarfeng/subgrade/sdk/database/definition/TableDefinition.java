@@ -1,8 +1,8 @@
 package com.dwarfeng.subgrade.sdk.database.definition;
 
 import com.dwarfeng.dutil.basic.cna.model.*;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -76,7 +76,7 @@ public class TableDefinition {
      *
      * @param columnDefinition 列定义。
      */
-    public void addColumnDefinition(@NonNull ColumnDefinition columnDefinition) {
+    public void addColumnDefinition(@Nonnull ColumnDefinition columnDefinition) {
         columnDefinitionList.add(columnDefinition);
         columnDefinition.setContextTableDefinition(this);
         cacheMap.clear();
@@ -112,7 +112,7 @@ public class TableDefinition {
         return optionalDefinitionList.containsKey(name);
     }
 
-    public void addOptionalDefinition(@NonNull OptionalDefinition optionalDefinition) {
+    public void addOptionalDefinition(@Nonnull OptionalDefinition optionalDefinition) {
         optionalDefinitionList.add(optionalDefinition);
         optionalDefinition.setContextTableDefinition(this);
         cacheMap.clear();

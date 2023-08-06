@@ -8,7 +8,8 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.SingleObjectService;
-import org.springframework.lang.NonNull;
+
+import javax.annotation.Nonnull;
 
 /**
  * 通用的单对象服务。
@@ -26,10 +27,10 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
     private long cacheTimeout;
 
     public GeneralSingleObjectService(
-            @NonNull SingleObjectDao<E> dao,
-            @NonNull SingleObjectCache<E> cache,
-            @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel,
+            @Nonnull SingleObjectDao<E> dao,
+            @Nonnull SingleObjectCache<E> cache,
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel,
             long cacheTimeout) {
         this.dao = dao;
         this.cache = cache;
@@ -92,7 +93,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
         return dao;
     }
 
-    public void setDao(@NonNull SingleObjectDao<E> dao) {
+    public void setDao(@Nonnull SingleObjectDao<E> dao) {
         this.dao = dao;
     }
 
@@ -100,7 +101,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
         return cache;
     }
 
-    public void setCache(@NonNull SingleObjectCache<E> cache) {
+    public void setCache(@Nonnull SingleObjectCache<E> cache) {
         this.cache = cache;
     }
 
@@ -108,7 +109,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
         return sem;
     }
 
-    public void setSem(@NonNull ServiceExceptionMapper sem) {
+    public void setSem(@Nonnull ServiceExceptionMapper sem) {
         this.sem = sem;
     }
 
@@ -116,7 +117,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
         return exceptionLogLevel;
     }
 
-    public void setExceptionLogLevel(@NonNull LogLevel exceptionLogLevel) {
+    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
     }
 

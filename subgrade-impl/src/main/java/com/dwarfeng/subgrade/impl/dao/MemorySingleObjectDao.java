@@ -7,7 +7,8 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.SingleObjectDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.lang.NonNull;
+
+import javax.annotation.Nonnull;
 
 /**
  * 通过内存引用模型实现的单对象数据访问层。
@@ -32,8 +33,8 @@ public class MemorySingleObjectDao<K extends Key, E extends Entity<K>> implement
     private K key;
 
     public MemorySingleObjectDao(
-            @NonNull ReferenceModel<E> memory,
-            @NonNull K key
+            @Nonnull ReferenceModel<E> memory,
+            @Nonnull K key
     ) {
         this.memory = memory;
         this.key = key;
@@ -79,7 +80,7 @@ public class MemorySingleObjectDao<K extends Key, E extends Entity<K>> implement
      * @param rrb 引用资源桥。
      * @throws DaoException 数据访问层异常。
      */
-    public void fillData(@NonNull RefResourceBridge<K, E> rrb) throws DaoException {
+    public void fillData(@Nonnull RefResourceBridge<K, E> rrb) throws DaoException {
         try {
             rrb.fillRef(this.memory);
         } catch (Exception e) {
@@ -93,7 +94,7 @@ public class MemorySingleObjectDao<K extends Key, E extends Entity<K>> implement
      * @param rrb 引用资源桥。
      * @throws DaoException 数据访问层异常。
      */
-    public void saveData(@NonNull RefResourceBridge<K, E> rrb) throws DaoException {
+    public void saveData(@Nonnull RefResourceBridge<K, E> rrb) throws DaoException {
         try {
             rrb.saveRef(this.memory);
         } catch (Exception e) {
@@ -105,7 +106,7 @@ public class MemorySingleObjectDao<K extends Key, E extends Entity<K>> implement
         return memory;
     }
 
-    public void setMemory(@NonNull ReferenceModel<E> memory) {
+    public void setMemory(@Nonnull ReferenceModel<E> memory) {
         this.memory = memory;
     }
 
@@ -113,7 +114,7 @@ public class MemorySingleObjectDao<K extends Key, E extends Entity<K>> implement
         return key;
     }
 
-    public void setKey(@NonNull K key) {
+    public void setKey(@Nonnull K key) {
         this.key = key;
     }
 }

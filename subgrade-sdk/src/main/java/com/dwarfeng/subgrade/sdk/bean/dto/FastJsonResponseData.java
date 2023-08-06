@@ -4,7 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import com.dwarfeng.subgrade.stack.bean.dto.ResponseData;
 import com.dwarfeng.subgrade.stack.bean.dto.ResponseData.Meta;
-import org.springframework.lang.NonNull;
+
+import javax.annotation.Nonnull;
 
 /**
  * 适用于 FastJson 的 ResponseData。
@@ -23,7 +24,7 @@ public class FastJsonResponseData<T> implements Dto {
      * @param <T>          ResponseData 中的元素的类型。
      * @return 生成的 FastJsonPagedData。
      */
-    public static <T> FastJsonResponseData<T> of(@NonNull ResponseData<T> responseData) {
+    public static <T> FastJsonResponseData<T> of(@Nonnull ResponseData<T> responseData) {
         return new FastJsonResponseData<>(
                 responseData.getData(),
                 FastJsonMeta.of(responseData.getMeta())
@@ -81,7 +82,7 @@ public class FastJsonResponseData<T> implements Dto {
          * @param meta 指定的 PagedData。
          * @return 生成的 FastJsonMeta。
          */
-        public static FastJsonMeta of(@NonNull Meta meta) {
+        public static FastJsonMeta of(@Nonnull Meta meta) {
             return new FastJsonMeta(
                     meta.getCode(),
                     meta.getMessage()

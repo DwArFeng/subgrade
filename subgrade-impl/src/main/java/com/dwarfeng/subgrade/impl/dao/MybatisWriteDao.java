@@ -4,7 +4,8 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.WriteDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.lang.NonNull;
+
+import javax.annotation.Nonnull;
 
 /**
  * 使用 MyBatis 实现的 WriteDao。
@@ -21,14 +22,14 @@ public class MybatisWriteDao<E extends Entity<?>> implements WriteDao<E> {
     private String namespace;
     private String writeId;
 
-    public MybatisWriteDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
+    public MybatisWriteDao(@Nonnull SqlSessionTemplate template, @Nonnull String namespace) {
         this(template, namespace, DEFAULT_WRITE_ID);
     }
 
     public MybatisWriteDao(
-            @NonNull SqlSessionTemplate template,
-            @NonNull String namespace,
-            @NonNull String writeId) {
+            @Nonnull SqlSessionTemplate template,
+            @Nonnull String namespace,
+            @Nonnull String writeId) {
         this.template = template;
         this.namespace = namespace;
         this.writeId = writeId;

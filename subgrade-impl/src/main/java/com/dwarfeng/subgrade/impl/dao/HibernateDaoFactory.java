@@ -8,10 +8,10 @@ import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import org.hibernate.dialect.Dialect;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,12 +42,12 @@ public final class HibernateDaoFactory {
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
     newPresetLookupDaoWithChosenDialect(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull PresetCriteriaMaker presetCriteriaMaker,
-            @NonNull List<DialectNativeLookup<E>> nativeSqlLookups,
-            @NonNull String dialectClassCanonicalName
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull PresetCriteriaMaker presetCriteriaMaker,
+            @Nonnull List<DialectNativeLookup<E>> nativeSqlLookups,
+            @Nonnull String dialectClassCanonicalName
     ) {
         NativeLookup<E> nativeLookup = nativeSqlLookups.stream().filter(
                 lookup -> lookup.supportDialect(dialectClassCanonicalName)
@@ -74,12 +74,12 @@ public final class HibernateDaoFactory {
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
     newPresetLookupDaoWithChosenDialect(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull PresetCriteriaMaker presetCriteriaMaker,
-            @NonNull List<DialectNativeLookup<E>> nativeSqlLookups,
-            @NonNull Class<? extends Dialect> dialectClass
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull PresetCriteriaMaker presetCriteriaMaker,
+            @Nonnull List<DialectNativeLookup<E>> nativeSqlLookups,
+            @Nonnull Class<? extends Dialect> dialectClass
     ) {
         NativeLookup<E> nativeLookup = nativeSqlLookups.stream().filter(
                 lookup -> lookup.supportDialect(dialectClass)
@@ -107,12 +107,12 @@ public final class HibernateDaoFactory {
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
     newPresetLookupDaoWithChosenDialect(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull PresetCriteriaMaker presetCriteriaMaker,
-            @NonNull List<DialectNativeLookup<E>> nativeSqlLookups,
-            @NonNull String dialectClassCanonicalName,
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull PresetCriteriaMaker presetCriteriaMaker,
+            @Nonnull List<DialectNativeLookup<E>> nativeSqlLookups,
+            @Nonnull String dialectClassCanonicalName,
             boolean accelerateEnabled
     ) {
         if (accelerateEnabled) {
@@ -145,12 +145,12 @@ public final class HibernateDaoFactory {
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
     newPresetLookupDaoWithChosenDialect(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull PresetCriteriaMaker presetCriteriaMaker,
-            @NonNull List<DialectNativeLookup<E>> nativeSqlLookups,
-            @NonNull Class<? extends Dialect> dialectClass,
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull PresetCriteriaMaker presetCriteriaMaker,
+            @Nonnull List<DialectNativeLookup<E>> nativeSqlLookups,
+            @Nonnull Class<? extends Dialect> dialectClass,
             boolean accelerateEnabled
     ) {
         if (accelerateEnabled) {
@@ -179,10 +179,10 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newPresetLookupDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull PresetCriteriaMaker presetCriteriaMaker,
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull PresetCriteriaMaker presetCriteriaMaker,
             @Nullable NativeLookup<E> nativeLookup
     ) {
         if (Objects.isNull(nativeLookup)) {

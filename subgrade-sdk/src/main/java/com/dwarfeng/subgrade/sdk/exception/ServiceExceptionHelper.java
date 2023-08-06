@@ -7,8 +7,8 @@ import com.dwarfeng.subgrade.stack.exception.*;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.log.SingleLevelLogger;
 import org.slf4j.LoggerFactory;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,8 +70,8 @@ public final class ServiceExceptionHelper {
      * @return 转化后抛出的服务异常。
      */
     public static ServiceException logAndThrow(
-            @NonNull String message, @NonNull LogLevel logLevel, @NonNull ServiceExceptionMapper mapper,
-            @NonNull Exception e) {
+            @Nonnull String message, @Nonnull LogLevel logLevel, @Nonnull ServiceExceptionMapper mapper,
+            @Nonnull Exception e) {
         LOGGER_MAP.get(logLevel).log(message, e);
         return mapper.map(e);
     }
@@ -84,7 +84,7 @@ public final class ServiceExceptionHelper {
      * @return 转化后抛出的服务异常。
      */
     public static ServiceException mapAndThrow(
-            @NonNull ServiceExceptionMapper mapper, @NonNull Exception e) {
+            @Nonnull ServiceExceptionMapper mapper, @Nonnull Exception e) {
         return mapper.map(e);
     }
 }

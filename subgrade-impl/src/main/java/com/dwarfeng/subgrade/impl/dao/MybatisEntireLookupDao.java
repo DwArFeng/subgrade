@@ -5,8 +5,8 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -28,16 +28,16 @@ public class MybatisEntireLookupDao<E extends Entity<?>> implements EntireLookup
     private String entirePagingId;
     private String entireCountId;
 
-    public MybatisEntireLookupDao(@NonNull SqlSessionTemplate template, @NonNull String namespace) {
+    public MybatisEntireLookupDao(@Nonnull SqlSessionTemplate template, @Nonnull String namespace) {
         this(template, namespace, DEFAULT_ENTIRE_LOOKUP_ID, DEFAULT_ENTIRE_PAGING_ID, DEFAULT_ENTIRE_COUNT_ID);
     }
 
     public MybatisEntireLookupDao(
-            @NonNull SqlSessionTemplate template,
-            @NonNull String namespace,
-            @NonNull String entireLookupId,
-            @NonNull String entirePagingId,
-            @NonNull String entireCountId) {
+            @Nonnull SqlSessionTemplate template,
+            @Nonnull String namespace,
+            @Nonnull String entireLookupId,
+            @Nonnull String entirePagingId,
+            @Nonnull String entireCountId) {
         this.template = template;
         this.namespace = namespace;
         this.entireLookupId = entireLookupId;

@@ -3,8 +3,8 @@ package com.dwarfeng.subgrade.impl.bean;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import org.dozer.Mapper;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -28,7 +28,7 @@ public class DozerBeanTransformer<U extends Bean, V extends Bean> implements Bea
     private Mapper mapper;
 
     public DozerBeanTransformer(
-            @NonNull Class<U> classU, @NonNull Class<V> classV, @NonNull Mapper mapper
+            @Nonnull Class<U> classU, @Nonnull Class<V> classV, @Nonnull Mapper mapper
     ) {
         this.classU = classU;
         this.classV = classV;
@@ -55,7 +55,7 @@ public class DozerBeanTransformer<U extends Bean, V extends Bean> implements Bea
         return classU;
     }
 
-    public void setClazzU(@NonNull Class<U> classU) {
+    public void setClazzU(@Nonnull Class<U> classU) {
         this.classU = classU;
     }
 
@@ -63,7 +63,7 @@ public class DozerBeanTransformer<U extends Bean, V extends Bean> implements Bea
         return classV;
     }
 
-    public void setClazzV(@NonNull Class<V> classV) {
+    public void setClazzV(@Nonnull Class<V> classV) {
         this.classV = classV;
     }
 
@@ -71,7 +71,7 @@ public class DozerBeanTransformer<U extends Bean, V extends Bean> implements Bea
         return mapper;
     }
 
-    public void setMapper(@NonNull Mapper mapper) {
+    public void setMapper(@Nonnull Mapper mapper) {
         this.mapper = mapper;
     }
 }

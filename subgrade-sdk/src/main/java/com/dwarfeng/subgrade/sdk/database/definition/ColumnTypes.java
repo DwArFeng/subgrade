@@ -1,6 +1,6 @@
 package com.dwarfeng.subgrade.sdk.database.definition;
 
-import org.springframework.lang.NonNull;
+import javax.annotation.Nonnull;
 
 /**
  * 列类型工具类。
@@ -250,7 +250,7 @@ public final class ColumnTypes {
      * 允许的值是1901到2155，和0000（4位年格式），如果你使用2位，1970-2069( 70-69)。
      * MySQL以YYYY格式来显示YEAR值，但是允许你把使用字符串或数字值赋给YEAR列。
      */
-    public static String year(@NonNull YearDigit yearDigit) {
+    public static String year(@Nonnull YearDigit yearDigit) {
         switch (yearDigit) {
             case TWO:
                 return "YEAR(2)";

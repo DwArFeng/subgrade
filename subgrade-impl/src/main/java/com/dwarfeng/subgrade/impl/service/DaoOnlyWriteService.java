@@ -9,8 +9,8 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.WriteService;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -28,10 +28,10 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
     private LogLevel exceptionLogLevel;
 
     public DaoOnlyWriteService(
-            @NonNull WriteDao<E> dao,
-            @NonNull KeyFetcher<K> keyFetcher,
-            @NonNull ServiceExceptionMapper sem,
-            @NonNull LogLevel exceptionLogLevel) {
+            @Nonnull WriteDao<E> dao,
+            @Nonnull KeyFetcher<K> keyFetcher,
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel) {
         this.dao = dao;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
@@ -54,7 +54,7 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
         return dao;
     }
 
-    public void setDao(@NonNull WriteDao<E> dao) {
+    public void setDao(@Nonnull WriteDao<E> dao) {
         this.dao = dao;
     }
 
@@ -62,7 +62,7 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
         return keyFetcher;
     }
 
-    public void setKeyFetcher(@NonNull KeyFetcher<K> keyFetcher) {
+    public void setKeyFetcher(@Nonnull KeyFetcher<K> keyFetcher) {
         this.keyFetcher = keyFetcher;
     }
 
@@ -70,7 +70,7 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
         return sem;
     }
 
-    public void setSem(@NonNull ServiceExceptionMapper sem) {
+    public void setSem(@Nonnull ServiceExceptionMapper sem) {
         this.sem = sem;
     }
 
@@ -78,7 +78,7 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
         return exceptionLogLevel;
     }
 
-    public void setExceptionLogLevel(@NonNull LogLevel exceptionLogLevel) {
+    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
     }
 }

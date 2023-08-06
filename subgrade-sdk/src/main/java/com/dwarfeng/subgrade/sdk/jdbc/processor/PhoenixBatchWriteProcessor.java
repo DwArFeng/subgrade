@@ -5,8 +5,8 @@ import com.dwarfeng.subgrade.sdk.database.definition.PhoenixHelper;
 import com.dwarfeng.subgrade.sdk.database.definition.TableDefinition;
 import com.dwarfeng.subgrade.sdk.jdbc.handle.WriteHandle;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class PhoenixBatchWriteProcessor<E extends Entity<?>> implements BatchWri
     private WriteHandle<E> handle;
 
     public PhoenixBatchWriteProcessor(
-            @NonNull TableDefinition tableDefinition, @NonNull WriteHandle<E> handle) {
+            @Nonnull TableDefinition tableDefinition, @Nonnull WriteHandle<E> handle) {
         this.tableDefinition = tableDefinition;
         this.handle = handle;
     }
@@ -75,7 +75,7 @@ public class PhoenixBatchWriteProcessor<E extends Entity<?>> implements BatchWri
         return tableDefinition;
     }
 
-    public void setTableDefinition(@NonNull TableDefinition tableDefinition) {
+    public void setTableDefinition(@Nonnull TableDefinition tableDefinition) {
         this.tableDefinition = tableDefinition;
     }
 
@@ -83,7 +83,7 @@ public class PhoenixBatchWriteProcessor<E extends Entity<?>> implements BatchWri
         return handle;
     }
 
-    public void setHandle(@NonNull WriteHandle<E> handle) {
+    public void setHandle(@Nonnull WriteHandle<E> handle) {
         this.handle = handle;
     }
 }

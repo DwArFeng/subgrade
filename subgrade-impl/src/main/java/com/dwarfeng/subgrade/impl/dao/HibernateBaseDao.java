@@ -9,9 +9,9 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -35,21 +35,21 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     private Collection<String> updateKeepFields;
 
     public HibernateBaseDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE) {
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE) {
         this(template, keyBeanTransformer, entityBeanTransformer, classPE,
                 new DefaultDeletionMod<>(), Collections.emptySet());
     }
 
     public HibernateBaseDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull DeletionMod<PE> deletionMod,
-            @NonNull Collection<String> updateKeepFields
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull DeletionMod<PE> deletionMod,
+            @Nonnull Collection<String> updateKeepFields
     ) {
         this.template = template;
         this.keyBeanTransformer = keyBeanTransformer;
@@ -154,7 +154,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         return template;
     }
 
-    public void setTemplate(@NonNull HibernateTemplate template) {
+    public void setTemplate(@Nonnull HibernateTemplate template) {
         this.template = template;
     }
 
@@ -162,7 +162,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         return keyBeanTransformer;
     }
 
-    public void setKeyBeanTransformer(@NonNull BeanTransformer<K, PK> keyBeanTransformer) {
+    public void setKeyBeanTransformer(@Nonnull BeanTransformer<K, PK> keyBeanTransformer) {
         this.keyBeanTransformer = keyBeanTransformer;
     }
 
@@ -170,7 +170,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         return entityBeanTransformer;
     }
 
-    public void setEntityBeanTransformer(@NonNull BeanTransformer<E, PE> entityBeanTransformer) {
+    public void setEntityBeanTransformer(@Nonnull BeanTransformer<E, PE> entityBeanTransformer) {
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
@@ -178,7 +178,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         return classPE;
     }
 
-    public void setClassPE(@NonNull Class<PE> classPE) {
+    public void setClassPE(@Nonnull Class<PE> classPE) {
         this.classPE = classPE;
     }
 
@@ -186,7 +186,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         return deletionMod;
     }
 
-    public void setDeletionMod(@NonNull DeletionMod<PE> deletionMod) {
+    public void setDeletionMod(@Nonnull DeletionMod<PE> deletionMod) {
         this.deletionMod = deletionMod;
     }
 

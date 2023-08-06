@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- 规范约束检查注解。
+  - org.springframework.lang.NonNull -> javax.annotation.Nonnull。
+  - org.springframework.lang.Nullable -> javax.annotation.Nullable。
+
 - 规范化类名。
   - HibernateAcceleratePresetLookupDao -> HibernateAccelerablePresetLookupDao，旧类名依然可用，但是已经过时。
 

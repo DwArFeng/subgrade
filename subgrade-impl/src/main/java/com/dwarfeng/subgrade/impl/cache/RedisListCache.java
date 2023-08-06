@@ -7,8 +7,8 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.cache.ListCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,9 +29,9 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     private BeanTransformer<E, JE> transformer;
 
     public RedisListCache(
-            @NonNull String key,
-            @NonNull RedisTemplate<String, JE> template,
-            @NonNull BeanTransformer<E, JE> transformer) {
+            @Nonnull String key,
+            @Nonnull RedisTemplate<String, JE> template,
+            @Nonnull BeanTransformer<E, JE> transformer) {
         this.key = key;
         this.template = template;
         this.transformer = transformer;
@@ -151,7 +151,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         return key;
     }
 
-    public void setKey(@NonNull String key) {
+    public void setKey(@Nonnull String key) {
         this.key = key;
     }
 
@@ -159,7 +159,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         return template;
     }
 
-    public void setTemplate(@NonNull RedisTemplate<String, JE> template) {
+    public void setTemplate(@Nonnull RedisTemplate<String, JE> template) {
         this.template = template;
     }
 
@@ -167,7 +167,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         return transformer;
     }
 
-    public void setTransformer(@NonNull BeanTransformer<E, JE> transformer) {
+    public void setTransformer(@Nonnull BeanTransformer<E, JE> transformer) {
         this.transformer = transformer;
     }
 }

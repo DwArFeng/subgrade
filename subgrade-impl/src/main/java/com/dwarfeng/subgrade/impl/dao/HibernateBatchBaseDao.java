@@ -9,7 +9,6 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.springframework.lang.NonNull;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import javax.annotation.Nonnull;
@@ -42,33 +41,33 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     private Collection<String> updateKeepFields;
 
     public HibernateBatchBaseDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE
     ) {
         this(template, keyBeanTransformer, entityBeanTransformer, classPE, new DefaultDeletionMod<>(),
                 DEFAULT_BATCH_SIZE, Collections.emptySet());
     }
 
     public HibernateBatchBaseDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull DeletionMod<PE> deletionMod
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull DeletionMod<PE> deletionMod
     ) {
         this(template, keyBeanTransformer, entityBeanTransformer,
                 classPE, deletionMod, DEFAULT_BATCH_SIZE, Collections.emptySet());
     }
 
     public HibernateBatchBaseDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull DeletionMod<PE> deletionMod,
-            @NonNull Collection<String> updateKeepFields
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull DeletionMod<PE> deletionMod,
+            @Nonnull Collection<String> updateKeepFields
 
     ) {
         this(template, keyBeanTransformer, entityBeanTransformer,
@@ -76,11 +75,11 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     }
 
     public HibernateBatchBaseDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull DeletionMod<PE> deletionMod,
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull DeletionMod<PE> deletionMod,
             int batchSize
     ) {
         this(template, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod,
@@ -88,13 +87,13 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     }
 
     public HibernateBatchBaseDao(
-            @NonNull HibernateTemplate template,
-            @NonNull BeanTransformer<K, PK> keyBeanTransformer,
-            @NonNull BeanTransformer<E, PE> entityBeanTransformer,
-            @NonNull Class<PE> classPE,
-            @NonNull DeletionMod<PE> deletionMod,
+            @Nonnull HibernateTemplate template,
+            @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
+            @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
+            @Nonnull Class<PE> classPE,
+            @Nonnull DeletionMod<PE> deletionMod,
             int batchSize,
-            @NonNull Collection<String> updateKeepFields
+            @Nonnull Collection<String> updateKeepFields
     ) {
         if (batchSize <= 0) {
             throw new IllegalArgumentException("参数 batchSize 必须为正数");
@@ -334,7 +333,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         return template;
     }
 
-    public void setTemplate(@NonNull HibernateTemplate template) {
+    public void setTemplate(@Nonnull HibernateTemplate template) {
         this.template = template;
     }
 
@@ -342,7 +341,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         return keyBeanTransformer;
     }
 
-    public void setKeyBeanTransformer(@NonNull BeanTransformer<K, PK> keyBeanTransformer) {
+    public void setKeyBeanTransformer(@Nonnull BeanTransformer<K, PK> keyBeanTransformer) {
         this.keyBeanTransformer = keyBeanTransformer;
     }
 
@@ -350,7 +349,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         return entityBeanTransformer;
     }
 
-    public void setEntityBeanTransformer(@NonNull BeanTransformer<E, PE> entityBeanTransformer) {
+    public void setEntityBeanTransformer(@Nonnull BeanTransformer<E, PE> entityBeanTransformer) {
         this.entityBeanTransformer = entityBeanTransformer;
     }
 
@@ -358,7 +357,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         return classPE;
     }
 
-    public void setClassPE(@NonNull Class<PE> classPE) {
+    public void setClassPE(@Nonnull Class<PE> classPE) {
         this.classPE = classPE;
     }
 
@@ -366,7 +365,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         return deletionMod;
     }
 
-    public void setDeletionMod(@NonNull DeletionMod<PE> deletionMod) {
+    public void setDeletionMod(@Nonnull DeletionMod<PE> deletionMod) {
         this.deletionMod = deletionMod;
     }
 
