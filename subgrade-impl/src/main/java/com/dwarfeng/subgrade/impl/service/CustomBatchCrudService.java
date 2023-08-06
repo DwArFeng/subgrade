@@ -19,7 +19,9 @@ import java.util.stream.Collectors;
 
 /**
  * 自定义的批量实体增删改查服务。
- * <p>该类只提供最基本的方法实现，没有添加任何事务或同步锁，请通过代理的方式在代理类中添加事务或者同步锁。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务或同步锁，请通过代理的方式在代理类中添加事务或者同步锁。
  *
  * @author DwArFeng
  * @since 0.2.1-beta
@@ -27,9 +29,13 @@ import java.util.stream.Collectors;
 @SuppressWarnings("DuplicatedCode")
 public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implements BatchCrudService<K, E> {
 
+    @Nonnull
     private BatchCrudOperation<K, E> operation;
+    @Nonnull
     private KeyFetcher<K> keyFetcher;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
 
     public CustomBatchCrudService(
@@ -361,6 +367,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
         }
     }
 
+    @Nonnull
     public BatchCrudOperation<K, E> getOperation() {
         return operation;
     }
@@ -369,6 +376,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
         this.operation = operation;
     }
 
+    @Nonnull
     public KeyFetcher<K> getKeyFetcher() {
         return keyFetcher;
     }
@@ -377,6 +385,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
         this.keyFetcher = keyFetcher;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -385,11 +394,22 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
 
     public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomBatchCrudService{" +
+                "operation=" + operation +
+                ", keyFetcher=" + keyFetcher +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                '}';
     }
 }

@@ -9,21 +9,29 @@ import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.SingleObjectService;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 /**
  * 通用的单对象服务。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.5-beta
  */
 public class GeneralSingleObjectService<E extends Entity<?>> implements SingleObjectService<E> {
 
+    @Nonnull
     private SingleObjectDao<E> dao;
+    @Nonnull
     private SingleObjectCache<E> cache;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
+    @Nonnegative
     private long cacheTimeout;
 
     public GeneralSingleObjectService(
@@ -31,7 +39,8 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
             @Nonnull SingleObjectCache<E> cache,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel,
-            long cacheTimeout) {
+            @Nonnegative long cacheTimeout
+    ) {
         this.dao = dao;
         this.cache = cache;
         this.sem = sem;
@@ -89,6 +98,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
         }
     }
 
+    @Nonnull
     public SingleObjectDao<E> getDao() {
         return dao;
     }
@@ -97,6 +107,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
         this.dao = dao;
     }
 
+    @Nonnull
     public SingleObjectCache<E> getCache() {
         return cache;
     }
@@ -105,6 +116,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
         this.cache = cache;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -113,6 +125,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
@@ -127,5 +140,16 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
 
     public void setCacheTimeout(long cacheTimeout) {
         this.cacheTimeout = cacheTimeout;
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralSingleObjectService{" +
+                "dao=" + dao +
+                ", cache=" + cache +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                ", cacheTimeout=" + cacheTimeout +
+                '}';
     }
 }

@@ -12,21 +12,27 @@ import javax.annotation.Nonnull;
 
 /**
  * 仅通过数据访问层实现的单对象服务。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.5-beta
  */
 public class DaoOnlySingleObjectService<E extends Entity<?>> implements SingleObjectService<E> {
 
+    @Nonnull
     private SingleObjectDao<E> dao;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
 
     public DaoOnlySingleObjectService(
             @Nonnull SingleObjectDao<E> dao,
             @Nonnull ServiceExceptionMapper sem,
-            @Nonnull LogLevel exceptionLogLevel) {
+            @Nonnull LogLevel exceptionLogLevel
+    ) {
         this.dao = dao;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
@@ -68,6 +74,7 @@ public class DaoOnlySingleObjectService<E extends Entity<?>> implements SingleOb
         }
     }
 
+    @Nonnull
     public SingleObjectDao<E> getDao() {
         return dao;
     }
@@ -76,6 +83,7 @@ public class DaoOnlySingleObjectService<E extends Entity<?>> implements SingleOb
         this.dao = dao;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -84,11 +92,21 @@ public class DaoOnlySingleObjectService<E extends Entity<?>> implements SingleOb
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
 
     public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "DaoOnlySingleObjectService{" +
+                "dao=" + dao +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                '}';
     }
 }

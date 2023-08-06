@@ -16,7 +16,9 @@ import java.util.Objects;
 
 /**
  * 自定义的实体增删改查服务。
- * <p>该类只提供最基本的方法实现，没有添加任何事务或同步锁，请通过代理的方式在代理类中添加事务或者同步锁。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务或同步锁，请通过代理的方式在代理类中添加事务或者同步锁。
  *
  * @author DwArFeng
  * @since 0.2.1-beta
@@ -24,16 +26,21 @@ import java.util.Objects;
 @SuppressWarnings("DuplicatedCode")
 public class CustomCrudService<K extends Key, E extends Entity<K>> implements CrudService<K, E> {
 
+    @Nonnull
     private CrudOperation<K, E> operation;
+    @Nonnull
     private KeyFetcher<K> keyFetcher;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
 
     public CustomCrudService(
             @Nonnull CrudOperation<K, E> operation,
             @Nonnull KeyFetcher<K> keyFetcher,
             @Nonnull ServiceExceptionMapper sem,
-            @Nonnull LogLevel exceptionLogLevel) {
+            @Nonnull LogLevel exceptionLogLevel
+    ) {
         this.operation = operation;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
@@ -177,6 +184,7 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
         }
     }
 
+    @Nonnull
     public CrudOperation<K, E> getOperation() {
         return operation;
     }
@@ -185,6 +193,7 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
         this.operation = operation;
     }
 
+    @Nonnull
     public KeyFetcher<K> getKeyFetcher() {
         return keyFetcher;
     }
@@ -193,6 +202,7 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
         this.keyFetcher = keyFetcher;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -201,11 +211,22 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
 
     public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomCrudService{" +
+                "operation=" + operation +
+                ", keyFetcher=" + keyFetcher +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                '}';
     }
 }

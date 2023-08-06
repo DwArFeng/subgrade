@@ -8,22 +8,32 @@ import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.BatchRelationService;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
  * 仅通过数据访问层实现的关系服务。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.2.4-beta
  */
 public class DaoOnlyBatchRelationService<PK extends Key, CK extends Key> implements BatchRelationService<PK, CK> {
 
+    @Nonnull
     private BatchRelationDao<PK, CK> dao;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
 
-    public DaoOnlyBatchRelationService(BatchRelationDao<PK, CK> dao, ServiceExceptionMapper sem, LogLevel exceptionLogLevel) {
+    public DaoOnlyBatchRelationService(
+            @Nonnull BatchRelationDao<PK, CK> dao,
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel
+    ) {
         this.dao = dao;
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
@@ -92,27 +102,30 @@ public class DaoOnlyBatchRelationService<PK extends Key, CK extends Key> impleme
         }
     }
 
+    @Nonnull
     public BatchRelationDao<PK, CK> getDao() {
         return dao;
     }
 
-    public void setDao(BatchRelationDao<PK, CK> dao) {
+    public void setDao(@Nonnull BatchRelationDao<PK, CK> dao) {
         this.dao = dao;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
 
-    public void setSem(ServiceExceptionMapper sem) {
+    public void setSem(@Nonnull ServiceExceptionMapper sem) {
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
 
-    public void setExceptionLogLevel(LogLevel exceptionLogLevel) {
+    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
     }
 

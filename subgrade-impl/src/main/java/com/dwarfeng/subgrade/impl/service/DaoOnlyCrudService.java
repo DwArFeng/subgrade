@@ -16,7 +16,9 @@ import java.util.Objects;
 
 /**
  * 仅通过数据访问层实现的实体增删改查服务。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
@@ -24,16 +26,21 @@ import java.util.Objects;
 @SuppressWarnings("DuplicatedCode")
 public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements CrudService<K, E> {
 
+    @Nonnull
     private BaseDao<K, E> dao;
+    @Nonnull
     private KeyFetcher<K> keyFetcher;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
 
     public DaoOnlyCrudService(
             @Nonnull BaseDao<K, E> dao,
             @Nonnull KeyFetcher<K> keyFetcher,
             @Nonnull ServiceExceptionMapper sem,
-            @Nonnull LogLevel exceptionLogLevel) {
+            @Nonnull LogLevel exceptionLogLevel
+    ) {
         this.dao = dao;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
@@ -177,6 +184,7 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
         }
     }
 
+    @Nonnull
     public BaseDao<K, E> getDao() {
         return dao;
     }
@@ -185,6 +193,7 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
         this.dao = dao;
     }
 
+    @Nonnull
     public KeyFetcher<K> getKeyFetcher() {
         return keyFetcher;
     }
@@ -193,6 +202,7 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
         this.keyFetcher = keyFetcher;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -201,11 +211,22 @@ public class DaoOnlyCrudService<K extends Key, E extends Entity<K>> implements C
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
 
     public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "DaoOnlyCrudService{" +
+                "dao=" + dao +
+                ", keyFetcher=" + keyFetcher +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                '}';
     }
 }

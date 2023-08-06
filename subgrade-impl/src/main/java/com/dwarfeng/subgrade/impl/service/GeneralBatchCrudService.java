@@ -12,6 +12,7 @@ import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,15 @@ import java.util.stream.Collectors;
 
 /**
  * 通用的实体增删改查服务。
- * <p>该类同时使用数据访问层和缓存实现实体的增删改查方法。</p>
- * <p>插入没有主键的对象时，该服务会试图通过主键抓取器抓取新的主键，如果没有主键抓取器，就会报出异常。</p>
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类同时使用数据访问层和缓存实现实体的增删改查方法。
+ *
+ * <p>
+ * 插入没有主键的对象时，该服务会试图通过主键抓取器抓取新的主键，如果没有主键抓取器，就会报出异常。
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
@@ -30,11 +37,17 @@ import java.util.stream.Collectors;
 @SuppressWarnings("DuplicatedCode")
 public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> implements BatchCrudService<K, E> {
 
+    @Nonnull
     private BatchBaseDao<K, E> dao;
+    @Nonnull
     private BatchBaseCache<K, E> cache;
+    @Nonnull
     private KeyFetcher<K> keyFetcher;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
+    @Nonnegative
     private long cacheTimeout;
 
     public GeneralBatchCrudService(
@@ -43,7 +56,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             @Nonnull KeyFetcher<K> keyFetcher,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel,
-            long cacheTimeout
+            @Nonnegative long cacheTimeout
     ) {
         this.dao = dao;
         this.cache = cache;
@@ -438,6 +451,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         }
     }
 
+    @Nonnull
     public BatchBaseDao<K, E> getDao() {
         return dao;
     }
@@ -446,6 +460,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         this.dao = dao;
     }
 
+    @Nonnull
     public BatchBaseCache<K, E> getCache() {
         return cache;
     }
@@ -454,6 +469,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         this.cache = cache;
     }
 
+    @Nonnull
     public KeyFetcher<K> getKeyFetcher() {
         return keyFetcher;
     }
@@ -462,6 +478,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         this.keyFetcher = keyFetcher;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -470,6 +487,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
@@ -484,5 +502,17 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
 
     public void setCacheTimeout(long cacheTimeout) {
         this.cacheTimeout = cacheTimeout;
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralBatchCrudService{" +
+                "dao=" + dao +
+                ", cache=" + cache +
+                ", keyFetcher=" + keyFetcher +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                ", cacheTimeout=" + cacheTimeout +
+                '}';
     }
 }

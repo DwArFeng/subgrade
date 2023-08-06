@@ -19,9 +19,15 @@ import java.util.stream.Collectors;
 
 /**
  * 仅通过数据访问层的实体增删改查服务。
- * <p>该类同时使用数据访问层和缓存实现实体的增删改查方法。</p>
- * <p>插入没有主键的对象时，该服务会试图通过主键抓取器抓取新的主键，如果没有主键抓取器，就会报出异常。</p>
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类同时使用数据访问层和缓存实现实体的增删改查方法。
+ *
+ * <p>
+ * 插入没有主键的对象时，该服务会试图通过主键抓取器抓取新的主键，如果没有主键抓取器，就会报出异常。
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
@@ -29,9 +35,13 @@ import java.util.stream.Collectors;
 @SuppressWarnings("DuplicatedCode")
 public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> implements BatchCrudService<K, E> {
 
+    @Nonnull
     private BatchBaseDao<K, E> dao;
+    @Nonnull
     private KeyFetcher<K> keyFetcher;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
 
     public DaoOnlyBatchCrudService(
@@ -373,6 +383,7 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         }
     }
 
+    @Nonnull
     public BatchBaseDao<K, E> getDao() {
         return dao;
     }
@@ -381,6 +392,7 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         this.dao = dao;
     }
 
+    @Nonnull
     public KeyFetcher<K> getKeyFetcher() {
         return keyFetcher;
     }
@@ -389,6 +401,7 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         this.keyFetcher = keyFetcher;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -397,11 +410,22 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
 
     public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "DaoOnlyBatchCrudService{" +
+                "dao=" + dao +
+                ", keyFetcher=" + keyFetcher +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                '}';
     }
 }

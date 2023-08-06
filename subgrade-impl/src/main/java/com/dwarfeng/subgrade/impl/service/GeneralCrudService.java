@@ -12,14 +12,21 @@ import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.CrudService;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
  * 通用的实体增删改查服务。
- * <p>该类同时使用数据访问层和缓存实现实体的增删改查方法。</p>
- * <p>插入没有主键的对象时，该服务会试图通过主键抓取器抓取新的主键，如果没有主键抓取器，就会报出异常。</p>
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类同时使用数据访问层和缓存实现实体的增删改查方法。
+ *
+ * <p>
+ * 插入没有主键的对象时，该服务会试图通过主键抓取器抓取新的主键，如果没有主键抓取器，就会报出异常。
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
@@ -27,11 +34,17 @@ import java.util.Objects;
 @SuppressWarnings("DuplicatedCode")
 public class GeneralCrudService<K extends Key, E extends Entity<K>> implements CrudService<K, E> {
 
+    @Nonnull
     private BaseDao<K, E> dao;
+    @Nonnull
     private BaseCache<K, E> cache;
+    @Nonnull
     private KeyFetcher<K> keyFetcher;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
+    @Nonnegative
     private long cacheTimeout;
 
     public GeneralCrudService(
@@ -40,7 +53,8 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
             @Nonnull KeyFetcher<K> keyFetcher,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel,
-            long cacheTimeout) {
+            @Nonnegative long cacheTimeout
+    ) {
         this.dao = dao;
         this.cache = cache;
         this.keyFetcher = keyFetcher;
@@ -221,6 +235,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
         }
     }
 
+    @Nonnull
     public BaseDao<K, E> getDao() {
         return dao;
     }
@@ -229,6 +244,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
         this.dao = dao;
     }
 
+    @Nonnull
     public BaseCache<K, E> getCache() {
         return cache;
     }
@@ -237,6 +253,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
         this.cache = cache;
     }
 
+    @Nonnull
     public KeyFetcher<K> getKeyFetcher() {
         return keyFetcher;
     }
@@ -245,6 +262,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
         this.keyFetcher = keyFetcher;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -253,6 +271,7 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
@@ -267,5 +286,17 @@ public class GeneralCrudService<K extends Key, E extends Entity<K>> implements C
 
     public void setCacheTimeout(long cacheTimeout) {
         this.cacheTimeout = cacheTimeout;
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralCrudService{" +
+                "dao=" + dao +
+                ", cache=" + cache +
+                ", keyFetcher=" + keyFetcher +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                ", cacheTimeout=" + cacheTimeout +
+                '}';
     }
 }

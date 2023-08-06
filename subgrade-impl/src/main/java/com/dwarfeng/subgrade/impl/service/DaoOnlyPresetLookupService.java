@@ -16,15 +16,20 @@ import java.util.List;
 
 /**
  * 仅通过数据访问层实现的预设实体查询服务。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
 public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLookupService<E> {
 
+    @Nonnull
     private PresetLookupDao<E> dao;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
 
     public DaoOnlyPresetLookupService(
@@ -103,6 +108,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         }
     }
 
+    @Nonnull
     public PresetLookupDao<E> getDao() {
         return dao;
     }
@@ -111,6 +117,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         this.dao = dao;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -119,11 +126,21 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
 
     public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "DaoOnlyPresetLookupService{" +
+                "dao=" + dao +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                '}';
     }
 }

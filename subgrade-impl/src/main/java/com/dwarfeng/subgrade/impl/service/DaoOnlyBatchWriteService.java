@@ -16,23 +16,30 @@ import java.util.Objects;
 
 /**
  * 仅通过数据访问层实现的批量写入服务。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 1.1.0
  */
 public class DaoOnlyBatchWriteService<K extends Key, E extends Entity<K>> implements BatchWriteService<E> {
 
+    @Nonnull
     private BatchWriteDao<E> dao;
+    @Nonnull
     private KeyFetcher<K> keyFetcher;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
 
     public DaoOnlyBatchWriteService(
             @Nonnull BatchWriteDao<E> dao,
             @Nonnull KeyFetcher<K> keyFetcher,
             @Nonnull ServiceExceptionMapper sem,
-            @Nonnull LogLevel exceptionLogLevel) {
+            @Nonnull LogLevel exceptionLogLevel
+    ) {
         this.dao = dao;
         this.keyFetcher = keyFetcher;
         this.sem = sem;
@@ -65,6 +72,7 @@ public class DaoOnlyBatchWriteService<K extends Key, E extends Entity<K>> implem
         }
     }
 
+    @Nonnull
     public BatchWriteDao<E> getDao() {
         return dao;
     }
@@ -73,6 +81,7 @@ public class DaoOnlyBatchWriteService<K extends Key, E extends Entity<K>> implem
         this.dao = dao;
     }
 
+    @Nonnull
     public KeyFetcher<K> getKeyFetcher() {
         return keyFetcher;
     }
@@ -81,6 +90,7 @@ public class DaoOnlyBatchWriteService<K extends Key, E extends Entity<K>> implem
         this.keyFetcher = keyFetcher;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -89,11 +99,22 @@ public class DaoOnlyBatchWriteService<K extends Key, E extends Entity<K>> implem
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
 
     public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "DaoOnlyBatchWriteService{" +
+                "dao=" + dao +
+                ", keyFetcher=" + keyFetcher +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                '}';
     }
 }

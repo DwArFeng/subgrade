@@ -20,6 +20,21 @@
   - com.dwarfeng.subgrade.impl.dao.RedisEntireLookupDao。
   - com.dwarfeng.subgrade.impl.dao.RedisPresetLookupDao。
   - com.dwarfeng.subgrade.impl.dao.RedisSingleObjectDao。
+  - com.dwarfeng.subgrade.impl.service.CustomBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.CustomCrudService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchRelationService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyCrudService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyRelationService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlySingleObjectService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyWriteService。
+  - com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.GeneralCrudService。
+  - com.dwarfeng.subgrade.impl.service.GeneralEntireLookupService。
+  - com.dwarfeng.subgrade.impl.service.GeneralSingleObjectService。
 
 - 规范约束检查注解。
   - org.springframework.lang.NonNull -> javax.annotation.Nonnull。

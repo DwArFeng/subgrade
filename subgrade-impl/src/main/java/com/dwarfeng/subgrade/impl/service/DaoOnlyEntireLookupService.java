@@ -16,16 +16,23 @@ import java.util.List;
 
 /**
  * 仅通过数据访问层实现的全体实体查询服务。
- * <p>该类同时使用数据访问层和缓存实现实体的查询方法。</p>
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类同时使用数据访问层和缓存实现实体的查询方法。
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
 public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLookupService<E> {
 
+    @Nonnull
     private EntireLookupDao<E> dao;
+    @Nonnull
     private ServiceExceptionMapper sem;
+    @Nonnull
     private LogLevel exceptionLogLevel;
 
     public DaoOnlyEntireLookupService(
@@ -104,6 +111,7 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
         }
     }
 
+    @Nonnull
     public EntireLookupDao<E> getDao() {
         return dao;
     }
@@ -112,6 +120,7 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
         this.dao = dao;
     }
 
+    @Nonnull
     public ServiceExceptionMapper getSem() {
         return sem;
     }
@@ -120,11 +129,21 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
         this.sem = sem;
     }
 
+    @Nonnull
     public LogLevel getExceptionLogLevel() {
         return exceptionLogLevel;
     }
 
     public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
         this.exceptionLogLevel = exceptionLogLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "DaoOnlyEntireLookupService{" +
+                "dao=" + dao +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                '}';
     }
 }
