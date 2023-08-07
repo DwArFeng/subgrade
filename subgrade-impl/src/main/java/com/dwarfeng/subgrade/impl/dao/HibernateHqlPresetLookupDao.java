@@ -129,6 +129,7 @@ public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> i
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public int lookupCount(String preset, Object[] objs) throws DaoException {
         try {
