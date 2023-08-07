@@ -5,6 +5,7 @@ import com.dwarfeng.subgrade.stack.handler.LocalCacheHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,13 +26,14 @@ public class GeneralLocalCacheHandler<K, V> implements LocalCacheHandler<K, V> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneralLocalCacheHandler.class);
 
-    private final Fetcher<K, V> fetcher;
+    @Nonnull
+    private Fetcher<K, V> fetcher;
 
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private final Map<K, V> dataMap = new HashMap<>();
     private final Set<K> notExistsKeys = new HashSet<>();
 
-    public GeneralLocalCacheHandler(Fetcher<K, V> fetcher) {
+    public GeneralLocalCacheHandler(@Nonnull Fetcher<K, V> fetcher) {
         this.fetcher = fetcher;
     }
 
@@ -147,5 +149,33 @@ public class GeneralLocalCacheHandler<K, V> implements LocalCacheHandler<K, V> {
         } finally {
             lock.writeLock().unlock();
         }
+    }
+
+    @Nonnull
+    public Fetcher<K, V> getFetcher() {
+        lock.readLock().lock();
+        try {
+            return fetcher;
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    public void setFetcher(@Nonnull Fetcher<K, V> fetcher) {
+        lock.writeLock().lock();
+        try {
+            this.fetcher = fetcher;
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralLocalCacheHandler{" +
+                "fetcher=" + fetcher +
+                ", dataMap=" + dataMap +
+                ", notExistsKeys=" + notExistsKeys +
+                '}';
     }
 }

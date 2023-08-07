@@ -8,6 +8,7 @@ import org.apache.curator.framework.recipes.leader.LeaderLatchListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -24,9 +25,12 @@ public class CuratorDistributedLockHandler implements DistributedLockHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CuratorDistributedLockHandler.class);
 
-    private final CuratorFramework curatorFramework;
-    private final String leaderLatchPath;
-    private final Worker worker;
+    @Nonnull
+    private CuratorFramework curatorFramework;
+    @Nonnull
+    private String leaderLatchPath;
+    @Nonnull
+    private Worker worker;
 
     private final Lock lock = new ReentrantLock();
     private final InternalLeaderLatchListener leaderLatchListener = new InternalLeaderLatchListener();
@@ -38,7 +42,11 @@ public class CuratorDistributedLockHandler implements DistributedLockHandler {
 
     private boolean workingFlag = false;
 
-    public CuratorDistributedLockHandler(CuratorFramework curatorFramework, String leaderLatchPath, Worker worker) {
+    public CuratorDistributedLockHandler(
+            @Nonnull CuratorFramework curatorFramework,
+            @Nonnull String leaderLatchPath,
+            @Nonnull Worker worker
+    ) {
         this.curatorFramework = curatorFramework;
         this.leaderLatchPath = leaderLatchPath;
         this.worker = worker;
@@ -194,6 +202,77 @@ public class CuratorDistributedLockHandler implements DistributedLockHandler {
 
         worker.rest();
         workingFlag = false;
+    }
+
+    @Nonnull
+    public CuratorFramework getCuratorFramework() {
+        lock.lock();
+        try {
+            return curatorFramework;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void setCuratorFramework(@Nonnull CuratorFramework curatorFramework) {
+        lock.lock();
+        try {
+            this.curatorFramework = curatorFramework;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Nonnull
+    public String getLeaderLatchPath() {
+        lock.lock();
+        try {
+            return leaderLatchPath;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void setLeaderLatchPath(@Nonnull String leaderLatchPath) {
+        lock.lock();
+        try {
+            this.leaderLatchPath = leaderLatchPath;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Nonnull
+    public Worker getWorker() {
+        lock.lock();
+        try {
+            return worker;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void setWorker(@Nonnull Worker worker) {
+        lock.lock();
+        try {
+            this.worker = worker;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "CuratorDistributedLockHandler{" +
+                "curatorFramework=" + curatorFramework +
+                ", leaderLatchPath='" + leaderLatchPath + '\'' +
+                ", worker=" + worker +
+                ", onlineFlag=" + onlineFlag +
+                ", leaderLatch=" + leaderLatch +
+                ", lockHoldingFlag=" + lockHoldingFlag +
+                ", startedFlag=" + startedFlag +
+                ", workingFlag=" + workingFlag +
+                '}';
     }
 
     private class InternalLeaderLatchListener implements LeaderLatchListener {

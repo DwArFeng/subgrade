@@ -4,7 +4,11 @@
 
 #### 功能构建
 
-- (无)
+- 优化代码结构。
+  - com.dwarfeng.subgrade.impl.handler.CuratorDistributedLockHandler。
+  - com.dwarfeng.subgrade.impl.handler.GeneralLocalCacheHandler。
+  - com.dwarfeng.subgrade.impl.handler.GeneralOnlineHandler。
+  - com.dwarfeng.subgrade.impl.handler.GeneralStartableHandler。
 
 #### Bug修复
 

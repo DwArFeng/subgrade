@@ -5,6 +5,7 @@ import com.dwarfeng.subgrade.stack.handler.OnlineHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -21,12 +22,13 @@ public class GeneralOnlineHandler implements OnlineHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneralOnlineHandler.class);
 
-    private final Worker worker;
+    @Nonnull
+    private Worker worker;
 
     private final Lock lock = new ReentrantLock();
     private boolean onlineFlag = false;
 
-    public GeneralOnlineHandler(Worker worker) {
+    public GeneralOnlineHandler(@Nonnull Worker worker) {
         this.worker = worker;
     }
 
@@ -78,5 +80,32 @@ public class GeneralOnlineHandler implements OnlineHandler {
         } finally {
             lock.unlock();
         }
+    }
+
+    @Nonnull
+    public Worker getWorker() {
+        lock.lock();
+        try {
+            return worker;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void setWorker(@Nonnull Worker worker) {
+        lock.lock();
+        try {
+            this.worker = worker;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralOnlineHandler{" +
+                "worker=" + worker +
+                ", onlineFlag=" + onlineFlag +
+                '}';
     }
 }

@@ -5,6 +5,7 @@ import com.dwarfeng.subgrade.stack.handler.StartableHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -21,12 +22,13 @@ public class GeneralStartableHandler implements StartableHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneralStartableHandler.class);
 
-    private final Worker worker;
+    @Nonnull
+    private Worker worker;
 
     private final Lock lock = new ReentrantLock();
     private boolean startedFlag = false;
 
-    public GeneralStartableHandler(Worker worker) {
+    public GeneralStartableHandler(@Nonnull Worker worker) {
         this.worker = worker;
     }
 
@@ -78,5 +80,32 @@ public class GeneralStartableHandler implements StartableHandler {
         } finally {
             lock.unlock();
         }
+    }
+
+    @Nonnull
+    public Worker getWorker() {
+        lock.lock();
+        try {
+            return worker;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void setWorker(@Nonnull Worker worker) {
+        lock.lock();
+        try {
+            this.worker = worker;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralStartableHandler{" +
+                "worker=" + worker +
+                ", startedFlag=" + startedFlag +
+                '}';
     }
 }
