@@ -38,6 +38,11 @@
   - com.dwarfeng.subgrade.impl.service.GeneralCrudService。
   - com.dwarfeng.subgrade.impl.service.GeneralEntireLookupService。
   - com.dwarfeng.subgrade.impl.service.GeneralSingleObjectService。
+  - com.dwarfeng.subgrade.impl.cache.RedisBaseCache。
+  - com.dwarfeng.subgrade.impl.cache.RedisSingleObjectCache。
+  - com.dwarfeng.subgrade.impl.cache.RedisListCache。
+  - com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache。
+  - com.dwarfeng.subgrade.impl.cache.RedisKeyListCache。
 
 - 规范约束检查注解。
   - org.springframework.lang.NonNull -> javax.annotation.Nonnull。

@@ -9,26 +9,35 @@ import com.dwarfeng.subgrade.stack.cache.BaseCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
  * 使用 Redis 实现的 BaseCache。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
  */
 public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean> implements BaseCache<K, E> {
 
+    @Nonnull
     private RedisTemplate<String, JE> template;
+    @Nonnull
     private StringKeyFormatter<K> formatter;
+    @Nonnull
     private BeanTransformer<E, JE> transformer;
 
     public RedisBaseCache(
-            @Nullable RedisTemplate<String, JE> template,
-            @Nullable StringKeyFormatter<K> formatter,
-            @Nullable BeanTransformer<E, JE> transformer) {
+            @Nonnull RedisTemplate<String, JE> template,
+            @Nonnull StringKeyFormatter<K> formatter,
+            @Nonnull BeanTransformer<E, JE> transformer
+    ) {
         this.template = template;
         this.formatter = formatter;
         this.transformer = transformer;
@@ -37,7 +46,10 @@ public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean>
     @Override
     public boolean exists(K key) throws CacheException {
         try {
-            return template.hasKey(formatKey(key));
+            // 获得装箱结果。
+            Boolean result = template.hasKey(formatKey(key));
+            // 拆箱并返回。
+            return result != null && result;
         } catch (Exception e) {
             throw new CacheException(e);
         }
@@ -78,7 +90,10 @@ public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean>
     @Override
     public void clear() throws CacheException {
         try {
-            template.delete(template.keys(formatter.generalFormat()));
+            Set<String> keys = Optional.ofNullable(
+                    template.keys(formatter.generalFormat())
+            ).orElse(Collections.emptySet());
+            template.delete(keys);
         } catch (Exception e) {
             throw new CacheException(e);
         }
@@ -88,27 +103,39 @@ public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean>
         return formatter.format(key);
     }
 
+    @Nonnull
     public RedisTemplate<String, JE> getTemplate() {
         return template;
     }
 
-    public void setTemplate(@Nullable RedisTemplate<String, JE> template) {
+    public void setTemplate(@Nonnull RedisTemplate<String, JE> template) {
         this.template = template;
     }
 
+    @Nonnull
     public StringKeyFormatter<K> getFormatter() {
         return formatter;
     }
 
-    public void setFormatter(@Nullable StringKeyFormatter<K> formatter) {
+    public void setFormatter(@Nonnull StringKeyFormatter<K> formatter) {
         this.formatter = formatter;
     }
 
+    @Nonnull
     public BeanTransformer<E, JE> getTransformer() {
         return transformer;
     }
 
-    public void setTransformer(@Nullable BeanTransformer<E, JE> transformer) {
+    public void setTransformer(@Nonnull BeanTransformer<E, JE> transformer) {
         this.transformer = transformer;
+    }
+
+    @Override
+    public String toString() {
+        return "RedisBaseCache{" +
+                "template=" + template +
+                ", formatter=" + formatter +
+                ", transformer=" + transformer +
+                '}';
     }
 }

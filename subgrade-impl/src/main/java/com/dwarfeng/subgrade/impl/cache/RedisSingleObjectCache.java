@@ -13,23 +13,31 @@ import javax.annotation.Nonnull;
 
 /**
  * 使用 Redis 实现的单对象缓存。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.5-beta
  */
-public class RedisSingleObjectCache<K extends Key, E extends Entity<K>, JE extends Bean> implements SingleObjectCache<E> {
+public class RedisSingleObjectCache<K extends Key, E extends Entity<K>, JE extends Bean> implements
+        SingleObjectCache<E> {
 
+    @Nonnull
     private RedisTemplate<String, JE> template;
+    @Nonnull
     private StringKeyFormatter<K> formatter;
+    @Nonnull
     private BeanTransformer<E, JE> transformer;
+    @Nonnull
     private K key;
 
     public RedisSingleObjectCache(
             @Nonnull RedisTemplate<String, JE> template,
             @Nonnull StringKeyFormatter<K> formatter,
             @Nonnull BeanTransformer<E, JE> transformer,
-            @Nonnull K key) {
+            @Nonnull K key
+    ) {
         this.template = template;
         this.formatter = formatter;
         this.transformer = transformer;
@@ -46,7 +54,10 @@ public class RedisSingleObjectCache<K extends Key, E extends Entity<K>, JE exten
     }
 
     private boolean internalExists() {
-        return template.hasKey(formatter.format(key));
+        // 获得装箱结果。
+        Boolean result = template.hasKey(formatter.format(key));
+        // 拆箱并返回。
+        return result != null && result;
     }
 
     @Override
@@ -78,6 +89,7 @@ public class RedisSingleObjectCache<K extends Key, E extends Entity<K>, JE exten
         }
     }
 
+    @Nonnull
     public RedisTemplate<String, JE> getTemplate() {
         return template;
     }
@@ -86,6 +98,7 @@ public class RedisSingleObjectCache<K extends Key, E extends Entity<K>, JE exten
         this.template = template;
     }
 
+    @Nonnull
     public StringKeyFormatter<K> getFormatter() {
         return formatter;
     }
@@ -94,6 +107,7 @@ public class RedisSingleObjectCache<K extends Key, E extends Entity<K>, JE exten
         this.formatter = formatter;
     }
 
+    @Nonnull
     public BeanTransformer<E, JE> getTransformer() {
         return transformer;
     }
@@ -102,11 +116,22 @@ public class RedisSingleObjectCache<K extends Key, E extends Entity<K>, JE exten
         this.transformer = transformer;
     }
 
+    @Nonnull
     public K getKey() {
         return key;
     }
 
     public void setKey(@Nonnull K key) {
         this.key = key;
+    }
+
+    @Override
+    public String toString() {
+        return "RedisSingleObjectCache{" +
+                "template=" + template +
+                ", formatter=" + formatter +
+                ", transformer=" + transformer +
+                ", key=" + key +
+                '}';
     }
 }

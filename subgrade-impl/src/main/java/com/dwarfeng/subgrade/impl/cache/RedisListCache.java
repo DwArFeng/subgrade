@@ -12,26 +12,33 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
  * 使用 Redis 实现的 ListCache。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
  */
 public class RedisListCache<E extends Entity<?>, JE extends Bean> implements ListCache<E> {
 
+    @Nonnull
     private String key;
+    @Nonnull
     private RedisTemplate<String, JE> template;
+    @Nonnull
     private BeanTransformer<E, JE> transformer;
 
     public RedisListCache(
             @Nonnull String key,
             @Nonnull RedisTemplate<String, JE> template,
-            @Nonnull BeanTransformer<E, JE> transformer) {
+            @Nonnull BeanTransformer<E, JE> transformer
+    ) {
         this.key = key;
         this.template = template;
         this.transformer = transformer;
@@ -40,7 +47,10 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     @Override
     public boolean exists() throws CacheException {
         try {
-            return template.hasKey(key);
+            // 获得装箱后的结果。
+            Boolean result = template.hasKey(key);
+            // 拆箱并返回。
+            return result != null && result;
         } catch (Exception e) {
             throw new CacheException(e);
         }
@@ -49,7 +59,10 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     @Override
     public int size() throws CacheException {
         try {
-            return template.opsForList().size(key).intValue();
+            // 获得装箱后的结果。
+            Long result = template.opsForList().size(key);
+            // 拆箱并返回。
+            return result == null ? 0 : result.intValue();
         } catch (Exception e) {
             throw new CacheException(e);
         }
@@ -60,10 +73,13 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     public List<E> get() throws CacheException {
         try {
             Long totalSize = template.opsForList().size(key);
-            if (totalSize == 0) {
+            if (Objects.isNull(totalSize) || totalSize == 0) {
                 return new ArrayList<>();
             } else {
                 List<JE> range = template.opsForList().range(key, 0, totalSize - 1);
+                if (Objects.isNull(range)) {
+                    return new ArrayList<>();
+                }
                 return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
             }
         } catch (Exception e) {
@@ -71,10 +87,14 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public List<E> get(int beginIndex, int maxEntity) throws CacheException {
         try {
             List<JE> range = template.opsForList().range(key, beginIndex, beginIndex + maxEntity - 1);
+            if (Objects.isNull(range)) {
+                return new ArrayList<>();
+            }
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
             throw new CacheException(e);
@@ -86,9 +106,15 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     public List<E> get(PagingInfo pagingInfo) throws CacheException {
         try {
             Long totalSize = template.opsForList().size(key);
+            if (Objects.isNull(totalSize) || totalSize == 0) {
+                return new ArrayList<>();
+            }
             long beginIndex = (long) pagingInfo.getRows() * pagingInfo.getPage();
             long endIndex = Math.min(totalSize, beginIndex + pagingInfo.getRows()) - 1;
             List<JE> range = template.opsForList().range(key, beginIndex, endIndex);
+            if (Objects.isNull(range)) {
+                return new ArrayList<>();
+            }
             return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
             throw new CacheException(e);
@@ -147,6 +173,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         }
     }
 
+    @Nonnull
     public String getKey() {
         return key;
     }
@@ -155,6 +182,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         this.key = key;
     }
 
+    @Nonnull
     public RedisTemplate<String, JE> getTemplate() {
         return template;
     }
@@ -163,11 +191,21 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         this.template = template;
     }
 
+    @Nonnull
     public BeanTransformer<E, JE> getTransformer() {
         return transformer;
     }
 
     public void setTransformer(@Nonnull BeanTransformer<E, JE> transformer) {
         this.transformer = transformer;
+    }
+
+    @Override
+    public String toString() {
+        return "RedisListCache{" +
+                "key='" + key + '\'' +
+                ", template=" + template +
+                ", transformer=" + transformer +
+                '}';
     }
 }
