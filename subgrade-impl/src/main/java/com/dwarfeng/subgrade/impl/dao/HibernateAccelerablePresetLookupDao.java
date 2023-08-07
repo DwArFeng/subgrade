@@ -147,17 +147,17 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
     public E lookupFirst(String preset, Object[] objs) throws DaoException {
         try {
             if (nativeLookup.supportPreset(preset)) {
-                DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
-                presetCriteriaMaker.makeCriteria(criteria, preset, objs);
-                @SuppressWarnings("unchecked")
-                List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria, 0, 1);
-                return byCriteria.stream().findFirst().map(entityBeanTransformer::reverseTransform).orElse(null);
-            } else {
                 List<E> result = template.executeWithNativeSession(session -> session.doReturningWork(
                         connection -> this.nativeLookup.lookupEntity(connection, preset, objs, PagingInfo.FIRST_ONE)
                 ));
                 assert result != null;
                 return result.stream().findFirst().orElse(null);
+            } else {
+                DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
+                presetCriteriaMaker.makeCriteria(criteria, preset, objs);
+                @SuppressWarnings("unchecked")
+                List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria, 0, 1);
+                return byCriteria.stream().findFirst().map(entityBeanTransformer::reverseTransform).orElse(null);
             }
         } catch (Exception e) {
             throw new DaoException(e);

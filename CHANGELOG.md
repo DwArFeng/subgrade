@@ -57,7 +57,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复 HibernateAccelerablePresetLookupDao.lookupFirst 方法的 bug。
 
 #### 功能移除
 
