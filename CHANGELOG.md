@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 增加数据访问层实现。
+  - com.dwarfeng.subgrade.impl.dao.HibernateHqlPresetLookupDao。
+
 - 规范代码的注解、注释、toString 方法。
   - com.dwarfeng.subgrade.impl.dao.HibernateAccelerablePresetLookupDao。
   - com.dwarfeng.subgrade.impl.dao.HibernateBaseDao。

@@ -56,7 +56,7 @@ public class QueryInfo implements Dto {
 
     @Override
     public String toString() {
-        return "QueryInfo{" +
+        return "HqlQueryInfo{" +
                 "whereClause='" + whereClause + '\'' +
                 ", orderingMap=" + orderingMap +
                 ", parameters=" + Arrays.toString(parameters) +
