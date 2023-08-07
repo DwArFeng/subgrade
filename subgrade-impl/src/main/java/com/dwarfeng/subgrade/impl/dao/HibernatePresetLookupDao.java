@@ -21,6 +21,22 @@ import java.util.stream.Collectors;
  * <p>
  * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
+ * <p>
+ * 该类使用 Hibernate Criteria API 实现。基于 Hibernate Criteria，该类可以实现大多数的查询需求。
+ * 有关 Criteria API 的使用，请参考 <a href="https://docs.jboss.org/hibernate/orm/5.6/userguide/html_single/Hibernate_User_Guide.html#appendix-legacy-criteria">Hibernate 官方文档</a>。
+ *
+ * <p>
+ * 如果需要实现 Criteria API 无法实现的查询需求，请使用 {@link HibernateHqlPresetLookupDao}。
+ *
+ * <p>
+ * 自 Hibernate 5.0.0.Final 开始，Hibernate 官方已经不推荐使用 Hibernate Criteria API，而是推荐使用 JPA Criteria API。
+ * 但 Hibernate 仍然保留了 Hibernate Criteria API，且没有将其标记为 deprecated，因此该类仍然可以使用。<br>
+ * 随着版本升级，当 Hibernate Criteria API 被官方标记为 deprecated 时，该类将被标记为 deprecated。
+ *
+ * <p>
+ * 使用者应在项目的升级中，逐步将此类替换为 {@link HibernateHqlPresetLookupDao}。
+ *
+ * @see HibernateHqlPresetLookupDao
  * @author DwArFeng
  * @since 0.0.3-beta
  */
