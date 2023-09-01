@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.impl.handler;
 
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
 /**
@@ -19,7 +20,9 @@ public final class HandlerUtil {
      *
      * @param e 传入的异常。
      * @throws HandlerException 抛出的处理器异常。
+     * @deprecated 该方法由于所处位置不当，且命名不规范，已经被 {@link HandlerExceptionHelper#parseThrow(Exception)} 替代。
      */
+    @Deprecated
     public static void transformAndThrowException(Exception e) throws HandlerException {
         if (e instanceof HandlerException) {
             throw (HandlerException) e;

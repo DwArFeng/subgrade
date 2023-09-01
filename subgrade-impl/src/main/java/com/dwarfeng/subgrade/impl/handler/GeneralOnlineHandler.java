@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.impl.handler;
 
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.OnlineHandler;
 import org.slf4j.Logger;
@@ -56,7 +57,7 @@ public class GeneralOnlineHandler implements OnlineHandler {
             worker.work();
             onlineFlag = true;
         } catch (Exception e) {
-            HandlerUtil.transformAndThrowException(e);
+            throw HandlerExceptionHelper.parse(e);
         } finally {
             lock.unlock();
         }
@@ -76,7 +77,7 @@ public class GeneralOnlineHandler implements OnlineHandler {
             worker.rest();
             onlineFlag = false;
         } catch (Exception e) {
-            HandlerUtil.transformAndThrowException(e);
+            throw HandlerExceptionHelper.parse(e);
         } finally {
             lock.unlock();
         }
