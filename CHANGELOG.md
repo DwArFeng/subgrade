@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 依赖升级。
+  - 升级 `spring-kafka` 依赖版本为 `2.9.11` 以规避漏洞。
+
 - 优化代码结构。
   - com.dwarfeng.subgrade.impl.handler.CuratorDistributedLockHandler。
   - com.dwarfeng.subgrade.impl.handler.GeneralLocalCacheHandler。
