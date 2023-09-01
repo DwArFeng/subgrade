@@ -54,7 +54,7 @@ public class DaoOnlyBatchWriteService<K extends Key, E extends Entity<K>> implem
             }
             dao.write(element);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("写入实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("写入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -68,7 +68,7 @@ public class DaoOnlyBatchWriteService<K extends Key, E extends Entity<K>> implem
             }
             dao.batchWrite(elements);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("写入实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("写入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 

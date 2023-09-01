@@ -50,7 +50,7 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
         try {
             return PagingUtil.pagedData(dao.lookup());
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -59,7 +59,7 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
         try {
             return PagingUtil.pagedData(pagingInfo, dao.lookupCount(), dao.lookup(pagingInfo));
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -71,7 +71,7 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
         try {
             return dao.lookup();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -83,7 +83,7 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
         try {
             return dao.lookup(pagingInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -95,7 +95,7 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
         try {
             return dao.lookupFirst();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -107,7 +107,7 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
         try {
             return dao.lookupCount();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体数量时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体数量时发生异常", exceptionLogLevel, e, sem);
         }
     }
 

@@ -71,7 +71,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             return internalExists(key);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("判断实体是否存在时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -80,7 +80,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             return internalGet(key);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("获取实体信息时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("获取实体信息时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -89,7 +89,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             return internalInsert(element);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -109,7 +109,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             internalUpdate(element);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -127,7 +127,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             internalDelete(key);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("删除实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -147,7 +147,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             return internalExists(key) ? internalGet(key) : null;
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("获取实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -159,7 +159,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             }
             return null;
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -170,7 +170,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
                 internalUpdate(element);
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -181,7 +181,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
                 internalDelete(key);
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("删除实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -195,7 +195,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
                 return null;
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("插入或更新实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("插入或更新实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -223,7 +223,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             return internalAllExists(keys);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("判断实体是否存在时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -239,7 +239,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             return internalNonExists(keys);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("判断实体是否存在时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -255,7 +255,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             return internalBatchGet(keys);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("判断实体是否存在时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -272,7 +272,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             return internalBatchInsert(elements);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -300,7 +300,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             internalBatchUpdate(elements);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -319,7 +319,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             internalBatchDelete(keys);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("删除实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -343,7 +343,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             }
             return internalBatchGet(existsKeys);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("获取实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -358,7 +358,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             }
             return internalBatchInsert(elements2Insert);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -373,7 +373,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             }
             internalBatchUpdate(elements2Update);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -388,7 +388,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             }
             internalBatchDelete(keys2Delete);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("删除实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -407,7 +407,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             internalBatchUpdate(elements2Update);
             return internalBatchInsert(elements2Insert);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("插入或更新实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("插入或更新实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -421,7 +421,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         try {
             internalDumpCache(key);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("将实体存入缓存时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("将实体存入缓存时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -447,7 +447,7 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
                 internalDumpCache(key);
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("将实体存入缓存时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("将实体存入缓存时发生异常", exceptionLogLevel, e, sem);
         }
     }
 

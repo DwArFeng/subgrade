@@ -43,7 +43,7 @@ public class DaoOnlyRelationService<PK extends Key, CK extends Key> implements R
         try {
             return dao.existsRelation(pk, ck);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询实体关系是否存在时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询实体关系是否存在时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -52,7 +52,7 @@ public class DaoOnlyRelationService<PK extends Key, CK extends Key> implements R
         try {
             dao.addRelation(pk, ck);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("添加实体关系时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("添加实体关系时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -61,7 +61,7 @@ public class DaoOnlyRelationService<PK extends Key, CK extends Key> implements R
         try {
             dao.deleteRelation(pk, ck);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除实体关系时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("删除实体关系时发生异常", exceptionLogLevel, e, sem);
         }
     }
 

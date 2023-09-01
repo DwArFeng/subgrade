@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * 异常的帮助类。
+ * 服务异常帮助类。
  *
  * @author DwArFeng
  * @since 0.0.1-alpha
@@ -28,13 +28,11 @@ public final class ServiceExceptionHelper {
     private static final Map<LogLevel, SingleLevelLogger> LOGGER_MAP =
             SingleLevelLoggerFactory.newInstanceMap(LoggerFactory.getLogger(ServiceExceptionHelper.class));
 
-    private ServiceExceptionHelper() {
-        throw new IllegalStateException("禁止外部实例化");
-    }
-
     /**
      * 向指定的映射中添加subgrade默认的目标映射。
-     * <p>该方法可以在配置类中快速的搭建目标映射。</p>
+     *
+     * <p>
+     * 该方法可以在配置类中快速的搭建目标映射。
      *
      * @param map 指定的映射，允许为null。
      * @return 添加了默认目标的映射。
@@ -68,10 +66,13 @@ public final class ServiceExceptionHelper {
      * @param mapper   指定的异常映射器。
      * @param e        指定的异常。
      * @return 转化后抛出的服务异常。
+     * @deprecated 该方法由于命名不规范，已经被 {@link #logParse(String, LogLevel, Exception, ServiceExceptionMapper)} 取代。
      */
+    @Deprecated
     public static ServiceException logAndThrow(
             @Nonnull String message, @Nonnull LogLevel logLevel, @Nonnull ServiceExceptionMapper mapper,
-            @Nonnull Exception e) {
+            @Nonnull Exception e
+    ) {
         LOGGER_MAP.get(logLevel).log(message, e);
         return mapper.map(e);
     }
@@ -82,9 +83,76 @@ public final class ServiceExceptionHelper {
      * @param mapper 指定的异常映射器。
      * @param e      指定的异常。
      * @return 转化后抛出的服务异常。
+     * @deprecated 该方法由于命名不规范，已经被 {@link #parse(Exception, ServiceExceptionMapper)} 取代。
      */
+    @Deprecated
     public static ServiceException mapAndThrow(
-            @Nonnull ServiceExceptionMapper mapper, @Nonnull Exception e) {
+            @Nonnull ServiceExceptionMapper mapper, @Nonnull Exception e
+    ) {
         return mapper.map(e);
+    }
+
+    /**
+     * 将指定的异常解析为服务异常。
+     *
+     * @param mapper 参与解析的服务异常映射器。
+     * @param e      指定的异常。
+     * @return 解析后得到的服务异常。
+     * @since 1.4.4
+     */
+    public static ServiceException parse(@Nonnull Exception e, @Nonnull ServiceExceptionMapper mapper) {
+        return mapper.map(e);
+    }
+
+    /**
+     * 将指定的异常解析为服务异常，并抛出。
+     *
+     * @param mapper 参与解析的服务异常映射器。
+     * @param e      指定的异常。
+     * @throws ServiceException 解析后抛出的服务异常。
+     * @since 1.4.4
+     */
+    public static void parseThrow(@Nonnull Exception e, @Nonnull ServiceExceptionMapper mapper)
+            throws ServiceException {
+        throw parse(e, mapper);
+    }
+
+    /**
+     * 日志记录指定的异常，并将该异常解析为服务异常。
+     *
+     * @param message  日志的消息。
+     * @param logLevel 日志的等级。
+     * @param e        指定的异常。
+     * @param mapper   参与解析的服务异常映射器。
+     * @return 解析后得到的服务异常。
+     * @since 1.4.4
+     */
+    public static ServiceException logParse(
+            @Nonnull String message, @Nonnull LogLevel logLevel,
+            @Nonnull Exception e, @Nonnull ServiceExceptionMapper mapper
+    ) {
+        LOGGER_MAP.get(logLevel).log(message, e);
+        return parse(e, mapper);
+    }
+
+    /**
+     * 日志记录指定的异常，并将该异常解析为服务异常，并抛出。
+     *
+     * @param message  日志的消息。
+     * @param logLevel 日志的等级。
+     * @param e        指定的异常。
+     * @param mapper   参与解析的服务异常映射器。
+     * @throws ServiceException 解析后抛出的服务异常。
+     * @since 1.4.4
+     */
+    public static void logParseThrow(
+            @Nonnull String message, @Nonnull LogLevel logLevel,
+            @Nonnull Exception e, @Nonnull ServiceExceptionMapper mapper
+    ) throws ServiceException {
+        throw logParse(message, logLevel, e, mapper);
+    }
+
+    private ServiceExceptionHelper() {
+        throw new IllegalStateException("禁止实例化");
     }
 }

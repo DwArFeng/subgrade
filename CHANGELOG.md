@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- 优化服务异常的处理工具。
+  - 在 `ServiceExceptionHelper` 中新增服务异常的工具方法。
+  - 过期 `ServiceExceptionHelper` 中不规范的方法，并使用新方法替换工程内的调用。
 
 #### Bug修复
 

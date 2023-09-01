@@ -65,7 +65,7 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
             cache.set(lookup, cacheTimeout);
             return PagingUtil.pagedData(lookup);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -79,7 +79,7 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
             cache.set(lookup, cacheTimeout);
             return PagingUtil.pagedData(pagingInfo, cache.size(), cache.get(pagingInfo));
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -96,7 +96,7 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
             cache.set(lookup, cacheTimeout);
             return lookup;
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -113,7 +113,7 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
             cache.set(lookup, cacheTimeout);
             return cache.get(pagingInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -130,7 +130,7 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
             cache.set(lookup, cacheTimeout);
             return lookup.stream().findFirst().orElse(null);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -147,7 +147,7 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
             cache.set(lookup, cacheTimeout);
             return lookup.size();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询全部实体数量时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询全部实体数量时发生异常", exceptionLogLevel, e, sem);
         }
     }
 

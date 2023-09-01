@@ -47,7 +47,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         try {
             return PagingUtil.pagedData(dao.lookup(preset, objs));
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询预设实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -56,7 +56,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         try {
             return PagingUtil.pagedData(pagingInfo, dao.lookupCount(preset, objs), dao.lookup(preset, objs, pagingInfo));
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询预设实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -68,7 +68,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         try {
             return dao.lookup(preset, objs);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询预设实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -80,7 +80,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         try {
             return dao.lookup(preset, objs, pagingInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询预设实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -92,7 +92,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         try {
             return dao.lookupFirst(preset, objs);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询预设实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -104,7 +104,7 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
         try {
             return dao.lookupCount(preset, objs);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询预设实体数量时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("查询预设实体数量时发生异常", exceptionLogLevel, e, sem);
         }
     }
 

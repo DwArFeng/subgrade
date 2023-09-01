@@ -53,7 +53,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
         try {
             return internalExists();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断实体是否存在时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("判断实体是否存在时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -74,7 +74,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
             cache.put(entity, cacheTimeout);
             return entity;
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("获取实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -84,7 +84,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
             dao.put(entity);
             cache.put(entity, cacheTimeout);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
@@ -94,7 +94,7 @@ public class GeneralSingleObjectService<E extends Entity<?>> implements SingleOb
             dao.clear();
             cache.clear();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", exceptionLogLevel, sem, e);
+            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
