@@ -43,7 +43,6 @@ public final class ServiceExceptionHelper {
             map = new HashMap<>();
         }
 
-        map.put(KeyFetchException.class, ServiceExceptionCodes.KEY_FETCH_FAILED);
         map.put(CacheException.class, ServiceExceptionCodes.CACHE_FAILED);
         map.put(DaoException.class, ServiceExceptionCodes.DAO_FAILED);
         map.put(EntityNotExistException.class, ServiceExceptionCodes.ENTITY_NOT_EXIST);
@@ -54,6 +53,12 @@ public final class ServiceExceptionHelper {
         map.put(HandlerException.class, ServiceExceptionCodes.HANDLER_FAILED);
         map.put(PermissionDeniedException.class, ServiceExceptionCodes.PERMISSION_DENIED);
         map.put(LoginFailedException.class, ServiceExceptionCodes.LOGIN_FAILED);
+        map.put(GenerateException.class, ServiceExceptionCodes.GENERATE_FAILED);
+
+        // 映射过时的异常，以保证兼容性。
+        @SuppressWarnings("deprecation")
+        Class<? extends Exception> deprecatedClass = KeyFetchException.class;
+        map.put(deprecatedClass, ServiceExceptionCodes.KEY_FETCH_FAILED);
 
         return map;
     }

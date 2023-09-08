@@ -4,7 +4,11 @@
 
 #### 功能构建
 
-- (无)
+- 新增对象生成机制。
+  - 新增 com.dwarfeng.subgrade.stack.generation.Generator 接口。
+  - 新增 com.dwarfeng.subgrade.stack.generation.KeyGenerator 接口。
+  - 过时 com.dwarfeng.subgrade.stack.bean.key.KeyFetcher 接口。
+  - 使用新增接口替换工程内部的过时接口。
 
 #### Bug修复
 

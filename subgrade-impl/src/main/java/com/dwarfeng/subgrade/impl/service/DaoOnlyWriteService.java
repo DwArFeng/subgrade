@@ -7,6 +7,7 @@ import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.dao.WriteDao;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
+import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.WriteService;
 
@@ -27,7 +28,7 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
     @Nonnull
     private WriteDao<E> dao;
     @Nonnull
-    private KeyFetcher<K> keyFetcher;
+    private KeyGenerator<K> keyGenerator;
     @Nonnull
     private ServiceExceptionMapper sem;
     @Nonnull
@@ -35,12 +36,26 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
 
     public DaoOnlyWriteService(
             @Nonnull WriteDao<E> dao,
+            @Nonnull KeyGenerator<K> keyGenerator,
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel
+    ) {
+        this.dao = dao;
+        this.keyGenerator = keyGenerator;
+        this.sem = sem;
+        this.exceptionLogLevel = exceptionLogLevel;
+    }
+
+    @Deprecated
+    public DaoOnlyWriteService(
+            @Nonnull WriteDao<E> dao,
             @Nonnull KeyFetcher<K> keyFetcher,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel
     ) {
         this.dao = dao;
-        this.keyFetcher = keyFetcher;
+        this.keyGenerator = KeyFetcherAdaptHelper.toKeyGenerator(keyFetcher);
+
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
     }
@@ -49,7 +64,7 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
     public void write(E element) throws ServiceException {
         try {
             if (Objects.isNull(element.getKey())) {
-                element.setKey(keyFetcher.fetchKey());
+                element.setKey(keyGenerator.generate());
             }
             dao.write(element);
         } catch (Exception e) {
@@ -67,12 +82,23 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
     }
 
     @Nonnull
-    public KeyFetcher<K> getKeyFetcher() {
-        return keyFetcher;
+    public KeyGenerator<K> getKeyGenerator() {
+        return keyGenerator;
     }
 
+    public void setKeyGenerator(@Nonnull KeyGenerator<K> keyGenerator) {
+        this.keyGenerator = keyGenerator;
+    }
+
+    @Deprecated
+    @Nonnull
+    public KeyFetcher<K> getKeyFetcher() {
+        return KeyFetcherAdaptHelper.toKeyFetcher(keyGenerator);
+    }
+
+    @Deprecated
     public void setKeyFetcher(@Nonnull KeyFetcher<K> keyFetcher) {
-        this.keyFetcher = keyFetcher;
+        this.keyGenerator = KeyFetcherAdaptHelper.toKeyGenerator(keyFetcher);
     }
 
     @Nonnull
@@ -97,7 +123,7 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
     public String toString() {
         return "DaoOnlyWriteService{" +
                 "dao=" + dao +
-                ", keyFetcher=" + keyFetcher +
+                ", keyGenerator=" + keyGenerator +
                 ", sem=" + sem +
                 ", exceptionLogLevel=" + exceptionLogLevel +
                 '}';

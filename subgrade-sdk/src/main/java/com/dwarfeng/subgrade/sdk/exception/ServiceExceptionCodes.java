@@ -96,6 +96,12 @@ public final class ServiceExceptionCodes {
     public static final ServiceException.Code NOT_IMPLEMENTED_YET =
             new ServiceException.Code(offset(110), "not implemented yet");
 
+    /**
+     * 生成失败。
+     */
+    public static final ServiceException.Code GENERATE_FAILED =
+            new ServiceException.Code(offset(120), "generate failed");
+
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
     }
@@ -133,6 +139,7 @@ public final class ServiceExceptionCodes {
         LOGIN_FAILED.setCode(offset(90));
         DATABASE_FAILED.setCode(offset(100));
         NOT_IMPLEMENTED_YET.setCode(offset(110));
+        GENERATE_FAILED.setCode(offset(120));
     }
 
     private ServiceExceptionCodes() {

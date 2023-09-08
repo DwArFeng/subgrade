@@ -6,6 +6,7 @@ package com.dwarfeng.subgrade.stack.exception;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
+@Deprecated
 public class KeyFetchException extends Exception {
 
     private static final long serialVersionUID = -799575221601479850L;
@@ -25,7 +26,9 @@ public class KeyFetchException extends Exception {
         super(cause);
     }
 
-    protected KeyFetchException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected KeyFetchException(
+            String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace
+    ) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

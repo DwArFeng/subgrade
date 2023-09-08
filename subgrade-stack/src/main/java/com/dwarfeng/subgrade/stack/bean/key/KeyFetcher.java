@@ -1,6 +1,7 @@
 package com.dwarfeng.subgrade.stack.bean.key;
 
 import com.dwarfeng.subgrade.stack.exception.KeyFetchException;
+import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +9,24 @@ import java.util.List;
 /**
  * 主键抓取器。
  *
- * <p>用于抓取主键</p>
- * <p>主键抓取器用于在无主键实体插入时向其分配一个主键。<br>
+ * <p>
+ * 用于抓取主键。
+ *
+ * <p>
+ * 主键抓取器用于在无主键实体插入时向其分配一个主键。
+ *
+ * <p>
  * 如果希望使用数据访问层的主键生成机制，则重写 {@link KeyFetcher#fetchKey()} 方法，使其返回 <code>null</code> 即可。
- * <p>注意：实现该方法时，如果返回值不为 <code>null</code>，则必须保证每次抓取的主键都是唯一的。
+ *
+ * <p>
+ * 注意：实现该方法时，如果返回值不为 <code>null</code>，则必须保证每次抓取的主键都是唯一的。
  *
  * @author DwArFeng
  * @since 0.0.1-beta
+ * @deprecated 由于名称 <code>KeyFetcher</code> 不能真正的体现其作用，
+ * 因此该接口将在 <code>1.4.5</code> 版本中被 {@link KeyGenerator} 取代。
  */
+@Deprecated
 public interface KeyFetcher<K extends Key> {
 
     /**

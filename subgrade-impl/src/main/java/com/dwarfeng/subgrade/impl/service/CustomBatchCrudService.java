@@ -8,6 +8,7 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
+import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 
@@ -32,7 +33,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
     @Nonnull
     private BatchCrudOperation<K, E> operation;
     @Nonnull
-    private KeyFetcher<K> keyFetcher;
+    private KeyGenerator<K> keyGenerator;
     @Nonnull
     private ServiceExceptionMapper sem;
     @Nonnull
@@ -40,12 +41,25 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
 
     public CustomBatchCrudService(
             @Nonnull BatchCrudOperation<K, E> operation,
+            @Nonnull KeyGenerator<K> keyGenerator,
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel
+    ) {
+        this.operation = operation;
+        this.keyGenerator = keyGenerator;
+        this.sem = sem;
+        this.exceptionLogLevel = exceptionLogLevel;
+    }
+
+    @Deprecated
+    public CustomBatchCrudService(
+            @Nonnull BatchCrudOperation<K, E> operation,
             @Nonnull KeyFetcher<K> keyFetcher,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel
     ) {
         this.operation = operation;
-        this.keyFetcher = keyFetcher;
+        this.keyGenerator = KeyFetcherAdaptHelper.toKeyGenerator(keyFetcher);
         this.sem = sem;
         this.exceptionLogLevel = exceptionLogLevel;
     }
@@ -90,7 +104,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
 
     private K internalInsert(E element) throws Exception {
         if (Objects.isNull(element.getKey())) {
-            element.setKey(keyFetcher.fetchKey());
+            element.setKey(keyGenerator.generate());
         }
         if (internalExists(element.getKey())) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
@@ -245,7 +259,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
         }
 
         List<E> nonKeyElements = elements.stream().filter(e -> Objects.isNull(e.getKey())).collect(Collectors.toList());
-        List<K> generatedKeys = keyFetcher.batchFetchKey(nonKeyElements.size());
+        List<K> generatedKeys = keyGenerator.batchGenerate(nonKeyElements.size());
         for (int i = 0; i < nonKeyElements.size(); i++) {
             nonKeyElements.get(i).setKey(generatedKeys.get(i));
         }
@@ -377,12 +391,23 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
     }
 
     @Nonnull
-    public KeyFetcher<K> getKeyFetcher() {
-        return keyFetcher;
+    public KeyGenerator<K> getKeyGenerator() {
+        return keyGenerator;
     }
 
+    public void setKeyGenerator(@Nonnull KeyGenerator<K> keyGenerator) {
+        this.keyGenerator = keyGenerator;
+    }
+
+    @Deprecated
+    @Nonnull
+    public KeyFetcher<K> getKeyFetcher() {
+        return KeyFetcherAdaptHelper.toKeyFetcher(keyGenerator);
+    }
+
+    @Deprecated
     public void setKeyFetcher(@Nonnull KeyFetcher<K> keyFetcher) {
-        this.keyFetcher = keyFetcher;
+        this.keyGenerator = KeyFetcherAdaptHelper.toKeyGenerator(keyFetcher);
     }
 
     @Nonnull
@@ -407,7 +432,7 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
     public String toString() {
         return "CustomBatchCrudService{" +
                 "operation=" + operation +
-                ", keyFetcher=" + keyFetcher +
+                ", keyGenerator=" + keyGenerator +
                 ", sem=" + sem +
                 ", exceptionLogLevel=" + exceptionLogLevel +
                 '}';

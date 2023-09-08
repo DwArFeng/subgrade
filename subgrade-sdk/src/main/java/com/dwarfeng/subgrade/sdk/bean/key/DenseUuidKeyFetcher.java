@@ -7,11 +7,13 @@ import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import java.util.UUID;
 
 /**
- * 紧凑型UUID主键抓取器。
+ * 紧凑型 UUID 主键抓取器。
  *
  * @author DwArFeng
  * @since 0.2.4-beta
+ * @deprecated 该类不再推荐使用，请使用 impl 模块的相应主键生成器。
  */
+@Deprecated
 public class DenseUuidKeyFetcher implements KeyFetcher<DenseUuidKey> {
 
     @Override
