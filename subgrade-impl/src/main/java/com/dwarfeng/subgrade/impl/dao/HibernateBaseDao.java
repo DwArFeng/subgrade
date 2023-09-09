@@ -27,7 +27,8 @@ import java.util.Objects;
  * @since 0.0.1-beta
  */
 @SuppressWarnings("DuplicatedCode")
-public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K>, PE extends Bean> implements BaseDao<K, E> {
+public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K>, PE extends Bean> implements
+        BaseDao<K, E> {
 
     @Nonnull
     private HibernateTemplate template;

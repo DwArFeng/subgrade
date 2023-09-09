@@ -7,6 +7,7 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BatchRelationDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import javax.annotation.Nonnull;
@@ -98,9 +99,10 @@ public class HibernateBatchRelationDao<
         try {
             PCK pck = ckTransformer.transform(ck);
             PCE pce = template.get(classPCE, pck);
-            //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+            // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+            PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
             @SuppressWarnings("unchecked")
-            Collection<PPE> ppes = (Collection<PPE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(pce, childProperty);
+            Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
             for (PPE ppe : ppes) {
                 PE pe = peTransformer.reverseTransform(ppe);
                 if (Objects.equals(pk, pe.getKey())) {
@@ -122,16 +124,18 @@ public class HibernateBatchRelationDao<
             PPE ppe = template.get(classPPE, ppk);
             PCE pce = template.get(classPCE, pck);
             if (joinType == JoinType.JOIN_BY_CHILD) {
-                //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                 @SuppressWarnings("unchecked")
-                Collection<PPE> ppes = (Collection<PPE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(pce, childProperty);
+                Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
                 ppes.add(ppe);
                 assert pce != null;
                 template.save(pce);
             } else if (joinType == JoinType.JOIN_BY_PARENT) {
-                //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                 @SuppressWarnings("unchecked")
-                Collection<PCE> pces = (Collection<PCE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(ppe, parentProperty);
+                Collection<PCE> pces = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
                 pces.add(pce);
                 assert ppe != null;
                 template.save(ppe);
@@ -153,16 +157,18 @@ public class HibernateBatchRelationDao<
             PPE ppe = template.get(classPPE, ppk);
             PCE pce = template.get(classPCE, pck);
             if (joinType == JoinType.JOIN_BY_CHILD) {
-                //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                 @SuppressWarnings("unchecked")
-                Collection<PPE> ppes = (Collection<PPE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(pce, childProperty);
+                Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
                 ppes.remove(ppe);
                 assert pce != null;
                 template.save(pce);
             } else if (joinType == JoinType.JOIN_BY_PARENT) {
-                //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                 @SuppressWarnings("unchecked")
-                Collection<PCE> pces = (Collection<PCE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(ppe, parentProperty);
+                Collection<PCE> pces = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
                 pces.remove(pce);
                 assert ppe != null;
                 template.save(ppe);
@@ -181,10 +187,12 @@ public class HibernateBatchRelationDao<
         try {
             PPK ppk = pkTransformer.transform(pk);
             PPE ppe = template.get(classPPE, ppk);
-            //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+            // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+            PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
             @SuppressWarnings("unchecked")
-            Collection<PCE> pces = (Collection<PCE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(ppe, parentProperty);
-            List<CK> collect = pces.stream().map(ceTransformer::reverseTransform).map(CE::getKey).collect(Collectors.toList());
+            Collection<PCE> pces = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
+            List<CK> collect = pces.stream().map(ceTransformer::reverseTransform).map(CE::getKey)
+                    .collect(Collectors.toList());
             return new HashSet<>(collect).containsAll(cks);
         } catch (Exception e) {
             throw new DaoException(e);
@@ -197,10 +205,12 @@ public class HibernateBatchRelationDao<
         try {
             PPK ppk = pkTransformer.transform(pk);
             PPE ppe = template.get(classPPE, ppk);
-            //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+            // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+            PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
             @SuppressWarnings("unchecked")
-            Collection<PCE> pces = (Collection<PCE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(ppe, parentProperty);
-            List<CK> collect = pces.stream().map(ceTransformer::reverseTransform).map(CE::getKey).collect(Collectors.toList());
+            Collection<PCE> pces = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
+            List<CK> collect = pces.stream().map(ceTransformer::reverseTransform).map(CE::getKey)
+                    .collect(Collectors.toList());
             for (CK ck : cks) {
                 if (collect.contains(ck)) {
                     return false;
@@ -222,16 +232,18 @@ public class HibernateBatchRelationDao<
             List<PCE> pces = pcks.stream().map(pck -> template.get(classPCE, pck)).collect(Collectors.toList());
             if (joinType == JoinType.JOIN_BY_CHILD) {
                 for (PCE pce : pces) {
-                    //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                    // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                    PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                     @SuppressWarnings("unchecked")
-                    Collection<PPE> ppes = (Collection<PPE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(pce, childProperty);
+                    Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
                     ppes.add(ppe);
                     template.save(pce);
                 }
             } else if (joinType == JoinType.JOIN_BY_PARENT) {
-                //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                 @SuppressWarnings("unchecked")
-                Collection<PCE> property = (Collection<PCE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(ppe, parentProperty);
+                Collection<PCE> property = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
                 property.addAll(pces);
                 assert ppe != null;
                 template.save(ppe);
@@ -254,16 +266,18 @@ public class HibernateBatchRelationDao<
             List<PCE> pces = pcks.stream().map(pck -> template.get(classPCE, pck)).collect(Collectors.toList());
             if (joinType == JoinType.JOIN_BY_CHILD) {
                 for (PCE pce : pces) {
-                    //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                    // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                    PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                     @SuppressWarnings("unchecked")
-                    Collection<PPE> ppes = (Collection<PPE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(pce, childProperty);
+                    Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
                     ppes.remove(ppe);
                     template.save(pce);
                 }
             } else if (joinType == JoinType.JOIN_BY_PARENT) {
-                //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                 @SuppressWarnings("unchecked")
-                Collection<PCE> property = (Collection<PCE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(ppe, parentProperty);
+                Collection<PCE> property = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
                 property.removeAll(pces);
                 assert ppe != null;
                 template.save(ppe);

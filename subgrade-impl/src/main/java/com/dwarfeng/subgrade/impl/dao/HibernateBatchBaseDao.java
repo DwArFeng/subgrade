@@ -26,7 +26,8 @@ import java.util.stream.Collectors;
  * @since 0.0.1-beta
  */
 @SuppressWarnings("DuplicatedCode")
-public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Entity<K>, PE extends Bean> implements BatchBaseDao<K, E> {
+public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Entity<K>, PE extends Bean> implements
+        BatchBaseDao<K, E> {
 
     /**
      * 默认的批处理数。

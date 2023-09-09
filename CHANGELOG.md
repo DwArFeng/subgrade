@@ -6,6 +6,7 @@
 
 - 优化代码格式。
   - com.dwarfeng.subgrade.impl.service.*。
+  - com.dwarfeng.subgrade.impl.dao.*。
 
 - 新增对象生成机制。
   - 新增 com.dwarfeng.subgrade.stack.generation.Generator 接口。

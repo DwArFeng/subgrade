@@ -7,6 +7,7 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.RelationDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import javax.annotation.Nonnull;
@@ -95,9 +96,10 @@ public class HibernateRelationDao<
         try {
             PCK pck = ckTransformer.transform(ck);
             PCE pce = template.get(classPCE, pck);
-            //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+            // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+            PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
             @SuppressWarnings("unchecked")
-            Collection<PPE> ppes = (Collection<PPE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(pce, childProperty);
+            Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
             for (PPE ppe : ppes) {
                 PE pe = peTransformer.reverseTransform(ppe);
                 if (Objects.equals(pk, pe.getKey())) {
@@ -119,16 +121,18 @@ public class HibernateRelationDao<
             PPE ppe = template.get(classPPE, ppk);
             PCE pce = template.get(classPCE, pck);
             if (joinType == JoinType.JOIN_BY_CHILD) {
-                //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                 @SuppressWarnings("unchecked")
-                Collection<PPE> ppes = (Collection<PPE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(pce, childProperty);
+                Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
                 ppes.add(ppe);
                 assert pce != null;
                 template.save(pce);
             } else if (joinType == JoinType.JOIN_BY_PARENT) {
-                //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                 @SuppressWarnings("unchecked")
-                Collection<PCE> pces = (Collection<PCE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(ppe, parentProperty);
+                Collection<PCE> pces = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
                 pces.add(pce);
                 assert ppe != null;
                 template.save(ppe);
@@ -150,16 +154,18 @@ public class HibernateRelationDao<
             PPE ppe = template.get(classPPE, ppk);
             PCE pce = template.get(classPCE, pck);
             if (joinType == JoinType.JOIN_BY_CHILD) {
-                //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                 @SuppressWarnings("unchecked")
-                Collection<PPE> ppes = (Collection<PPE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(pce, childProperty);
+                Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
                 ppes.remove(ppe);
                 assert pce != null;
                 template.save(pce);
             } else if (joinType == JoinType.JOIN_BY_PARENT) {
-                //如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
+                PropertyUtilsBean propertyUtils = BeanUtilsBean.getInstance().getPropertyUtils();
                 @SuppressWarnings("unchecked")
-                Collection<PCE> pces = (Collection<PCE>) BeanUtilsBean.getInstance().getPropertyUtils().getProperty(ppe, parentProperty);
+                Collection<PCE> pces = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
                 pces.remove(pce);
                 assert ppe != null;
                 template.save(ppe);
