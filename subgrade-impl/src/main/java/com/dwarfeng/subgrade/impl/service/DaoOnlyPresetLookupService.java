@@ -54,7 +54,9 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
     @Override
     public PagedData<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         try {
-            return PagingUtil.pagedData(pagingInfo, dao.lookupCount(preset, objs), dao.lookup(preset, objs, pagingInfo));
+            return PagingUtil.pagedData(
+                    pagingInfo, dao.lookupCount(preset, objs), dao.lookup(preset, objs, pagingInfo)
+            );
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
         }

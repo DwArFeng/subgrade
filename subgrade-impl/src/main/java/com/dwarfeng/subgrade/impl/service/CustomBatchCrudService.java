@@ -253,7 +253,8 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> implemen
     }
 
     private List<K> internalBatchInsert(List<E> elements) throws Exception {
-        List<K> collect = elements.stream().filter(e -> Objects.nonNull(e.getKey())).map(E::getKey).collect(Collectors.toList());
+        List<K> collect = elements.stream().filter(e -> Objects.nonNull(e.getKey())).map(E::getKey)
+                .collect(Collectors.toList());
         if (!internalNonExists(collect)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }

@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化代码格式。
+  - com.dwarfeng.subgrade.impl.service.*。
+
 - 新增对象生成机制。
   - 新增 com.dwarfeng.subgrade.stack.generation.Generator 接口。
   - 新增 com.dwarfeng.subgrade.stack.generation.KeyGenerator 接口。
