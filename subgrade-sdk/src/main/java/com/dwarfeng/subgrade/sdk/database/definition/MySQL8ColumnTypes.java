@@ -14,16 +14,10 @@ import javax.annotation.Nonnull;
  * https://dev.mysql.com/doc/refman/8.0/en/data-types.html
  * </a>
  *
- * <p>
- * 该类生成的是 MySQL8 支持的数据类型对应的字符串，但是该类的名称并没有体现出这一点，因此该类的名称并不规范。<br>
- * 请使用 {@link MySQL8ColumnTypes} 代替该类。
- *
  * @author DwArFeng
- * @since 1.1.0
- * @deprecated 该类由于命名不规范而被弃用，请使用 {@link MySQL8ColumnTypes} 代替。
+ * @since 1.4.7
  */
-@Deprecated
-public final class ColumnTypes {
+public final class MySQL8ColumnTypes {
 
     /**
      * 生成 TINYINT 数据类型对应的列类型字符串。
@@ -532,19 +526,6 @@ public final class ColumnTypes {
     /**
      * 生成 NUMERIC 数据类型对应的列类型字符串。
      *
-     * @param m 参数 M。
-     * @return NUMERIC 数据类型对应的列类型字符串。
-     * @see #numeric(int)
-     * @deprecated 该方法由于命名不规范而被弃用，请使用 {@link #numeric(int)} 代替。
-     */
-    @Deprecated
-    public static String sqlNumeric(int m) {
-        return numeric(m);
-    }
-
-    /**
-     * 生成 NUMERIC 数据类型对应的列类型字符串。
-     *
      * <p>
      * NUMERIC 是 DECIMAL 的同义词。
      *
@@ -563,20 +544,6 @@ public final class ColumnTypes {
      */
     public static String numeric(int m, int d) {
         return String.format("NUMERIC(%d,%d)", m, d);
-    }
-
-    /**
-     * 生成 NUMERIC 数据类型对应的列类型字符串。
-     *
-     * @param m 参数 M。
-     * @param d 参数 D。
-     * @return NUMERIC 数据类型对应的列类型字符串。
-     * @see #numeric(int, int)
-     * @deprecated 该方法由于命名不规范而被弃用，请使用 {@link #numeric(int, int)} 代替。
-     */
-    @Deprecated
-    public static String sqlNumeric(int m, int d) {
-        return numeric(m, d);
     }
 
     /**
@@ -744,18 +711,6 @@ public final class ColumnTypes {
     }
 
     /**
-     * 生成 TIMESTAMP 数据类型对应的列类型字符串。
-     *
-     * @param m 参数 M。
-     * @return TIMESTAMP 数据类型对应的列类型字符串。
-     * @deprecated 该方法对应的格式不是 MySQL8 支持的格式，故弃用。
-     */
-    @Deprecated
-    public static String timestamp(int m) {
-        return String.format("TIMESTAMP(%d)", m);
-    }
-
-    /**
      * 生成 YEAR 数据类型对应的列类型字符串。
      *
      * <p>
@@ -781,11 +736,6 @@ public final class ColumnTypes {
      * YEAR 的格式为 <code>YEAR[(4)]</code>。
      *
      * <p>
-     * 需要注意的是，MySQL8 中不再支持 2 位年，故该方法的参数 <code>yearDigit</code> 中的枚举值 {@link YearDigit#TWO}
-     * 已经被弃用，但是为了程序的兼容性，该枚举值仍然保留，并且该方法仍然可以接受该枚举值作为参数。<br>
-     * 向该方法的参数 <code>yearDigit</code> 传入 {@link YearDigit#TWO} 时，该方法会返回 <code>YEAR(4)</code>。
-     *
-     * <p>
      * 有关该格式的详细信息，请参考:
      * <a href="https://dev.mysql.com/doc/refman/8.0/en/date-and-time-type-syntax.html">
      * https://dev.mysql.com/doc/refman/8.0/en/date-and-time-type-syntax.html
@@ -793,9 +743,9 @@ public final class ColumnTypes {
      *
      * @return YEAR 数据类型对应的列类型字符串。
      */
+    @SuppressWarnings("SwitchStatementWithTooFewBranches")
     public static String year(@Nonnull YearDigit yearDigit) {
         switch (yearDigit) {
-            case TWO:
             case FOUR:
                 return "YEAR(4)";
             default:
@@ -807,24 +757,9 @@ public final class ColumnTypes {
      * YEAR 类型的位数。
      *
      * @author DwArFeng
-     * @since 1.1.0
+     * @since 1.4.7
      */
-    public enum YearDigit {
-
-        /**
-         * 2 位年。
-         *
-         * @deprecated 2 位年在 MySQL8 中已经不支持，为了程序的兼容性，该枚举值仍然保留。
-         */
-        // 为了程序的兼容性，该枚举值仍然需要使用。
-        @Deprecated
-        TWO,
-
-        /**
-         * 4 位年。
-         */
-        FOUR
-    }
+    public enum YearDigit {FOUR}
 
     /**
      * 生成 CHAR 数据类型对应的列类型字符串。

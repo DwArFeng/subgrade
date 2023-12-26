@@ -4,7 +4,10 @@
 
 #### 功能构建
 
-- (无)
+- 优化 com.dwarfeng.subgrade.sdk.database.definition 包下的代码。
+  - 优化 ColumnTypes 类中的注释。
+  - 废弃 ColumnTypes 类。
+  - 增加 MySQL8ColumnTypes 类。
 
 #### Bug修复
 
