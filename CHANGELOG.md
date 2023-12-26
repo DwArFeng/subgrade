@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 依赖升级。
+  - 升级 `spring` 依赖版本为 `5.3.31` 以规避漏洞。
+
 - 优化 com.dwarfeng.subgrade.sdk.database.definition 包下的代码。
   - 优化 ColumnTypes 类中的注释。
   - 废弃 ColumnTypes 类。

@@ -27,7 +27,7 @@
         <!-- 进行版本声明 -->
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.13.2</junit.version>
-        <spring.version>5.3.27</spring.version>
+        <spring.version>5.3.31</spring.version>
         <kafka.version>3.6.1</kafka.version>
         <spring-kafka.version>2.9.11</spring-kafka.version>
         <fastjson.version>1.2.83</fastjson.version>
