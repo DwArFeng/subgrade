@@ -74,7 +74,7 @@ public class PhoenixCreateTableDatabaseTask implements DatabaseTask<Object> {
             sb.append(columnDefinition.getName()).append(' ').append(columnDefinition.getType());
             // 追加 NULL 或者 NOT NULL
             PhoenixHelper.ColumnNullable columnNullable = PhoenixHelper.getColumnNullable(columnDefinition);
-            if (Objects.nonNull(columnNullable) && columnNullable.sqlFragment().length() > 0) {
+            if (Objects.nonNull(columnNullable) && !columnNullable.sqlFragment().isEmpty()) {
                 sb.append(' ').append(columnNullable.sqlFragment());
             }
             String defaultValue = PhoenixHelper.getColumnDefaultValue(columnDefinition);
@@ -191,7 +191,7 @@ public class PhoenixCreateTableDatabaseTask implements DatabaseTask<Object> {
         sb.append("CREATE");
         PhoenixHelper.IndexType indexType = PhoenixHelper.getIndexType(index);
         // 按需追加 LOCAL
-        if (Objects.nonNull(indexType) && indexType.sqlFragment().length() > 0) {
+        if (Objects.nonNull(indexType) && !indexType.sqlFragment().isEmpty()) {
             sb.append(' ').append(indexType.sqlFragment());
         }
         // 追加 INDEX IF NOT EXISTS + index名称 + ON + 表名
@@ -230,7 +230,7 @@ public class PhoenixCreateTableDatabaseTask implements DatabaseTask<Object> {
         }
         // 按需增加 ASYNC。
         IndexAsyncType indexAsyncType = PhoenixHelper.getIndexAsyncType(index);
-        if (Objects.nonNull(indexAsyncType) && indexAsyncType.sqlFragment().length() > 0) {
+        if (Objects.nonNull(indexAsyncType) && !indexAsyncType.sqlFragment().isEmpty()) {
             sb.append(' ').append(indexAsyncType.sqlFragment());
         }
         // 追加索引的选项。

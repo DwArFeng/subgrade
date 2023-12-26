@@ -72,6 +72,7 @@ public class JsonFileRefResourceBridge<K extends Key, E extends Entity<K>, JE ex
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void saveRef(ReferenceModel<E> referenceModel) throws NullPointerException, ProcessException, UnsupportedOperationException {
         try {

@@ -183,6 +183,7 @@ public final class PagingUtil {
      * @param <V>         第二个类型。
      * @return 第二个类型的PagedData。
      */
+    @SuppressWarnings("DuplicatedCode")
     public static <U extends Bean, V extends Bean> PagedData<V>
     transform(@Nonnull PagedData<U> pagedData, @Nonnull BeanTransformer<U, V> transformer) {
         PagedData<V> p = new PagedData<>();
@@ -203,6 +204,7 @@ public final class PagingUtil {
      * @param <V>         第二个类型。
      * @return 第一个类型的PagedData。
      */
+    @SuppressWarnings("DuplicatedCode")
     public static <U extends Bean, V extends Bean> PagedData<U>
     reverseTransform(@Nonnull PagedData<V> pagedData, @Nonnull BeanTransformer<U, V> transformer) {
         PagedData<U> p = new PagedData<>();

@@ -9,8 +9,10 @@ import org.springframework.validation.BindingResult;
 
 /**
  * BindingCheckAopManager 的默认实现。
- * <p>当任何 BingdingResult 有错误时，返回错误类型为 {@link ServiceExceptionCodes#PARAM_VALIDATION_FAILED}
- * 的bad类型的 FastJsonResponseData</p>
+ *
+ * <p>
+ * 当任何 BindingResult 有错误时，返回错误类型为 {@link ServiceExceptionCodes#PARAM_VALIDATION_FAILED}
+ * 的bad类型的 FastJsonResponseData
  *
  * @author DwArFeng
  * @since 0.3.0-beta

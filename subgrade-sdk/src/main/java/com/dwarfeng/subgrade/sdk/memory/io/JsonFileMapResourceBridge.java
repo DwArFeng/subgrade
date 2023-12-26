@@ -75,6 +75,7 @@ public class JsonFileMapResourceBridge<K extends Key, E extends Entity<K>, JE ex
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void saveMap(Map<K, E> map) throws ProcessException, UnsupportedOperationException {
         try {

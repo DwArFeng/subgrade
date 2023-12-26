@@ -15,8 +15,18 @@ public final class ServiceExceptionCodes {
     /**
      * 未定义错误代码，代表未定义的错误。
      */
-    public static final ServiceException.Code UNDEFINE =
-            new ServiceException.Code(offset(1), "undefine");
+    public static final ServiceException.Code UNDEFINED =
+            new ServiceException.Code(offset(1), "undefined");
+
+    /**
+     * 未定义错误代码，代表未定义的错误。
+     *
+     * @deprecated 该常量由于拼写错误而被废弃，请使用 {@link #UNDEFINED}。
+     * @see #UNDEFINED
+     */
+    @SuppressWarnings("SpellCheckingInspection")
+    @Deprecated
+    public static final ServiceException.Code UNDEFINE = UNDEFINED;
 
     /**
      * 主键获取失败
@@ -125,7 +135,7 @@ public final class ServiceExceptionCodes {
         EXCEPTION_CODE_OFFSET = exceptionCodeOffset;
 
         // 以新的 EXCEPTION_CODE_OFFSET 为基准，更新异常代码的值。
-        UNDEFINE.setCode(offset(1));
+        UNDEFINED.setCode(offset(1));
         KEY_FETCH_FAILED.setCode(offset(10));
         CACHE_FAILED.setCode(offset(20));
         DAO_FAILED.setCode(offset(30));

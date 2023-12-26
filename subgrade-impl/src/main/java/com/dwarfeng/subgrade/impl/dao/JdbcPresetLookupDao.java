@@ -29,6 +29,8 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         this.processor = processor;
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public List<E> lookup(String preset, Object[] objs) throws DaoException {
         try {
@@ -43,6 +45,8 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public List<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
         try {
@@ -57,6 +61,8 @@ public class JdbcPresetLookupDao<E extends Entity<?>> implements PresetLookupDao
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public int lookupCount(String preset, Object[] objs) throws DaoException {
         try {

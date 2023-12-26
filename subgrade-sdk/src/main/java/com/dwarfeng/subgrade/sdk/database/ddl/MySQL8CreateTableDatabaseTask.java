@@ -16,7 +16,6 @@ import java.sql.Statement;
  * @author DwArFeng
  * @since 1.1.1
  */
-@SuppressWarnings("DuplicatedCode")
 public class MySQL8CreateTableDatabaseTask implements DatabaseTask<Object> {
 
     private static final String CACHE_SQL_CREATE_TABLE = "CACHE_SQL_CREATE_TABLE";

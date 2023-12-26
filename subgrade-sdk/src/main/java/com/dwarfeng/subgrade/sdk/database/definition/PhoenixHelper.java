@@ -305,6 +305,7 @@ public class PhoenixHelper {
      * will automatically be pre-split at each possible salt bucket value. For more information,
      * see <a href=http://phoenix.incubator.apache.org/salted.html>http://phoenix.incubator.apache.org/salted.html<a/>
      */
+    @SuppressWarnings("JavadocLinkAsPlainText")
     public static void setTableSaltBuckets(@Nonnull TableDefinition tableDefinition, Integer val) {
         if (Objects.nonNull(val) && (val < 0 || val > 256)) {
             throw new IllegalArgumentException("SALT_BUCKETS 的取值在 0-256 之前，当前值是 " + val);
@@ -321,6 +322,7 @@ public class PhoenixHelper {
      * the expense of potentially losing data in the event of a region server failure. This option is useful when
      * updating a table which is not the source-of-truth and thus making the lose of data acceptable.
      */
+    @SuppressWarnings("GrazieInspection")
     public static void setTableDisableWal(@Nonnull TableDefinition tableDefinition, Boolean val) {
         tableDefinition.putProperty(CUSTOM_DISABLE_WAL, val);
     }
@@ -339,6 +341,7 @@ public class PhoenixHelper {
      * <a href = http://phoenix.incubator.apache.org/secondary_indexing.html>
      * http://phoenix.incubator.apache.org/secondary_indexing.html</a>
      */
+    @SuppressWarnings("SpellCheckingInspection")
     public static void setTableImmutableRows(@Nonnull TableDefinition tableDefinition, Boolean val) {
         tableDefinition.putProperty(CUSTOM_IMMUTABLE_ROWS, val);
     }
@@ -365,6 +368,7 @@ public class PhoenixHelper {
      * string option determines the column family used used when none is specified. The value is case sensitive.
      * If this option is not present, a column family name of '0' is used.
      */
+    @SuppressWarnings("GrazieInspection")
     public static void setTableDefaultColumnFamily(@Nonnull TableDefinition tableDefinition, String val) {
         if (Objects.isNull(val) || val.isEmpty()) {
             throw new IllegalArgumentException("DEFAULT_COLUMN_FAMILY 不能为 null 或空字符串");
@@ -396,6 +400,7 @@ public class PhoenixHelper {
      * For more information on transactions, see
      * <a href = http://phoenix.apache.org/transactions.html>http://phoenix.apache.org/transactions.html</a>
      */
+    @SuppressWarnings({"GrazieInspection", "SpellCheckingInspection"})
     public static void setTableTransactional(@Nonnull TableDefinition tableDefinition, Boolean val) {
         tableDefinition.putProperty(CUSTOM_TRANSACTIONAL, val);
     }
@@ -412,6 +417,7 @@ public class PhoenixHelper {
      * VALUES statement).  A millisecond value indicates how long the client will hold on to its cached version of the
      * metadata before checking back with the server for updates.
      */
+    @SuppressWarnings("GrazieInspection")
     public static void setTableUpdateCacheFrequency(@Nonnull TableDefinition tableDefinition, UpdateCacheFrequency val) {
         tableDefinition.putProperty(CUSTOM_UPDATE_CACHE_FREQUENCY, val);
     }
@@ -602,6 +608,7 @@ public class PhoenixHelper {
      * will automatically be pre-split at each possible salt bucket value. For more information,
      * see <a href=http://phoenix.incubator.apache.org/salted.html>http://phoenix.incubator.apache.org/salted.html<a/>
      */
+    @SuppressWarnings("JavadocLinkAsPlainText")
     public static void setIndexSaltBuckets(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, Integer val) {
         makeSureIndexExists(tableDefinition, indexName);
@@ -620,6 +627,7 @@ public class PhoenixHelper {
      * the expense of potentially losing data in the event of a region server failure. This option is useful when
      * updating a table which is not the source-of-truth and thus making the lose of data acceptable.
      */
+    @SuppressWarnings("GrazieInspection")
     public static void setIndexDisableVal(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);
@@ -640,6 +648,7 @@ public class PhoenixHelper {
      * <a href = http://phoenix.incubator.apache.org/secondary_indexing.html>
      * http://phoenix.incubator.apache.org/secondary_indexing.html</a>
      */
+    @SuppressWarnings("SpellCheckingInspection")
     public static void setIndexImmutableRows(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);
@@ -670,6 +679,7 @@ public class PhoenixHelper {
      * string option determines the column family used used when none is specified. The value is case sensitive.
      * If this option is not present, a column family name of '0' is used.
      */
+    @SuppressWarnings("GrazieInspection")
     public static void setIndexDefaultColumnFamily(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, String val) {
         makeSureIndexExists(tableDefinition, indexName);
@@ -705,6 +715,7 @@ public class PhoenixHelper {
      * For more information on transactions, see
      * <a href = http://phoenix.apache.org/transactions.html>http://phoenix.apache.org/transactions.html</a>
      */
+    @SuppressWarnings({"GrazieInspection", "SpellCheckingInspection"})
     public static void setIndexTransactional(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);
@@ -723,6 +734,7 @@ public class PhoenixHelper {
      * VALUES statement).  A millisecond value indicates how long the client will hold on to its cached version of the
      * metadata before checking back with the server for updates.
      */
+    @SuppressWarnings("GrazieInspection")
     public static void setIndexUpdateCacheFrequency(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, UpdateCacheFrequency val) {
         makeSureIndexExists(tableDefinition, indexName);
@@ -819,16 +831,6 @@ public class PhoenixHelper {
         @SuppressWarnings("unchecked")
         List<String> property = (List<String>) optionalDefinition.getProperty(CUSTOM_SPLIT_POINT, Collections.emptyList());
         return property;
-    }
-
-    private static void makeSurePrimaryKey(@Nonnull TableDefinition tableDefinition) {
-        List<OptionalDefinition> optionalDefinitions = tableDefinition.getOptionalDefinitions(OPTIONAL_TYPE_PRIMARY_KEY);
-        if (optionalDefinitions.isEmpty()) {
-            throw new IllegalArgumentException("参数 tableDefinition 不含有主键");
-        }
-        if (optionalDefinitions.size() > 1) {
-            throw new IllegalArgumentException("参数 tableDefinition 定义了多个主键约束");
-        }
     }
 
     @SuppressWarnings("unchecked")

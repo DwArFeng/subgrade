@@ -11,6 +11,7 @@ import java.util.*;
  * @author DwArFeng
  * @since 1.1.1
  */
+@SuppressWarnings("all") // TODO 抑制所有警告，在该类实现后删除该注解。
 public class MySQL8Helper {
 
     private static final String CUSTOM_COLUMN_PROPERTY = "COLUMN_PROPERTY";

@@ -12,9 +12,9 @@ import java.util.Objects;
  */
 public class PermissionDeniedException extends Exception {
 
-    private static final long serialVersionUID = 6241543379412106596L;
+    private static final long serialVersionUID = 493897585676491244L;
 
-    private List<String> missingPermissions;
+    private final List<String> missingPermissions;
 
     public PermissionDeniedException(List<String> missingPermissions) {
         this.missingPermissions = missingPermissions;

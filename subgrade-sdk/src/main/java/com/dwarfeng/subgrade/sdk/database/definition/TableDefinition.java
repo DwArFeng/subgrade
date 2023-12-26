@@ -150,7 +150,6 @@ public class TableDefinition {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     public void updateProperty(String key, Consumer<Object> vc, Supplier<Object> ifAbsent) {
         Object value;
         if (!propertyMap.containsKey(key)) {

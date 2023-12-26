@@ -42,6 +42,8 @@ public class JdbcBatchWriteDao<E extends Entity<?>> implements BatchWriteDao<E> 
         template.update(sqlAndParameter.getSql(), sqlAndParameter.getFirstParameters());
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public void batchWrite(List<E> elements) throws DaoException {
         try {

@@ -30,11 +30,25 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
 
     @Override
     public T deserialize(byte[] bytes) throws SerializationException {
-        if (bytes == null || bytes.length <= 0) {
+        if (bytes == null || bytes.length == 0) {
             return null;
         }
         String str = new String(bytes);
         return JSON.parseObject(str, clazz);
     }
 
+    public Class<T> getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Class<T> clazz) {
+        this.clazz = clazz;
+    }
+
+    @Override
+    public String toString() {
+        return "FastJsonRedisSerializer{" +
+                "clazz=" + clazz +
+                '}';
+    }
 }

@@ -26,6 +26,8 @@ public class JdbcWriteDao<E extends Entity<?>> implements WriteDao<E> {
         this.processor = processor;
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public void write(E element) throws DaoException {
         try {

@@ -29,6 +29,8 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         this.processor = processor;
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public K insert(E element) throws DaoException {
         try {
@@ -43,6 +45,8 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public void update(E element) throws DaoException {
         try {
@@ -53,6 +57,8 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public void delete(K key) throws DaoException {
         try {
@@ -63,6 +69,8 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public boolean exists(K key) throws DaoException {
         try {
@@ -79,6 +87,8 @@ public class JdbcBaseDao<K extends Key, E extends Entity<K>> implements BaseDao<
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public E get(K key) throws DaoException {
         try {

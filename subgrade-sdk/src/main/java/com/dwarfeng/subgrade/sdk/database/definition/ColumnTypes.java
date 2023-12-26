@@ -189,8 +189,6 @@ public final class ColumnTypes {
         return String.format("NUMERIC(%d,%d)", m, d);
     }
 
-//    DATE  一个日期。支持的范围是'1000-01-01'到'9999-12-31'。MySQL以'YYYY-MM-DD'格式来显示DATE值，但是允许你使用字符串或数字把值赋给DATE列。   DATETIME  一个日期和时间组合。支持的范围是'1000-01-01 00:00:00'到'9999-12-31 23:59:59'。MySQL以'YYYY-MM-DD HH:MM:SS'格式来显示
-
     /**
      * DATE 一个日期。支持的范围是'1000-01-01'到'9999-12-31'。
      * Database 以'YYYY-MM-DD'格式来显示DATE值，但是允许你使用字符串或数字把值赋给DATE列。
@@ -206,11 +204,6 @@ public final class ColumnTypes {
     public static String datetime() {
         return "DATETIME";
     }
-
-//
-//    YEAR[(2|4)]  一个2或4位数字格式的年(缺省是4位)。允许的值是1901到2155，和0000（4位年格式），如果你使用2位，1970-2069( 70-69)。MySQL以YYYY格式来显示YEAR值，但是允许你把使用字符串或数字值赋给YEAR列。（YEAR类型在MySQL3.22中是新类型。）
-//
-//
 
     /**
      * TIMESTAMP[(M)]  一个时间戳记。范围是'1970-01-01 00:00:00'到2037年的某时。
@@ -348,7 +341,7 @@ public final class ColumnTypes {
     }
 
     /**
-     * ENUM('value1','value2',...)  枚举。一个仅有一个值的字符串对象，这个值式选自与值列表'value1'、'value2', ...,或NULL。
+     * ENUM('value1','value2',...)  枚举。一个仅有一个值的字符串对象，这个值式选自与值列表 'value1'、'value2', ...,或NULL。
      * 一个ENUM最多能有65535不同的值。
      */
     @SuppressWarnings("DuplicatedCode")
@@ -365,7 +358,7 @@ public final class ColumnTypes {
 
     /**
      * SET('value1','value2',...) 一个集合。
-     * 能有零个或多个值的一个字符串对象，其中每一个必须从值列表'value1','value2',...选出。
+     * 能有零个或多个值的一个字符串对象，其中每一个必须从值列表 'value1','value2',...选出。
      * 一个SET最多能有64个成员。
      */
     @SuppressWarnings("DuplicatedCode")

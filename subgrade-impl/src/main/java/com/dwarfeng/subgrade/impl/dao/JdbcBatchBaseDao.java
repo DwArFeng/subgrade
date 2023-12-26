@@ -116,6 +116,8 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
         );
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public List<K> batchInsert(List<E> elements) throws DaoException {
         try {
@@ -140,6 +142,8 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public void batchUpdate(List<E> elements) throws DaoException {
         try {
@@ -160,6 +164,8 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public void batchDelete(List<K> keys) throws DaoException {
         try {
@@ -180,6 +186,8 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public boolean allExists(List<K> keys) throws DaoException {
         try {
@@ -203,6 +211,8 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public boolean nonExists(List<K> keys) throws DaoException {
         try {
@@ -226,6 +236,8 @@ public class JdbcBatchBaseDao<K extends Key, E extends Entity<K>> implements Bat
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public List<E> batchGet(List<K> keys) throws DaoException {
         try {

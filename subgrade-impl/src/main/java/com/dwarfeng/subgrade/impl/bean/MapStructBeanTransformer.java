@@ -72,7 +72,6 @@ public class MapStructBeanTransformer<U extends Bean, V extends Bean> implements
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void checkTransformMethod(Method method) {
         if (!(method.getParameterCount() == 1)) {
             return;
@@ -92,7 +91,6 @@ public class MapStructBeanTransformer<U extends Bean, V extends Bean> implements
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void checkReverseTransformMethod(Method method) {
         if (!(method.getParameterCount() == 1)) {
             return;

@@ -43,6 +43,8 @@ public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao
         }
     }
 
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
     @Override
     public List<E> lookup(PagingInfo pagingInfo) throws DaoException {
         try {

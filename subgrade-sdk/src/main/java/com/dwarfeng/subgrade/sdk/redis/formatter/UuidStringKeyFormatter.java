@@ -30,6 +30,14 @@ public class UuidStringKeyFormatter implements StringKeyFormatter<UuidKey> {
         return prefix + Constants.REDIS_KEY_WILDCARD_CHARACTER;
     }
 
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
     @Override
     public String toString() {
         return "UuidStringKeyFormatter{" +
