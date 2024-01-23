@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.impl.dao;
 
+import com.dwarfeng.subgrade.sdk.hibernate.criteria.NoOrderDetachedCriteria;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
@@ -70,7 +71,7 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
     @Override
     public int lookupCount() throws DaoException {
         try {
-            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
+            DetachedCriteria criteria = NoOrderDetachedCriteria.forClass(classPE);
             criteria.setProjection(Projections.rowCount());
             return template.findByCriteria(criteria).stream().findFirst().map(Long.class::cast)
                     .map(Long::intValue).orElse(0);

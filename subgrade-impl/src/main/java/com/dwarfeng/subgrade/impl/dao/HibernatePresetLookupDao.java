@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.impl.dao;
 
+import com.dwarfeng.subgrade.sdk.hibernate.criteria.NoOrderDetachedCriteria;
 import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.BeanTransformer;
@@ -36,8 +37,8 @@ import java.util.stream.Collectors;
  * <p>
  * 使用者应在项目的升级中，逐步将此类替换为 {@link HibernateHqlPresetLookupDao}。
  *
- * @see HibernateHqlPresetLookupDao
  * @author DwArFeng
+ * @see HibernateHqlPresetLookupDao
  * @since 0.0.3-beta
  */
 public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> implements PresetLookupDao<E> {
@@ -81,7 +82,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
     @Override
     public List<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
         try {
-            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
+            DetachedCriteria criteria = NoOrderDetachedCriteria.forClass(classPE);
             presetCriteriaMaker.makeCriteria(criteria, preset, objs);
             @SuppressWarnings("unchecked")
             List<PE> byCriteria = (List<PE>) template.findByCriteria(
@@ -168,4 +169,5 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
                 ", presetCriteriaMaker=" + presetCriteriaMaker +
                 '}';
     }
+
 }

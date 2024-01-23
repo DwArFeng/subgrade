@@ -15,7 +15,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 1.4.2
  */
-public final class HqlCondition {
+public class HqlCondition {
 
     private final ReferenceModel<Class<?>> entityClassRef = new DefaultReferenceModel<>();
     private final ReferenceModel<String> entityAliasRef = new DefaultReferenceModel<>();

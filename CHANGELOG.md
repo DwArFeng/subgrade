@@ -4,7 +4,12 @@
 
 #### 功能构建
 
-- (无)
+- 优化 Hibernate Dao，使部分实现类的计数查询不生成 ORDER BY 语句，提高查询效率。
+  - com.dwarfeng.subgrade.impl.dao.HibernateAccelerableHqlPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateAccelerablePresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateHqlPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao。
 
 #### Bug修复
 

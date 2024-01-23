@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.impl.dao;
 
+import com.dwarfeng.subgrade.sdk.hibernate.criteria.NoOrderDetachedCriteria;
 import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
 import com.dwarfeng.subgrade.sdk.hibernate.nativelookup.DialectNativeLookup;
 import com.dwarfeng.subgrade.sdk.hibernate.nativelookup.NativeLookup;
@@ -131,7 +132,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
                 assert result != null;
                 return result;
             } else {
-                DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
+                DetachedCriteria criteria = NoOrderDetachedCriteria.forClass(classPE);
                 presetCriteriaMaker.makeCriteria(criteria, preset, objs);
                 criteria.setProjection(Projections.rowCount());
                 return template.findByCriteria(criteria).stream().findFirst().map(Long.class::cast)

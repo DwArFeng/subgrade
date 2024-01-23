@@ -136,7 +136,7 @@ public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> i
             // 获取装箱的结果。
             Integer result = template.execute(session -> {
                 // 构建 HqlCondition 对象。
-                HqlCondition condition = new HqlCondition(classPE, entityAlias);
+                HqlCondition condition = new NoOrderHqlCondition(classPE, entityAlias);
 
                 // 调用 presetConditionMaker 相应方法，补充查询信息。
                 presetConditionMaker.makeCondition(condition, preset, objs);
