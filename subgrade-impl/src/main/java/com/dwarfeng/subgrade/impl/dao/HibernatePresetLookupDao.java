@@ -84,7 +84,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
     @Override
     public List<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
         try {
-            DetachedCriteria criteria = NoOrderDetachedCriteria.forClass(classPE);
+            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
             presetCriteriaMaker.makeCriteria(criteria, preset, objs);
             @SuppressWarnings("unchecked")
             List<PE> byCriteria = (List<PE>) template.findByCriteria(
@@ -99,7 +99,7 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
     @Override
     public int lookupCount(String preset, Object[] objs) throws DaoException {
         try {
-            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
+            DetachedCriteria criteria = NoOrderDetachedCriteria.forClass(classPE);
             presetCriteriaMaker.makeCriteria(criteria, preset, objs);
             criteria.setProjection(Projections.rowCount());
             return template.findByCriteria(criteria).stream().findFirst().map(Long.class::cast)

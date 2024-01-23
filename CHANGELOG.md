@@ -13,7 +13,8 @@
 
 #### Bug修复
 
-- (无)
+- 修复部分数据访问层的错误代码。
+  - com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao。
 
 #### 功能移除
 
