@@ -24,7 +24,9 @@ import java.util.stream.Collectors;
  *
  * <p>
  * 该类使用 Hibernate Criteria API 实现。基于 Hibernate Criteria，该类可以实现大多数的查询需求。
- * 有关 Criteria API 的使用，请参考 <a href="https://docs.jboss.org/hibernate/orm/5.6/userguide/html_single/Hibernate_User_Guide.html#appendix-legacy-criteria">Hibernate 官方文档</a>。
+ * 有关 Criteria API 的使用，请参考
+ * <a href="https://docs.jboss.org/hibernate/orm/5.6/userguide/html_single/Hibernate_User_Guide.html#appendix-legacy-
+ * criteria">Hibernate 官方文档</a>。
  *
  * <p>
  * 如果需要实现 Criteria API 无法实现的查询需求，请使用 {@link HibernateHqlPresetLookupDao}。
@@ -169,5 +171,4 @@ public class HibernatePresetLookupDao<E extends Entity<?>, PE extends Bean> impl
                 ", presetCriteriaMaker=" + presetCriteriaMaker +
                 '}';
     }
-
 }

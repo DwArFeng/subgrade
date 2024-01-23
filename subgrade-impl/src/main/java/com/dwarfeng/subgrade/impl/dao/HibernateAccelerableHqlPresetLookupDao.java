@@ -36,15 +36,21 @@ import java.util.stream.Collectors;
  * 生成 {@link HibernatePresetLookupDao}。<br>
  * 实现 {@link DialectNativeLookup}
  * 接口便可方便地判断一个本地查询是否支持指定的数据库（方言）。<br>
- * 利用 {@link HibernateDaoFactory#newHqlPresetLookupDao(HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, NativeLookup)}
- * {@link HibernateDaoFactory#newHqlPresetLookupDaoWithChosenDialect(HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, List, String)}
- * {@link HibernateDaoFactory#newHqlPresetLookupDaoWithChosenDialect(HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, List, Class)}
+ * 利用 {@link HibernateDaoFactory#newHqlPresetLookupDao(
+ *HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, NativeLookup)}
+ * {@link HibernateDaoFactory#newHqlPresetLookupDaoWithChosenDialect(
+ *HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, List, String)}
+ * {@link HibernateDaoFactory#newHqlPresetLookupDaoWithChosenDialect(
+ *HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, List, Class)}
  * 可以便捷地实现目标数据库可变时的本地加速查询判断逻辑。
  *
  * @author DwArFeng
- * @see HibernateDaoFactory#newHqlPresetLookupDao(HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, NativeLookup)
- * @see HibernateDaoFactory#newHqlPresetLookupDaoWithChosenDialect(HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, List, String)
- * @see HibernateDaoFactory#newHqlPresetLookupDaoWithChosenDialect(HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, List, Class)
+ * @see HibernateDaoFactory#newHqlPresetLookupDao(
+ *HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, NativeLookup)
+ * @see HibernateDaoFactory#newHqlPresetLookupDaoWithChosenDialect(
+ *HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, List, String)
+ * @see HibernateDaoFactory#newHqlPresetLookupDaoWithChosenDialect(
+ *HibernateTemplate, BeanTransformer, Class, PresetConditionMaker, List, Class)
  * @since 1.4.2
  */
 public class HibernateAccelerableHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> implements

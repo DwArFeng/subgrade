@@ -37,15 +37,21 @@ import java.util.stream.Collectors;
  * 生成 {@link HibernatePresetLookupDao}。<br>
  * 实现 {@link DialectNativeLookup}
  * 接口便可方便地判断一个本地查询是否支持指定的数据库（方言）。<br>
- * 利用 {@link HibernateDaoFactory#newPresetLookupDao(HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, NativeLookup)}
- * {@link HibernateDaoFactory#newPresetLookupDaoWithChosenDialect(HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, List, String)}
- * {@link HibernateDaoFactory#newPresetLookupDaoWithChosenDialect(HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, List, Class)}
+ * 利用 {@link HibernateDaoFactory#newPresetLookupDao(
+ *HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, NativeLookup)}
+ * {@link HibernateDaoFactory#newPresetLookupDaoWithChosenDialect(
+ *HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, List, String)}
+ * {@link HibernateDaoFactory#newPresetLookupDaoWithChosenDialect(
+ *HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, List, Class)}
  * 可以便捷地实现目标数据库可变时的本地加速查询判断逻辑。
  *
  * @author DwArFeng
- * @see HibernateDaoFactory#newPresetLookupDao(HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, NativeLookup)
- * @see HibernateDaoFactory#newPresetLookupDaoWithChosenDialect(HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, List, String)
- * @see HibernateDaoFactory#newPresetLookupDaoWithChosenDialect(HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, List, Class)
+ * @see HibernateDaoFactory#newPresetLookupDao(
+ *HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, NativeLookup)
+ * @see HibernateDaoFactory#newPresetLookupDaoWithChosenDialect(
+ *HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, List, String)
+ * @see HibernateDaoFactory#newPresetLookupDaoWithChosenDialect(
+ *HibernateTemplate, BeanTransformer, Class, PresetCriteriaMaker, List, Class)
  * @since 1.4.2
  */
 public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends Bean> implements

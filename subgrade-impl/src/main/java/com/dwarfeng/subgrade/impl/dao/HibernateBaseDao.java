@@ -47,7 +47,8 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<K, PK> keyBeanTransformer,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
-            @Nonnull Class<PE> classPE) {
+            @Nonnull Class<PE> classPE
+    ) {
         this(
                 template, keyBeanTransformer, entityBeanTransformer, classPE, new DefaultDeletionMod<>(),
                 Collections.emptySet()

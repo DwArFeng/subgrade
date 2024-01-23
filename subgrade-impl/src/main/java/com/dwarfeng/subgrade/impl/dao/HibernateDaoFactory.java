@@ -41,8 +41,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -73,8 +72,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -106,8 +104,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -144,8 +141,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -212,8 +208,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newHqlPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -245,8 +240,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newHqlPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -280,8 +274,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newHqlPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -313,8 +306,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newHqlPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -349,8 +341,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newHqlPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -388,8 +379,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newHqlPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -427,8 +417,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newHqlPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,
@@ -466,8 +455,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      * @see DialectNativeLookup
      */
-    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E>
-    newHqlPresetLookupDaoWithChosenDialect(
+    public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
             @Nonnull HibernateTemplate template,
             @Nonnull BeanTransformer<E, PE> entityBeanTransformer,
             @Nonnull Class<PE> classPE,

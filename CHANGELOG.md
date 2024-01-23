@@ -4,7 +4,12 @@
 
 #### 功能构建
 
-- (无)
+- 部分类代码格式优化。
+  - com.dwarfeng.subgrade.impl.dao.HibernateAccelerableHqlPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateAccelerablePresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateDaoFactory。
+  - com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao。
 
 #### Bug修复
 
