@@ -12,6 +12,7 @@ import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,11 +59,20 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
     @Override
     public List<E> lookup(PagingInfo pagingInfo) throws DaoException {
         try {
-            DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
-            @SuppressWarnings("unchecked")
-            List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria,
-                    pagingInfo.getPage() * pagingInfo.getRows(), pagingInfo.getRows());
-            return byCriteria.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());
+            // 展开参数。
+            int page = pagingInfo.getPage();
+            int rows = pagingInfo.getRows();
+            // 每页行数大于 0 时，按照正常的逻辑查询数据。
+            if (rows > 0) {
+                DetachedCriteria criteria = DetachedCriteria.forClass(classPE);
+                @SuppressWarnings("unchecked")
+                List<PE> byCriteria = (List<PE>) template.findByCriteria(criteria, page * rows, rows);
+                return byCriteria.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());
+            }
+            // 否则返回空列表。
+            else {
+                return Collections.emptyList();
+            }
         } catch (Exception e) {
             throw new DaoException(e);
         }

@@ -9,6 +9,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,11 +57,26 @@ public class MemoryPresetLookupDao<K extends Key, E extends Entity<K>> implement
         return memory.values().stream().filter(e -> filter.accept(e, preset, objs)).collect(Collectors.toList());
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public List<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) {
-        int beginIndex = pagingInfo.getPage() * pagingInfo.getRows();
-        int endIndex = beginIndex + pagingInfo.getRows();
+        // 展开参数。
+        int page = pagingInfo.getPage();
+        int rows = pagingInfo.getRows();
+        // 每页行数大于 0 时，按照正常的逻辑查询数据。
+        if (rows > 0) {
+            return lookupWithPositiveRows(preset, objs, page, rows);
+        }
+        // 否则返回空列表。
+        else {
+            return Collections.emptyList();
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @Nonnull
+    private List<E> lookupWithPositiveRows(String preset, Object[] objs, int page, int rows) {
+        int beginIndex = page * rows;
+        int endIndex = beginIndex + rows;
         List<E> list = memory.values().stream().filter(e -> filter.accept(e, preset, objs))
                 .collect(Collectors.toList());
 

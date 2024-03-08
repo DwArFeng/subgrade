@@ -9,10 +9,7 @@ import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -107,15 +104,28 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         try {
             Long totalSize = template.opsForList().size(key);
             if (Objects.isNull(totalSize) || totalSize == 0) {
-                return new ArrayList<>();
+                return Collections.emptyList();
             }
-            long beginIndex = (long) pagingInfo.getRows() * pagingInfo.getPage();
-            long endIndex = Math.min(totalSize, beginIndex + pagingInfo.getRows()) - 1;
-            List<JE> range = template.opsForList().range(key, beginIndex, endIndex);
-            if (Objects.isNull(range)) {
-                return new ArrayList<>();
+
+            int page = pagingInfo.getPage();
+            int rows = pagingInfo.getRows();
+
+            List<JE> jes;
+            // 每页行数大于 0 时，按照正常的逻辑查询数据。
+            if (rows > 0) {
+                long beginIndex = (long) rows * page;
+                long endIndex = Math.min(totalSize, beginIndex + rows) - 1;
+                jes = template.opsForList().range(key, beginIndex, endIndex);
             }
-            return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
+            // 否则返回空列表。
+            else {
+                jes = Collections.emptyList();
+            }
+
+            if (Objects.isNull(jes)) {
+                return Collections.emptyList();
+            }
+            return jes.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
             throw new CacheException(e);
         }

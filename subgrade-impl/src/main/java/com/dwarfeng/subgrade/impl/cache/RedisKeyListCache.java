@@ -111,15 +111,28 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
             String formatKey = formatKey(key);
             Long totalSize = template.opsForList().size(formatKey);
             if (Objects.isNull(totalSize) || totalSize == 0) {
-                return new ArrayList<>();
+                return Collections.emptyList();
             }
-            long beginIndex = (long) pagingInfo.getRows() * pagingInfo.getPage();
-            long endIndex = Math.min(totalSize, beginIndex + pagingInfo.getRows()) - 1;
-            List<JE> range = template.opsForList().range(formatKey, beginIndex, endIndex);
-            if (Objects.isNull(range)) {
-                return new ArrayList<>();
+
+            int rows = pagingInfo.getRows();
+            int page = pagingInfo.getPage();
+
+            List<JE> jes;
+            // 每页行数大于 0 时，按照正常的逻辑查询数据。
+            if (rows > 0) {
+                long beginIndex = (long) rows * page;
+                long endIndex = Math.min(totalSize, beginIndex + rows) - 1;
+                jes = template.opsForList().range(formatKey, beginIndex, endIndex);
             }
-            return range.stream().map(transformer::reverseTransform).collect(Collectors.toList());
+            // 否则返回空列表。
+            else {
+                jes = Collections.emptyList();
+            }
+
+            if (Objects.isNull(jes)) {
+                return Collections.emptyList();
+            }
+            return jes.stream().map(transformer::reverseTransform).collect(Collectors.toList());
         } catch (Exception e) {
             throw new CacheException(e);
         }

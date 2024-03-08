@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,12 +49,21 @@ public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao
     @Override
     public List<E> lookup(PagingInfo pagingInfo) throws DaoException {
         try {
-            SQLAndParameter sqlAndParameter = processor.provideEntirePaging(pagingInfo);
-            return template.query(
-                    sqlAndParameter.getSql(),
-                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
-                    processor::resolveEntirePaging
-            );
+            // 展开参数。
+            int rows = pagingInfo.getRows();
+            // 每页行数大于 0 时，按照正常的逻辑查询数据。
+            if (rows > 0) {
+                SQLAndParameter sqlAndParameter = processor.provideEntirePaging(pagingInfo);
+                return template.query(
+                        sqlAndParameter.getSql(),
+                        new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                        processor::resolveEntirePaging
+                );
+            }
+            // 否则返回空列表。
+            else {
+                return Collections.emptyList();
+            }
         } catch (Exception e) {
             throw new DaoException(e);
         }

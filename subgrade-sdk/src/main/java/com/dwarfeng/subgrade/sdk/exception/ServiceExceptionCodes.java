@@ -112,6 +112,12 @@ public final class ServiceExceptionCodes {
     public static final ServiceException.Code GENERATE_FAILED =
             new ServiceException.Code(offset(120), "generate failed");
 
+    /**
+     * 分页失败。
+     */
+    public static final ServiceException.Code PAGING_FAILED =
+            new ServiceException.Code(offset(130), "paging failed");
+
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
     }

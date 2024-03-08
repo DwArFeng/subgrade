@@ -8,10 +8,7 @@ import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 通过内存实现的 EntireLookupDao。
@@ -50,11 +47,26 @@ public class MemoryEntireLookupDao<K extends Key, E extends Entity<K>> implement
         return new ArrayList<>(memory.values());
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public List<E> lookup(PagingInfo pagingInfo) {
-        int beginIndex = pagingInfo.getPage() * pagingInfo.getRows();
-        int endIndex = beginIndex + pagingInfo.getRows();
+        // 展开参数。
+        int page = pagingInfo.getPage();
+        int rows = pagingInfo.getRows();
+        // 每页行数大于 0 时，按照正常的逻辑查询数据。
+        if (rows > 0) {
+            return lookupWithPositiveRows(page, rows);
+        }
+        // 否则返回空列表。
+        else {
+            return Collections.emptyList();
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @Nonnull
+    private List<E> lookupWithPositiveRows(int page, int rows) {
+        int beginIndex = page * rows;
+        int endIndex = beginIndex + rows;
         List<E> list = new ArrayList<>(memory.values());
 
         // 修正 beginIndex 和 endIndex，使得 list.subList 方法不抛出 IndexOutOfBoundsException 异常。

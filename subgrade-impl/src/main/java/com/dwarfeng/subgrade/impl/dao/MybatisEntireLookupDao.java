@@ -7,6 +7,7 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -57,7 +58,16 @@ public class MybatisEntireLookupDao<E extends Entity<?>> implements EntireLookup
     @Override
     public List<E> lookup(PagingInfo pagingInfo) throws DaoException {
         try {
-            return template.selectList(concatId(entireLookupId), pagingInfo);
+            // 展开参数。
+            int rows = pagingInfo.getRows();
+            // 每页行数大于 0 时，按照正常的逻辑查询数据。
+            if (rows > 0) {
+                return template.selectList(concatId(entirePagingId), pagingInfo);
+            }
+            // 否则返回空列表。
+            else {
+                return Collections.emptyList();
+            }
         } catch (Exception e) {
             throw new DaoException(e);
         }

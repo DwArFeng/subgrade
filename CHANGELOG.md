@@ -4,7 +4,43 @@
 
 #### 功能构建
 
-- (无)
+- 新增分页查询特性。
+  - 进一步明确了分页查询时，每页行数为 0 的行为。
+  - 分页查询时，如果页数为负数，则默认修正为 0。
+  - 分页查询时，如果每页数量为负数，则默认修正为 `Integer.MAX_VALUE`。
+  - 分页修正默认开启，可以通过添加 VM 参数 `-Dsubgrade.useStrictPaging=true` 关闭。
+  - 分页修正时默认输出警告日志，可以通过添加 VM 参数 `-Dsubgrade.logPagingWarning=false` 关闭。
+
+- 为适配新增的分页查询特性，修改服务接口文档。
+  - com.dwarfeng.subgrade.stack.service.EntireLookupService。
+  - com.dwarfeng.subgrade.stack.service.PresetLookupService。
+
+- 为适配新增的分页查询特性，修改服务实现。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService。
+  - com.dwarfeng.subgrade.impl.service.GeneralEntireLookupService。
+
+- 为适配新增的分页查询特性，修改缓存实现。
+  - com.dwarfeng.subgrade.impl.cache.RedisKeyListCache。
+  - com.dwarfeng.subgrade.impl.cache.RedisListCache。
+
+- 为适配新增的分页查询特性，修改数据访问层实现。
+  - com.dwarfeng.subgrade.impl.dao.HibernateAccelerableHqlPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateAccelerablePresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateHqlPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.JdbcEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.JdbcPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.MemoryEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.MemoryPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.MybatisEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.MybatisPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.RedisEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.RedisPresetLookupDao。
+
+- 为适配新增的分页查询特性，增加新异常，并分配异常代码。
+  - com.dwarfeng.subgrade.stack.exception.PagingException。
 
 #### Bug修复
 

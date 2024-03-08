@@ -57,6 +57,7 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
     @Override
     public PagedData<E> lookup(PagingInfo pagingInfo) throws ServiceException {
         try {
+            pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
             return PagingUtil.pagedData(pagingInfo, dao.lookupCount(), dao.lookup(pagingInfo));
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
@@ -81,6 +82,7 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
     @Override
     public List<E> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
         try {
+            pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
             return dao.lookup(pagingInfo);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);

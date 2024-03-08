@@ -72,6 +72,7 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
     @Override
     public PagedData<E> lookup(PagingInfo pagingInfo) throws ServiceException {
         try {
+            pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
             if (cache.exists()) {
                 return PagingUtil.pagedData(pagingInfo, cache.size(), cache.get(pagingInfo));
             }
@@ -106,6 +107,7 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
     @Override
     public List<E> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
         try {
+            pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
             if (cache.exists()) {
                 return cache.get(pagingInfo);
             }
