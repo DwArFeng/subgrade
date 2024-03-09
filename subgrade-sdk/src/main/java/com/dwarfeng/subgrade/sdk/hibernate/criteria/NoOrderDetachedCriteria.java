@@ -14,6 +14,8 @@ import org.hibernate.criterion.Order;
  */
 public class NoOrderDetachedCriteria extends DetachedCriteria {
 
+    private static final long serialVersionUID = -1764654268361537400L;
+
     @SuppressWarnings("rawtypes")
     public static NoOrderDetachedCriteria forClass(Class clazz) {
         return new NoOrderDetachedCriteria(clazz.getName());

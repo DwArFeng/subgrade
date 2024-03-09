@@ -44,7 +44,8 @@
 
 #### Bug修复
 
-- (无)
+- 修复部分类实现 `Serializable` 的类没有 `serialVersionUID` 静态字段的问题。
+  - com.dwarfeng.subgrade.sdk.hibernate.criteria.NoOrderDetachedCriteria。
 
 #### 功能移除
 
