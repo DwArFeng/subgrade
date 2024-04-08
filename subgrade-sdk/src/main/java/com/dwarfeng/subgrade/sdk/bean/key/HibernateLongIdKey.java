@@ -41,7 +41,7 @@ public class HibernateLongIdKey implements Key {
 
     @Override
     public int hashCode() {
-        return (int) (longId ^ (longId >>> 32));
+        return Long.hashCode(longId);
     }
 
     @Override

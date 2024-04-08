@@ -1036,7 +1036,7 @@ public final class MySQL8ColumnTypes {
      * @param values 参数 values。
      * @return ENUM 数据类型对应的列类型字符串。
      */
-    @SuppressWarnings("DuplicatedCode")
+    @SuppressWarnings({"DuplicatedCode", "JavaExistingMethodCanBeUsed"})
     public static String sqlEnum(String... values) {
         StringBuilder sb = new StringBuilder();
         sb.append("ENUM(");
@@ -1063,7 +1063,7 @@ public final class MySQL8ColumnTypes {
      * @param values 参数 values。
      * @return SET 数据类型对应的列类型字符串。
      */
-    @SuppressWarnings("DuplicatedCode")
+    @SuppressWarnings({"DuplicatedCode", "JavaExistingMethodCanBeUsed"})
     public static String set(String... values) {
         StringBuilder sb = new StringBuilder();
         sb.append("SET(");

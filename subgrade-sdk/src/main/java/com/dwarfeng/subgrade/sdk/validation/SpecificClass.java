@@ -54,9 +54,9 @@ public @interface SpecificClass {
         @Override
         public void initialize(SpecificClass constraintAnnotation) {
             LOGGER.debug("初始化...");
-            LOGGER.debug("获取注解的 requiredClass 属性，为: " + constraintAnnotation.requiredClass().getCanonicalName() + "...");
+            LOGGER.debug("获取注解的 requiredClass 属性，为: {}...", constraintAnnotation.requiredClass().getCanonicalName());
             requiredClass = constraintAnnotation.requiredClass();
-            LOGGER.debug("获取注解的 allowSubClass 属性，为: " + constraintAnnotation.allowSubClass() + "...");
+            LOGGER.debug("获取注解的 allowSubClass 属性，为: {}...", constraintAnnotation.allowSubClass());
             allowSubClass = constraintAnnotation.allowSubClass();
         }
 
@@ -66,26 +66,14 @@ public @interface SpecificClass {
             LOGGER.debug("开始验证...");
             try {
                 if (allowSubClass) {
-                    LOGGER.debug(
-                            "允许验证对象为指定类的子类，判断验证对象的类是否是 "
-                                    + requiredClass.getCanonicalName() + " 的子类或本身类..."
-                    );
+                    LOGGER.debug("允许验证对象为指定类的子类，判断验证对象的类是否是 {} 的子类或本身类...", requiredClass.getCanonicalName());
                     boolean aFlag = requiredClass.isAssignableFrom(value.getClass());
-                    LOGGER.debug(
-                            "验证结束，判断验证对象的类是否是 "
-                                    + requiredClass.getCanonicalName() + " 的子类或本身类，结果为 " + aFlag + "..."
-                    );
+                    LOGGER.debug("验证结束，判断验证对象的类是否是 {} 的子类或本身类，结果为 {}...", requiredClass.getCanonicalName(), aFlag);
                     return aFlag;
                 } else {
-                    LOGGER.debug(
-                            "不允许验证对象为指定类的子类，判断验证对象的类与 "
-                                    + requiredClass.getCanonicalName() + " 是否相等..."
-                    );
+                    LOGGER.debug("不允许验证对象为指定类的子类，判断验证对象的类与 {} 是否相等...", requiredClass.getCanonicalName());
                     boolean aFlag = Objects.equals(value.getClass(), requiredClass);
-                    LOGGER.debug(
-                            "验证结束，判断验证对象的类与 "
-                                    + requiredClass.getCanonicalName() + " 是否相等，结果为 " + aFlag + "..."
-                    );
+                    LOGGER.debug("验证结束，判断验证对象的类与 {} 是否相等，结果为 {}...", requiredClass.getCanonicalName(), aFlag);
                     return aFlag;
                 }
             } catch (Exception e) {

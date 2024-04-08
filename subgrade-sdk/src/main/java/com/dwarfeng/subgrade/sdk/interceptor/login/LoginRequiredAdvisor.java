@@ -39,20 +39,20 @@ public class LoginRequiredAdvisor {
 
         // 获取PJP中的登录ID信息。
         LongIdKey loginId = manager.getLoginId(pjp);
-        LOGGER.debug("manager.getLoginId(pjp) = " + loginId);
+        LOGGER.debug("manager.getLoginId(pjp) = {}", loginId);
 
         // 判断是否登录。
         if (!loginHandler.isLogin(loginId)) {
             // 没有登录时进行的调度。
-            LOGGER.debug("指定的ID " + loginId + " 没有登录");
+            LOGGER.debug("指定的ID {} 没有登录", loginId);
             return manager.onNotLogin(pjp, loginId);
         }
 
         // 用户登录后进行的调度。
-        LOGGER.debug("指定的ID " + loginId + " 登录了");
+        LOGGER.debug("指定的ID {} 登录了", loginId);
         if (isPostpone(pjp)) {
             // 如果注解中注明了要延长登录时间。
-            LOGGER.info("指定的ID " + loginId + " 延长登录时间...");
+            LOGGER.info("指定的ID {} 延长登录时间...", loginId);
             loginHandler.postpone(loginId);
         }
 

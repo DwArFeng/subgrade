@@ -43,14 +43,14 @@ public class PermissionRequiredAdvisor {
 
         // 获取 PJP 中的用户信息。
         StringIdKey userKey = manager.getUserKey(pjp);
-        LOGGER.debug("manager.getUserKey(pjp) = " + userKey);
+        LOGGER.debug("manager.getUserKey(pjp) = {}", userKey);
 
         //获取方法所需的执行权限。
         LOGGER.debug("扫描 @PermissionRequired 注解，获取方法执行所需的权限");
         PermissionRequired permissionRequired = AdvisorUtil.directMethodAnnotation(pjp, PermissionRequired.class);
         LOGGER.debug("所需的权限: ");
         for (String s : permissionRequired.value()) {
-            LOGGER.debug("\t" + s);
+            LOGGER.debug("\t{}", s);
         }
         List<String> permissionList = Arrays.asList(permissionRequired.value());
 
@@ -62,7 +62,7 @@ public class PermissionRequiredAdvisor {
         if (!missingPermissions.isEmpty()) {
             LOGGER.debug("用户缺失权限，调用 manager 的相关调度方法...");
             for (String s : missingPermissions) {
-                LOGGER.debug("\t" + s);
+                LOGGER.debug("\t{}", s);
             }
             return manager.onMissingPermission(pjp, userKey, missingPermissions);
         }

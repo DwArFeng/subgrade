@@ -97,7 +97,7 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         String className = pjp.getSignature().getDeclaringTypeName();
         String methodName = pjp.getSignature().getName();
-        LOGGER.debug("方法 " + className + "." + methodName + " 切入友好性AOP...");
+        LOGGER.debug("方法 {}.{} 切入友好性AOP...", className, methodName);
 
         //扫描方法中或类中的 @Friendly 注解。
         List<Friendly> friendlies = scanFriendlyList(pjp);
