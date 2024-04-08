@@ -8,7 +8,10 @@
 
 #### Bug修复
 
-- (无)
+- 修复部分 `BatchCrudService` 在使用废弃的构造器方法实例化后部分方法无法正常工作的 bug。
+  - com.dwarfeng.subgrade.impl.service.CustomBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService。
 
 #### 功能移除
 

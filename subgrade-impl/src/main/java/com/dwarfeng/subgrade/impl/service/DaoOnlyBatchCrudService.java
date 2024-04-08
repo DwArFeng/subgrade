@@ -6,6 +6,7 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.exception.GenerateException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
@@ -275,12 +276,22 @@ public class DaoOnlyBatchCrudService<K extends Key, E extends Entity<K>> impleme
         }
 
         List<E> nonKeyElements = elements.stream().filter(e -> Objects.isNull(e.getKey())).collect(Collectors.toList());
+        // 根据 nonKeyElements 的大小，选择性生成主键。
+        mayGenerateKeys(nonKeyElements);
+
+        return dao.batchInsert(elements);
+    }
+
+    private void mayGenerateKeys(List<E> nonKeyElements) throws GenerateException {
+        // 如果 nonKeyElements 为空，则不生成主键。
+        if (nonKeyElements.isEmpty()) {
+            return;
+        }
+        // 否则生成主键。
         List<K> generatedKeys = keyGenerator.batchGenerate(nonKeyElements.size());
         for (int i = 0; i < nonKeyElements.size(); i++) {
             nonKeyElements.get(i).setKey(generatedKeys.get(i));
         }
-
-        return dao.batchInsert(elements);
     }
 
     @Override
