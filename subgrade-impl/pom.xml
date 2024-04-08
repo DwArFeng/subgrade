@@ -11,7 +11,7 @@
     <parent>
         <groupId>com.dwarfeng</groupId>
         <artifactId>subgrade</artifactId>
-        <version>1.5.1.a-SNAPSHOT</version>
+        <version>1.5.1.a</version>
     </parent>
 
     <artifactId>subgrade-impl</artifactId>
