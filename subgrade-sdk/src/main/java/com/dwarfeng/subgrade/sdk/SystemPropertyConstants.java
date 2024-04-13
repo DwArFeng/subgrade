@@ -56,14 +56,6 @@ public final class SystemPropertyConstants {
     @Deprecated
     public static final String LOG_PAGING_WARNING = VALUE_USE_STRICT_PAGING;
 
-    /**
-     * 详细的行为分析日志。
-     *
-     * @deprecated 该常量已经过时，请使用 {@link #VALUE_DETAILED_BEHAVIOR_ANALYSE_LOG}。
-     */
-    @Deprecated
-    public static final String DETAILED_BEHAVIOR_ANALYSE_LOG = VALUE_USE_STRICT_PAGING;
-
     private SystemPropertyConstants() {
         throw new IllegalStateException("禁止实例化");
     }
