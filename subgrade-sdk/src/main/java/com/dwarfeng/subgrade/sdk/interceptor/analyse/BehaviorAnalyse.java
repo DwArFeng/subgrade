@@ -21,4 +21,14 @@ public @interface BehaviorAnalyse {
      * @since 1.2.0
      */
     LogLevel logLevel() default LogLevel.DEBUG;
+
+    /**
+     * 日志记录器的类。
+     *
+     * <p>
+     * 默认为 <code>Void.class</code>，表示使用注解所在类的日志记录器。
+     *
+     * @since 1.5.2
+     */
+    Class<?> loggerClass() default Void.class;
 }
