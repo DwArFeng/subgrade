@@ -138,7 +138,7 @@ public class GeneralLocalCacheHandler<K, V> implements LocalCacheHandler<K, V> {
     }
 
     @Override
-    public void clear() throws HandlerException {
+    public void clear() {
         lock.writeLock().lock();
         try {
             dataMap.clear();
