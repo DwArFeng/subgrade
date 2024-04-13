@@ -19,11 +19,11 @@ public final class PagingFixHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(PagingFixHelper.class);
 
     private static final boolean USE_STRICT_PAGING = Boolean.parseBoolean(
-            System.getProperty(SystemPropertyConstants.USE_STRICT_PAGING, Boolean.FALSE.toString())
+            System.getProperty(SystemPropertyConstants.VALUE_USE_STRICT_PAGING, Boolean.FALSE.toString())
     );
 
     private static final Boolean LOG_PAGING_WARNING = Boolean.parseBoolean(
-            System.getProperty(SystemPropertyConstants.LOG_PAGING_WARNING, Boolean.TRUE.toString())
+            System.getProperty(SystemPropertyConstants.VALUE_LOG_PAGING_WARNING, Boolean.TRUE.toString())
     );
 
     /**

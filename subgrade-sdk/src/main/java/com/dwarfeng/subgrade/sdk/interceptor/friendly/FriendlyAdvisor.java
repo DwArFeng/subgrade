@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.sdk.interceptor.friendly;
 
+import com.dwarfeng.subgrade.sdk.SystemPropertyConstants;
 import com.dwarfeng.subgrade.sdk.interceptor.AdvisorUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -50,23 +51,28 @@ import java.util.stream.Collectors;
  * <p>
  * 假设所有的注解都被启动了，那么按照 {@link Friendly} 注解规则，这些注解与切入点方法的执行顺序是：
  * <blockquote><pre>
- * 1. optionalKey = "a" 的注解的 paramManger 执行
- * 2. optionalKey = "b" 的注解的 paramManger 执行
- * 3. optionalKey = "c" 的注解的 paramManger 执行
- * 4. optionalKey = "d" 的注解的 paramManger 执行
+ * 1. <code>optionalKey = "a"</code> 的注解的 paramManger 执行
+ * 2. <code>optionalKey = "b"</code> 的注解的 paramManger 执行
+ * 3. <code>optionalKey = "c"</code> 的注解的 paramManger 执行
+ * 4. <code>optionalKey = "d"</code> 的注解的 paramManger 执行
  * 5. 原始方法执行
- * 6. optionalKey = "d" 的注解的 resultManger 执行
- * 7. optionalKey = "c" 的注解的 resultManger 执行
- * 8. optionalKey = "b" 的注解的 resultManger 执行
- * 9. optionalKey = "a" 的注解的 resultManger 执行
+ * 6. <code>optionalKey = "d"</code> 的注解的 resultManger 执行
+ * 7. <code>optionalKey = "c"</code> 的注解的 resultManger 执行
+ * 8. <code>optionalKey = "b"</code> 的注解的 resultManger 执行
+ * 9. <code>optionalKey = "a"</code> 的注解的 resultManger 执行
  * </pre></blockquote>
  *
  * <p>
  * 友好性增强默认是不启用的，您需在java运行环境中增加环境参数以启动友好性注解。
- * <blockquote><pre>
- * 1. 增加运行参数 -Dsubgrade.friendly.enable 以启用所有的 {@link Friendly} 注解。
- * 2. 增加运行参数 -Dsubgrade.friendly.enable.a 以启用所有 optionalKey = "a" 的 {@link Friendly} 注解。
- * </pre></blockquote>
+ * <ol>
+ *     <li>
+ *         增加运行参数 <code>-Dsubgrade.enableFriendly=true</code> 以启用所有的 {@link Friendly} 注解。
+ *     </li>
+ *     <li>
+ *         增加运行参数 <code>-Dsubgrade.enableFriendly.a=true</code> 以启用所有 <code>optionalKey = "a"</code>
+ *         的 {@link Friendly} 注解。
+ *     </li>
+ * </ol>
  *
  * @author DwArFeng
  * @since 1.0.2
@@ -77,12 +83,29 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
 
     /**
      * 程序配置中，启用所有友好性增强的键。
+     *
+     * @deprecated 该键已经过时，请使用 {@link SystemPropertyConstants#VALUE_FRIENDLY_ENABLE_ALL}。
      */
+    @Deprecated
     public static final String KEY_ENABLE_ALL = "subgrade.friendly.enable";
+
+    // 为了兼容旧版本的启用键，此处保留了旧版本的启用键。
+    @SuppressWarnings("DeprecatedIsStillUsed")
+    @Deprecated
+    private static final String DEPRECATED_KEY_ENABLE_ALL = KEY_ENABLE_ALL;
+
     /**
      * 程序配置中，启用特定的友好性增强的键的格式化字符串。
+     *
+     * @deprecated 该键已经过时，请使用 {@link SystemPropertyConstants#FORMAT_FRIENDLY_ENABLE_SPECIFIC}。
      */
+    @Deprecated
     public static final String FORMAT_KEY_ENABLE_SPECIFIC = "subgrade.friendly.enable.%s";
+
+    // 为了兼容旧版本的启用键，此处保留了旧版本的启用键。
+    @SuppressWarnings("DeprecatedIsStillUsed")
+    @Deprecated
+    private static final String DEPRECATED_FORMAT_KEY_ENABLE_SPECIFIC = FORMAT_KEY_ENABLE_SPECIFIC;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FriendlyAdvisor.class);
 
@@ -183,7 +206,12 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
     }
 
     private List<Friendly> scanEnabledFriendlies(List<Friendly> friendlies) {
-        if (System.getProperties().containsKey(KEY_ENABLE_ALL)) {
+        // 解析是否启用所有的友好性增强，此处兼容旧版本的启用键。
+        boolean enableAll = System.getProperties().containsKey(DEPRECATED_KEY_ENABLE_ALL) ||
+                Boolean.parseBoolean(System.getProperty(
+                        SystemPropertyConstants.VALUE_FRIENDLY_ENABLE_ALL, Boolean.FALSE.toString()
+                ));
+        if (enableAll) {
             return friendlies;
         }
 
@@ -195,7 +223,13 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
             if (Objects.nonNull(embeddedValueResolver)) {
                 optionalKey = embeddedValueResolver.resolveStringValue(optionalKey);
             }
-            return System.getProperties().containsKey(String.format(FORMAT_KEY_ENABLE_SPECIFIC, optionalKey));
+            // 解析是否启用特定的友好性增强，此处兼容旧版本的启用键。
+            return System.getProperties().containsKey(
+                    String.format(DEPRECATED_FORMAT_KEY_ENABLE_SPECIFIC, optionalKey)
+            ) || Boolean.parseBoolean(System.getProperty(
+                    String.format(SystemPropertyConstants.FORMAT_FRIENDLY_ENABLE_SPECIFIC, optionalKey),
+                    Boolean.FALSE.toString()
+            ));
         }).collect(Collectors.toList());
     }
 }
