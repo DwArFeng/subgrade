@@ -64,9 +64,6 @@ public final class SingleLevelLoggerFactory {
 
         private Logger delegate;
 
-        public DebugSingleLevelLogger() {
-        }
-
         @Override
         public LogLevel logLevel() {
             return LogLevel.DEBUG;
@@ -144,9 +141,6 @@ public final class SingleLevelLoggerFactory {
     static class ErrorSingleLevelLogger implements SingleLevelLogger {
 
         private Logger delegate;
-
-        public ErrorSingleLevelLogger() {
-        }
 
         @Override
         public LogLevel logLevel() {
@@ -226,9 +220,6 @@ public final class SingleLevelLoggerFactory {
 
         private Logger delegate;
 
-        public InfoSingleLevelLogger() {
-        }
-
         @Override
         public LogLevel logLevel() {
             return LogLevel.INFO;
@@ -306,9 +297,6 @@ public final class SingleLevelLoggerFactory {
     static class WarnSingleLevelLogger implements SingleLevelLogger {
 
         private Logger delegate;
-
-        public WarnSingleLevelLogger() {
-        }
 
         public WarnSingleLevelLogger(Logger delegate) {
             this.delegate = delegate;

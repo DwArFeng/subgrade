@@ -33,6 +33,34 @@ public class XmlFileMapResourceBridge<K extends Key, E extends Entity<K>, XE ext
     private BeanTransformer<E, XE> transformer;
     private Class<XR> classXR;
 
+    /**
+     * 生成一个 XML 文件资源映射桥。
+     *
+     * @param file        指定的文件。
+     * @param transformer 指定的转换器。
+     * @param classXR     指定的 XR 类型。
+     */
+    public XmlFileMapResourceBridge(
+            @Nonnull File file,
+            @Nonnull BeanTransformer<E, XE> transformer,
+            @Nonnull Class<XR> classXR
+    ) {
+        this.file = file;
+        this.transformer = transformer;
+        this.classXR = classXR;
+    }
+
+    /**
+     * 生成一个 XML 文件资源映射桥。
+     *
+     * @param file        指定的文件。
+     * @param transformer 指定的转换器。
+     * @param classXE     指定的 XE 类型。
+     * @param classXR     指定的 XR 类型。
+     * @deprecated 由于参数 classXE 没有使用，因此该构造器不再推荐使用。
+     */
+    @SuppressWarnings("unused")
+    @Deprecated
     public XmlFileMapResourceBridge(
             @Nonnull File file,
             @Nonnull BeanTransformer<E, XE> transformer,
