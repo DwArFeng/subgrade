@@ -101,7 +101,7 @@ public class BehaviorAnalyseAdvisor {
                 if (skipParamRecord[i]) {
                     logger.log("  参数 " + i + "/" + pjp.getArgs().length + ": SkipRecord 注解生效, 不记录此参数");
                 } else {
-                    logger.log("  参数 " + i + "/" + pjp.getArgs().length + ": " + pjp.getArgs()[i]);
+                    logger.log("  参数 " + i + "/" + pjp.getArgs().length + ": " + smartToString(pjp.getArgs()[i]));
                 }
             }
         }
@@ -134,7 +134,7 @@ public class BehaviorAnalyseAdvisor {
             if (skipResultRecord) {
                 logger.log("  返回对象: SkipRecord 注解生效, 不记录返回对象");
             } else {
-                logger.log("  返回对象: " + result);
+                logger.log("  返回对象: " + smartToString(result));
             }
         }
         logger.log("  用时: " + timeCost + " 毫秒");
@@ -159,5 +159,33 @@ public class BehaviorAnalyseAdvisor {
             return;
         }
         logger.log(message);
+    }
+
+    private String smartToString(Object obj) {
+        if (obj == null) {
+            return "null";
+        }
+        if (obj.getClass().isArray()) {
+            if (obj instanceof Object[]) {
+                return Arrays.toString((Object[]) obj);
+            } else if (obj instanceof int[]) {
+                return Arrays.toString((int[]) obj);
+            } else if (obj instanceof long[]) {
+                return Arrays.toString((long[]) obj);
+            } else if (obj instanceof short[]) {
+                return Arrays.toString((short[]) obj);
+            } else if (obj instanceof byte[]) {
+                return Arrays.toString((byte[]) obj);
+            } else if (obj instanceof char[]) {
+                return Arrays.toString((char[]) obj);
+            } else if (obj instanceof double[]) {
+                return Arrays.toString((double[]) obj);
+            } else if (obj instanceof float[]) {
+                return Arrays.toString((float[]) obj);
+            } else if (obj instanceof boolean[]) {
+                return Arrays.toString((boolean[]) obj);
+            }
+        }
+        return Objects.toString(obj);
     }
 }
