@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复 `CHANGELOG.md` 中早前版本中能够引起歧义的错误描述。
 
 #### 功能移除
 
@@ -23,7 +23,7 @@
 - 行为分析优化。
   - 优化行为分析的日志输出格式，使输出信息更加全面，且更加规范。
   - 优化行为分析的日志输出格式，在默认情况下减少不必要的输出。
-  - 增加 VM 参数 `-Dsubgrade.logBehaviorAnalyse=true` 用于开启在默认情况下减少的输出。
+  - 增加 VM 参数 `-Dsubgrade.detailedBehaviorAnalyseLog=true` 用于开启在默认情况下减少的输出。
   - 日志记录器的默认类优化为 `BehaviorAnalyse` 注解所在的类。
   - `BehaviorAnalyse` 注解增加 `loggerClass` 属性，用于指定日志记录器的类。
 
