@@ -10,7 +10,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.Ordered;
+import org.springframework.core.PriorityOrdered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,21 @@ import java.util.*;
  */
 @Component
 @Aspect
-@Order(Ordered.HIGHEST_PRECEDENCE)
+/*
+ * 该 AOP 需要在几乎所有的 AOP 之前执行，因为它需要记录方法的执行时间。
+ * 但是根据 Spring 的文档说明：AOP 调用链中，ExposeInvocationInterceptor 应该是最先执行的，
+ * 因为它需要在调用链中暴露出当前的 MethodInvocation。
+ * ExposeInvocationInterceptor Javadoc 原文如下：
+ *   If used, this interceptor will normally be the first in the interceptor chain.
+ * 因此，该 AOP 的优先级应该设置为最高，但必须低于 ExposeInvocationInterceptor 的优先级。
+ * 根据 ExposeInvocationInterceptor 的源码，ExposeInvocationInterceptor 的优先级是：
+ *   PriorityOrdered.HIGHEST_PRECEDENCE + 1;
+ * 因此，该 AOP 的优先级应该设置为：
+ *   PriorityOrdered.HIGHEST_PRECEDENCE + 10;
+ * 以保证该 AOP 在 ExposeInvocationInterceptor 之后执行。
+ * 2-9 保留给其它的 AOP。
+ */
+@Order(PriorityOrdered.HIGHEST_PRECEDENCE + 10)
 public class BehaviorAnalyseAdvisor {
 
     /**

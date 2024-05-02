@@ -8,6 +8,9 @@
 
 #### Bug修复
 
+- 修复部分 AOP Advisor 优先级不合理的 bug。
+  - com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyseAdvisor。
+
 - 修复 `CHANGELOG.md` 中早前版本中能够引起歧义的错误描述。
 
 #### 功能移除
