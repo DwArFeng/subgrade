@@ -48,7 +48,7 @@
         <aspectj.version>1.9.7</aspectj.version>
         <hibernate.version>5.6.7.Final</hibernate.version>
         <hibernate-validator.version>6.0.21.Final</hibernate-validator.version>
-        <slf4j.version>1.7.5</slf4j.version>
+        <slf4j.version>1.7.36</slf4j.version>
         <dozer.version>5.5.1</dozer.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <dutil.version>beta-0.3.2.a</dutil.version>
