@@ -2,7 +2,9 @@ package com.dwarfeng.subgrade.stack.exception;
 
 /**
  * 服务异常映射器。
- * <p> 将一般的异常映射为服务异常。
+ *
+ * <p>
+ * 将一般的异常映射为服务异常。
  *
  * @author DwArFeng
  * @since 0.0.1-alpha

@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 优化部分文档注释。
+  - com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper。
 
 #### Bug修复
 
