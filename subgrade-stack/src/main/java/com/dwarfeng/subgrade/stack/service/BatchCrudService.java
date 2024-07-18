@@ -81,8 +81,27 @@ public interface BatchCrudService<K extends Key, E extends Entity<K>> extends Cr
      * @param elements 指定的元素组成的集合。
      * @return 所有被插入元素的主键，小于或等于 elements 的个数。
      * @throws ServiceException 服务异常。
+     * @see #batchInsertIfNotExists(List)
+     * @deprecated 该方法不符合语义，不建议使用。请使用 {@link #batchInsertIfNotExists(List)}。
      */
+    /*
+     * 为了满足接口的兼容性，该接口中的 batchInsertIfNotExists 方法的默认实现是调用本方法，
+     * 因此忽略 DeprecatedIsStillUsed 警告。
+     */
+    @SuppressWarnings("DeprecatedIsStillUsed")
+    @Deprecated
     List<K> batchInsertIfExists(List<E> elements) throws ServiceException;
+
+    /**
+     * 如果不存在指定的元素，则插入。
+     *
+     * @param elements 指定的元素组成的集合。
+     * @return 所有被插入元素的主键，小于或等于 elements 的个数。
+     * @throws ServiceException 服务异常。
+     */
+    default List<K> batchInsertIfNotExists(List<E> elements) throws ServiceException {
+        return batchInsertIfExists(elements);
+    }
 
     /**
      * 如果存在指定的元素，则更新。

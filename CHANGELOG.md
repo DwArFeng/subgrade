@@ -8,7 +8,8 @@
 
 #### Bug修复
 
-- (无)
+- 过期部分结构中命名不规范的方法，并提供命名规范的方法。
+  - com.dwarfeng.subgrade.stack.service.BatchCrudService.batchInsertIfExists。
 
 #### 功能移除
 

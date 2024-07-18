@@ -376,8 +376,25 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         }
     }
 
+    @SuppressWarnings("deprecation")
+    @Deprecated
     @Override
     public List<K> batchInsertIfExists(List<E> elements) throws ServiceException {
+        try {
+            List<E> elements2Insert = new ArrayList<>();
+            for (E element : elements) {
+                if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
+                    elements2Insert.add(element);
+                }
+            }
+            return internalBatchInsert(elements2Insert);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
+        }
+    }
+
+    @Override
+    public List<K> batchInsertIfNotExists(List<E> elements) throws ServiceException {
         try {
             List<E> elements2Insert = new ArrayList<>();
             for (E element : elements) {
