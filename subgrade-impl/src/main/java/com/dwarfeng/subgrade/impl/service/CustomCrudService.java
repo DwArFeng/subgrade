@@ -91,38 +91,38 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
     }
 
     @Override
-    public K insert(E element) throws ServiceException {
+    public K insert(E entity) throws ServiceException {
         try {
-            return internalInsert(element);
+            return internalInsert(entity);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
-    private K internalInsert(E element) throws Exception {
-        if (Objects.isNull(element.getKey())) {
-            element.setKey(keyGenerator.generate());
+    private K internalInsert(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey())) {
+            entity.setKey(keyGenerator.generate());
         }
-        if (internalExists(element.getKey())) {
+        if (internalExists(entity.getKey())) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }
-        return operation.insert(element);
+        return operation.insert(entity);
     }
 
     @Override
-    public void update(E element) throws ServiceException {
+    public void update(E entity) throws ServiceException {
         try {
-            internalUpdate(element);
+            internalUpdate(entity);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
-    private void internalUpdate(E element) throws Exception {
-        if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
+    private void internalUpdate(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
-        operation.update(element);
+        operation.update(entity);
     }
 
     @Override
@@ -151,10 +151,10 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
     }
 
     @Override
-    public K insertIfNotExists(E element) throws ServiceException {
+    public K insertIfNotExists(E entity) throws ServiceException {
         try {
-            if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
-                return internalInsert(element);
+            if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                return internalInsert(entity);
             }
             return null;
         } catch (Exception e) {
@@ -163,10 +163,10 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
     }
 
     @Override
-    public void updateIfExists(E element) throws ServiceException {
+    public void updateIfExists(E entity) throws ServiceException {
         try {
-            if (internalExists(element.getKey())) {
-                internalUpdate(element);
+            if (internalExists(entity.getKey())) {
+                internalUpdate(entity);
             }
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
@@ -185,12 +185,12 @@ public class CustomCrudService<K extends Key, E extends Entity<K>> implements Cr
     }
 
     @Override
-    public K insertOrUpdate(E element) throws ServiceException {
+    public K insertOrUpdate(E entity) throws ServiceException {
         try {
-            if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
-                return internalInsert(element);
+            if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                return internalInsert(entity);
             } else {
-                internalUpdate(element);
+                internalUpdate(entity);
                 return null;
             }
         } catch (Exception e) {

@@ -61,26 +61,26 @@ public class DaoOnlyBatchWriteService<K extends Key, E extends Entity<K>> implem
     }
 
     @Override
-    public void write(E element) throws ServiceException {
+    public void write(E entity) throws ServiceException {
         try {
-            if (Objects.isNull(element.getKey())) {
-                element.setKey(keyGenerator.generate());
+            if (Objects.isNull(entity.getKey())) {
+                entity.setKey(keyGenerator.generate());
             }
-            dao.write(element);
+            dao.write(entity);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("写入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
     @Override
-    public void batchWrite(List<E> elements) throws ServiceException {
+    public void batchWrite(List<E> entities) throws ServiceException {
         try {
-            for (E element : elements) {
-                if (Objects.isNull(element.getKey())) {
-                    element.setKey(keyGenerator.generate());
+            for (E entity : entities) {
+                if (Objects.isNull(entity.getKey())) {
+                    entity.setKey(keyGenerator.generate());
                 }
             }
-            dao.batchWrite(elements);
+            dao.batchWrite(entities);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("写入实体时发生异常", exceptionLogLevel, e, sem);
         }

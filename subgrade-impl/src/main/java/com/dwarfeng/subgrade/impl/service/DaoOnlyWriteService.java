@@ -61,12 +61,12 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
     }
 
     @Override
-    public void write(E element) throws ServiceException {
+    public void write(E entity) throws ServiceException {
         try {
-            if (Objects.isNull(element.getKey())) {
-                element.setKey(keyGenerator.generate());
+            if (Objects.isNull(entity.getKey())) {
+                entity.setKey(keyGenerator.generate());
             }
-            dao.write(element);
+            dao.write(entity);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("写入实体时发生异常", exceptionLogLevel, e, sem);
         }

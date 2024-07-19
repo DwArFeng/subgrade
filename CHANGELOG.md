@@ -4,8 +4,26 @@
 
 #### 功能构建
 
+- 优化部分接口及其实现的参数名称。
+  - com.dwarfeng.subgrade.stack.service.BatchCrudService。
+  - com.dwarfeng.subgrade.stack.service.BatchWriteService。
+  - com.dwarfeng.subgrade.stack.service.CrudService。
+  - com.dwarfeng.subgrade.stack.service.WriteService。
+  - com.dwarfeng.subgrade.impl.service.CustomBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.CustomCrudService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyCrudService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyWriteService。
+  - com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.GeneralCrudService。
+
 - 优化部分文档注释。
   - com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper。
+  - com.dwarfeng.subgrade.stack.service.BatchCrudService。
+  - com.dwarfeng.subgrade.stack.service.BatchWriteService。
+  - com.dwarfeng.subgrade.stack.service.CrudService。
+  - com.dwarfeng.subgrade.stack.service.WriteService。
 
 #### Bug修复
 

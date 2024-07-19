@@ -104,41 +104,41 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public K insert(E element) throws ServiceException {
+    public K insert(E entity) throws ServiceException {
         try {
-            return internalInsert(element);
+            return internalInsert(entity);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
-    private K internalInsert(E element) throws Exception {
-        if (Objects.isNull(element.getKey())) {
-            element.setKey(keyGenerator.generate());
-        } else if (internalExists(element.getKey())) {
+    private K internalInsert(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey())) {
+            entity.setKey(keyGenerator.generate());
+        } else if (internalExists(entity.getKey())) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }
-        K key = dao.insert(element);
-        cache.push(element, cacheTimeout);
+        K key = dao.insert(entity);
+        cache.push(entity, cacheTimeout);
         return key;
     }
 
     @Override
-    public void update(E element) throws ServiceException {
+    public void update(E entity) throws ServiceException {
         try {
-            internalUpdate(element);
+            internalUpdate(entity);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
-    private void internalUpdate(E element) throws Exception {
-        if (!internalExists(element.getKey())) {
+    private void internalUpdate(E entity) throws Exception {
+        if (!internalExists(entity.getKey())) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
 
-        dao.update(element);
-        cache.push(element, cacheTimeout);
+        dao.update(entity);
+        cache.push(entity, cacheTimeout);
     }
 
     @Override
@@ -171,10 +171,10 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public K insertIfNotExists(E element) throws ServiceException {
+    public K insertIfNotExists(E entity) throws ServiceException {
         try {
-            if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
-                return internalInsert(element);
+            if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                return internalInsert(entity);
             }
             return null;
         } catch (Exception e) {
@@ -183,10 +183,10 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public void updateIfExists(E element) throws ServiceException {
+    public void updateIfExists(E entity) throws ServiceException {
         try {
-            if (internalExists(element.getKey())) {
-                internalUpdate(element);
+            if (internalExists(entity.getKey())) {
+                internalUpdate(entity);
             }
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
@@ -205,12 +205,12 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public K insertOrUpdate(E element) throws ServiceException {
+    public K insertOrUpdate(E entity) throws ServiceException {
         try {
-            if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
-                return internalInsert(element);
+            if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                return internalInsert(entity);
             } else {
-                internalUpdate(element);
+                internalUpdate(entity);
                 return null;
             }
         } catch (Exception e) {
@@ -279,68 +279,68 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     private List<E> internalBatchGet(List<K> keys) throws Exception {
-        List<E> elements = new ArrayList<>();
+        List<E> entities = new ArrayList<>();
         for (K key : keys) {
-            elements.add(internalGet(key));
+            entities.add(internalGet(key));
         }
-        return elements;
+        return entities;
     }
 
     @Override
-    public List<K> batchInsert(List<E> elements) throws ServiceException {
+    public List<K> batchInsert(List<E> entities) throws ServiceException {
         try {
-            return internalBatchInsert(elements);
+            return internalBatchInsert(entities);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
-    private List<K> internalBatchInsert(List<E> elements) throws Exception {
-        List<K> collect = elements.stream().filter(
+    private List<K> internalBatchInsert(List<E> entities) throws Exception {
+        List<K> collect = entities.stream().filter(
                 e -> Objects.nonNull(e.getKey())).map(E::getKey).collect(Collectors.toList()
         );
         if (!internalNonExists(collect)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }
 
-        List<E> nonKeyElements = elements.stream().filter(e -> Objects.isNull(e.getKey())).collect(Collectors.toList());
-        // 根据 nonKeyElements 的大小，选择性生成主键。
-        mayGenerateKeys(nonKeyElements);
+        List<E> nonKeyEntities = entities.stream().filter(e -> Objects.isNull(e.getKey())).collect(Collectors.toList());
+        // 根据 nonKeyEntities 的大小，选择性生成主键。
+        mayGenerateKeys(nonKeyEntities);
 
-        List<K> ks = dao.batchInsert(elements);
-        cache.batchPush(elements, cacheTimeout);
+        List<K> ks = dao.batchInsert(entities);
+        cache.batchPush(entities, cacheTimeout);
         return ks;
     }
 
-    private void mayGenerateKeys(List<E> nonKeyElements) throws GenerateException {
-        // 如果 nonKeyElements 为空，则不生成主键。
-        if (nonKeyElements.isEmpty()) {
+    private void mayGenerateKeys(List<E> nonKeyEntities) throws GenerateException {
+        // 如果 nonKeyEntities 为空，则不生成主键。
+        if (nonKeyEntities.isEmpty()) {
             return;
         }
         // 否则生成主键。
-        List<K> generatedKeys = keyGenerator.batchGenerate(nonKeyElements.size());
-        for (int i = 0; i < nonKeyElements.size(); i++) {
-            nonKeyElements.get(i).setKey(generatedKeys.get(i));
+        List<K> generatedKeys = keyGenerator.batchGenerate(nonKeyEntities.size());
+        for (int i = 0; i < nonKeyEntities.size(); i++) {
+            nonKeyEntities.get(i).setKey(generatedKeys.get(i));
         }
     }
 
     @Override
-    public void batchUpdate(List<E> elements) throws ServiceException {
+    public void batchUpdate(List<E> entities) throws ServiceException {
         try {
-            internalBatchUpdate(elements);
+            internalBatchUpdate(entities);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
-    private void internalBatchUpdate(List<E> elements) throws Exception {
-        List<K> collect = elements.stream().map(E::getKey).collect(Collectors.toList());
+    private void internalBatchUpdate(List<E> entities) throws Exception {
+        List<K> collect = entities.stream().map(E::getKey).collect(Collectors.toList());
         if (!internalAllExists(collect)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
 
-        dao.batchUpdate(elements);
-        cache.batchPush(elements, cacheTimeout);
+        dao.batchUpdate(entities);
+        cache.batchPush(entities, cacheTimeout);
     }
 
     @Override
@@ -379,45 +379,45 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     @SuppressWarnings("deprecation")
     @Deprecated
     @Override
-    public List<K> batchInsertIfExists(List<E> elements) throws ServiceException {
+    public List<K> batchInsertIfExists(List<E> entities) throws ServiceException {
         try {
-            List<E> elements2Insert = new ArrayList<>();
-            for (E element : elements) {
-                if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
-                    elements2Insert.add(element);
+            List<E> entities2Insert = new ArrayList<>();
+            for (E entity : entities) {
+                if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                    entities2Insert.add(entity);
                 }
             }
-            return internalBatchInsert(elements2Insert);
+            return internalBatchInsert(entities2Insert);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
     @Override
-    public List<K> batchInsertIfNotExists(List<E> elements) throws ServiceException {
+    public List<K> batchInsertIfNotExists(List<E> entities) throws ServiceException {
         try {
-            List<E> elements2Insert = new ArrayList<>();
-            for (E element : elements) {
-                if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
-                    elements2Insert.add(element);
+            List<E> entities2Insert = new ArrayList<>();
+            for (E entity : entities) {
+                if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                    entities2Insert.add(entity);
                 }
             }
-            return internalBatchInsert(elements2Insert);
+            return internalBatchInsert(entities2Insert);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
     }
 
     @Override
-    public void batchUpdateIfExists(List<E> elements) throws ServiceException {
+    public void batchUpdateIfExists(List<E> entities) throws ServiceException {
         try {
-            List<E> elements2Update = new ArrayList<>();
-            for (E element : elements) {
-                if (internalExists(element.getKey())) {
-                    elements2Update.add(element);
+            List<E> entities2Update = new ArrayList<>();
+            for (E entity : entities) {
+                if (internalExists(entity.getKey())) {
+                    entities2Update.add(entity);
                 }
             }
-            internalBatchUpdate(elements2Update);
+            internalBatchUpdate(entities2Update);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
         }
@@ -439,19 +439,19 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public List<K> batchInsertOrUpdate(List<E> elements) throws ServiceException {
+    public List<K> batchInsertOrUpdate(List<E> entities) throws ServiceException {
         try {
-            List<E> elements2Insert = new ArrayList<>();
-            List<E> elements2Update = new ArrayList<>();
-            for (E element : elements) {
-                if (Objects.isNull(element.getKey()) || !internalExists(element.getKey())) {
-                    elements2Insert.add(element);
+            List<E> entities2Insert = new ArrayList<>();
+            List<E> entities2Update = new ArrayList<>();
+            for (E entity : entities) {
+                if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                    entities2Insert.add(entity);
                 } else {
-                    elements2Update.add(element);
+                    entities2Update.add(entity);
                 }
             }
-            internalBatchUpdate(elements2Update);
-            return internalBatchInsert(elements2Insert);
+            internalBatchUpdate(entities2Update);
+            return internalBatchInsert(entities2Insert);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("插入或更新实体时发生异常", exceptionLogLevel, e, sem);
         }
