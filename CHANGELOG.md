@@ -4,6 +4,18 @@
 
 #### 功能构建
 
+- 增加部分服务的抽象实现。
+  - com.dwarfeng.subgrade.impl.service.AbstractBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.AbstractCrudService。
+
+- 优化部分服务的实现的继承关系。
+  - com.dwarfeng.subgrade.impl.service.CustomBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.CustomCrudService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyCrudService。
+  - com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService。
+  - com.dwarfeng.subgrade.impl.service.GeneralCrudService。
+
 - 优化部分接口及其实现的参数名称。
   - com.dwarfeng.subgrade.stack.service.BatchCrudService。
   - com.dwarfeng.subgrade.stack.service.BatchWriteService。

@@ -12,7 +12,6 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -37,34 +36,76 @@ import java.util.stream.Collectors;
  * @since 0.0.1-beta
  */
 @SuppressWarnings("DuplicatedCode")
-public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> implements BatchCrudService<K, E> {
+public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> extends AbstractBatchCrudService<K, E> {
 
     @Nonnull
     private BatchBaseDao<K, E> dao;
+
     @Nonnull
     private BatchBaseCache<K, E> cache;
+
     @Nonnull
     private KeyGenerator<K> keyGenerator;
-    @Nonnull
-    private ServiceExceptionMapper sem;
-    @Nonnull
-    private LogLevel exceptionLogLevel;
+
     @Nonnegative
     private long cacheTimeout;
 
+    /**
+     * 构造器方法。
+     *
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @param dao               基础数据访问层。
+     * @param cache             基础缓存接口。
+     * @param keyGenerator      主键生成器。
+     * @param cacheTimeout      缓存超时时间。
+     * @since 1.5.4
+     */
+    public GeneralBatchCrudService(
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel,
+            @Nonnull BatchBaseDao<K, E> dao,
+            @Nonnull BatchBaseCache<K, E> cache,
+            @Nonnull KeyGenerator<K> keyGenerator,
+            @Nonnegative long cacheTimeout
+    ) {
+        super(sem, exceptionLogLevel);
+        this.dao = dao;
+        this.cache = cache;
+        this.keyGenerator = keyGenerator;
+        this.cacheTimeout = cacheTimeout;
+    }
+
+    /**
+     * 构造器方法。
+     *
+     * <p>
+     * 由于在 1.5.4 后，该类的继承关系发生了变化，因此该构造器方法已经被废弃。<br>
+     * 请使用 {@link #GeneralBatchCrudService(ServiceExceptionMapper, LogLevel, BatchBaseDao, BatchBaseCache, KeyGenerator, long)}。<br>
+     * 新的构造器调整了参数顺序，使其更符合新的继承形式对应的参数顺序。
+     *
+     * @param dao               基础数据访问层。
+     * @param cache             基础缓存接口。
+     * @param keyGenerator      主键生成器。
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @param cacheTimeout      缓存超时时间。
+     * @see #GeneralBatchCrudService(ServiceExceptionMapper, LogLevel, BatchBaseDao, BatchBaseCache, KeyGenerator, long)
+     * @deprecated 使用 {@link #GeneralBatchCrudService(ServiceExceptionMapper, LogLevel, BatchBaseDao, BatchBaseCache, KeyGenerator, long)} 代替。
+     */
+    @Deprecated
     public GeneralBatchCrudService(
             @Nonnull BatchBaseDao<K, E> dao,
             @Nonnull BatchBaseCache<K, E> cache,
             @Nonnull KeyGenerator<K> keyGenerator,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel,
-            long cacheTimeout
+            @Nonnegative long cacheTimeout
     ) {
+        super(sem, exceptionLogLevel);
         this.dao = dao;
         this.cache = cache;
         this.keyGenerator = keyGenerator;
-        this.sem = sem;
-        this.exceptionLogLevel = exceptionLogLevel;
         this.cacheTimeout = cacheTimeout;
     }
 
@@ -77,145 +118,17 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             @Nonnull LogLevel exceptionLogLevel,
             @Nonnegative long cacheTimeout
     ) {
+        super(sem, exceptionLogLevel);
         this.dao = dao;
         this.cache = cache;
         this.keyGenerator = KeyFetcherAdaptHelper.toKeyGenerator(keyFetcher);
-        this.sem = sem;
-        this.exceptionLogLevel = exceptionLogLevel;
         this.cacheTimeout = cacheTimeout;
     }
 
-    @Override
-    public boolean exists(K key) throws ServiceException {
-        try {
-            return internalExists(key);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("判断实体是否存在时发生异常", exceptionLogLevel, e, sem);
-        }
-    }
 
     @Override
-    public E get(K key) throws ServiceException {
-        try {
-            return internalGet(key);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("获取实体信息时发生异常", exceptionLogLevel, e, sem);
-        }
-    }
-
-    @Override
-    public K insert(E entity) throws ServiceException {
-        try {
-            return internalInsert(entity);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
-        }
-    }
-
-    private K internalInsert(E entity) throws Exception {
-        if (Objects.isNull(entity.getKey())) {
-            entity.setKey(keyGenerator.generate());
-        } else if (internalExists(entity.getKey())) {
-            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
-        }
-        K key = dao.insert(entity);
-        cache.push(entity, cacheTimeout);
-        return key;
-    }
-
-    @Override
-    public void update(E entity) throws ServiceException {
-        try {
-            internalUpdate(entity);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
-        }
-    }
-
-    private void internalUpdate(E entity) throws Exception {
-        if (!internalExists(entity.getKey())) {
-            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
-        }
-
-        dao.update(entity);
-        cache.push(entity, cacheTimeout);
-    }
-
-    @Override
-    public void delete(K key) throws ServiceException {
-        try {
-            internalDelete(key);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("删除实体时发生异常", exceptionLogLevel, e, sem);
-        }
-    }
-
-    private void internalDelete(K key) throws Exception {
-        if (!internalExists(key)) {
-            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
-        }
-
-        if (cache.exists(key)) {
-            cache.delete(key);
-        }
-        dao.delete(key);
-    }
-
-    @Override
-    public E getIfExists(K key) throws ServiceException {
-        try {
-            return internalExists(key) ? internalGet(key) : null;
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("获取实体时发生异常", exceptionLogLevel, e, sem);
-        }
-    }
-
-    @Override
-    public K insertIfNotExists(E entity) throws ServiceException {
-        try {
-            if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
-                return internalInsert(entity);
-            }
-            return null;
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
-        }
-    }
-
-    @Override
-    public void updateIfExists(E entity) throws ServiceException {
-        try {
-            if (internalExists(entity.getKey())) {
-                internalUpdate(entity);
-            }
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
-        }
-    }
-
-    @Override
-    public void deleteIfExists(K key) throws ServiceException {
-        try {
-            if (internalExists(key)) {
-                internalDelete(key);
-            }
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("删除实体时发生异常", exceptionLogLevel, e, sem);
-        }
-    }
-
-    @Override
-    public K insertOrUpdate(E entity) throws ServiceException {
-        try {
-            if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
-                return internalInsert(entity);
-            } else {
-                internalUpdate(entity);
-                return null;
-            }
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("插入或更新实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected boolean doExists(K key) throws Exception {
+        return internalExists(key);
     }
 
     private boolean internalExists(K key) throws Exception {
@@ -223,6 +136,11 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
             return true;
         }
         return dao.exists(key);
+    }
+
+    @Override
+    protected E doGet(K key) throws Exception {
+        return internalGet(key);
     }
 
     private E internalGet(K key) throws Exception {
@@ -238,12 +156,91 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public boolean allExists(List<K> keys) throws ServiceException {
-        try {
-            return internalAllExists(keys);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("判断实体是否存在时发生异常", exceptionLogLevel, e, sem);
+    protected K doInsert(E entity) throws Exception {
+        return internalInsert(entity);
+    }
+
+    private K internalInsert(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey())) {
+            entity.setKey(keyGenerator.generate());
+        } else if (internalExists(entity.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
         }
+        K key = dao.insert(entity);
+        cache.push(entity, cacheTimeout);
+        return key;
+    }
+
+    @Override
+    protected void doUpdate(E entity) throws Exception {
+        internalUpdate(entity);
+    }
+
+    private void internalUpdate(E entity) throws Exception {
+        if (!internalExists(entity.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        dao.update(entity);
+        cache.push(entity, cacheTimeout);
+    }
+
+    @Override
+    protected void doDelete(K key) throws Exception {
+        internalDelete(key);
+    }
+
+    private void internalDelete(K key) throws Exception {
+        if (!internalExists(key)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        if (cache.exists(key)) {
+            cache.delete(key);
+        }
+        dao.delete(key);
+    }
+
+    @Override
+    protected E doGetIfExists(K key) throws Exception {
+        return internalExists(key) ? internalGet(key) : null;
+    }
+
+    @Override
+    protected K doInsertIfNotExists(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+            return internalInsert(entity);
+        }
+        return null;
+    }
+
+    @Override
+    protected void doUpdateIfExists(E entity) throws Exception {
+        if (internalExists(entity.getKey())) {
+            internalUpdate(entity);
+        }
+    }
+
+    @Override
+    protected void doDeleteIfExists(K key) throws Exception {
+        if (internalExists(key)) {
+            internalDelete(key);
+        }
+    }
+
+    @Override
+    protected K doInsertOrUpdate(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+            return internalInsert(entity);
+        } else {
+            internalUpdate(entity);
+            return null;
+        }
+    }
+
+    @Override
+    protected boolean doAllExists(List<K> keys) throws Exception {
+        return internalAllExists(keys);
     }
 
     private boolean internalAllExists(List<K> keys) throws Exception {
@@ -254,12 +251,8 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public boolean nonExists(List<K> keys) throws ServiceException {
-        try {
-            return internalNonExists(keys);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("判断实体是否存在时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected boolean doNonExists(List<K> keys) throws Exception {
+        return internalNonExists(keys);
     }
 
     private boolean internalNonExists(List<K> keys) throws Exception {
@@ -270,12 +263,8 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public List<E> batchGet(List<K> keys) throws ServiceException {
-        try {
-            return internalBatchGet(keys);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("判断实体是否存在时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected List<E> doBatchGet(List<K> keys) throws Exception {
+        return internalBatchGet(keys);
     }
 
     private List<E> internalBatchGet(List<K> keys) throws Exception {
@@ -287,12 +276,8 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public List<K> batchInsert(List<E> entities) throws ServiceException {
-        try {
-            return internalBatchInsert(entities);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected List<K> doBatchInsert(List<E> entities) throws Exception {
+        return internalBatchInsert(entities);
     }
 
     private List<K> internalBatchInsert(List<E> entities) throws Exception {
@@ -325,12 +310,8 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public void batchUpdate(List<E> entities) throws ServiceException {
-        try {
-            internalBatchUpdate(entities);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected void doBatchUpdate(List<E> entities) throws Exception {
+        internalBatchUpdate(entities);
     }
 
     private void internalBatchUpdate(List<E> entities) throws Exception {
@@ -344,12 +325,8 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public void batchDelete(List<K> keys) throws ServiceException {
-        try {
-            internalBatchDelete(keys);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("删除实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected void doBatchDelete(List<K> keys) throws Exception {
+        internalBatchDelete(keys);
     }
 
     private void internalBatchDelete(List<K> keys) throws Exception {
@@ -362,99 +339,62 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
     }
 
     @Override
-    public List<E> batchGetIfExists(List<K> keys) throws ServiceException {
-        try {
-            List<K> existsKeys = new ArrayList<>();
-            for (K key : keys) {
-                if (internalExists(key)) {
-                    existsKeys.add(key);
-                }
+    protected List<E> doBatchGetIfExists(List<K> keys) throws Exception {
+        List<K> existsKeys = new ArrayList<>();
+        for (K key : keys) {
+            if (internalExists(key)) {
+                existsKeys.add(key);
             }
-            return internalBatchGet(existsKeys);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("获取实体时发生异常", exceptionLogLevel, e, sem);
         }
-    }
-
-    @SuppressWarnings("deprecation")
-    @Deprecated
-    @Override
-    public List<K> batchInsertIfExists(List<E> entities) throws ServiceException {
-        try {
-            List<E> entities2Insert = new ArrayList<>();
-            for (E entity : entities) {
-                if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
-                    entities2Insert.add(entity);
-                }
-            }
-            return internalBatchInsert(entities2Insert);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
-        }
+        return internalBatchGet(existsKeys);
     }
 
     @Override
-    public List<K> batchInsertIfNotExists(List<E> entities) throws ServiceException {
-        try {
-            List<E> entities2Insert = new ArrayList<>();
-            for (E entity : entities) {
-                if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
-                    entities2Insert.add(entity);
-                }
+    protected List<K> doBatchInsertIfNotExists(List<E> entities) throws Exception {
+        List<E> entities2Insert = new ArrayList<>();
+        for (E entity : entities) {
+            if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                entities2Insert.add(entity);
             }
-            return internalBatchInsert(entities2Insert);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("插入实体时发生异常", exceptionLogLevel, e, sem);
         }
+        return internalBatchInsert(entities2Insert);
     }
 
     @Override
-    public void batchUpdateIfExists(List<E> entities) throws ServiceException {
-        try {
-            List<E> entities2Update = new ArrayList<>();
-            for (E entity : entities) {
-                if (internalExists(entity.getKey())) {
-                    entities2Update.add(entity);
-                }
+    protected void doBatchUpdateIfExists(List<E> entities) throws Exception {
+        List<E> entities2Update = new ArrayList<>();
+        for (E entity : entities) {
+            if (internalExists(entity.getKey())) {
+                entities2Update.add(entity);
             }
-            internalBatchUpdate(entities2Update);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("更新实体时发生异常", exceptionLogLevel, e, sem);
         }
+        internalBatchUpdate(entities2Update);
     }
 
     @Override
-    public void batchDeleteIfExists(List<K> keys) throws ServiceException {
-        try {
-            List<K> keys2Delete = new ArrayList<>();
-            for (K key : keys) {
-                if (internalExists(key)) {
-                    keys2Delete.add(key);
-                }
+    protected void doBatchDeleteIfExists(List<K> keys) throws Exception {
+        List<K> keys2Delete = new ArrayList<>();
+        for (K key : keys) {
+            if (internalExists(key)) {
+                keys2Delete.add(key);
             }
-            internalBatchDelete(keys2Delete);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("删除实体时发生异常", exceptionLogLevel, e, sem);
         }
+        internalBatchDelete(keys2Delete);
     }
 
     @Override
-    public List<K> batchInsertOrUpdate(List<E> entities) throws ServiceException {
-        try {
-            List<E> entities2Insert = new ArrayList<>();
-            List<E> entities2Update = new ArrayList<>();
-            for (E entity : entities) {
-                if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
-                    entities2Insert.add(entity);
-                } else {
-                    entities2Update.add(entity);
-                }
+    protected List<K> doBatchInsertOrUpdate(List<E> entities) throws Exception {
+        List<E> entities2Insert = new ArrayList<>();
+        List<E> entities2Update = new ArrayList<>();
+        for (E entity : entities) {
+            if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                entities2Insert.add(entity);
+            } else {
+                entities2Update.add(entity);
             }
-            internalBatchUpdate(entities2Update);
-            return internalBatchInsert(entities2Insert);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("插入或更新实体时发生异常", exceptionLogLevel, e, sem);
         }
+        internalBatchUpdate(entities2Update);
+        return internalBatchInsert(entities2Insert);
     }
 
     /**
@@ -535,24 +475,6 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
         this.keyGenerator = KeyFetcherAdaptHelper.toKeyGenerator(keyFetcher);
     }
 
-    @Nonnull
-    public ServiceExceptionMapper getSem() {
-        return sem;
-    }
-
-    public void setSem(@Nonnull ServiceExceptionMapper sem) {
-        this.sem = sem;
-    }
-
-    @Nonnull
-    public LogLevel getExceptionLogLevel() {
-        return exceptionLogLevel;
-    }
-
-    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
-        this.exceptionLogLevel = exceptionLogLevel;
-    }
-
     public long getCacheTimeout() {
         return cacheTimeout;
     }
@@ -570,6 +492,8 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> impleme
                 ", sem=" + sem +
                 ", exceptionLogLevel=" + exceptionLogLevel +
                 ", cacheTimeout=" + cacheTimeout +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
                 '}';
     }
 }
