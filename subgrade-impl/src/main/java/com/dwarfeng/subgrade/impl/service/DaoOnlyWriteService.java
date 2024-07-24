@@ -1,15 +1,12 @@
 package com.dwarfeng.subgrade.impl.service;
 
-import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.dao.WriteDao;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import com.dwarfeng.subgrade.stack.service.WriteService;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -23,27 +20,59 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 1.1.0
  */
-public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements WriteService<E> {
+public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> extends AbstractWriteService<E> {
 
     @Nonnull
     private WriteDao<E> dao;
+
     @Nonnull
     private KeyGenerator<K> keyGenerator;
-    @Nonnull
-    private ServiceExceptionMapper sem;
-    @Nonnull
-    private LogLevel exceptionLogLevel;
 
+    /**
+     * 构造器方法。
+     *
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @param dao               数据访问层。
+     * @param keyGenerator      主键生成器。
+     * @since 1.5.4
+     */
+    public DaoOnlyWriteService(
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel,
+            @Nonnull WriteDao<E> dao,
+            @Nonnull KeyGenerator<K> keyGenerator
+    ) {
+        super(sem, exceptionLogLevel);
+        this.dao = dao;
+        this.keyGenerator = keyGenerator;
+    }
+
+    /**
+     * 构造器方法。
+     *
+     * <p>
+     * 由于在 1.5.4 后，该类的继承关系发生了变化，因此该构造器方法已经被废弃。<br>
+     * 请使用 {@link #DaoOnlyWriteService(ServiceExceptionMapper, LogLevel, WriteDao, KeyGenerator)}。<br>
+     * 新的构造器调整了参数顺序，使其更符合新的继承形式对应的参数顺序。
+     *
+     * @param dao               数据访问层。
+     * @param keyGenerator      主键生成器。
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @see #DaoOnlyWriteService(ServiceExceptionMapper, LogLevel, WriteDao, KeyGenerator)
+     * @deprecated 使用 {@link #DaoOnlyWriteService(ServiceExceptionMapper, LogLevel, WriteDao, KeyGenerator)} 代替。
+     */
+    @Deprecated
     public DaoOnlyWriteService(
             @Nonnull WriteDao<E> dao,
             @Nonnull KeyGenerator<K> keyGenerator,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel
     ) {
+        super(sem, exceptionLogLevel);
         this.dao = dao;
         this.keyGenerator = keyGenerator;
-        this.sem = sem;
-        this.exceptionLogLevel = exceptionLogLevel;
     }
 
     @Deprecated
@@ -53,23 +82,17 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel
     ) {
+        super(sem, exceptionLogLevel);
         this.dao = dao;
         this.keyGenerator = KeyFetcherAdaptHelper.toKeyGenerator(keyFetcher);
-
-        this.sem = sem;
-        this.exceptionLogLevel = exceptionLogLevel;
     }
 
     @Override
-    public void write(E entity) throws ServiceException {
-        try {
-            if (Objects.isNull(entity.getKey())) {
-                entity.setKey(keyGenerator.generate());
-            }
-            dao.write(entity);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("写入实体时发生异常", exceptionLogLevel, e, sem);
+    protected void doWrite(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey())) {
+            entity.setKey(keyGenerator.generate());
         }
+        dao.write(entity);
     }
 
     @Nonnull
@@ -99,24 +122,6 @@ public class DaoOnlyWriteService<K extends Key, E extends Entity<K>> implements 
     @Deprecated
     public void setKeyFetcher(@Nonnull KeyFetcher<K> keyFetcher) {
         this.keyGenerator = KeyFetcherAdaptHelper.toKeyGenerator(keyFetcher);
-    }
-
-    @Nonnull
-    public ServiceExceptionMapper getSem() {
-        return sem;
-    }
-
-    public void setSem(@Nonnull ServiceExceptionMapper sem) {
-        this.sem = sem;
-    }
-
-    @Nonnull
-    public LogLevel getExceptionLogLevel() {
-        return exceptionLogLevel;
-    }
-
-    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
-        this.exceptionLogLevel = exceptionLogLevel;
     }
 
     @Override
