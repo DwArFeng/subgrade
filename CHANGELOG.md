@@ -40,6 +40,7 @@
   - com.dwarfeng.subgrade.stack.service.CrudService。
   - com.dwarfeng.subgrade.stack.service.WriteService。
   - com.dwarfeng.subgrade.stack.service.EntireLookupService。
+  - com.dwarfeng.subgrade.stack.service.PresetLookupService。
 
 #### Bug修复
 
