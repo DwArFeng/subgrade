@@ -16,15 +16,18 @@ import java.util.List;
 public interface EntireLookupService<E extends Entity<?>> extends Service {
 
     /**
-     * 查询所有元素。
+     * 查询所有实体。
      *
-     * @return 带有分页信息的所有元素。
+     * @return 带有分页信息的所有实体。
      * @throws ServiceException 服务异常。
      */
     PagedData<E> lookup() throws ServiceException;
 
     /**
-     * 查询所有元素，并以列表的形式返回。
+     * 查询所有实体。
+     *
+     * <p>
+     * 查询所有实体，并以列表的形式返回。
      *
      * <p>
      * 在该接口的大量实践中发现，当数据量过大时，使用 {@link #lookup()} 方法查询会消耗过多的时间查询其中的数据总量，
@@ -32,7 +35,7 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
      * 增加特性应用场景下的查询效率。<br>
      * 该接口方法拥有默认实现，其效率与 {@link #lookup()} 相同，需要实现类重写，以满足到提高效率的需求。
      *
-     * @return 元素组成的列表。
+     * @return 实体组成的列表。
      * @throws ServiceException 服务异常。
      * @since 1.2.4
      */
@@ -41,7 +44,7 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
     }
 
     /**
-     * 查询分页元素。
+     * 查询分页实体。
      *
      * <p>
      * 在 1.5.0 版本中，增加了对每页行数为 0 的分页信息的支持，当每页行数为 0 时，仅查询数据总量，不返回数据，
@@ -112,7 +115,7 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
      *     </tr>
      *     <tr>
      *         <td>data</td>
-     *         <td>所有对象组成的列表或空列表</td>
+     *         <td>所有实体组成的列表或空列表</td>
      *         <td>当 currentPage 为 0 时，data 包含所有数据<br>当 currentPage 大于 0 时，data 为空列表。</td>
      *     </tr>
      * </table>
@@ -156,7 +159,7 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
      *     </tr>
      *     <tr>
      *         <td>data</td>
-     *         <td>所有对象组成的列表</td>
+     *         <td>所有实体组成的列表</td>
      *         <td></td>
      *     </tr>
      * </table>
@@ -166,14 +169,17 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
      * 记录警告日志的行为默认启用，可以通过设置系统参数 <code>-Dsubgrade.logPagingWarning=false</code> 来关闭。<br>
      * 所有系统参数的值均可以在 sdk 模块的 <code>com.dwarfeng.subgrade.sdk.SystemPropertyConstants</code> 类中找到。
      *
-     * @param pagingInfo 元素的分页信息。
-     * @return 带有分页信息的指定页上的元素。
+     * @param pagingInfo 实体的分页信息。
+     * @return 带有分页信息的指定页上的实体。
      * @throws ServiceException 服务异常。
      */
     PagedData<E> lookup(PagingInfo pagingInfo) throws ServiceException;
 
     /**
-     * 查询分页元素，并以列表的形式返回。
+     * 查询分页实体。
+     *
+     * <p>
+     * 查询分页实体，并以列表的形式返回。
      *
      * <p>
      * 在该接口的大量实践中发现，当数据量过大时，使用 {@link #lookup(PagingInfo)}
@@ -251,7 +257,7 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
      *     </tr>
      *     <tr>
      *         <td>data</td>
-     *         <td>所有对象组成的列表或空列表</td>
+     *         <td>所有实体组成的列表或空列表</td>
      *         <td>当 currentPage 为 0 时，data 包含所有数据<br>当 currentPage 大于 0 时，data 为空列表。</td>
      *     </tr>
      * </table>
@@ -295,7 +301,7 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
      *     </tr>
      *     <tr>
      *         <td>data</td>
-     *         <td>所有对象组成的列表</td>
+     *         <td>所有实体组成的列表</td>
      *         <td></td>
      *     </tr>
      * </table>
@@ -306,7 +312,7 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
      * 所有系统参数的值均可以在 sdk 模块的 <code>com.dwarfeng.subgrade.sdk.SystemPropertyConstants</code> 类中找到。
      *
      * @param pagingInfo 分页信息。
-     * @return 元素组成的列表。
+     * @return 实体组成的列表。
      * @throws ServiceException 服务异常。
      * @since 1.2.4
      */
@@ -315,12 +321,12 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
     }
 
     /**
-     * 查询数据访问层中的第一个元素。
+     * 查询首个实体。
      *
      * <p>
      * 当数据访问层中存在数据时，返回第一个数据；当数据访问层中不存在数据时，返回 null。
      *
-     * @return 数据访问层中的第一个对象，或者是 null。
+     * @return 数据访问层中的第一个实体，或者是 null。
      * @throws ServiceException 服务异常。
      * @since 1.2.8
      */
@@ -329,17 +335,17 @@ public interface EntireLookupService<E extends Entity<?>> extends Service {
     }
 
     /**
-     * 查询元素的总数量。
+     * 查询实体数量。
      *
      * <p>
-     * 在该接口的大量实践中发现，许多场景只需要获取元素的数量，而不需要获取元素列表。
+     * 在该接口的大量实践中发现，许多场景只需要获取实体的数量，而不需要获取实体列表。
      * 使用 {@link #lookup()} 或 {@link #lookup(PagingInfo)} 方法查询会造成不必要的性能浪费。<br>
      * 该方法可以直接返回数据总量，在部分场景下使用该方法可以提高查询的效率。
      *
      * <p>
      * 该接口方法拥有默认实现，其效率与 {@link #lookup(PagingInfo)} 相同，需要实现类重写，以满足到提高效率的需求。
      *
-     * @return 元素的数量。
+     * @return 实体的数量。
      * @throws ServiceException 服务异常。
      * @since 1.4.1
      */

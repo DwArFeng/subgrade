@@ -36,6 +36,7 @@
   - com.dwarfeng.subgrade.stack.service.BatchWriteService。
   - com.dwarfeng.subgrade.stack.service.CrudService。
   - com.dwarfeng.subgrade.stack.service.WriteService。
+  - com.dwarfeng.subgrade.stack.service.EntireLookupService。
 
 #### Bug修复
 
