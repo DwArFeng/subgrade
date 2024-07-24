@@ -1,15 +1,12 @@
 package com.dwarfeng.subgrade.impl.service;
 
 import com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil;
-import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -23,93 +20,84 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLookupService<E> {
+public class DaoOnlyPresetLookupService<E extends Entity<?>> extends AbstractPresetLookupService<E> {
 
     @Nonnull
     private PresetLookupDao<E> dao;
-    @Nonnull
-    private ServiceExceptionMapper sem;
-    @Nonnull
-    private LogLevel exceptionLogLevel;
 
+    /**
+     * 构造器方法。
+     *
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @param dao               数据访问层。
+     * @since 1.5.4
+     */
+    public DaoOnlyPresetLookupService(
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel,
+            @Nonnull PresetLookupDao<E> dao
+    ) {
+        super(sem, exceptionLogLevel);
+        this.dao = dao;
+    }
+
+    /**
+     * 构造器方法。
+     *
+     * <p>
+     * 由于在 1.5.4 后，该类的继承关系发生了变化，因此该构造器方法已经被废弃。<br>
+     * 请使用 {@link #DaoOnlyPresetLookupService(ServiceExceptionMapper, LogLevel, PresetLookupDao)}。<br>
+     * 新的构造器调整了参数顺序，使其更符合新的继承形式对应的参数顺序。
+     *
+     * @param dao               数据访问层。
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @see #DaoOnlyPresetLookupService(ServiceExceptionMapper, LogLevel, PresetLookupDao)
+     * @deprecated 使用 {@link #DaoOnlyPresetLookupService(ServiceExceptionMapper, LogLevel, PresetLookupDao)} 代替。
+     */
+    @Deprecated
     public DaoOnlyPresetLookupService(
             @Nonnull PresetLookupDao<E> dao,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel
     ) {
+        super(sem, exceptionLogLevel);
         this.dao = dao;
-        this.sem = sem;
-        this.exceptionLogLevel = exceptionLogLevel;
     }
 
     @Override
-    public PagedData<E> lookup(String preset, Object[] objs) throws ServiceException {
-        try {
-            return PagingUtil.pagedData(dao.lookup(preset, objs));
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected PagedData<E> doLookup(String preset, Object[] objs) throws Exception {
+        return PagingUtil.pagedData(dao.lookup(preset, objs));
     }
 
     @Override
-    public PagedData<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
-        try {
-            pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
-            return PagingUtil.pagedData(
-                    pagingInfo, dao.lookupCount(preset, objs), dao.lookup(preset, objs, pagingInfo)
-            );
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected PagedData<E> doLookup(String preset, Object[] objs, PagingInfo pagingInfo) throws Exception {
+        pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
+        return PagingUtil.pagedData(
+                pagingInfo, dao.lookupCount(preset, objs), dao.lookup(preset, objs, pagingInfo)
+        );
     }
 
-    /**
-     * @since 1.2.4
-     */
     @Override
-    public List<E> lookupAsList(String preset, Object[] objs) throws ServiceException {
-        try {
-            return dao.lookup(preset, objs);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected List<E> doLookupAsList(String preset, Object[] objs) throws Exception {
+        return dao.lookup(preset, objs);
     }
 
-    /**
-     * @since 1.2.4
-     */
     @Override
-    public List<E> lookupAsList(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
-        try {
-            pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
-            return dao.lookup(preset, objs, pagingInfo);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected List<E> doLookupAsList(String preset, Object[] objs, PagingInfo pagingInfo) throws Exception {
+        pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
+        return dao.lookup(preset, objs, pagingInfo);
     }
 
-    /**
-     * @since 1.2.8
-     */
     @Override
-    public E lookupFirst(String preset, Object[] objs) throws ServiceException {
-        try {
-            return dao.lookupFirst(preset, objs);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询预设实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected E doLookupFirst(String preset, Object[] objs) throws Exception {
+        return dao.lookupFirst(preset, objs);
     }
 
-    /**
-     * @since 1.4.1
-     */
     @Override
-    public int lookupCount(String preset, Object[] objs) throws ServiceException {
-        try {
-            return dao.lookupCount(preset, objs);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询预设实体数量时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected int doLookupCount(String preset, Object[] objs) throws Exception {
+        return dao.lookupCount(preset, objs);
     }
 
     @Nonnull
@@ -119,24 +107,6 @@ public class DaoOnlyPresetLookupService<E extends Entity<?>> implements PresetLo
 
     public void setDao(@Nonnull PresetLookupDao<E> dao) {
         this.dao = dao;
-    }
-
-    @Nonnull
-    public ServiceExceptionMapper getSem() {
-        return sem;
-    }
-
-    public void setSem(@Nonnull ServiceExceptionMapper sem) {
-        this.sem = sem;
-    }
-
-    @Nonnull
-    public LogLevel getExceptionLogLevel() {
-        return exceptionLogLevel;
-    }
-
-    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
-        this.exceptionLogLevel = exceptionLogLevel;
     }
 
     @Override
