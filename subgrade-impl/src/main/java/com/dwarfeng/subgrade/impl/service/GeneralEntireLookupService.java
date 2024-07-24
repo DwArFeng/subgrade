@@ -1,16 +1,13 @@
 package com.dwarfeng.subgrade.impl.service;
 
 import com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil;
-import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.cache.ListCache;
 import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -28,19 +25,57 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLookupService<E> {
+public class GeneralEntireLookupService<E extends Entity<?>> extends AbstractEntireLookupService<E> {
 
     @Nonnull
     private EntireLookupDao<E> dao;
+
     @Nonnull
     private ListCache<E> cache;
-    @Nonnull
-    private ServiceExceptionMapper sem;
-    @Nonnull
-    private LogLevel exceptionLogLevel;
+
     @Nonnegative
     private long cacheTimeout;
 
+    /**
+     * 构造器方法。
+     *
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @param dao               数据访问层。
+     * @param cache             列表缓存。
+     * @param cacheTimeout      缓存超时时间。
+     * @since 1.5.4
+     */
+    public GeneralEntireLookupService(
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel,
+            @Nonnull EntireLookupDao<E> dao,
+            @Nonnull ListCache<E> cache,
+            @Nonnegative long cacheTimeout
+    ) {
+        super(sem, exceptionLogLevel);
+        this.dao = dao;
+        this.cache = cache;
+        this.cacheTimeout = cacheTimeout;
+    }
+
+    /**
+     * 构造器方法。
+     *
+     * <p>
+     * 由于在 1.5.4 后，该类的继承关系发生了变化，因此该构造器方法已经被废弃。<br>
+     * 请使用 {@link #GeneralEntireLookupService(ServiceExceptionMapper, LogLevel, EntireLookupDao, ListCache, long)}。<br>
+     * 新的构造器调整了参数顺序，使其更符合新的继承形式对应的参数顺序。
+     *
+     * @param dao               数据访问层。
+     * @param cache             列表缓存。
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @param cacheTimeout      缓存超时时间。
+     * @see #GeneralEntireLookupService(ServiceExceptionMapper, LogLevel, EntireLookupDao, ListCache, long)
+     * @deprecated 使用 {@link #GeneralEntireLookupService(ServiceExceptionMapper, LogLevel, EntireLookupDao, ListCache, long)} 代替。
+     */
+    @Deprecated
     public GeneralEntireLookupService(
             @Nonnull EntireLookupDao<E> dao,
             @Nonnull ListCache<E> cache,
@@ -48,109 +83,72 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
             @Nonnull LogLevel exceptionLogLevel,
             @Nonnegative long cacheTimeout
     ) {
+        super(sem, exceptionLogLevel);
         this.dao = dao;
         this.cache = cache;
-        this.sem = sem;
-        this.exceptionLogLevel = exceptionLogLevel;
         this.cacheTimeout = cacheTimeout;
     }
 
     @Override
-    public PagedData<E> lookup() throws ServiceException {
-        try {
-            if (cache.exists()) {
-                return PagingUtil.pagedData(cache.get());
-            }
-            List<E> lookup = dao.lookup();
-            cache.set(lookup, cacheTimeout);
-            return PagingUtil.pagedData(lookup);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
+    protected PagedData<E> doLookup() throws Exception {
+        if (cache.exists()) {
+            return PagingUtil.pagedData(cache.get());
         }
+        List<E> lookup = dao.lookup();
+        cache.set(lookup, cacheTimeout);
+        return PagingUtil.pagedData(lookup);
     }
 
     @Override
-    public PagedData<E> lookup(PagingInfo pagingInfo) throws ServiceException {
-        try {
-            pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
-            if (cache.exists()) {
-                return PagingUtil.pagedData(pagingInfo, cache.size(), cache.get(pagingInfo));
-            }
-            List<E> lookup = dao.lookup();
-            cache.set(lookup, cacheTimeout);
+    protected PagedData<E> doLookup(PagingInfo pagingInfo) throws Exception {
+        pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
+        if (cache.exists()) {
             return PagingUtil.pagedData(pagingInfo, cache.size(), cache.get(pagingInfo));
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
+        List<E> lookup = dao.lookup();
+        cache.set(lookup, cacheTimeout);
+        return PagingUtil.pagedData(pagingInfo, cache.size(), cache.get(pagingInfo));
     }
 
-    /**
-     * @since 1.2.4
-     */
     @Override
-    public List<E> lookupAsList() throws ServiceException {
-        try {
-            if (cache.exists()) {
-                return cache.get();
-            }
-            List<E> lookup = dao.lookup();
-            cache.set(lookup, cacheTimeout);
-            return lookup;
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
+    protected List<E> doLookupAsList() throws Exception {
+        if (cache.exists()) {
+            return cache.get();
         }
+        List<E> lookup = dao.lookup();
+        cache.set(lookup, cacheTimeout);
+        return lookup;
     }
 
-    /**
-     * @since 1.2.4
-     */
     @Override
-    public List<E> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
-        try {
-            pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
-            if (cache.exists()) {
-                return cache.get(pagingInfo);
-            }
-            List<E> lookup = dao.lookup();
-            cache.set(lookup, cacheTimeout);
+    protected List<E> doLookupAsList(PagingInfo pagingInfo) throws Exception {
+        pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
+        if (cache.exists()) {
             return cache.get(pagingInfo);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
         }
+        List<E> lookup = dao.lookup();
+        cache.set(lookup, cacheTimeout);
+        return cache.get(pagingInfo);
     }
 
-    /**
-     * @since 1.2.8
-     */
     @Override
-    public E lookupFirst() throws ServiceException {
-        try {
-            if (cache.exists()) {
-                return cache.get(PagingInfo.FIRST_ONE).stream().findFirst().orElse(null);
-            }
-            List<E> lookup = dao.lookup();
-            cache.set(lookup, cacheTimeout);
-            return lookup.stream().findFirst().orElse(null);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
+    protected E doLookupFirst() throws Exception {
+        if (cache.exists()) {
+            return cache.get(PagingInfo.FIRST_ONE).stream().findFirst().orElse(null);
         }
+        List<E> lookup = dao.lookup();
+        cache.set(lookup, cacheTimeout);
+        return lookup.stream().findFirst().orElse(null);
     }
 
-    /**
-     * @since 1.4.1
-     */
     @Override
-    public int lookupCount() throws ServiceException {
-        try {
-            if (cache.exists()) {
-                return cache.get().size();
-            }
-            List<E> lookup = dao.lookup();
-            cache.set(lookup, cacheTimeout);
-            return lookup.size();
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体数量时发生异常", exceptionLogLevel, e, sem);
+    protected int doLookupCount() throws Exception {
+        if (cache.exists()) {
+            return cache.get().size();
         }
+        List<E> lookup = dao.lookup();
+        cache.set(lookup, cacheTimeout);
+        return lookup.size();
     }
 
     @Nonnull
@@ -171,24 +169,6 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
         this.cache = cache;
     }
 
-    @Nonnull
-    public ServiceExceptionMapper getSem() {
-        return sem;
-    }
-
-    public void setSem(@Nonnull ServiceExceptionMapper sem) {
-        this.sem = sem;
-    }
-
-    @Nonnull
-    public LogLevel getExceptionLogLevel() {
-        return exceptionLogLevel;
-    }
-
-    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
-        this.exceptionLogLevel = exceptionLogLevel;
-    }
-
     public long getCacheTimeout() {
         return cacheTimeout;
     }
@@ -202,9 +182,9 @@ public class GeneralEntireLookupService<E extends Entity<?>> implements EntireLo
         return "GeneralEntireLookupService{" +
                 "dao=" + dao +
                 ", cache=" + cache +
+                ", cacheTimeout=" + cacheTimeout +
                 ", sem=" + sem +
                 ", exceptionLogLevel=" + exceptionLogLevel +
-                ", cacheTimeout=" + cacheTimeout +
                 '}';
     }
 }

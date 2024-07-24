@@ -1,15 +1,12 @@
 package com.dwarfeng.subgrade.impl.service;
 
 import com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil;
-import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -26,91 +23,82 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.0.3-beta
  */
-public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLookupService<E> {
+public class DaoOnlyEntireLookupService<E extends Entity<?>> extends AbstractEntireLookupService<E> {
 
     @Nonnull
     private EntireLookupDao<E> dao;
-    @Nonnull
-    private ServiceExceptionMapper sem;
-    @Nonnull
-    private LogLevel exceptionLogLevel;
 
+    /**
+     * 构造器方法。
+     *
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @param dao               数据访问层。
+     * @since 1.5.4
+     */
+    public DaoOnlyEntireLookupService(
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel,
+            @Nonnull EntireLookupDao<E> dao
+    ) {
+        super(sem, exceptionLogLevel);
+        this.dao = dao;
+    }
+
+    /**
+     * 构造器方法。
+     *
+     * <p>
+     * 由于在 1.5.4 后，该类的继承关系发生了变化，因此该构造器方法已经被废弃。<br>
+     * 请使用 {@link #DaoOnlyEntireLookupService(ServiceExceptionMapper, LogLevel, EntireLookupDao)}。<br>
+     * 新的构造器调整了参数顺序，使其更符合新的继承形式对应的参数顺序。
+     *
+     * @param dao               数据访问层。
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @see #DaoOnlyEntireLookupService(ServiceExceptionMapper, LogLevel, EntireLookupDao)
+     * @deprecated 使用 {@link #DaoOnlyEntireLookupService(ServiceExceptionMapper, LogLevel, EntireLookupDao)} 代替。
+     */
+    @Deprecated
     public DaoOnlyEntireLookupService(
             @Nonnull EntireLookupDao<E> dao,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel
     ) {
+        super(sem, exceptionLogLevel);
         this.dao = dao;
-        this.sem = sem;
-        this.exceptionLogLevel = exceptionLogLevel;
     }
 
     @Override
-    public PagedData<E> lookup() throws ServiceException {
-        try {
-            return PagingUtil.pagedData(dao.lookup());
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected PagedData<E> doLookup() throws Exception {
+        return PagingUtil.pagedData(dao.lookup());
     }
 
     @Override
-    public PagedData<E> lookup(PagingInfo pagingInfo) throws ServiceException {
-        try {
-            pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
-            return PagingUtil.pagedData(pagingInfo, dao.lookupCount(), dao.lookup(pagingInfo));
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected PagedData<E> doLookup(PagingInfo pagingInfo) throws Exception {
+        pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
+        return PagingUtil.pagedData(pagingInfo, dao.lookupCount(), dao.lookup(pagingInfo));
     }
 
-    /**
-     * @since 1.2.4
-     */
     @Override
-    public List<E> lookupAsList() throws ServiceException {
-        try {
-            return dao.lookup();
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected List<E> doLookupAsList() throws Exception {
+        return dao.lookup();
     }
 
-    /**
-     * @since 1.2.4
-     */
     @Override
-    public List<E> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
-        try {
-            pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
-            return dao.lookup(pagingInfo);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected List<E> doLookupAsList(PagingInfo pagingInfo) throws Exception {
+        pagingInfo = PagingFixHelper.mayFixPagingInfo(pagingInfo);
+        return dao.lookup(pagingInfo);
     }
 
-    /**
-     * @since 1.2.8
-     */
     @Override
-    public E lookupFirst() throws ServiceException {
-        try {
-            return dao.lookupFirst();
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected E doLookupFirst() throws Exception {
+        return dao.lookupFirst();
     }
 
-    /**
-     * @since 1.4.1
-     */
     @Override
-    public int lookupCount() throws ServiceException {
-        try {
-            return dao.lookupCount();
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询全部实体数量时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected int doLookupCount() throws Exception {
+        return dao.lookupCount();
     }
 
     @Nonnull
@@ -120,24 +108,6 @@ public class DaoOnlyEntireLookupService<E extends Entity<?>> implements EntireLo
 
     public void setDao(@Nonnull EntireLookupDao<E> dao) {
         this.dao = dao;
-    }
-
-    @Nonnull
-    public ServiceExceptionMapper getSem() {
-        return sem;
-    }
-
-    public void setSem(@Nonnull ServiceExceptionMapper sem) {
-        this.sem = sem;
-    }
-
-    @Nonnull
-    public LogLevel getExceptionLogLevel() {
-        return exceptionLogLevel;
-    }
-
-    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
-        this.exceptionLogLevel = exceptionLogLevel;
     }
 
     @Override
