@@ -47,6 +47,8 @@
   - com.dwarfeng.subgrade.stack.service.WriteService。
   - com.dwarfeng.subgrade.stack.service.EntireLookupService。
   - com.dwarfeng.subgrade.stack.service.PresetLookupService。
+  - com.dwarfeng.subgrade.stack.service.RelationService。
+  - com.dwarfeng.subgrade.stack.service.BatchRelationService。
 
 #### Bug修复
 
