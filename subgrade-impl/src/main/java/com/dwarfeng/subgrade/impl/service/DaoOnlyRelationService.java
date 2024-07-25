@@ -1,12 +1,9 @@
 package com.dwarfeng.subgrade.impl.service;
 
-import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.RelationDao;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import com.dwarfeng.subgrade.stack.service.RelationService;
 
 import javax.annotation.Nonnull;
 
@@ -19,50 +16,65 @@ import javax.annotation.Nonnull;
  * @author DwArFeng
  * @since 0.2.3-beta
  */
-public class DaoOnlyRelationService<PK extends Key, CK extends Key> implements RelationService<PK, CK> {
+public class DaoOnlyRelationService<PK extends Key, CK extends Key> extends AbstractRelationService<PK, CK> {
 
     @Nonnull
     private RelationDao<PK, CK> dao;
-    @Nonnull
-    private ServiceExceptionMapper sem;
-    @Nonnull
-    private LogLevel exceptionLogLevel;
 
+    /**
+     * 构造器方法。
+     *
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @param dao               数据访问层。
+     * @since 1.5.4
+     */
+    public DaoOnlyRelationService(
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel,
+            @Nonnull RelationDao<PK, CK> dao
+    ) {
+        super(sem, exceptionLogLevel);
+        this.dao = dao;
+    }
+
+    /**
+     * 构造器方法。
+     *
+     * <p>
+     * 由于在 1.5.4 后，该类的继承关系发生了变化，因此该构造器方法已经被废弃。<br>
+     * 请使用 {@link #DaoOnlyRelationService(ServiceExceptionMapper, LogLevel, RelationDao)}。<br>
+     * 新的构造器调整了参数顺序，使其更符合新的继承形式对应的参数顺序。
+     *
+     * @param dao               数据访问层。
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @see #DaoOnlyRelationService(ServiceExceptionMapper, LogLevel, RelationDao)
+     * @deprecated 使用 {@link #DaoOnlyRelationService(ServiceExceptionMapper, LogLevel, RelationDao)} 代替。
+     */
+    @Deprecated
     public DaoOnlyRelationService(
             @Nonnull RelationDao<PK, CK> dao,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel
     ) {
+        super(sem, exceptionLogLevel);
         this.dao = dao;
-        this.sem = sem;
-        this.exceptionLogLevel = exceptionLogLevel;
     }
 
     @Override
-    public boolean existsRelation(PK pk, CK ck) throws ServiceException {
-        try {
-            return dao.existsRelation(pk, ck);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询实体关系是否存在时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected boolean doExistsRelation(PK pk, CK ck) throws Exception {
+        return dao.existsRelation(pk, ck);
     }
 
     @Override
-    public void addRelation(PK pk, CK ck) throws ServiceException {
-        try {
-            dao.addRelation(pk, ck);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("添加实体关系时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected void doAddRelation(PK pk, CK ck) throws Exception {
+        dao.addRelation(pk, ck);
     }
 
     @Override
-    public void deleteRelation(PK pk, CK ck) throws ServiceException {
-        try {
-            dao.deleteRelation(pk, ck);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("删除实体关系时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected void doDeleteRelation(PK pk, CK ck) throws Exception {
+        dao.deleteRelation(pk, ck);
     }
 
     @Nonnull
@@ -72,24 +84,6 @@ public class DaoOnlyRelationService<PK extends Key, CK extends Key> implements R
 
     public void setDao(@Nonnull RelationDao<PK, CK> dao) {
         this.dao = dao;
-    }
-
-    @Nonnull
-    public ServiceExceptionMapper getSem() {
-        return sem;
-    }
-
-    public void setSem(@Nonnull ServiceExceptionMapper sem) {
-        this.sem = sem;
-    }
-
-    @Nonnull
-    public LogLevel getExceptionLogLevel() {
-        return exceptionLogLevel;
-    }
-
-    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
-        this.exceptionLogLevel = exceptionLogLevel;
     }
 
     @Override

@@ -11,6 +11,8 @@
   - com.dwarfeng.subgrade.impl.service.AbstractPresetLookupService。
   - com.dwarfeng.subgrade.impl.service.AbstractBatchWriteService。
   - com.dwarfeng.subgrade.impl.service.AbstractWriteService。
+  - com.dwarfeng.subgrade.impl.service.AbstractBatchRelationService。
+  - com.dwarfeng.subgrade.impl.service.AbstractRelationService。
 
 - 优化部分服务的实现的继承关系。
   - com.dwarfeng.subgrade.impl.service.CustomBatchCrudService。
@@ -24,6 +26,8 @@
   - com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService。
   - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService。
   - com.dwarfeng.subgrade.impl.service.DaoOnlyWriteService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchRelationService。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyRelationService。
 
 - 优化部分接口及其实现的参数名称。
   - com.dwarfeng.subgrade.stack.service.BatchCrudService。

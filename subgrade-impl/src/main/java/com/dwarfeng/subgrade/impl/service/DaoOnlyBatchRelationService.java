@@ -1,12 +1,9 @@
 package com.dwarfeng.subgrade.impl.service;
 
-import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 import com.dwarfeng.subgrade.stack.dao.BatchRelationDao;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import com.dwarfeng.subgrade.stack.service.BatchRelationService;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -20,86 +17,85 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.2.4-beta
  */
-public class DaoOnlyBatchRelationService<PK extends Key, CK extends Key> implements BatchRelationService<PK, CK> {
+public class DaoOnlyBatchRelationService<PK extends Key, CK extends Key> extends AbstractBatchRelationService<PK, CK> {
 
     @Nonnull
     private BatchRelationDao<PK, CK> dao;
-    @Nonnull
-    private ServiceExceptionMapper sem;
-    @Nonnull
-    private LogLevel exceptionLogLevel;
 
+    /**
+     * 构造器方法。
+     *
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @param dao               数据访问层。
+     * @since 1.5.4
+     */
+    public DaoOnlyBatchRelationService(
+            @Nonnull ServiceExceptionMapper sem,
+            @Nonnull LogLevel exceptionLogLevel,
+            @Nonnull BatchRelationDao<PK, CK> dao
+    ) {
+        super(sem, exceptionLogLevel);
+        this.dao = dao;
+    }
+
+    /**
+     * 构造器方法。
+     *
+     * <p>
+     * 由于在 1.5.4 后，该类的继承关系发生了变化，因此该构造器方法已经被废弃。<br>
+     * 请使用 {@link #DaoOnlyBatchRelationService(ServiceExceptionMapper, LogLevel, BatchRelationDao)}。<br>
+     * 新的构造器调整了参数顺序，使其更符合新的继承形式对应的参数顺序。
+     *
+     * @param dao               数据访问层。
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @see #DaoOnlyBatchRelationService(ServiceExceptionMapper, LogLevel, BatchRelationDao)
+     * @deprecated 使用 {@link #DaoOnlyBatchRelationService(ServiceExceptionMapper, LogLevel, BatchRelationDao)} 代替。
+     */
+    @Deprecated
     public DaoOnlyBatchRelationService(
             @Nonnull BatchRelationDao<PK, CK> dao,
             @Nonnull ServiceExceptionMapper sem,
             @Nonnull LogLevel exceptionLogLevel
     ) {
+        super(sem, exceptionLogLevel);
         this.dao = dao;
-        this.sem = sem;
-        this.exceptionLogLevel = exceptionLogLevel;
     }
 
     @Override
-    public boolean existsAllRelations(PK pk, List<CK> cks) throws ServiceException {
-        try {
-            return dao.existsAllRelations(pk, cks);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询实体关系是否存在时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected boolean doExistsRelation(PK pk, CK ck) throws Exception {
+        return dao.existsRelation(pk, ck);
     }
 
     @Override
-    public boolean existsNonRelations(PK pk, List<CK> cks) throws ServiceException {
-        try {
-            return dao.existsNonRelations(pk, cks);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询实体关系是否存在时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected void doAddRelation(PK pk, CK ck) throws Exception {
+        dao.addRelation(pk, ck);
     }
 
     @Override
-    public void batchAddRelations(PK pk, List<CK> cks) throws ServiceException {
-        try {
-            dao.batchAddRelations(pk, cks);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("添加实体关系时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected void doDeleteRelation(PK pk, CK ck) throws Exception {
+        dao.deleteRelation(pk, ck);
     }
 
     @Override
-    public void batchDeleteRelations(PK pk, List<CK> cks) throws ServiceException {
-        try {
-            dao.batchDeleteRelations(pk, cks);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("删除实体关系时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected boolean doExistsAllRelations(PK pk, List<CK> cks) throws Exception {
+        return dao.existsAllRelations(pk, cks);
     }
 
     @Override
-    public boolean existsRelation(PK pk, CK ck) throws ServiceException {
-        try {
-            return dao.existsRelation(pk, ck);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("查询实体关系是否存在时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected boolean doExistsNonRelations(PK pk, List<CK> cks) throws Exception {
+        return dao.existsNonRelations(pk, cks);
     }
 
     @Override
-    public void addRelation(PK pk, CK ck) throws ServiceException {
-        try {
-            dao.addRelation(pk, ck);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("添加实体关系时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected void doBatchAddRelations(PK pk, List<CK> cks) throws Exception {
+        dao.batchAddRelations(pk, cks);
     }
 
     @Override
-    public void deleteRelation(PK pk, CK ck) throws ServiceException {
-        try {
-            dao.deleteRelation(pk, ck);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("删除实体关系时发生异常", exceptionLogLevel, e, sem);
-        }
+    protected void doBatchDeleteRelations(PK pk, List<CK> cks) throws Exception {
+        dao.batchDeleteRelations(pk, cks);
     }
 
     @Nonnull
@@ -111,28 +107,12 @@ public class DaoOnlyBatchRelationService<PK extends Key, CK extends Key> impleme
         this.dao = dao;
     }
 
-    @Nonnull
-    public ServiceExceptionMapper getSem() {
-        return sem;
-    }
-
-    public void setSem(@Nonnull ServiceExceptionMapper sem) {
-        this.sem = sem;
-    }
-
-    @Nonnull
-    public LogLevel getExceptionLogLevel() {
-        return exceptionLogLevel;
-    }
-
-    public void setExceptionLogLevel(@Nonnull LogLevel exceptionLogLevel) {
-        this.exceptionLogLevel = exceptionLogLevel;
-    }
-
     @Override
     public String toString() {
         return "DaoOnlyBatchRelationService{" +
                 "dao=" + dao +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
                 ", sem=" + sem +
                 ", exceptionLogLevel=" + exceptionLogLevel +
                 '}';
