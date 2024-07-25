@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 依赖升级。
+  - 升级 `netty` 依赖版本为 `4.1.108.Final` 以规避漏洞。
+
 - 增加部分服务的抽象实现。
   - com.dwarfeng.subgrade.impl.service.AbstractBatchCrudService。
   - com.dwarfeng.subgrade.impl.service.AbstractCrudService。
