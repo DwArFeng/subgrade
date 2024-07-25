@@ -125,7 +125,6 @@ public class GeneralBatchCrudService<K extends Key, E extends Entity<K>> extends
         this.cacheTimeout = cacheTimeout;
     }
 
-
     @Override
     protected boolean doExists(K key) throws Exception {
         return internalExists(key);

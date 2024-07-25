@@ -30,7 +30,6 @@ public abstract class AbstractBatchCrudService<K extends Key, E extends Entity<K
         this.exceptionLogLevel = exceptionLogLevel;
     }
 
-
     @Override
     public boolean exists(K key) throws ServiceException {
         try {

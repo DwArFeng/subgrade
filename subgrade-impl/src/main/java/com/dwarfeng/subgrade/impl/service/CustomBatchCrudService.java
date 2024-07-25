@@ -338,7 +338,6 @@ public class CustomBatchCrudService<K extends Key, E extends Entity<K>> extends 
         return internalBatchInsert(entities2Insert);
     }
 
-
     @Nonnull
     public BatchCrudOperation<K, E> getOperation() {
         return operation;

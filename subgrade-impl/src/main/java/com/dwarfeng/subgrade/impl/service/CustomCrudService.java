@@ -22,7 +22,6 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 0.2.1-beta
  */
-@SuppressWarnings("DuplicatedCode")
 public class CustomCrudService<K extends Key, E extends Entity<K>> extends AbstractCrudService<K, E> {
 
     @Nonnull
