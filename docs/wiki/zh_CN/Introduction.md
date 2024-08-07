@@ -1,4 +1,4 @@
-# Subgrade
+# Subgrade Introduction - Subgrade 简介
 
 此项目是作者的个人工具库，包含多种能大幅提高发开速度的通用工具库。
 
@@ -25,14 +25,14 @@
 
 ## 文档
 
-该项目的文档位于 [docs](./docs) 目录下，包括：
+该项目的文档位于 [docs](../../../docs) 目录下，包括：
 
 ### wiki
 
 wiki 为项目的开发人员为本项目编写的详细文档，包含不同语言的版本，主要入口为：
 
-1. [简介](./docs/wiki/zh_CN/Introduction.md) - 镜像的 `README.md`，与本文件内容基本相同。
-2. [目录](./docs/wiki/zh_CN/Contents.md) - 文档目录。
+1. [简介](./Introduction.md) - 镜像的 `README.md`，与本文件内容基本相同。
+2. [目录](./Contents.md) - 文档目录。
 
 ## 包含的工具
 
@@ -63,28 +63,28 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 ## 安装说明
 
 1. 下载源码。
-
+   
    使用git进行源码下载。
-
+   
    ```
    git clone git@github.com:DwArFeng/supgrade.git
    ```
-
+   
    对于中国用户，可以使用gitee进行高速下载。
-
+   
    ```
    git clone git@gitee.com:dwarfeng/supgrade.git
    ```
 
 2. 项目安装。
-
+   
    进入项目根目录，执行maven命令
    ```
    mvn clean source:jar install
    ```
 
 3. 项目部署。
-
+   
    该项目使用了 `2.8.2` 版本的 `maven-deploy-plugin`，如果您有属于自己的 maven 依赖仓库，
    可以在妥善配置 maven 的 `setting.xml` 之后，进入项目根目录，运行 maven 部署指令。
    ```
@@ -172,10 +172,10 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 - 低于 `1.2.7.a` 的版本，部分关键依赖有严重等级的 bug，使用可能会造成安全问题。
 
 - 低于 `1.2.3.b` 的版本包含以下已经发现的 bug，如果项目使用到了下述模块，则需要将 subgrade 版本升级至 `1.2.3.b`。
-  - `RedisBatchBaseDao` 执行 `batchDelete` 存在执行不成功或行为异常的 bug。
+   - `RedisBatchBaseDao` 执行 `batchDelete` 存在执行不成功或行为异常的 bug。
 
 - 低于 `1.1.8.a` 的版本包含以下已经发现的 bug，如果项目使用到了下述模块，则需要将 subgrade 版本升级至 `1.1.8.a`。
-  - `com.dwarfeng.subgrade.stack.service.CrudService.get` 部分实现当实体不存在时抛出意料之外的异常的 bug。
+   - `com.dwarfeng.subgrade.stack.service.CrudService.get` 部分实现当实体不存在时抛出意料之外的异常的 bug。
 
 - 对于任何使用 subgrade 旧版本的项目，请酌情将 subgrade 版本升级至不低于 `1.2.3.b`。
 
