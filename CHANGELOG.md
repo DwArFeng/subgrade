@@ -8,7 +8,11 @@
 
 #### Bug修复
 
-- (无)
+- 修正部分文档注释。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService。
+
+- 添加部分类中缺失的构造器方法。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService。
 
 #### 功能移除
 
