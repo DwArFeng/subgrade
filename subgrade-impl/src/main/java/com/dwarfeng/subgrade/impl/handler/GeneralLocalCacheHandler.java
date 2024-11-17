@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -125,7 +122,7 @@ public class GeneralLocalCacheHandler<K, V> implements LocalCacheHandler<K, V> {
     public boolean remove(K key) {
         lock.writeLock().lock();
         try {
-            boolean flag = dataMap.keySet().remove(key);
+            boolean flag = Objects.nonNull(dataMap.remove(key));
             flag |= notExistsKeys.remove(key);
 
             // 记录日志。

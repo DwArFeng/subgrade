@@ -31,8 +31,13 @@ public class PermissionRequiredAdvisor {
 
     private final Logger LOGGER = LoggerFactory.getLogger(PermissionRequiredAdvisor.class);
 
+    // 为了与旧代码兼容，使用字段注入，忽略相关警告。
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private PermissionHandler permissionHandler;
+
+    // 为了与旧代码兼容，使用字段注入，忽略相关警告。
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private PermissionRequiredAopManager manager;
 
