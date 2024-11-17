@@ -156,6 +156,7 @@ public final class ServiceExceptionCodes {
         DATABASE_FAILED.setCode(offset(100));
         NOT_IMPLEMENTED_YET.setCode(offset(110));
         GENERATE_FAILED.setCode(offset(120));
+        PAGING_FAILED.setCode(offset(130));
     }
 
     private ServiceExceptionCodes() {
