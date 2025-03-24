@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh_CN/VersionBlacklist.md。
+
 - 依赖升级。
   - 升级 `kafka` 依赖版本为 `3.9.0` 以规避漏洞。
   - 升级 `hibernate-validator` 依赖版本为 `6.2.5.Final` 以规避漏洞。
