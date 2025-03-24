@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- 依赖升级。
+  - 升级 `kafka` 依赖版本为 `3.9.0` 以规避漏洞。
+  - 升级 `hibernate-validator` 依赖版本为 `6.2.5.Final` 以规避漏洞。
 
 #### Bug修复
 
@@ -1273,7 +1275,7 @@
 #### 功能移除
 
 - ~~删除（重命名）com.dwarfeng.subgrade.stack.dao.ConstraintLookupDao~~
-  
+
   该在创建之时已经做出注释警告用户不要使用，因此该类的删除不会造成过度的不兼容。
 
 ---
