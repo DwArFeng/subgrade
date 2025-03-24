@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- 优化部分文档中的内容。
+  - README.md。
+  - docs/wiki/zh_CN/Introduction.md。
+
 - Wiki 编写。
   - docs/wiki/zh_CN/VersionBlacklist.md。
 
