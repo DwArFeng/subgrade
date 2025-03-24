@@ -54,9 +54,8 @@ public class RedisSingleObjectDao<K extends Key, E extends Entity<K>, JE extends
     }
 
     private boolean internalExists() {
-        Boolean unboxedResult = template.hasKey(formatter.format(key));
-        // 拆箱。
-        return unboxedResult != null && unboxedResult;
+        // 获得装箱后的结果，拆箱并返回。
+        return template.hasKey(formatter.format(key));
     }
 
     @Override

@@ -44,10 +44,8 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
     @Override
     public boolean exists() throws CacheException {
         try {
-            // 获得装箱后的结果。
-            Boolean result = template.hasKey(key);
-            // 拆箱并返回。
-            return result != null && result;
+            // 获得装箱后的结果，拆箱并返回。
+            return template.hasKey(key);
         } catch (Exception e) {
             throw new CacheException(e);
         }

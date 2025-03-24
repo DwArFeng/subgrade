@@ -54,10 +54,8 @@ public class RedisSingleObjectCache<K extends Key, E extends Entity<K>, JE exten
     }
 
     private boolean internalExists() {
-        // 获得装箱结果。
-        Boolean result = template.hasKey(formatter.format(key));
-        // 拆箱并返回。
-        return result != null && result;
+        // 获得装箱后的结果，拆箱并返回。
+        return template.hasKey(formatter.format(key));
     }
 
     @Override

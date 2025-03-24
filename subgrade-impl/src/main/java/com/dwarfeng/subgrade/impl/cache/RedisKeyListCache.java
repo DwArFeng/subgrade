@@ -47,10 +47,8 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
     @Override
     public boolean exists(K key) throws CacheException {
         try {
-            // 获得装箱后的结果。
-            Boolean result = template.hasKey(formatKey(key));
-            // 拆箱并返回。
-            return result != null && result;
+            // 获得装箱后的结果，拆箱并返回。
+            return template.hasKey(formatKey(key));
         } catch (Exception e) {
             throw new CacheException(e);
         }
@@ -196,9 +194,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
     @Override
     public void clear() throws CacheException {
         try {
-            Set<String> keys = Optional.ofNullable(
-                    template.keys(formatter.generalFormat())
-            ).orElse(Collections.emptySet());
+            Set<String> keys = Optional.of(template.keys(formatter.generalFormat())).orElse(Collections.emptySet());
             template.delete(keys);
         } catch (Exception e) {
             throw new CacheException(e);

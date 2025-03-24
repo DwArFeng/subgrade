@@ -79,7 +79,7 @@ public class TimeBasedSerialCodeKeyGenerator implements KeyGenerator<StringIdKey
             Date currentDate = new Date();
             String currentTimeKey = keyPrefix + (currentDate.getTime() / indexResetPeriod);
             Long currentIndex;
-            boolean hasKey = Optional.ofNullable(template.hasKey(currentTimeKey)).orElse(false);
+            boolean hasKey = Optional.of(template.hasKey(currentTimeKey)).orElse(false);
             if (!hasKey) {
                 template.opsForValue().set(
                         currentTimeKey,
