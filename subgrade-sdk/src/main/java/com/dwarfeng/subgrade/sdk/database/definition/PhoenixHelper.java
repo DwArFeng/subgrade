@@ -341,7 +341,7 @@ public class PhoenixHelper {
      * <a href = http://phoenix.incubator.apache.org/secondary_indexing.html>
      * http://phoenix.incubator.apache.org/secondary_indexing.html</a>
      */
-    @SuppressWarnings("SpellCheckingInspection")
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     public static void setTableImmutableRows(@Nonnull TableDefinition tableDefinition, Boolean val) {
         tableDefinition.putProperty(CUSTOM_IMMUTABLE_ROWS, val);
     }
@@ -648,7 +648,7 @@ public class PhoenixHelper {
      * <a href = http://phoenix.incubator.apache.org/secondary_indexing.html>
      * http://phoenix.incubator.apache.org/secondary_indexing.html</a>
      */
-    @SuppressWarnings("SpellCheckingInspection")
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     public static void setIndexImmutableRows(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);

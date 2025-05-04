@@ -15,16 +15,15 @@ public final class ServiceExceptionCodes {
     /**
      * 未定义错误代码，代表未定义的错误。
      */
-    public static final ServiceException.Code UNDEFINED =
-            new ServiceException.Code(offset(1), "undefined");
+    public static final ServiceException.Code UNDEFINED = new ServiceException.Code(offset(1), "undefined");
 
     /**
      * 未定义错误代码，代表未定义的错误。
      *
-     * @deprecated 该常量由于拼写错误而被废弃，请使用 {@link #UNDEFINED}。
      * @see #UNDEFINED
+     * @deprecated 该常量由于拼写错误而被废弃，请使用 {@link #UNDEFINED}。
      */
-    @SuppressWarnings("SpellCheckingInspection")
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     @Deprecated
     public static final ServiceException.Code UNDEFINE = UNDEFINED;
 
