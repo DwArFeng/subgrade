@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh_CN/InstallBySourceCode.md。
+  - docs/wiki/zh_CN/UseWithMaven.md。
+
 - 依赖升级。
   - 升级 `netty` 依赖版本为 `4.1.119.Final` 以规避漏洞。
 
