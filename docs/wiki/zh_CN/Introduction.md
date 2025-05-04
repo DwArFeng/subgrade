@@ -62,28 +62,28 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 ## 安装说明
 
 1. 下载源码。
-   
-   使用git进行源码下载。
-   
-   ```
+
+   使用 git 进行源码下载。
+
+   ```shell
    git clone git@github.com:DwArFeng/supgrade.git
    ```
-   
-   对于中国用户，可以使用gitee进行高速下载。
-   
-   ```
+
+   对于中国用户，可以使用 gitee 进行高速下载。
+
+   ```shell
    git clone git@gitee.com:dwarfeng/supgrade.git
    ```
 
 2. 项目安装。
-   
+
    进入项目根目录，执行maven命令
    ```
    mvn clean source:jar install
    ```
 
 3. 项目部署。
-   
+
    该项目使用了 `2.8.2` 版本的 `maven-deploy-plugin`，如果您有属于自己的 maven 依赖仓库，
    可以在妥善配置 maven 的 `setting.xml` 之后，进入项目根目录，运行 maven 部署指令。
    ```
@@ -111,56 +111,59 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 #### subgrade-stack
 
 ```xml
+
 <dependency>
-  <groupId>com.dwarfeng</groupId>
-  <artifactId>subgrade-stack</artifactId>
-  <version>${subgrade.version}</version>
+    <groupId>com.dwarfeng</groupId>
+    <artifactId>subgrade-stack</artifactId>
+    <version>${subgrade.version}</version>
 </dependency>
 ```
 
 #### subgrade-sdk
 
 ```xml
+
 <dependency>
-  <groupId>com.dwarfeng</groupId>
-  <artifactId>subgrade-sdk</artifactId>
-  <version>${subgrade.version}</version>
-  <exclusions>
-    <exclusion>
-      <artifactId>dozer</artifactId>
-      <groupId>net.sf.dozer</groupId>
-    </exclusion>
-    <exclusion>
-      <artifactId>dozer-spring</artifactId>
-      <groupId>net.sf.dozer</groupId>
-    </exclusion>
-  </exclusions>
+    <groupId>com.dwarfeng</groupId>
+    <artifactId>subgrade-sdk</artifactId>
+    <version>${subgrade.version}</version>
+    <exclusions>
+        <exclusion>
+            <artifactId>dozer</artifactId>
+            <groupId>net.sf.dozer</groupId>
+        </exclusion>
+        <exclusion>
+            <artifactId>dozer-spring</artifactId>
+            <groupId>net.sf.dozer</groupId>
+        </exclusion>
+    </exclusions>
 </dependency>
 ```
 
 #### subgrade-impl
 
 ```xml
+
 <dependency>
-  <groupId>com.dwarfeng</groupId>
-  <artifactId>subgrade-impl</artifactId>
-  <version>${subgrade.version}</version>
-  <exclusions>
-    <exclusion>
-      <artifactId>dozer</artifactId>
-      <groupId>net.sf.dozer</groupId>
-    </exclusion>
-    <exclusion>
-      <artifactId>dozer-spring</artifactId>
-      <groupId>net.sf.dozer</groupId>
-    </exclusion>
-  </exclusions>
+    <groupId>com.dwarfeng</groupId>
+    <artifactId>subgrade-impl</artifactId>
+    <version>${subgrade.version}</version>
+    <exclusions>
+        <exclusion>
+            <artifactId>dozer</artifactId>
+            <groupId>net.sf.dozer</groupId>
+        </exclusion>
+        <exclusion>
+            <artifactId>dozer-spring</artifactId>
+            <groupId>net.sf.dozer</groupId>
+        </exclusion>
+    </exclusions>
 </dependency>
 ```
 
 ## 推荐使用版本
 
-- 对于任何的新项目，推荐使用不低于 `1.5.6.a` 的版本。
+- 对于任何的新项目，推荐使用不低于 `1.5.7.a` 的版本。
 
 - 对于使用 `WriteService` 或 `BatchWriteService` 的项目，请勿使用 `1.5.4.a` `1.5.5.a` 版本。
 

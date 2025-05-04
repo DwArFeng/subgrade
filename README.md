@@ -63,15 +63,15 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 1. 下载源码。
 
-   使用git进行源码下载。
+   使用 git 进行源码下载。
 
-   ```
+   ```shell
    git clone git@github.com:DwArFeng/supgrade.git
    ```
 
-   对于中国用户，可以使用gitee进行高速下载。
+   对于中国用户，可以使用 gitee 进行高速下载。
 
-   ```
+   ```shell
    git clone git@gitee.com:dwarfeng/supgrade.git
    ```
 
@@ -111,50 +111,53 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 #### subgrade-stack
 
 ```xml
+
 <dependency>
-  <groupId>com.dwarfeng</groupId>
-  <artifactId>subgrade-stack</artifactId>
-  <version>${subgrade.version}</version>
+    <groupId>com.dwarfeng</groupId>
+    <artifactId>subgrade-stack</artifactId>
+    <version>${subgrade.version}</version>
 </dependency>
 ```
 
 #### subgrade-sdk
 
 ```xml
+
 <dependency>
-  <groupId>com.dwarfeng</groupId>
-  <artifactId>subgrade-sdk</artifactId>
-  <version>${subgrade.version}</version>
-  <exclusions>
-    <exclusion>
-      <artifactId>dozer</artifactId>
-      <groupId>net.sf.dozer</groupId>
-    </exclusion>
-    <exclusion>
-      <artifactId>dozer-spring</artifactId>
-      <groupId>net.sf.dozer</groupId>
-    </exclusion>
-  </exclusions>
+    <groupId>com.dwarfeng</groupId>
+    <artifactId>subgrade-sdk</artifactId>
+    <version>${subgrade.version}</version>
+    <exclusions>
+        <exclusion>
+            <artifactId>dozer</artifactId>
+            <groupId>net.sf.dozer</groupId>
+        </exclusion>
+        <exclusion>
+            <artifactId>dozer-spring</artifactId>
+            <groupId>net.sf.dozer</groupId>
+        </exclusion>
+    </exclusions>
 </dependency>
 ```
 
 #### subgrade-impl
 
 ```xml
+
 <dependency>
-  <groupId>com.dwarfeng</groupId>
-  <artifactId>subgrade-impl</artifactId>
-  <version>${subgrade.version}</version>
-  <exclusions>
-    <exclusion>
-      <artifactId>dozer</artifactId>
-      <groupId>net.sf.dozer</groupId>
-    </exclusion>
-    <exclusion>
-      <artifactId>dozer-spring</artifactId>
-      <groupId>net.sf.dozer</groupId>
-    </exclusion>
-  </exclusions>
+    <groupId>com.dwarfeng</groupId>
+    <artifactId>subgrade-impl</artifactId>
+    <version>${subgrade.version}</version>
+    <exclusions>
+        <exclusion>
+            <artifactId>dozer</artifactId>
+            <groupId>net.sf.dozer</groupId>
+        </exclusion>
+        <exclusion>
+            <artifactId>dozer-spring</artifactId>
+            <groupId>net.sf.dozer</groupId>
+        </exclusion>
+    </exclusions>
 </dependency>
 ```
 
@@ -171,10 +174,10 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 - 低于 `1.2.7.a` 的版本，部分关键依赖有严重等级的 bug，使用可能会造成安全问题。
 
 - 低于 `1.2.3.b` 的版本包含以下已经发现的 bug，如果项目使用到了下述模块，则需要将 subgrade 版本升级至 `1.2.3.b`。
-  - `RedisBatchBaseDao` 执行 `batchDelete` 存在执行不成功或行为异常的 bug。
+   - `RedisBatchBaseDao` 执行 `batchDelete` 存在执行不成功或行为异常的 bug。
 
 - 低于 `1.1.8.a` 的版本包含以下已经发现的 bug，如果项目使用到了下述模块，则需要将 subgrade 版本升级至 `1.1.8.a`。
-  - `com.dwarfeng.subgrade.stack.service.CrudService.get` 部分实现当实体不存在时抛出意料之外的异常的 bug。
+   - `com.dwarfeng.subgrade.stack.service.CrudService.get` 部分实现当实体不存在时抛出意料之外的异常的 bug。
 
 - 对于任何使用 subgrade 旧版本的项目，请酌情将 subgrade 版本升级至不低于 `1.2.3.b`。
 
