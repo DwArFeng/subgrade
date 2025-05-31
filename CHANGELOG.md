@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh_CN/DataAccessBasics.md。
+
 - 依赖升级。
   - 升级 `commons-beanutils` 依赖版本为 `1.11.0` 以规避漏洞。
 
