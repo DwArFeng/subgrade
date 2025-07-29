@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 优化部分文档中的内容。
+  - docs/wiki/zh_CN/Contents.md。
+  - docs/wiki/zh_CN/DataAccessBasics.md。
+
 - 优化部分异常代码的 `tip`。
   - com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.KEY_FETCH_FAILED。
 

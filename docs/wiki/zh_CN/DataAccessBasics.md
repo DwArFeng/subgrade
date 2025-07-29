@@ -1,4 +1,4 @@
-# Data Access Basics - 数据访问机制基础
+# Data Access Basics - 数据访问基础
 
 ## 综述
 

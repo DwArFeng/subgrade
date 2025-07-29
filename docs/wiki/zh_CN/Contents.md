@@ -17,8 +17,8 @@
 
 - [Version Blacklist](./VersionBlacklist.md) - 版本黑名单，列出了本项目的版本黑名单，请注意避免使用这些版本。
 
-## 机制
+## 功能
 
 ### 数据访问
 
-- [Data Access Basics](./DataAccessBasics.md) - 数据访问机制基础，说明了本项目的数据访问机制基础功能以及接口。
+- [Data Access Basics](./DataAccessBasics.md) - 数据访问基础，说明了本项目的数据访问基础功能以及接口。
