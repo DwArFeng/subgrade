@@ -1,24 +1,24 @@
 # ChangeLog
 
-### Release_1.5.11_20250729_build_A
+## Release_1.5.11_20250729_build_A
 
-#### 功能构建
-
-- (无)
-
-#### Bug修复
+### 功能构建
 
 - (无)
 
-#### 功能移除
+### Bug 修复
+
+- (无)
+
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.10_20250531_build_A
+## Release_1.5.10_20250531_build_A
 
-#### 功能构建
+### 功能构建
 
 - Wiki 编写。
   - docs/wiki/zh_CN/DataAccessBasics.md。
@@ -26,19 +26,19 @@
 - 依赖升级。
   - 升级 `commons-beanutils` 依赖版本为 `1.11.0` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.9_20250504_build_A
+## Release_1.5.9_20250504_build_A
 
-#### 功能构建
+### 功能构建
 
 - 优化部分文档中的内容。
   - README.md。
@@ -51,19 +51,19 @@
 - 依赖升级。
   - 升级 `netty` 依赖版本为 `4.1.119.Final` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.8_20250324_build_A
+## Release_1.5.8_20250324_build_A
 
-#### 功能构建
+### 功能构建
 
 - 优化部分文档中的内容。
   - README.md。
@@ -76,39 +76,39 @@
   - 升级 `kafka` 依赖版本为 `3.9.0` 以规避漏洞。
   - 升级 `hibernate-validator` 依赖版本为 `6.2.5.Final` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.7_20241117_build_A
+## Release_1.5.7_20241117_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `spring` 依赖版本为 `5.3.39` 以规避漏洞。
   - 升级 `netty` 依赖版本为 `4.1.115.Final` 以规避漏洞。
   - 升级 `zookeeper` 依赖版本为 `3.9.3` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - 修复服务异常代号的 bug。
   - 修复 `ServiceExceptionCodes` 设置服务异常代号的偏移量时，部分服务异常代号中的代码值未更新的的 bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.6_20240807_build_A
+## Release_1.5.6_20240807_build_A
 
-#### 功能构建
+### 功能构建
 
 - 更新 `README.md`。
 
@@ -119,7 +119,7 @@
   - docs/wiki/zh_CN/Contents.md。
   - docs/wiki/zh_CN/Introduction.md。
 
-#### Bug修复
+### Bug 修复
 
 - 修正部分文档注释。
   - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService。
@@ -127,32 +127,32 @@
 - 添加部分类中缺失的构造器方法。
   - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.5_20240730_build_A
+## Release_1.5.5_20240730_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `spring` 依赖版本为 `5.3.37` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.4_20240725_build_A
+## Release_1.5.4_20240725_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `netty` 依赖版本为 `4.1.108.Final` 以规避漏洞。
@@ -207,20 +207,20 @@
   - com.dwarfeng.subgrade.stack.service.RelationService。
   - com.dwarfeng.subgrade.stack.service.BatchRelationService。
 
-#### Bug修复
+### Bug 修复
 
 - 过期部分结构中命名不规范的方法，并提供命名规范的方法。
   - com.dwarfeng.subgrade.stack.service.BatchCrudService.batchInsertIfExists。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.3_20240503_build_A
+## Release_1.5.3_20240503_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `slf4j` 依赖版本为 `1.7.36` 以规避漏洞。
@@ -228,22 +228,22 @@
 - 行为分析优化。
   - 优化了参数或返回值是数组的情况下，行为分析的日志输出格式。
 
-#### Bug修复
+### Bug 修复
 
 - 修复部分 AOP Advisor 优先级不合理的 bug。
   - com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyseAdvisor。
 
 - 修复 `CHANGELOG.md` 中早前版本中能够引起歧义的错误描述。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.2_20240413_build_A
+## Release_1.5.2_20240413_build_A
 
-#### 功能构建
+### 功能构建
 
 - 行为分析优化。
   - 优化行为分析的日志输出格式，使输出信息更加全面，且更加规范。
@@ -257,38 +257,38 @@
   - 对于启用/停止项目某项功能的系统属性，统一解析为 `boolean` 类型进行判断，而不只是判断该属性是否存在。
   - 优化部分系统属性的键名。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.1_20240408_build_A
+## Release_1.5.1_20240408_build_A
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 修复部分 `BatchCrudService` 在使用废弃的构造器方法实例化后部分方法无法正常工作的 bug。
   - com.dwarfeng.subgrade.impl.service.CustomBatchCrudService。
   - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchCrudService。
   - com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.5.0_20240309_build_A
+## Release_1.5.0_20240309_build_A
 
-#### 功能构建
+### 功能构建
 
 - 新增分页查询特性。
   - 进一步明确了分页查询时，每页行数为 0 的行为。
@@ -328,20 +328,20 @@
 - 为适配新增的分页查询特性，增加新异常，并分配异常代码。
   - com.dwarfeng.subgrade.stack.exception.PagingException。
 
-#### Bug修复
+### Bug 修复
 
 - 修复部分类实现 `Serializable` 的类没有 `serialVersionUID` 静态字段的问题。
   - com.dwarfeng.subgrade.sdk.hibernate.criteria.NoOrderDetachedCriteria。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.4.8_20240123_build_B
+## Release_1.4.8_20240123_build_B
 
-#### 功能构建
+### 功能构建
 
 - 部分类代码格式优化。
   - com.dwarfeng.subgrade.impl.dao.HibernateAccelerableHqlPresetLookupDao。
@@ -350,20 +350,20 @@
   - com.dwarfeng.subgrade.impl.dao.HibernateDaoFactory。
   - com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao。
 
-#### Bug修复
+### Bug 修复
 
 - 修复部分数据访问层的错误代码。
   - com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.4.8_20240123_build_A
+## Release_1.4.8_20240123_build_A
 
-#### 功能构建
+### 功能构建
 
 - 优化 Hibernate Dao，使部分实现类的计数查询不生成 ORDER BY 语句，提高查询效率。
   - com.dwarfeng.subgrade.impl.dao.HibernateAccelerableHqlPresetLookupDao。
@@ -372,19 +372,19 @@
   - com.dwarfeng.subgrade.impl.dao.HibernateHqlPresetLookupDao。
   - com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.4.7_20231226_build_A
+## Release_1.4.7_20231226_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `spring` 依赖版本为 `5.3.31` 以规避漏洞。
@@ -394,19 +394,19 @@
   - 废弃 ColumnTypes 类。
   - 增加 MySQL8ColumnTypes 类。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.4.6_20231225_build_A
+## Release_1.4.6_20231225_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `kafka` 依赖版本为 `3.6.1` 以规避漏洞。
@@ -414,19 +414,19 @@
   - 升级 `netty` 依赖版本为 `4.1.104.Final` 以规避漏洞。
   - 升级 `zookeeper` 依赖版本为 `3.7.2` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.4.5_20230909_build_A
+## Release_1.4.5_20230909_build_A
 
-#### 功能构建
+### 功能构建
 
 - 优化代码格式。
   - com.dwarfeng.subgrade.impl.service.*。
@@ -438,19 +438,19 @@
   - 过时 com.dwarfeng.subgrade.stack.bean.key.KeyFetcher 接口。
   - 使用新增接口替换工程内部的过时接口。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.4.4_20230902_build_A
+## Release_1.4.4_20230902_build_A
 
-#### 功能构建
+### 功能构建
 
 - 优化处理器异常的处理工具。
   - 新增 `HandlerExceptionHelper` 帮助类，在其中提供处理器异常的工具方法。
@@ -460,19 +460,19 @@
   - 在 `ServiceExceptionHelper` 中新增服务异常的工具方法。
   - 过期 `ServiceExceptionHelper` 中不规范的方法，并使用新方法替换工程内的调用。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.4.3_20230901_build_A
+## Release_1.4.3_20230901_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `spring-kafka` 依赖版本为 `2.9.11` 以规避漏洞。
@@ -483,19 +483,19 @@
   - com.dwarfeng.subgrade.impl.handler.GeneralOnlineHandler。
   - com.dwarfeng.subgrade.impl.handler.GeneralStartableHandler。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.4.2_20230807_build_A
+## Release_1.4.2_20230807_build_A
 
-#### 功能构建
+### 功能构建
 
 - 增加数据访问层实现。
   - com.dwarfeng.subgrade.impl.dao.HibernateHqlPresetLookupDao。
@@ -548,37 +548,37 @@
 - 依赖升级。
   - 升级 `guava` 依赖版本为 `32.0.1-jre` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - 修复 HibernateAccelerablePresetLookupDao.lookupFirst 方法的 bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.4.1_20230729_build_A
+## Release_1.4.1_20230729_build_A
 
-#### 功能构建
+### 功能构建
 
 - 增加接口方法及其实现。
   - com.dwarfeng.subgrade.stack.service.EntireLookupService.lookupCount。
   - com.dwarfeng.subgrade.stack.service.PresetLookupService.lookupCount。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.4.0_20230509_build_A
+## Release_1.4.0_20230509_build_A
 
-#### 功能构建
+### 功能构建
 
 - 优化 ServiceExceptionCodes 类。
   - 增加异常代码 ServiceExceptionCodes.NOT_IMPLEMENTED_YET。
@@ -588,54 +588,54 @@
   - 强化 LoginRequiredAdvisor 调度逻辑。
   - 强化 PermissionRequiredAdvisor 调度逻辑（**不兼容更新**）。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.3.3_20230420_build_A
+## Release_1.3.3_20230420_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `spring` 依赖版本为 `5.3.27` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.3.2_20230327_build_A
+## Release_1.3.2_20230327_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `spring` 依赖版本为 `5.3.26` 以规避漏洞。
   - 升级 `snakeyaml` 依赖版本为 `2.0` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.3.1_20230310_build_A
+## Release_1.3.1_20230310_build_A
 
-#### 功能构建
+### 功能构建
 
 - 放宽 LocalCacheHandler 的泛型约束。
 
@@ -646,19 +646,19 @@
   - 升级 `netty` 依赖版本为 `4.1.86.Final` 以规避漏洞。
   - 升级 `dubbo` 依赖版本为 `2.7.21` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.3.0_20221129_build_A
+## Release_1.3.0_20221129_build_A
 
-#### 功能构建
+### 功能构建
 
 - `README.md` 优化。
   - 重新排版。
@@ -678,19 +678,19 @@
   - 更改 `dozer` 依赖 `scope` 类型为 `provided`, 停止默认引入。
   - 更改 `dozer-spring` 依赖 `scope` 类型为 `provided`, 停止默认引入。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.14_20221120_build_A
+## Release_1.2.14_20221120_build_A
 
-#### 功能构建
+### 功能构建
 
 - 增加依赖。
   - 增加依赖 `jsr305` 以规避依赖冲突，版本为 `3.0.2`。
@@ -711,11 +711,11 @@
   - 升级 `dutil` 依赖版本为 `beta-0.3.2.a` 以规避漏洞。
   - 升级 `aspectj` 依赖版本为 `1.9.7` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - 删除不需要的依赖。
   - 删除 `el` 依赖。
@@ -723,26 +723,26 @@
 
 ---
 
-### Release_1.2.13_20221025_build_B
+## Release_1.2.13_20221025_build_B
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `dubbo` 依赖版本为 `2.7.18` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.13_20221025_build_A
+## Release_1.2.13_20221025_build_A
 
-#### 功能构建
+### 功能构建
 
 - 优化部分代码的文档注释。
 
@@ -758,21 +758,21 @@
   - com.dwarfeng.subgrade.sdk.bean.key.FastJsonUuidKey。
   - com.dwarfeng.subgrade.sdk.bean.key.JSFixedFastJsonLongIdKey。
 
-#### Bug修复
+### Bug 修复
 
 - 修正部分数据访问层在进行分页查询时抛出异常的 bug。
   - com.dwarfeng.subgrade.impl.dao.MemoryEntireLookupDao。
   - com.dwarfeng.subgrade.impl.dao.MemoryPresetLookupDao。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.12_20221012_build_A
+## Release_1.2.12_20221012_build_A
 
-#### 功能构建
+### 功能构建
 
 - 改进数据访问层，完善文档注释。
   - com.dwarfeng.subgrade.impl.dao.MemoryBaseDao。
@@ -780,46 +780,46 @@
   - com.dwarfeng.subgrade.impl.dao.MemoryEntireLookupDao。
   - com.dwarfeng.subgrade.impl.dao.MemoryPresetLookupDao。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.11_20221011_build_A
+## Release_1.2.11_20221011_build_A
 
-#### 功能构建
+### 功能构建
 
 - 改进数据访问层。
   - com.dwarfeng.subgrade.impl.dao.MemoryBatchBaseDao。
   - com.dwarfeng.subgrade.impl.dao.MemoryBaseDao。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.10_20220912_build_A
+## Release_1.2.10_20220912_build_A
 
-#### 功能构建
+### 功能构建
 
 - 升级部分依赖至新版本。
   - dutil.version: `beta-0.3.0.a` - `beta-0.3.1.a`。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - 删除不需要的依赖。
   - 删除 `snowflake` 依赖。
@@ -827,25 +827,25 @@
 
 ---
 
-### Release_1.2.9_20220903_build_A
+## Release_1.2.9_20220903_build_A
 
-#### 功能构建
+### 功能构建
 
 - 升级 `maven-deploy-plugin` 插件版本为 `2.8.2`。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.8_20220701_build_A
+## Release_1.2.8_20220701_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `dutil` 依赖版本为 `beta-0.3.0`。
@@ -869,13 +869,13 @@
 - 主键抓取器新增批量抓取功能。
   - com.dwarfeng.subgrade.stack.bean.key.KeyFetcher.batchFetchKey。
 
-#### Bug修复
+### Bug 修复
 
 - 解决部分代码调用过时的 API 的问题。
 
 - 解决部分代码的警告。
 
-#### 功能移除
+### 功能移除
 
 - 删除不需要的依赖。
   - 删除 `joda-time` 依赖。
@@ -891,9 +891,9 @@
 
 ---
 
-### Release_1.2.7_20220525_build_A
+## Release_1.2.7_20220525_build_A
 
-#### 功能构建
+### 功能构建
 
 - 依赖升级。
   - 升级 `spring-kafka` 依赖版本为 `2.3.6.RELEASE` 以规避漏洞。
@@ -902,52 +902,52 @@
   - 升级 `netty` 依赖版本为 `4.1.77` 以规避漏洞。
   - 升级 `fastjson` 依赖版本为 `1.2.83` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - 修正部分文档注释中的语法错误。
 
-#### 功能移除
+### 功能移除
 
 - 依赖移除。
   - 移除 `mysql` 依赖。
 
 ---
 
-### Release_1.2.6_20220521_build_A
+## Release_1.2.6_20220521_build_A
 
-#### 功能构建
+### 功能构建
 
 - 升级 `spring` 依赖版本为 `5.3.19` 以规避漏洞。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.5_20220415_build_A
+## Release_1.2.5_20220415_build_A
 
-#### 功能构建
+### 功能构建
 
 - 升级依赖版本，并解决冲突。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.4_20220224_build_A
+## Release_1.2.4_20220224_build_A
 
-#### 功能构建
+### 功能构建
 
 - 升级 `log4j2` 依赖版本为 `2.17.1` 以规避漏洞。
   - `CVE-2021-44228`。
@@ -961,103 +961,103 @@
   - `PresetLookupService#lookupAsList(java.lang.String, java.lang.Object[])`。
   - `PresetLookupService#lookupAsList(java.lang.String, java.lang.Object[], PagingInfo)`。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.3_20211012_build_B
+## Release_1.2.3_20211012_build_B
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 修正 `RedisBatchBaseDao` 执行 `batchDelete` 方法时当入口参数长度为 0 时行为异常的 bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.3_20211012_build_A
+## Release_1.2.3_20211012_build_A
 
-#### 功能构建
+### 功能构建
 
 - 升级部分依赖至新版本。
   - dubbo.version: `2.7.1` - `2.7.13`。
   - httpcomponents.version: `4.4.1` - `4.5.13`。
   - hibernate-validator.version `6.0.18.Final` - `6.0.20.Final`。
 
-#### Bug修复
+### Bug 修复
 
 - 修正 `RedisBatchBaseDao` 执行 `batchDelete` 方法时无法删除实体的 bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.2_20210824_build_A
+## Release_1.2.2_20210824_build_A
 
-#### 功能构建
+### 功能构建
 
 - 为 HibernateBaseDao 以及 HibernateBatchBaseDao 增加字段 updateKeepFields，解决实体更新时多对多信息丢失的问题。
 - 升级 mybatis 版本。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.1_20201126_build_A
+## Release_1.2.1_20201126_build_A
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 修复了 PhoenixPresetLookupProcessor.providePresetCount 方法处理含有排序的 QueryInfo 时生成错误 SQL 语句的错误。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.0_20201110_build_B
+## Release_1.2.0_20201110_build_B
 
-#### 功能构建
+### 功能构建
 
 - 移除 README.md 中关于 OptionalLookupService 的成熟度说明。
 
-#### Bug修复
+### Bug 修复
 
 - 修复 BehaviorAnalyse AOP 日志输出接口/父类类名而不是直接类名的 bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.2.0_20201110_build_A
+## Release_1.2.0_20201110_build_A
 
-#### 功能构建
+### 功能构建
 
 - 对项目中的单级日志相关功能提供了框架级别的功能更新。
 - BehaviorAnalyse AOP 功能增强。
@@ -1067,13 +1067,13 @@
 - 大幅调整数据库处理器机制。
   - 这将导致该项目与旧版本的直接不兼容。
 
-#### Bug修复
+### Bug 修复
 
 - 修复 Friendly AOP 注解使用在接口/父类上时抛出异常的 bug。
 - 修复 LoginRequired AOP 注解使用在接口/父类上时抛出异常的 bug。
 - 修复 PermissionRequired AOP 注解使用在接口/父类上时抛出异常的 bug。
 
-#### 功能移除
+### 功能移除
 
 - ~~移除已经过时的接口 com.dwarfeng.subgrade.stack.dao.ReadOnlyBatchDao。~~
   - 该接口已经过时很久，删除不会导致新项目的不兼容。
@@ -1083,9 +1083,9 @@
 
 ---
 
-### Release_1.1.8_20201104_build_A
+## Release_1.1.8_20201104_build_A
 
-#### 功能构建
+### 功能构建
 
 - 为 FastJsonKafkaDeserializer.clazz 增加 get 和 set 方法。
 - 设置 LoginFailedException.loginId 字段为 final 字段。
@@ -1093,24 +1093,24 @@
   - com.dwarfeng.subgrade.stack.exception.EntityExistedException
   - com.dwarfeng.subgrade.stack.exception.EntityNotExistException
 
-#### Bug修复
+### Bug 修复
 
 - 修复 CrudService 实现类的 bug。
   - 修复 com.dwarfeng.subgrade.stack.service.CrudService.get 部分实现当实体不存在时抛出意料之外的异常的 bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.1.7_20200916_build_A
+## Release_1.1.7_20200916_build_A
 
-#### 功能构建
+### 功能构建
 
 - 去除代码中的部分警告。
 
-#### Bug修复
+### Bug 修复
 
 - 修复以下对象插入主键为 null 的元素时行为异常的 bug。
   - com.dwarfeng.subgrade.impl.service.DaoOnlyCrudService
@@ -1118,32 +1118,32 @@
   - com.dwarfeng.subgrade.impl.service.GeneralCrudService
   - com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.1.6_20200912_build_A
+## Release_1.1.6_20200912_build_A
 
-#### 功能构建
+### 功能构建
 
 - 添加主键抓取器。
   - com.dwarfeng.subgrade.impl.bean.key.TimeBasedSerialCodeKeyFetcher
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.1.5_20200910_build_A
+## Release_1.1.5_20200910_build_A
 
-#### 功能构建
+### 功能构建
 
 - 增强枚举的序列化能力。
   - com.dwarfeng.subgrade.sdk.enumeration.IndexedEnum
@@ -1151,38 +1151,38 @@
   - com.dwarfeng.subgrade.sdk.hibernate.converter.IndexedEnumConverter
   - com.dwarfeng.subgrade.sdk.fastjson.serialize.LabeledEnumCodec
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.1.4_20200904_build_A
+## Release_1.1.4_20200904_build_A
 
-#### 功能构建
+### 功能构建
 
 - 升级log4j2依赖版本至2.13.3。
 - 规范subgrade-impl模块pom.xml引用坐标格式。
 - 新增文本格式化转换器。
   - com.dwarfeng.subgrade.sdk.redis.formatter.IntegerIdStringKeyFormatter
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.1.3_20200807_build_A
+## Release_1.1.3_20200807_build_A
 
-#### 功能构建
+### 功能构建
 
 - 添加主键抓取器。
   - com.dwarfeng.subgrade.impl.bean.key.NullValueKeyFetcher
@@ -1192,51 +1192,51 @@
 - 添加工具类方法。
   - com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper.mapAndThrow
 
-#### Bug修复
+### Bug 修复
 
 - 修复 GeneralBatchCrudService 在批量插入时行为不正常的 bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.1.2_20200714_build_A
+## Release_1.1.2_20200714_build_A
 
-#### 功能构建
+### 功能构建
 
 - 修改部分代码中变量名称的拼写错误。
 
-#### Bug修复
+### Bug 修复
 
 - 修复在某些情况下 com.dwarfeng.subgrade.impl.exception.MapServiceExceptionMapper 映射错误的 bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.1.1_20200630_build_B
+## Release_1.1.1_20200630_build_B
 
-#### 功能构建
+### 功能构建
 
 - 升级commons-beanutils依赖版本至1.9.4。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.1.1_20200630_build_A
+## Release_1.1.1_20200630_build_A
 
-#### 功能构建
+### 功能构建
 
 - com.dwarfeng.subgrade.sdk.jdbc 包结构调整。
   - **该调整将会导致此版本与 Release_1.1.0_20200611_build_A 不兼容。**
@@ -1269,19 +1269,19 @@
 - 开发 com.dwarfeng.subgrade.sdk.database.ddl 实现部分数据库的建表执行任务。
   - com.dwarfeng.subgrade.sdk.database.ddl.PhoenixCreateTableDatabaseTask
 
-#### Bug修复
+### Bug 修复
 
 - 修复使用jdbc框架进行 Apache Phoenix 分页查询时生成错误的 SQL 语句的bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.1.0_20200611_build_A
+## Release_1.1.0_20200611_build_A
 
-#### 功能构建
+### 功能构建
 
 - 编写 JDBC 基础数据访问层的 Apache Phoenix 实现。
   - com.dwarfeng.subgrade.sdk.jdbc.mapper.PhoenixEntireLookupMapper
@@ -1336,11 +1336,11 @@
   - 使用com.dwarfeng.subgrade.stack.dao.BatchReadOnlyDao 替代
   - 这可能会引发轻微的不兼容。
 
-#### Bug修复
+### Bug 修复
 
 - 修改在常规配置下 ServiceExceptionCodes.UNDEFINE 的错误代码为 0 的bug。
 
-#### 功能移除
+### 功能移除
 
 - ~~删除（重命名）com.dwarfeng.subgrade.stack.dao.ConstraintLookupDao~~
 
@@ -1348,9 +1348,9 @@
 
 ---
 
-### Release_1.0.2_20200526_build_A
+## Release_1.0.2_20200526_build_A
 
-#### 功能构建
+### 功能构建
 
 - 添加友好性AOP及其注解与实现方法。
   - com.dwarfeng.subgrade.sdk.interceptor.friendly.ControllerPagingFriendlyParamAopManager
@@ -1361,23 +1361,23 @@
   - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyParamAopManager
   - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyResultAopManager
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.0.1_20200503_build_A
+## Release_1.0.1_20200503_build_A
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 修正部分LookupDao分页行为不正确的bug。
   - com.dwarfeng.subgrade.impl.dao.MemoryEntireLookupDao
@@ -1385,181 +1385,181 @@
   - com.dwarfeng.subgrade.impl.dao.RedisEntireLookupDao
   - com.dwarfeng.subgrade.impl.dao.RedisPresetLookupDao
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_1.0.0_20200426_build_A
+## Release_1.0.0_20200426_build_A
 
-#### 功能构建
+### 功能构建
 
 - 添加主键类型com.dwarfeng.subgrade.stack.bean.key.ByteIdKey。
 
-#### Bug修复
+### Bug 修复
 
 - 修复HibernateBatchBaseDao.batchGet不抛出DaoException的代码问题。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.3.2_20200412_build_D
+## Beta_0.3.2_20200412_build_D
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 修复RedisEntireLookupDao.lookup方法数组越界的bug。
 - 修复RedisPresetLookupDao.lookup方法数组越界的bug。
 - 修复RedisEntireLookupDao.lookup方法返回结果不正确的bug。
 - 修复RedisPresetLookupDao.lookup方法返回结果不正确的bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.3.2_20200411_build_C
+## Beta_0.3.2_20200411_build_C
 
-#### 功能构建
+### 功能构建
 
 - 细化 HttpLoginRequiredAopManager 的异常处理过程。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.3.2_20200326_build_B
+## Beta_0.3.2_20200326_build_B
 
-#### 功能构建
+### 功能构建
 
 - 更新dutil依赖至beta-0.2.1.a。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.3.2_20200319_build_A
+## Beta_0.3.2_20200319_build_A
 
-#### 功能构建
+### 功能构建
 
 - 优化HibernateBaseDao的写入效率。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.3.1_20200307_build_C
+## Beta_0.3.1_20200307_build_C
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 修复了CrudService.insertOrUpdate方法处理主键为null的元素时的异常表现bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.3.1_20200303_build_B
+## Beta_0.3.1_20200303_build_B
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 解决了HibernateBaseDao.update方法不正常抛出异常的bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.3.1_20200302_build_A
+## Beta_0.3.1_20200302_build_A
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 将//noinspection替换为@SupressWarning
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.3.0_20200301_build_A
+## Beta_0.3.0_20200301_build_A
 
-#### 功能构建
+### 功能构建
 
 - 强化LoginRequiredAdvisor增强。
 - 实现BindingCheck增强。
 - Key实体的WebInput实现。
 
-#### Bug修复
+### Bug 修复
 
 - 修复了RedisBaseDao以及RedisBatchBaseDao的方法执行问题。
 
-#### 功能移除
+### 功能移除
 
 - ~~删除LoginPermRequiredAdvisor增强。~~
 
 ---
 
-### Beta_0.2.5_20200225_build_A
+## Beta_0.2.5_20200225_build_A
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 解决依赖冲突。
 - com.dwarfeng.subgrade.sdk.bean.key中的键对象实现接口从Bean更改为Key。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.2.4_20200222_build_A
+## Beta_0.2.4_20200222_build_A
 
-#### 功能构建
+### 功能构建
 
 - 新增主键实体IntegerIdKey。
 - 添加KeyFetcher的UUID以及DenseUUID实现。
@@ -1568,95 +1568,95 @@
 - 添加ResponseDataUtil.bad方法。
 - 添加FastJsonResponseData。
 
-#### Bug修复
+### Bug 修复
 
 - 修正FastJsonStringIdKey.stringId不正确的JSON注解。
 - 修正PagingUtil.pagedData中部分参数返回数据异常的bug。
 
-#### 功能移除
+### 功能移除
 
 - ~~移除PagingUtil中的indexBound方法。~~
 
 ---
 
-### Beta_0.2.3_20200219_build_B
+## Beta_0.2.3_20200219_build_B
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 修正FastJsonPagedData中错误的JSON字段。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.2.3_20200218_build_A
+## Beta_0.2.3_20200218_build_A
 
-#### 功能构建
+### 功能构建
 
 - 编写与Json相关的PagedData类。
   - FastJsonPagedData
   - JSFixedFastJsonPagedData
 - 为FastJson相关的对象添加 of 静态方法。
 
-#### Bug修复
+### Bug 修复
 
 - 修正PagedData中的字段拼写问题。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.2.2_20200216_build_B
+## Beta_0.2.2_20200216_build_B
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 修复PageUtil.pagedData方法返回总页数不正确的bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Beta_0.2.2_20200216_build_A
+## Beta_0.2.2_20200216_build_A
 
-#### 功能构建
+### 功能构建
 
 - 优化ResponseDataUtil.bad方法，使其入口参数能接受T的超类。
 - PagingUtil中增加PageData的转换方法。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - ~~删除与PresetDelete有关的数据访问层以及服务。~~
 
 ---
 
-### Beta_0.2.1_20200215_build_A
+## Beta_0.2.1_20200215_build_A
 
-#### 功能构建
+### 功能构建
 
 - 工程全目标实现，从此版本记录变更日志。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
