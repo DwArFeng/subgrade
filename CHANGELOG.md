@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh_CN/ExceptionMappingBasics.md。
+
 - 优化部分文档中的内容。
   - docs/wiki/zh_CN/Contents.md。
   - docs/wiki/zh_CN/DataAccessBasics.md。
