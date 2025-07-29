@@ -34,7 +34,7 @@
         <druid.version>1.0.9</druid.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <commons-beanutils.version>1.11.0</commons-beanutils.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <jedis.version>2.9.0</jedis.version>
         <spring-data-redis.version>2.7.5</spring-data-redis.version>
