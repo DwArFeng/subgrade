@@ -31,7 +31,7 @@ public final class ServiceExceptionCodes {
      * 主键获取失败
      */
     public static final ServiceException.Code KEY_FETCH_FAILED =
-            new ServiceException.Code(offset(10), "guid fetch failed");
+            new ServiceException.Code(offset(10), "key fetch failed");
 
     /**
      * 缓存异常。

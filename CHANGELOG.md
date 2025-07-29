@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化部分异常代码的 `tip`。
+  - com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.KEY_FETCH_FAILED。
+
 - 依赖升级。
   - 升级 `commons-lang3` 依赖版本为 `3.18.0` 以规避漏洞。
 
