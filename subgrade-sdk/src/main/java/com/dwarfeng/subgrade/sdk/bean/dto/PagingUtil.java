@@ -8,6 +8,7 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -219,7 +220,11 @@ public final class PagingUtil {
         p.setCurrentPage(pagedData.getCurrentPage());
         p.setRows(pagedData.getRows());
         p.setTotalPages(pagedData.getTotalPages());
-        p.setData(pagedData.getData().stream().map(transformer::transform).collect(Collectors.toList()));
+        p.setData(
+                Optional.ofNullable(pagedData.getData()).map(
+                        f -> f.stream().map(transformer::transform).collect(Collectors.toList())
+                ).orElse(null)
+        );
         return p;
     }
 
@@ -241,7 +246,11 @@ public final class PagingUtil {
         p.setCurrentPage(pagedData.getCurrentPage());
         p.setRows(pagedData.getRows());
         p.setTotalPages(pagedData.getTotalPages());
-        p.setData(pagedData.getData().stream().map(transformer::reverseTransform).collect(Collectors.toList()));
+        p.setData(
+                Optional.ofNullable(pagedData.getData()).map(
+                        f -> f.stream().map(transformer::reverseTransform).collect(Collectors.toList())
+                ).orElse(null)
+        );
         return p;
     }
 

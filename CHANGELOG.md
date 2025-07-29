@@ -9,7 +9,9 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分工具方法有可能产生空指针异常的问题。
+  - com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil.transform。
+  - com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil.reverseTransform。
 
 ### 功能移除
 
