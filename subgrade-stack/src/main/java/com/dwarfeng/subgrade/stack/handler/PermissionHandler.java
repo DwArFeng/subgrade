@@ -11,7 +11,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.1.0-beta
  */
-public interface PermissionHandler {
+public interface PermissionHandler extends Handler {
 
     /**
      * 查询用户是否拥有权限。

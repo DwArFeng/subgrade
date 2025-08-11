@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 使部分接口继承 `Handler` 接口。
+  - com.dwarfeng.subgrade.stack.handler.PermissionHandler。
+
 - 优化部分接口的文档注释。
   - com.dwarfeng.subgrade.stack.handler.LoginHandler。
   - com.dwarfeng.subgrade.stack.handler.LoginPermHandler。
