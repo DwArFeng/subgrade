@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 优化部分接口的文档注释。
+  - com.dwarfeng.subgrade.stack.handler.LoginHandler。
+  - com.dwarfeng.subgrade.stack.handler.LoginPermHandler。
+  - com.dwarfeng.subgrade.stack.handler.PermissionHandler。
+
 - 依赖升级。
   - 升级 `zookeeper` 依赖版本为 `3.9.4` 以规避漏洞。
 

@@ -16,7 +16,7 @@ public interface PermissionHandler {
     /**
      * 查询用户是否拥有权限。
      *
-     * @param userKey        指定的用户。
+     * @param userKey        指定的用户的主键。
      * @param permissionNode 指定的权限。
      * @return 指定的用户是否拥有指定的权限。
      * @throws HandlerException 处理器异常。
@@ -26,8 +26,8 @@ public interface PermissionHandler {
     /**
      * 查询用户是否拥有权限。
      *
-     * @param userKey         指定的用户。
-     * @param permissionNodes 指定的权限组成的列表。
+     * @param userKey         指定的用户的主键。
+     * @param permissionNodes 指定的权限节点组成的列表。
      * @return 指定的用户是否拥有指定的所有权限。
      * @throws HandlerException 处理器异常。
      */
@@ -39,9 +39,9 @@ public interface PermissionHandler {
      * <p>
      * 如果用户不缺失权限，返回空列表。
      *
-     * @param userKey         指定的用户。
-     * @param permissionNodes 指定的权限组成的列表。
-     * @return 用户缺失的权限。
+     * @param userKey         指定的用户的主键。
+     * @param permissionNodes 指定的权限节点组成的列表。
+     * @return 用户缺失的权限节点。
      * @throws HandlerException 处理器异常。
      * @deprecated 该方法不符合命名规范，使用 {@link #getMissingPermissions(StringIdKey, List)} 代替。
      */
@@ -57,9 +57,9 @@ public interface PermissionHandler {
      * <p>
      * 如果用户不缺失权限，返回空列表。
      *
-     * @param userKey         指定的用户。
-     * @param permissionNodes 指定的权限组成的列表。
-     * @return 用户缺失的权限。
+     * @param userKey         指定的用户的主键。
+     * @param permissionNodes 指定的权限节点组成的列表。
+     * @return 用户缺失的权限节点。
      * @throws HandlerException 处理器异常。
      */
     List<String> getMissingPermissions(StringIdKey userKey, List<String> permissionNodes) throws HandlerException;

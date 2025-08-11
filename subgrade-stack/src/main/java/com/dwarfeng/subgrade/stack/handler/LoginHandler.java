@@ -17,7 +17,7 @@ public interface LoginHandler extends Handler {
     /**
      * 检查密码是否正确。
      *
-     * @param userKey  指定的用户名。
+     * @param userKey  指定的用户的主键。
      * @param password 指定的密码。
      * @return 密码是否正确。
      * @throws HandlerException 处理器异常。
@@ -27,9 +27,9 @@ public interface LoginHandler extends Handler {
     /**
      * 登录。
      *
-     * @param userKey  指定的用户名。
+     * @param userKey  指定的用户的主键。
      * @param password 指定的密码。
-     * @return 登录 ID。
+     * @return 登录状态的主键。
      * @throws HandlerException 处理器异常。
      */
     LongIdKey login(StringIdKey userKey, String password) throws HandlerException;
@@ -37,10 +37,10 @@ public interface LoginHandler extends Handler {
     /**
      * 登录。
      *
-     * @param userKey       指定的用户名。
+     * @param userKey       指定的用户的主键。
      * @param password      指定的密码。
      * @param extraParamMap 额外参数。
-     * @return 登陆 ID。
+     * @return 登录状态的主键。
      * @throws HandlerException 处理器异常。
      * @since 1.3.1
      */
@@ -52,16 +52,16 @@ public interface LoginHandler extends Handler {
     /**
      * 登出。
      *
-     * @param idKey 指定的登录状态主键。
+     * @param idKey 指定的登录状态的主键。
      * @throws HandlerException 处理器异常。
      */
     void logout(LongIdKey idKey) throws HandlerException;
 
     /**
-     * 判断指定的登录状态主键是否处于有效的登录状态。
+     * 判断指定的登录状态的主键是否处于有效的登录状态。
      *
-     * @param idKey 指定的登录状态主键。
-     * @return 指定的登录状态主键是否处于有效的登录状态。
+     * @param idKey 指定的登录状态的主键。
+     * @return 指定的登录状态的主键是否处于有效的登录状态。
      * @throws HandlerException 处理器异常。
      */
     boolean isLogin(LongIdKey idKey) throws HandlerException;
@@ -69,7 +69,7 @@ public interface LoginHandler extends Handler {
     /**
      * 延长指定登录状态主键的超时日期。
      *
-     * @param idKey 指定的登录状态主键。
+     * @param idKey 指定的登录状态的主键。
      * @throws HandlerException 处理器异常。
      */
     void postpone(LongIdKey idKey) throws HandlerException;
