@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 优化 `docs/wiki` 目录结构。
+  - 将 `docs/wiki/en_US` 目录重命名为 `en-US`，以符合 rfc5646 规范。
+  - 将 `docs/wiki/zh_CN` 目录重命名为 `zh-CN`，以符合 rfc5646 规范。
+  - 更新 `docs/wiki/README.md` 中的链接指向。
+  - 更新 `README.md` 中的链接指向。
+
 - 使部分接口继承 `Handler` 接口。
   - com.dwarfeng.subgrade.stack.handler.PermissionHandler。
 
