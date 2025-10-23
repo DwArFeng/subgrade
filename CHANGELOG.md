@@ -4,7 +4,9 @@
 
 ### 功能构建
 
-- (无)
+- 优化开发环境支持。
+  - 在 .gitignore 中添加 VSCode 相关文件的忽略规则。
+  - 在 .gitignore 中添加 Cursor IDE 相关文件的忽略规则。
 
 ### Bug 修复
 
