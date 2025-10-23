@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh_CN/BehaviorAnalyse.md。
+
 - 登录和权限相关接口的大版本更新（**不兼容更新**）。
   - 优化 `LoginRequiredAopManager` 接口，将方法签名从使用 `LongIdKey` 类型改为直接使用 `String` 类型。
   - 优化 `PermissionRequiredAopManager` 接口，将方法签名从使用 `StringIdKey` 类型改为直接使用 `String` 类型。

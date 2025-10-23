@@ -26,3 +26,7 @@
 ### 异常映射
 
 - [Exception Mapping Basics](./ExceptionMappingBasics.md) - 异常映射基础，说明了本项目的异常映射机制基础功能以及接口。
+
+### AOP
+
+- [Behavior Analyse](./BehaviorAnalyse.md) - 行为分析，说明了本项目的行为分析 AOP 功能以及注解的使用。
