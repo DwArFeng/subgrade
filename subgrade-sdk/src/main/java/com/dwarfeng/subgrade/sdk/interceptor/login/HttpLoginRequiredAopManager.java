@@ -2,7 +2,6 @@ package com.dwarfeng.subgrade.sdk.interceptor.login;
 
 import com.dwarfeng.subgrade.sdk.bean.dto.FastJsonResponseData;
 import com.dwarfeng.subgrade.stack.bean.dto.ResponseData;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +18,14 @@ import static com.dwarfeng.subgrade.stack.bean.dto.ResponseData.Meta;
  * 同时，该登录增强限定返回类型为 {@link FastJsonResponseData}，如果登录失败，则将登录失败信息写入到返回值中。
  *
  * @author DwArFeng
- * @since 0.3.0-beta
+ * @since 1.7.0
  */
 public class HttpLoginRequiredAopManager implements LoginRequiredAopManager {
 
     private String tokenKey;
 
     @Override
-    public LongIdKey getLoginId(ProceedingJoinPoint pjp) {
+    public String getLoginId(ProceedingJoinPoint pjp) {
         // 获取 PJP 的参数。
         Object[] args = pjp.getArgs();
 
@@ -41,13 +40,7 @@ public class HttpLoginRequiredAopManager implements LoginRequiredAopManager {
             if (Objects.isNull(header)) {
                 throw new IllegalArgumentException("HttpServletRequest 对象没有名称为 " + tokenKey + " 的 header");
             }
-            try {
-                return new LongIdKey(Long.parseLong(header));
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException(
-                        "Header " + tokenKey + " 对应的值 " + header + " 无法转换成 Long 对象"
-                );
-            }
+            return header;
         }
 
         // 如果没有找到 HttpServletRequest 对象，则抛出异常。
@@ -57,7 +50,7 @@ public class HttpLoginRequiredAopManager implements LoginRequiredAopManager {
     }
 
     @Override
-    public Object onNotLogin(ProceedingJoinPoint pjp, LongIdKey loginId) {
+    public Object onNotLogin(ProceedingJoinPoint pjp, String loginId) {
         return FastJsonResponseData.of(new ResponseData<>(
                 null, new Meta(LOGIN_FAILED.getCode(), LOGIN_FAILED.getTip())
         ));

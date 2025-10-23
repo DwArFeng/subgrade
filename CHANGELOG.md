@@ -4,6 +4,22 @@
 
 ### 功能构建
 
+- 登录和权限相关接口的大版本更新（**不兼容更新**）。
+  - 优化 `LoginRequiredAopManager` 接口，将方法签名从使用 `LongIdKey` 类型改为直接使用 `String` 类型。
+  - 优化 `PermissionRequiredAopManager` 接口，将方法签名从使用 `StringIdKey` 类型改为直接使用 `String` 类型。
+  - 更新相关实现类以适配新的接口签名：
+    - com.dwarfeng.subgrade.sdk.interceptor.login.DefaultLoginRequiredAopManager。
+    - com.dwarfeng.subgrade.sdk.interceptor.login.HttpLoginRequiredAopManager。
+    - com.dwarfeng.subgrade.sdk.interceptor.login.TokenHandlerLoginRequiredAopManager。
+    - com.dwarfeng.subgrade.sdk.interceptor.permission.DefaultPermissionRequiredAopManager。
+    - com.dwarfeng.subgrade.sdk.interceptor.permission.HttpPermissionRequiredAopManager。
+    - com.dwarfeng.subgrade.sdk.interceptor.permission.TokenHandlerPermissionRequiredAopManager。
+  - 更新相关 Advisor 类以使用字符串类型的用户ID：
+    - com.dwarfeng.subgrade.sdk.interceptor.login.LoginRequiredAdvisor。
+    - com.dwarfeng.subgrade.sdk.interceptor.permission.PermissionRequiredAdvisor。
+  - 更新 `TokenResolver` 接口，将 `resolve()` 方法返回类型从 `StringIdKey` 改为 `String`。
+  - 更新 `LoginFailedException` 类，将字段类型从 `LongIdKey` 改为 `String`，并更新所有构造函数。
+
 - 优化开发环境支持。
   - 在 .gitignore 中添加 VSCode 相关文件的忽略规则。
   - 在 .gitignore 中添加 Cursor IDE 相关文件的忽略规则。

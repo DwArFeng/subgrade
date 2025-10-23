@@ -2,7 +2,6 @@ package com.dwarfeng.subgrade.sdk.interceptor.login;
 
 import com.dwarfeng.subgrade.sdk.bean.dto.FastJsonResponseData;
 import com.dwarfeng.subgrade.stack.bean.dto.ResponseData;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.handler.TokenHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -19,14 +18,14 @@ import static com.dwarfeng.subgrade.stack.bean.dto.ResponseData.Meta;
  * 同时，该登录增强限定返回类型为 {@link FastJsonResponseData}，如果登录失败，则将登录失败信息写入到返回值中。
  *
  * @author DwArFeng
- * @since 0.3.0-beta
+ * @since 1.7.0
  */
 public class TokenHandlerLoginRequiredAopManager implements LoginRequiredAopManager {
 
     private TokenHandler tokenHandler;
 
     @Override
-    public LongIdKey getLoginId(ProceedingJoinPoint pjp) {
+    public String getLoginId(ProceedingJoinPoint pjp) {
         // 获取 PJP 的参数。
         Object[] args = pjp.getArgs();
 
@@ -38,7 +37,7 @@ public class TokenHandlerLoginRequiredAopManager implements LoginRequiredAopMana
             }
             // 如果是 HttpServletRequest 对象，则调用 tokenHandler 获取登录 ID。
             try {
-                return tokenHandler.getLoginKey((HttpServletRequest) arg);
+                return tokenHandler.getLoginId((HttpServletRequest) arg);
             } catch (Exception e) {
                 throw new IllegalArgumentException("TokenHandler 获取登录 ID 失败，异常信息如下：", e);
             }
@@ -51,7 +50,7 @@ public class TokenHandlerLoginRequiredAopManager implements LoginRequiredAopMana
     }
 
     @Override
-    public Object onNotLogin(ProceedingJoinPoint pjp, LongIdKey loginId) {
+    public Object onNotLogin(ProceedingJoinPoint pjp, String loginId) {
         return FastJsonResponseData.of(new ResponseData<>(
                 null, new Meta(LOGIN_FAILED.getCode(), LOGIN_FAILED.getTip())
         ));

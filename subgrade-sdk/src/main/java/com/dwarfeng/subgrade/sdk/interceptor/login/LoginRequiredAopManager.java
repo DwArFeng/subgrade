@@ -1,32 +1,31 @@
 package com.dwarfeng.subgrade.sdk.interceptor.login;
 
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 /**
  * 登录增强管理器。
  *
  * @author DwArFeng
- * @since 0.3.0-beta
+ * @since 1.7.0
  */
 public interface LoginRequiredAopManager {
 
     /**
-     * 从指定的PJP中获取登录ID。
+     * 从指定的 PJP 中获取登录 ID。
      *
-     * @param pjp 指定的PJP。
-     * @return 从指定的PJP中获取的登录ID。
+     * @param pjp 指定的 PJP。
+     * @return 从指定的 PJP 中获取的登录 ID。
      * @throws Throwable 方法执行过程中抛出的任何异常。
      */
-    LongIdKey getLoginId(ProceedingJoinPoint pjp) throws Throwable;
+    String getLoginId(ProceedingJoinPoint pjp) throws Throwable;
 
     /**
      * 当用户没有登录时执行的调度。
      *
-     * @param pjp     指定的PJP上下文。
-     * @param loginId 没有登录的用户ID。
+     * @param pjp     指定的 PJP 上下文。
+     * @param loginId 没有登录的用户 ID。
      * @return 返回的对象。
      * @throws Throwable 抛出的任何异常。
      */
-    Object onNotLogin(ProceedingJoinPoint pjp, LongIdKey loginId) throws Throwable;
+    Object onNotLogin(ProceedingJoinPoint pjp, String loginId) throws Throwable;
 }

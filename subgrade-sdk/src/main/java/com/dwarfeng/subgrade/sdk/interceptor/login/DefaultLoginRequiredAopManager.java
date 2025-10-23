@@ -2,7 +2,7 @@ package com.dwarfeng.subgrade.sdk.interceptor.login;
 
 import com.dwarfeng.subgrade.sdk.interceptor.ExceptionContext;
 import com.dwarfeng.subgrade.sdk.interceptor.ExceptionContextUtil;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.exception.LoginFailedException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
@@ -15,18 +15,18 @@ import java.util.List;
  * 默认的登录增强管理器。
  *
  * <p>
- * 该登录增强管理器需要在入口参数中定义一个拥有 {@link @RequestLogin} 注解的 {@link LongIdKey} 类型的参数。
+ * 该登录增强管理器需要在入口参数中定义一个拥有 {@link @RequestLogin} 注解的 {@link String} 类型的参数。
  * 这个参数的值将会被当作登录 ID。<br>
  * 同时，该登录增强管理器需要在入口参数中定义一个 {@link ExceptionContext} 类型的参数，用于存储登录失败的异常信息。
  *
  * @author DwArFeng
- * @since 0.3.0-beta
+ * @since 1.7.0
  */
 public class DefaultLoginRequiredAopManager implements LoginRequiredAopManager {
 
     @Override
-    public LongIdKey getLoginId(ProceedingJoinPoint pjp) {
-        // 获取方法，此处可将signature强转为MethodSignature
+    public String getLoginId(ProceedingJoinPoint pjp) {
+        // 获取方法，此处可将 signature 强转为 MethodSignature。
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
 
@@ -38,20 +38,20 @@ public class DefaultLoginRequiredAopManager implements LoginRequiredAopManager {
             Parameter parameter = parameters[i];
             RequestLogin[] requestLogins = parameter.getAnnotationsByType(RequestLogin.class);
             if (requestLogins.length > 0) {
-                return (LongIdKey) pjp.getArgs()[i];
+                return (String) pjp.getArgs()[i];
             }
         }
         throw new IllegalArgumentException(
-                "未能在入口参数中找到 @RequestLogin 注解，请在入口参数中添加一个拥有 @RequestLogin 注解的 LongIdKey 参数"
+                "未能在入口参数中找到 @RequestLogin 注解，请在入口参数中添加一个拥有 @RequestLogin 注解的 String 参数"
         );
     }
 
     @Override
-    public Object onNotLogin(ProceedingJoinPoint pjp, LongIdKey loginId) throws Throwable {
+    public Object onNotLogin(ProceedingJoinPoint pjp, String loginId) throws Throwable {
         // 获取 PJP 的参数。
         Object[] args = pjp.getArgs();
 
-        // 获取方法，此处可将signature强转为MethodSignature
+        // 获取方法，此处可将 signature 强转为 MethodSignature。
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
 

@@ -2,7 +2,6 @@ package com.dwarfeng.subgrade.sdk.interceptor.permission;
 
 import com.dwarfeng.subgrade.sdk.bean.dto.FastJsonResponseData;
 import com.dwarfeng.subgrade.stack.bean.dto.ResponseData;
-import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.handler.TokenHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -19,14 +18,14 @@ import static com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.PERMISSI
  * 同时，该登录增强限定返回类型为 {@link FastJsonResponseData}，如果权限验证失败，则将权限验证失败信息写入到返回值中。
  *
  * @author DwArFeng
- * @since 1.4.0
+ * @since 1.7.0
  */
 public class TokenHandlerPermissionRequiredAopManager implements PermissionRequiredAopManager {
 
     private TokenHandler tokenHandler;
 
     @Override
-    public StringIdKey getUserKey(ProceedingJoinPoint pjp) {
+    public String getUserId(ProceedingJoinPoint pjp) {
         // 获取 PJP 的参数。
         Object[] args = pjp.getArgs();
 
@@ -36,11 +35,11 @@ public class TokenHandlerPermissionRequiredAopManager implements PermissionRequi
             if (!(arg instanceof HttpServletRequest)) {
                 continue;
             }
-            // 如果是 HttpServletRequest 对象，则调用 tokenHandler 获取用户主键。
+            // 如果是 HttpServletRequest 对象，则调用 tokenHandler 获取用户 ID。
             try {
-                return tokenHandler.getUserKey((HttpServletRequest) arg);
+                return tokenHandler.getUserId((HttpServletRequest) arg);
             } catch (Exception e) {
-                throw new IllegalArgumentException("TokenHandler 解析用户主键失败，异常信息如下：", e);
+                throw new IllegalArgumentException("TokenHandler 解析用户 ID 失败，异常信息如下：", e);
             }
         }
 
@@ -51,7 +50,7 @@ public class TokenHandlerPermissionRequiredAopManager implements PermissionRequi
     }
 
     @Override
-    public Object onMissingPermission(ProceedingJoinPoint pjp, StringIdKey userKey, List<String> missingPermissions) {
+    public Object onMissingPermission(ProceedingJoinPoint pjp, String userId, List<String> missingPermissions) {
         return FastJsonResponseData.of(new ResponseData<>(
                 null, new ResponseData.Meta(PERMISSION_DENIED.getCode(), PERMISSION_DENIED.getTip())
         ));
