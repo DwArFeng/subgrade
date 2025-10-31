@@ -8,6 +8,8 @@ package com.dwarfeng.subgrade.stack.exception;
  */
 public class LoginFailedException extends Exception {
 
+    private static final long serialVersionUID = 7682827709154581139L;
+
     private final String loginId;
 
     public LoginFailedException(String loginId) {
