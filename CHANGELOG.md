@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/UpgradeGuide1.7.0.md。
+
 - 增加缓存实现。
   - com.dwarfeng.subgrade.impl.cache.NullBaseCache。
   - com.dwarfeng.subgrade.impl.cache.NullBatchBaseCache。
