@@ -8,7 +8,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分缓存设置列表数据时，数据顺序与参数数据不一致的 bug。
+  - com.dwarfeng.subgrade.impl.cache.RedisKeyListCache。
 
 ### 功能移除
 

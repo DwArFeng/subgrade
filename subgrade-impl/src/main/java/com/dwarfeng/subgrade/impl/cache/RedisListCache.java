@@ -129,6 +129,7 @@ public class RedisListCache<E extends Entity<?>, JE extends Bean> implements Lis
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void set(Collection<E> entities, long timeout) throws CacheException {
         try {

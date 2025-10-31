@@ -136,6 +136,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void set(K key, Collection<E> entities, long timeout) throws CacheException {
         try {
@@ -145,7 +146,7 @@ public class RedisKeyListCache<K extends Key, E extends Entity<? extends Key>, J
                 return;
             }
             List<JE> collect = entities.stream().map(transformer::transform).collect(Collectors.toList());
-            template.opsForList().leftPushAll(formatKey, collect);
+            template.opsForList().rightPushAll(formatKey, collect);
             template.expire(formatKey, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             throw new CacheException(e);
