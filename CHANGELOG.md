@@ -4,7 +4,12 @@
 
 ### 功能构建
 
-- (无)
+- 增加缓存实现。
+  - com.dwarfeng.subgrade.impl.cache.NullBaseCache。
+  - com.dwarfeng.subgrade.impl.cache.NullBatchBaseCache。
+  - com.dwarfeng.subgrade.impl.cache.NullKeyListCache。
+  - com.dwarfeng.subgrade.impl.cache.NullListCache。
+  - com.dwarfeng.subgrade.impl.cache.NullSingleObjectCache。
 
 ### Bug 修复
 
