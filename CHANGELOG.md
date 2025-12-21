@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 增加本地缓存处理器实现。
+  - com.dwarfeng.subgrade.impl.handler.ExpirableLocalCacheHandler。
+
 - `subgrade-impl` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.subgrade.impl.dao.MybatisPresetLookupDao。
   - com.dwarfeng.subgrade.impl.dao.JdbcBatchWriteDao。
