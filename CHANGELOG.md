@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 增加本地缓存处理器实现。
+  - com.dwarfeng.subgrade.impl.handler.ExpirableLocalCacheHandler。
+
 - 依赖升级。
   - 升级 `kafka` 依赖版本为 `3.9.1` 以规避漏洞。
   - 升级 `spring-kafka` 依赖版本为 `2.9.13` 以规避漏洞。
