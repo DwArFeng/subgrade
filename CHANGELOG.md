@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/en-US/README.md。
+  - docs/wiki/zh-CN/README.md。
+
 - 增加本地缓存处理器实现。
   - com.dwarfeng.subgrade.impl.handler.ExpirableLocalCacheHandler。
 
