@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/GeneralLocalCacheHandlerBasics.md。
+  - docs/wiki/zh-CN/LocalCacheBasics.md。
+
 - 依赖升级。
   - 升级 `dutil` 依赖版本为 `0.4.0.a-beta` 以规避漏洞。
 

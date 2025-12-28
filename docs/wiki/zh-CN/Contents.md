@@ -26,3 +26,9 @@
 ### 异常映射
 
 - [Exception Mapping Basics](./ExceptionMappingBasics.md) - 异常映射基础，说明了本项目的异常映射机制基础功能以及接口。
+
+### 本地缓存
+
+- [Local Cache Basics](./LocalCacheBasics.md) - 本地缓存基础，说明了本项目的本地缓存处理器基础功能以及接口。
+- [General Local Cache Handler Basics](./GeneralLocalCacheHandlerBasics.md) -
+  通用本地缓存处理器基础，说明了 GeneralLocalCacheHandler 的实现和使用方法。
