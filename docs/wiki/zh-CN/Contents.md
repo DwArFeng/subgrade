@@ -31,6 +31,12 @@
 
 - [Behavior Analyse](./BehaviorAnalyse.md) - 行为分析，说明了本项目的行为分析 AOP 功能以及注解的使用。
 
+### 本地缓存
+
+- [Local Cache Basics](./LocalCacheBasics.md) - 本地缓存基础，说明了本项目的本地缓存处理器基础功能以及接口。
+- [General Local Cache Handler Basics](./GeneralLocalCacheHandlerBasics.md) -
+  通用本地缓存处理器基础，说明了 GeneralLocalCacheHandler 的实现和使用方法。
+
 ## 升级指导
 
 - [Upgrade Guide 1.7.0](./UpgradeGuide1.7.0.md) - 升级指南 1.7.0，详细说明了从 1.6.x 及更早版本升级到 1.7.0
