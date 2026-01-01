@@ -4,7 +4,10 @@
 
 ### 功能构建
 
+- 更新 README.md。
+
 - Wiki 更新。
+  - docs/wiki/zh-CN/Introduction.md。
   - docs/wiki/zh-CN/UpgradeGuide1.7.0.md。
   - docs/wiki/zh-CN/UseWithMaven.md。
   - docs/wiki/en-US/README.md。
