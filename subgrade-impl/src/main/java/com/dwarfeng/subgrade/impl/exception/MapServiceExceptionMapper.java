@@ -26,21 +26,21 @@ public class MapServiceExceptionMapper implements ServiceExceptionMapper {
 
     @Override
     public ServiceException map(Exception e) {
-        //如果入口参数是 null，则返回 null。
+        // 如果入口参数是 null，则返回 null。
         if (Objects.isNull(e)) {
             return null;
         }
-        //如果异常本身属于 ServiceException 则试图获取其错误代码。如果没有错误代码，按照普通异常处理。
+        // 如果异常本身属于 ServiceException 则试图获取其错误代码。如果没有错误代码，按照普通异常处理。
         if (e instanceof ServiceException && Objects.nonNull(((ServiceException) e).getCode())) {
             return new ServiceException(((ServiceException) e).getCode());
         }
 
-        //如果 destination 中有关于异常的直接定义，则返回直接定义。
+        // 如果 destination 中有关于异常的直接定义，则返回直接定义。
         if (destination.containsKey(e.getClass())) {
             return new ServiceException(destination.get(e.getClass()));
         }
 
-        //如果 destination 中没有关于异常的直接定义，则进行父类寻找，并且使用 router 缓存结果。
+        // 如果 destination 中没有关于异常的直接定义，则进行父类寻找，并且使用 router 缓存结果。
         if (router.containsKey(e.getClass())) {
             return new ServiceException(router.get(e.getClass()));
         }

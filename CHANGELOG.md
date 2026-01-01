@@ -4,6 +4,26 @@
 
 ### 功能构建
 
+- `subgrade-impl` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.subgrade.impl.dao.MybatisPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.JdbcBatchWriteDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateSingleObjectDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateBatchRelationDao。
+  - com.dwarfeng.subgrade.impl.dao.HibernateRelationDao。
+  - com.dwarfeng.subgrade.impl.dao.MybatisBatchWriteDao。
+  - com.dwarfeng.subgrade.impl.dao.JdbcPresetLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.JdbcBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.JdbcEntireLookupDao。
+  - com.dwarfeng.subgrade.impl.dao.JdbcBatchBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.JdbcWriteDao。
+  - com.dwarfeng.subgrade.impl.dao.MybatisBatchRelationDao。
+  - com.dwarfeng.subgrade.impl.dao.MybatisRelationDao。
+  - com.dwarfeng.subgrade.impl.dao.MybatisBatchBaseDao。
+  - com.dwarfeng.subgrade.impl.exception.MapServiceExceptionMapper。
+  - com.dwarfeng.subgrade.impl.dao.MybatisWriteDao。
+  - com.dwarfeng.subgrade.impl.dao.MybatisBaseDao。
+  - com.dwarfeng.subgrade.impl.dao.MybatisEntireLookupDao。
+
 - `subgrade-sdk` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil。
   - com.dwarfeng.subgrade.sdk.bean.dto.ResponseDataUtil。

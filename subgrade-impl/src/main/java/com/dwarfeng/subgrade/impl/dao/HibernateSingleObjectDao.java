@@ -93,8 +93,12 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
             }
 
             PK pk = transformKey(key);
-            //noinspection ConstantConditions PE 不可能为null，因为之前的语句已经判断PE一定存在。
-            template.delete(template.get(classPE, pk));
+            PE pe = template.get(classPE, pk);
+            // PE 不可能为 null，因为之前的语句已经判断 PE 一定存在。
+            if (Objects.isNull(pe)) {
+                throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
+            }
+            template.delete(pe);
             template.flush();
         } catch (Exception e) {
             throw new DaoException(e);

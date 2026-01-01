@@ -11,7 +11,8 @@ import java.util.Objects;
 
 /**
  * 使用 MyBatis 基于多对多关系实现的 RelationDao。
- * <p>该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。</p>
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
  *
  * @author DwArFeng
  * @since 1.1.1

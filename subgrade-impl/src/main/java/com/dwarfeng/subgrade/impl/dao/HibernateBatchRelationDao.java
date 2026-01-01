@@ -39,11 +39,11 @@ public class HibernateBatchRelationDao<
      */
     public enum JoinType {
         /**
-         * JoinTable注解在父类上。
+         * JoinTable 注解在父类上。
          */
         JOIN_BY_PARENT,
         /**
-         * JoinTable注解在子类上。
+         * JoinTable 注解在子类上。
          */
         JOIN_BY_CHILD
     }
