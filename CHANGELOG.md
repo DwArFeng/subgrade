@@ -5,6 +5,7 @@
 ### 功能构建
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/UseWithMaven.md。
   - docs/wiki/en-US/README.md。
   - docs/wiki/zh-CN/README.md。
 

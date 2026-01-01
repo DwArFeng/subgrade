@@ -11,56 +11,104 @@
 ### subgrade-stack
 
 ```xml
+<?xml version="1.0" encoding="UTF-8"?>
 
-<dependency>
-    <groupId>com.dwarfeng</groupId>
-    <artifactId>subgrade-stack</artifactId>
-    <version>${subgrade.version}</version>
-</dependency>
+<!--suppress MavenModelInspection, MavenModelVersionMissed -->
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+
+    <!-- 省略其他配置 -->
+    <dependencies>
+        <!-- 省略其他配置 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>subgrade-stack</artifactId>
+            <version>${subgrade.version}</version>
+        </dependency>
+        <!-- 省略其他配置 -->
+    </dependencies>
+    <!-- 省略其他配置 -->
+</project>
 ```
 
 ### subgrade-sdk
 
 ```xml
+<?xml version="1.0" encoding="UTF-8"?>
 
-<dependency>
-    <groupId>com.dwarfeng</groupId>
-    <artifactId>subgrade-sdk</artifactId>
-    <version>${subgrade.version}</version>
-    <!-- 推荐排除以下已停止维护的依赖 -->
-    <exclusions>
-        <exclusion>
-            <artifactId>dozer</artifactId>
-            <groupId>net.sf.dozer</groupId>
-        </exclusion>
-        <exclusion>
-            <artifactId>dozer-spring</artifactId>
-            <groupId>net.sf.dozer</groupId>
-        </exclusion>
-    </exclusions>
-</dependency>
+<!--suppress MavenModelInspection, MavenModelVersionMissed -->
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+
+    <!-- 省略其他配置 -->
+    <dependencies>
+        <!-- 省略其他配置 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>subgrade-sdk</artifactId>
+            <version>${subgrade.version}</version>
+            <!-- 推荐排除以下已停止维护的依赖 -->
+            <exclusions>
+                <exclusion>
+                    <artifactId>dozer</artifactId>
+                    <groupId>net.sf.dozer</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>dozer-spring</artifactId>
+                    <groupId>net.sf.dozer</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- 省略其他配置 -->
+    </dependencies>
+    <!-- 省略其他配置 -->
+</project>
 ```
 
 ### subgrade-impl
 
 ```xml
+<?xml version="1.0" encoding="UTF-8"?>
 
-<dependency>
-    <groupId>com.dwarfeng</groupId>
-    <artifactId>subgrade-impl</artifactId>
-    <version>${subgrade.version}</version>
-    <!-- 推荐排除以下已停止维护的依赖 -->
-    <exclusions>
-        <exclusion>
-            <artifactId>dozer</artifactId>
-            <groupId>net.sf.dozer</groupId>
-        </exclusion>
-        <exclusion>
-            <artifactId>dozer-spring</artifactId>
-            <groupId>net.sf.dozer</groupId>
-        </exclusion>
-    </exclusions>
-</dependency>
+<!--suppress MavenModelInspection, MavenModelVersionMissed -->
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+
+    <!-- 省略其他配置 -->
+    <dependencies>
+        <!-- 省略其他配置 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>subgrade-impl</artifactId>
+            <version>${subgrade.version}</version>
+            <!-- 推荐排除以下已停止维护的依赖 -->
+            <exclusions>
+                <exclusion>
+                    <artifactId>dozer</artifactId>
+                    <groupId>net.sf.dozer</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>dozer-spring</artifactId>
+                    <groupId>net.sf.dozer</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- 省略其他配置 -->
+    </dependencies>
+    <!-- 省略其他配置 -->
+</project>
 ```
 
 ## 注意事项
