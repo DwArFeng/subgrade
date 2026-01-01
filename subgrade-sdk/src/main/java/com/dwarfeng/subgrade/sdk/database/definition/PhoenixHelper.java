@@ -322,7 +322,6 @@ public class PhoenixHelper {
      * the expense of potentially losing data in the event of a region server failure. This option is useful when
      * updating a table which is not the source-of-truth and thus making the lose of data acceptable.
      */
-    @SuppressWarnings("GrazieInspection")
     public static void setTableDisableWal(@Nonnull TableDefinition tableDefinition, Boolean val) {
         tableDefinition.putProperty(CUSTOM_DISABLE_WAL, val);
     }
@@ -368,7 +367,6 @@ public class PhoenixHelper {
      * string option determines the column family used used when none is specified. The value is case sensitive.
      * If this option is not present, a column family name of '0' is used.
      */
-    @SuppressWarnings("GrazieInspection")
     public static void setTableDefaultColumnFamily(@Nonnull TableDefinition tableDefinition, String val) {
         if (Objects.isNull(val) || val.isEmpty()) {
             throw new IllegalArgumentException("DEFAULT_COLUMN_FAMILY 不能为 null 或空字符串");
@@ -400,7 +398,7 @@ public class PhoenixHelper {
      * For more information on transactions, see
      * <a href = http://phoenix.apache.org/transactions.html>http://phoenix.apache.org/transactions.html</a>
      */
-    @SuppressWarnings({"GrazieInspection", "SpellCheckingInspection"})
+    @SuppressWarnings({"SpellCheckingInspection"})
     public static void setTableTransactional(@Nonnull TableDefinition tableDefinition, Boolean val) {
         tableDefinition.putProperty(CUSTOM_TRANSACTIONAL, val);
     }
@@ -417,7 +415,6 @@ public class PhoenixHelper {
      * VALUES statement).  A millisecond value indicates how long the client will hold on to its cached version of the
      * metadata before checking back with the server for updates.
      */
-    @SuppressWarnings("GrazieInspection")
     public static void setTableUpdateCacheFrequency(@Nonnull TableDefinition tableDefinition, UpdateCacheFrequency val) {
         tableDefinition.putProperty(CUSTOM_UPDATE_CACHE_FREQUENCY, val);
     }
@@ -627,7 +624,6 @@ public class PhoenixHelper {
      * the expense of potentially losing data in the event of a region server failure. This option is useful when
      * updating a table which is not the source-of-truth and thus making the lose of data acceptable.
      */
-    @SuppressWarnings("GrazieInspection")
     public static void setIndexDisableVal(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);
@@ -679,7 +675,6 @@ public class PhoenixHelper {
      * string option determines the column family used used when none is specified. The value is case sensitive.
      * If this option is not present, a column family name of '0' is used.
      */
-    @SuppressWarnings("GrazieInspection")
     public static void setIndexDefaultColumnFamily(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, String val) {
         makeSureIndexExists(tableDefinition, indexName);
@@ -715,7 +710,7 @@ public class PhoenixHelper {
      * For more information on transactions, see
      * <a href = http://phoenix.apache.org/transactions.html>http://phoenix.apache.org/transactions.html</a>
      */
-    @SuppressWarnings({"GrazieInspection", "SpellCheckingInspection"})
+    @SuppressWarnings({"SpellCheckingInspection"})
     public static void setIndexTransactional(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, Boolean val) {
         makeSureIndexExists(tableDefinition, indexName);
@@ -734,7 +729,6 @@ public class PhoenixHelper {
      * VALUES statement).  A millisecond value indicates how long the client will hold on to its cached version of the
      * metadata before checking back with the server for updates.
      */
-    @SuppressWarnings("GrazieInspection")
     public static void setIndexUpdateCacheFrequency(
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, UpdateCacheFrequency val) {
         makeSureIndexExists(tableDefinition, indexName);
@@ -874,6 +868,8 @@ public class PhoenixHelper {
         return (String) tableDefinition.getOrPutCache(CACHE_FULL_TABLE_NAME, nonCacheFullTableName(tableDefinition));
     }
 
+    // 为了代码的可扩展性，此处不进行优化。
+    @SuppressWarnings("JavaExistingMethodCanBeUsed")
     private static Object nonCacheFullTableName(TableDefinition tableDefinition) {
         StringBuilder sb = new StringBuilder();
         if (Objects.nonNull(tableDefinition.getSchemaName())) {
