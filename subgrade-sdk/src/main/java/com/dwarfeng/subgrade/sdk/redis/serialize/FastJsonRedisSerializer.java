@@ -6,7 +6,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
 /**
- * 使用FastJson进行序列化的Redis序列化器。
+ * 使用 FastJson 进行序列化的 Redis 序列化器。
  *
  * @author DwArFeng
  * @since 0.0.1-alpha

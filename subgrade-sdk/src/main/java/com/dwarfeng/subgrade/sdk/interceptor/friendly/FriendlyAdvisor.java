@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * <p>
  * 友好性增强用于对输入的参数以及返回的结果做出微小的调整，以针对访问者进行“友好”的输入以及输出。
  * <br>
- * 常见的“友好”包括分页数据从1开始计数等等。
+ * 常见的“友好”包括分页数据从 1 开始计数等等。
  *
  * <p>
  * 使用友好性接口，需要在方法或实现类中增加 {@link Friendly} 注解。如果注解增加在方法上，则针对该方法本身进行友好性增强；
@@ -63,7 +63,7 @@ import java.util.stream.Collectors;
  * </pre></blockquote>
  *
  * <p>
- * 友好性增强默认是不启用的，您需在java运行环境中增加环境参数以启动友好性注解。
+ * 友好性增强默认是不启用的，您需在 java 运行环境中增加环境参数以启动友好性注解。
  * <ol>
  *     <li>
  *         增加运行参数 <code>-Dsubgrade.enableFriendly=true</code> 以启用所有的 {@link Friendly} 注解。
@@ -120,22 +120,22 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         String className = pjp.getSignature().getDeclaringTypeName();
         String methodName = pjp.getSignature().getName();
-        LOGGER.debug("方法 {}.{} 切入友好性AOP...", className, methodName);
+        LOGGER.debug("方法 {}.{} 切入友好性 AOP...", className, methodName);
 
-        //扫描方法中或类中的 @Friendly 注解。
+        // 扫描方法中或类中的 @Friendly 注解。
         List<Friendly> friendlies = scanFriendlyList(pjp);
-        //获取有效的 @Friendly 注解。
+        // 获取有效的 @Friendly 注解。
         friendlies = scanEnabledFriendlies(friendlies);
 
-        //如果有效的 @Friendly 注解为空，则直接返回原始方法，不进行增强。
+        // 如果有效的 @Friendly 注解为空，则直接返回原始方法，不进行增强。
         if (friendlies.isEmpty()) {
             return pjp.proceed(pjp.getArgs());
         }
 
-        //获取方法执行的原始参数。
+        // 获取方法执行的原始参数。
         Object[] param = pjp.getArgs();
 
-        //按顺序（正向）调用 friendlies 中的增强。
+        // 按顺序（正向）调用 friendlies 中的增强。
         for (Friendly friendly : friendlies) {
             if (!friendly.paramManger().isEmpty()) {
                 FriendlyParamAopManager friendlyParamAopManager = applicationContext.getBean(
@@ -144,10 +144,10 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
             }
         }
 
-        //执行友好化过后的参数，获得返回的结果。
+        // 执行友好化过后的参数，获得返回的结果。
         Object result = pjp.proceed(param);
 
-        //按顺序（逆向）调用 friendlies 中的增强。
+        // 按顺序（逆向）调用 friendlies 中的增强。
         Collections.reverse(friendlies);
         for (Friendly friendly : friendlies) {
             if (!friendly.resultManger().isEmpty()) {
@@ -157,7 +157,7 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
             }
         }
 
-        //返回结果。
+        // 返回结果。
         return result;
     }
 
@@ -182,7 +182,7 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
 
     private List<Friendly> scanFriendlyList(ProceedingJoinPoint pjp) {
         List<Friendly> friendlies = new ArrayList<>();
-        //获取类中的 @FriendlyList 注解。
+        // 获取类中的 @FriendlyList 注解。
         LOGGER.debug("扫描方类中的 @FriendlyList 注解...");
         FriendlyList friendlyList = AdvisorUtil.directClassAnnotation(pjp, FriendlyList.class);
         if (Objects.nonNull(friendlyList)) {
@@ -192,7 +192,7 @@ public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueRe
             LOGGER.debug("类中不存在 @FriendlyList 注解，继续扫描方类中的 @Friendly 注解...");
             friendlies.addAll(Arrays.asList(AdvisorUtil.directClassAnnotations(pjp, Friendly.class)));
         }
-        //获取方法中的 @FriendlyList 注解。
+        // 获取方法中的 @FriendlyList 注解。
         LOGGER.debug("扫描方法中的 @FriendlyList 注解...");
         friendlyList = AdvisorUtil.directMethodAnnotation(pjp, FriendlyList.class);
         if (Objects.nonNull(friendlyList)) {

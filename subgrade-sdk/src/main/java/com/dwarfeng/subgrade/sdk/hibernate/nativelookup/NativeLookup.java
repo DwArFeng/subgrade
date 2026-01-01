@@ -32,8 +32,8 @@ public interface NativeLookup<PE extends Bean> {
      * <p>
      * 如果方法在执行过程中发生了任何自定义的异常（如参数错误等），请抛出 {@link RuntimeException}。
      *
-     * @param connection JDBC连接。
-     * @throws SQLException     SQL语句异常。
+     * @param connection JDBC 连接。
+     * @throws SQLException     SQL 语句异常。
      * @throws RuntimeException 方法执行过程中发生的任何自定义异常。
      */
     void init(Connection connection) throws SQLException;
@@ -51,7 +51,7 @@ public interface NativeLookup<PE extends Bean> {
      * @param preset     预设名称。
      * @param args       参数。
      * @return 实体组成的列表，或者是 null。
-     * @throws SQLException     SQL语句异常。
+     * @throws SQLException     SQL 语句异常。
      * @throws RuntimeException 方法执行过程中发生的任何自定义异常。
      */
     List<PE> lookupEntity(Connection connection, String preset, Object[] args) throws SQLException;
@@ -70,7 +70,7 @@ public interface NativeLookup<PE extends Bean> {
      * @param args       参数。
      * @param pagingInfo 分页信息。
      * @return 实体组成的列表，或者是 null。
-     * @throws SQLException     SQL语句异常。
+     * @throws SQLException     SQL 语句异常。
      * @throws RuntimeException 方法执行过程中发生的任何自定义异常。
      */
     List<PE> lookupEntity(Connection connection, String preset, Object[] args, PagingInfo pagingInfo)
@@ -89,7 +89,7 @@ public interface NativeLookup<PE extends Bean> {
      * @param preset     预设名称。
      * @param args       参数。
      * @return 实体的数量值，或者是 null。
-     * @throws SQLException     SQL语句异常。
+     * @throws SQLException     SQL 语句异常。
      * @throws RuntimeException 方法执行过程中发生的任何自定义异常。
      */
     int lookupCount(Connection connection, String preset, Object[] args) throws SQLException;

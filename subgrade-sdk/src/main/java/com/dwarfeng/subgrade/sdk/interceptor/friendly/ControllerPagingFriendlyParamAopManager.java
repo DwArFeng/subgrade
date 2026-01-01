@@ -11,12 +11,12 @@ import java.util.Objects;
  * 控制器分页友好性参数增强管理器。
  *
  * <p>
- * 用于在web后端项目中对分页请求进行友好化（后端的分页通常从0开始，而前端的分页通常从1开始）。
+ * 用于在 web 后端项目中对分页请求进行友好化（后端的分页通常从 0 开始，而前端的分页通常从 1 开始）。
  *
  * <p>
  * 可以直接加在控制器类上，也可以加在方法上。
  * <br> 该增强被调用时，会寻找目标方法是否有名称为 {@link ControllerPagingFriendlyParamAopManager#pageParamName}
- * 的 int 类型参数，如果有，则将该参数的值减1。对于不满足条件的方法，则直接返回原始值。
+ * 的 int 类型参数，如果有，则将该参数的值减 1。对于不满足条件的方法，则直接返回原始值。
  *
  * <p>
  * 例如：
@@ -44,21 +44,21 @@ public class ControllerPagingFriendlyParamAopManager implements FriendlyParamAop
     @Override
     public Object[] processParam(ProceedingJoinPoint pjp, Object[] args) {
         try {
-            //获取参数的所有名称。
+            // 获取参数的所有名称。
             MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
             String[] parameterNames = methodSignature.getParameterNames();
             Class<?>[] parameterTypes = methodSignature.getParameterTypes();
 
-            //定位参数名等于pageParamName的下标。
+            // 定位参数名等于 pageParamName 的下标。
             int index = findPageParamName(parameterNames, parameterTypes);
 
-            //如果找不到下标，则在日志中输出WARN级别日志并返回原始值。
+            // 如果找不到下标，则在日志中输出 WARN 级别日志并返回原始值。
             if (index < 0) {
                 LOGGER.debug("此方法不符合控制器友好性分页的要求，将返回原始值");
                 return args;
             }
 
-            //指定的参数减一，并返回。
+            // 指定的参数减一，并返回。
             args[index] = ((int) args[index]) - 1;
             return args;
         } catch (Exception e) {

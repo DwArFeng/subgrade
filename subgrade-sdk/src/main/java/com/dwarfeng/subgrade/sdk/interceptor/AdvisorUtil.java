@@ -53,7 +53,7 @@ public final class AdvisorUtil {
         Class<?>[] parameterTypes = methodSignature.getMethod().getParameterTypes();
         Method method = null;
         try {
-            // 通过反射获得拦截的method
+            // 通过反射获得拦截的 method。
             method = directClass(pjp).getMethod(methodName, parameterTypes);
         } catch (NoSuchMethodException ignored) {
             // 可以保证方法一定存在。

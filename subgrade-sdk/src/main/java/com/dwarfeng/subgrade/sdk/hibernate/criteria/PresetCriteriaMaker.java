@@ -4,7 +4,8 @@ import org.hibernate.criterion.DetachedCriteria;
 
 /**
  * 预设 Criteria 制造器。
- * <p>根据预设名称与预设对象构造Criteria。</p>
+ * <p>
+ * 根据预设名称与预设对象构造 Criteria。
  *
  * @author DwArFeng
  * @since 0.0.3-beta
@@ -12,9 +13,9 @@ import org.hibernate.criterion.DetachedCriteria;
 public interface PresetCriteriaMaker {
 
     /**
-     * 制造Criteria。
+     * 制造 Criteria。
      *
-     * @param criteria 指定的Criteria。
+     * @param criteria 指定的 Criteria。
      * @param preset   预设的名称。
      * @param objs     预设对应的值。
      */

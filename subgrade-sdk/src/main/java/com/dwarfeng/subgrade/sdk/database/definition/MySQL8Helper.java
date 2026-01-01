@@ -504,7 +504,7 @@ public class MySQL8Helper {
     }
 
 //    TODO 待实现方法参考模板。
-//
+// 
 //    /**
 //     * 设置数据表的库名称。
 //     *
@@ -513,7 +513,7 @@ public class MySQL8Helper {
 //    public void setSchemaName(String schemaName) {
 //        this.schemaName = schemaName;
 //    }
-//
+// 
 //    /**
 //     * 设置数据表的名称。
 //     *
@@ -522,7 +522,7 @@ public class MySQL8Helper {
 //    public void setTableName(String tableName) {
 //        this.tableName = tableName;
 //    }
-//
+// 
 //    /**
 //     * 设置数据库引擎。
 //     *
@@ -531,7 +531,7 @@ public class MySQL8Helper {
 //    public void setEngine(@Nonnull Engine engine) {
 //        customDefinition.put(MySQL8Constants.CUSTOM_ENGINE, engine);
 //    }
-//
+// 
 //    /**
 //     * 设置数据库的默认字符集。
 //     *
@@ -540,7 +540,7 @@ public class MySQL8Helper {
 //    public void setDefaultCharset(@Nonnull Charset charset) {
 //        customDefinition.put(MySQL8Constants.CUSTOM_DEFAULT_CHARSET, charset);
 //    }
-//
+// 
 //    /**
 //     * 设置数据库字符的对比方法。
 //     *
@@ -549,7 +549,7 @@ public class MySQL8Helper {
 //    public void setCollation(@Nonnull Collation collation) {
 //        customDefinition.put(MySQL8Constants.CUSTOM_COLLATION, collation);
 //    }
-//
+// 
 //    /**
 //     * 设置数据库自增列的自增大小。
 //     *
@@ -558,7 +558,7 @@ public class MySQL8Helper {
 //    public void setAutoIncrement(int autoIncrement) {
 //        customDefinition.put(MySQL8Constants.CUSTOM_AUTO_INCREMENT, autoIncrement);
 //    }
-//
+// 
 //    /**
 //     * 增加列定义。
 //     *
@@ -568,7 +568,7 @@ public class MySQL8Helper {
 //    public void addColumn(@Nonnull String columnName, @Nonnull String type) {
 //        addColumn(columnName, type, null, null, null);
 //    }
-//
+// 
 //    /**
 //     * 增加列定义。
 //     *
@@ -593,7 +593,7 @@ public class MySQL8Helper {
 //        }
 //        columnDefinitionMap.put(columnName, new DefaultColumnDefinition(columnName, type, customDefinition));
 //    }
-//
+// 
 //    private void makeSureColumnPropertiesValid(List<ColumnProperty> columnProperties) {
 //        if (CollectionUtil.conatinsNull(columnProperties)) {
 //            throw new IllegalArgumentException("入口参数 columnProperties 不允许含有 NULL 元素");
@@ -611,7 +611,7 @@ public class MySQL8Helper {
 //            throw new IllegalArgumentException("入口参数 columnProperties 不允许同时包含 NULL 和 NOT_NULL");
 //        }
 //    }
-//
+// 
 //    /**
 //     * 添加索引。
 //     *
@@ -622,7 +622,7 @@ public class MySQL8Helper {
 //    public void addIndex(@Nonnull String name, @Nonnull IndexType indexType, @Nonnull String... columnNames) {
 //        addIndex(name, indexType, null, null, null, columnNames);
 //    }
-//
+// 
 //    /**
 //     * 添加索引。
 //     *
@@ -656,7 +656,7 @@ public class MySQL8Helper {
 //                MySQL8Constants.NAME_PRIMARY_KEY, MySQL8Constants.TYPE_INDEX,
 //                nameList.stream().map(columnDefinitionMap::get).collect(Collectors.toList()), customDefinition));
 //    }
-//
+// 
 //    /**
 //     * 设置索引的长度。
 //     *
@@ -677,7 +677,7 @@ public class MySQL8Helper {
 //            lengthMap.put(columnName, length);
 //        }
 //    }
-//
+// 
 //    /**
 //     * 设置索引升序排序。
 //     *
@@ -693,7 +693,7 @@ public class MySQL8Helper {
 //        ((HashSet<String>) customDefinition.get(MySQL8Constants.CUSTOM_INDEX_ASC)).addAll(columnNameList);
 //        ((HashSet<String>) customDefinition.get(MySQL8Constants.CUSTOM_INDEX_DESC)).removeAll(columnNameList);
 //    }
-//
+// 
 //    /**
 //     * 设置索引降序排序。
 //     *
@@ -709,7 +709,7 @@ public class MySQL8Helper {
 //        ((HashSet<String>) customDefinition.get(MySQL8Constants.CUSTOM_INDEX_ASC)).removeAll(columnNameList);
 //        ((HashSet<String>) customDefinition.get(MySQL8Constants.CUSTOM_INDEX_DESC)).addAll(columnNameList);
 //    }
-//
+// 
 //    /**
 //     * 设置外键约束。
 //     *
@@ -724,7 +724,7 @@ public class MySQL8Helper {
 //            @Nonnull List<String> refColumnNames, @Nonnull List<String> columnNames) {
 //        addForeignKey(foreignKeyName, refSchemaName, refTableName, refColumnNames, columnNames, null, null);
 //    }
-//
+// 
 //    /**
 //     * 设置外键约束。
 //     *
@@ -755,7 +755,7 @@ public class MySQL8Helper {
 //                foreignKeyName, MySQL8Constants.TYPE_FOREIGN_KEY,
 //                columnNames.stream().map(columnDefinitionMap::get).collect(Collectors.toList()), customDefinition));
 //    }
-//
+// 
 //    private void makeSureAllColumnNotExists(List<String> nameList) {
 //        for (String name : nameList) {
 //            if (columnDefinitionMap.containsKey(name)) {
@@ -763,7 +763,7 @@ public class MySQL8Helper {
 //            }
 //        }
 //    }
-//
+// 
 //    private void makeSureAllColumnExists(List<String> nameList) {
 //        if (!columnDefinitionMap.keySet().containsAll(nameList)) {
 //            for (String name : nameList) {
@@ -773,13 +773,13 @@ public class MySQL8Helper {
 //            }
 //        }
 //    }
-//
+// 
 //    private void makeSureIndexExists(String name) {
 //        if (!indexDefinitionMap.containsKey(name)) {
 //            throw new IllegalArgumentException("索引称" + name + "不存在");
 //        }
 //    }
-//
+// 
 //    /**
 //     * 构造数据表定义。
 //     *
@@ -801,12 +801,12 @@ public class MySQL8Helper {
 //                        IndexType.PRIMARY)).map(Map.Entry::getKey).count();
 //        if (count == 0) {
 //            throw new IllegalArgumentException("您还没有指定表中的主键，先调用 addIndex(String, IndexType, " +
-//                    "IndexStorage, Integer, String, String...) 方法添加类型为 IndexType.PRIMARY的主键");
+//                    "IndexStorage, Integer, String, String...) 方法添加类型为 IndexType.PRIMARY 的主键");
 //        }
 //        if (count > 1) {
 //            throw new IllegalArgumentException("您指定了多个主键索引，请检查程序并去除多余的主键索引");
 //        }
-//
+// 
 //        return new DefaultTableDefinition(
 //                schemaName,
 //                tableName,

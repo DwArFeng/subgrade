@@ -10,8 +10,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * 友好性列表注解。
+ * 
  * <p>
- * 在AOP的使用过程中，不需要显式使用该注解，而是仅仅需要使用多个{@link Friendly}注解即可。
+ * 在 AOP 的使用过程中，不需要显式使用该注解，而是仅仅需要使用多个{@link Friendly}注解即可。
  * <br>
  * 例如
  * <blockquote><pre>

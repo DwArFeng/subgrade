@@ -39,7 +39,7 @@ public @interface Friendly {
      * 获取可选键。
      *
      * <p>
-     * 可选键可以使用普通文本，也可以使用Spring的SpEL表达式。
+     * 可选键可以使用普通文本，也可以使用 Spring 的 SpEL 表达式。
      *
      * @return 可选键。
      */

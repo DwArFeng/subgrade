@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * SQL语句与参数。
+ * SQL 语句与参数。
  *
  * @author DwArFeng
  * @since 1.1.1

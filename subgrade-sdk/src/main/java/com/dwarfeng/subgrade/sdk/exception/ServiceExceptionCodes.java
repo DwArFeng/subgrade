@@ -64,7 +64,7 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(40), "param validation failed");
 
     /**
-     * IO异常。
+     * IO 异常。
      */
     public static final ServiceException.Code IO_EXCEPTION =
             new ServiceException.Code(offset(50), "io exception");

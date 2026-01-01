@@ -10,8 +10,8 @@ import java.util.Objects;
  * 适用于 FastJson 的 LongIdKey。
  *
  * <p>
- * 注意：该类中含有长整型的字段，在与JS前端通信中，会发生精度丢失的问题。
- * 请使用 {@link JSFixedFastJsonLongIdKey} 来解决JS前端的精度丢失问题。
+ * 注意：该类中含有长整型的字段，在与 JS 前端通信中，会发生精度丢失的问题。
+ * 请使用 {@link JSFixedFastJsonLongIdKey} 来解决 JS 前端的精度丢失问题。
  *
  * @author DwArFeng
  * @since 0.0.1-beta

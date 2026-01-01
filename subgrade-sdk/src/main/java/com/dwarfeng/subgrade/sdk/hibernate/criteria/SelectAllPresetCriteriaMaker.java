@@ -12,6 +12,6 @@ public class SelectAllPresetCriteriaMaker implements PresetCriteriaMaker {
 
     @Override
     public void makeCriteria(DetachedCriteria criteria, String preset, Object[] objs) {
-        //Do nothing.
+        // Do nothing.
     }
 }

@@ -14,7 +14,7 @@ public interface BindingCheckAopManager {
     /**
      * 当指定的 BindingResult 有错误时进行的调度。
      *
-     * @param pjp           相关的PJP。
+     * @param pjp           相关的 PJP。
      * @param bindingResult 指定的 BindingResult。
      * @return 返回的对象。
      * @throws Throwable 抛出的任何异常。

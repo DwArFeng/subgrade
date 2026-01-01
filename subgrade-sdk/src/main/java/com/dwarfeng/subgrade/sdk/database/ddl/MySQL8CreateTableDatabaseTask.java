@@ -36,7 +36,7 @@ public class MySQL8CreateTableDatabaseTask implements DatabaseTask<Object> {
 
     private String provideCreateTableSQL() {
         /*
-         * TODO 建表SQL模板
+         * TODO 建表 SQL 模板
          *
          *  CREATE TABLE `fdr`.`new_table` (
          * `id` INT NOT NULL,

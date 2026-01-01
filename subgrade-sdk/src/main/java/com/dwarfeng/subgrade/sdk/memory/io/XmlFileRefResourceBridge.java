@@ -15,10 +15,10 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * XML文件资源映射桥。
+ * XML 文件资源映射桥。
  *
  * <p>
- * 将XML文件资源与映射进行桥接的映射桥实现。
+ * 将 XML 文件资源与映射进行桥接的映射桥实现。
  *
  * @author DwArFeng
  * @since 0.0.3-beta

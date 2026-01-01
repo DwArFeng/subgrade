@@ -32,10 +32,10 @@ public class BindingCheckAdvisor {
 
     @Around("@annotation(com.dwarfeng.subgrade.sdk.interceptor.http.BindingCheck)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
-        LOGGER.debug("执行BindingCheck...");
+        LOGGER.debug("执行 BindingCheck...");
         for (Object arg : pjp.getArgs()) {
             if (arg instanceof BindingResult && ((BindingResult) arg).hasErrors()) {
-                LOGGER.debug("执行BindingCheck...");
+                LOGGER.debug("执行 BindingCheck...");
                 return manager.onHasError(pjp, (BindingResult) arg);
             }
         }

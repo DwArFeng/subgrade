@@ -160,8 +160,8 @@ public final class HavingHelper {
      * 生成 Between 的 Having 子句。
      *
      * @param expression 属性表达式。
-     * @param value1     属性值1。
-     * @param value2     属性值2。
+     * @param value1     属性值 1。
+     * @param value2     属性值 2。
      * @return 生成的 Having 子句。
      */
     public static PredicateClause between(@Nonnull String expression, @Nonnull Object value1, @Nonnull Object value2) {

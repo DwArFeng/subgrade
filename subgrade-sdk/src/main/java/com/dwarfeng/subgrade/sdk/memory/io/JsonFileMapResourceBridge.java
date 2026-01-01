@@ -24,10 +24,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * JSON文件资源映射桥。
+ * JSON 文件资源映射桥。
  *
  * <p>
- * 将JSON文件资源与映射进行桥接的映射桥实现。
+ * 将 JSON 文件资源与映射进行桥接的映射桥实现。
  *
  * @author DwArFeng
  * @since 0.0.3-beta

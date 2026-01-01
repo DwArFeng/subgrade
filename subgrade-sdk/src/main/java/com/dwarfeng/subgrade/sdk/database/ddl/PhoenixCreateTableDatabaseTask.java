@@ -194,7 +194,7 @@ public class PhoenixCreateTableDatabaseTask implements DatabaseTask<Object> {
         if (Objects.nonNull(indexType) && !indexType.sqlFragment().isEmpty()) {
             sb.append(' ').append(indexType.sqlFragment());
         }
-        // 追加 INDEX IF NOT EXISTS + index名称 + ON + 表名
+        // 追加 INDEX IF NOT EXISTS + index 名称 + ON + 表名
         sb.append(" INDEX IF NOT EXISTS ").append(index.getName()).append(" ON ")
                 .append(PhoenixHelper.getFullTableName(tableDefinition)).append(" (");
         // 追加索引列。

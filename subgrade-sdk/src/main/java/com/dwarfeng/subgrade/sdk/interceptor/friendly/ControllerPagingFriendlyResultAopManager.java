@@ -14,12 +14,12 @@ import java.util.Objects;
  * 控制器分页友好性结果增强管理器。
  *
  * <p>
- * 用于在web后端项目中对分页请求进行友好化（后端的分页通常从0开始，而前端的分页通常从1开始）。
+ * 用于在 web 后端项目中对分页请求进行友好化（后端的分页通常从 0 开始，而前端的分页通常从 1 开始）。
  *
  * <p>
- * 可以直接加在控制器类上，也可以加在方法上。
- * <br> 该增强被调用时，会调用返回对象的getData方法（按照subgrade的规范，Controller中的方法返回类型一定是
- * {@link com.dwarfeng.subgrade.stack.bean.dto.ResponseData}）或其它等效bean形式，如果其值不是 null，且其值类型为
+ * 可以直接加在控制器类上，也可以加在方法上。<br>
+ * 该增强被调用时，会调用返回对象的 getData 方法（按照 subgrade 的规范，Controller 中的方法返回类型一定是
+ * {@link com.dwarfeng.subgrade.stack.bean.dto.ResponseData}）或其它等效 bean 形式，如果其值不是 null，且其值类型为
  * {@link com.dwarfeng.subgrade.stack.bean.dto.PagedData}，{@link com.dwarfeng.subgrade.sdk.bean.dto.FastJsonPagedData}，
  * {@link com.dwarfeng.subgrade.sdk.bean.dto.JSFixedFastJsonPagedData} 中的任何一个，则调用
  * {@link com.dwarfeng.subgrade.stack.bean.dto.PagedData#setCurrentPage(int)} 方法，将其值加一。
@@ -31,7 +31,7 @@ import java.util.Objects;
  * &#64;BehaviorAnalyse //行为、性能分析
  * &#64;LoginRequired //需要登录
  * &#64;Friendly(paramManger = "beanIdHere", optionalKey= "paging") //分页友好
- * public FastJsonResponseData<JSFixedFastJsonPagedData<YourEntityBean>> all(
+ * public FastJsonResponseData&lt;JSFixedFastJsonPagedData&lt;YourEntityBean&gt;&gt; all(
  *         HttpServletRequest request,
  *         &#64;RequestParam("page") int page, &#64;RequestParam("rows") int rows) {
  *         ...

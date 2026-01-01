@@ -18,11 +18,11 @@ public final class ResponseDataUtil {
     }
 
     /**
-     * 生成一个含有指定数据且元数据为good的响应数据。
+     * 生成一个含有指定数据且元数据为 good 的响应数据。
      *
      * @param data 指定的数据。
      * @param <T>  数据的类型。
-     * @return 含有指定的数据且元数据为good的响应数据。
+     * @return 含有指定的数据且元数据为 good 的响应数据。
      */
     public static <T> ResponseData<T> good(T data) {
         return new ResponseData<>(data, new Meta(0, "good"));

@@ -427,7 +427,7 @@ public class PhoenixHelper {
      */
     public static void setTableUpdateCacheFrequency(@Nonnull TableDefinition tableDefinition, Long val) {
         if (Objects.nonNull(val) && val < 0) {
-            throw new IllegalArgumentException("UPDATE_CACHE_FREQUENCY 的取值应大于0 " + val);
+            throw new IllegalArgumentException("UPDATE_CACHE_FREQUENCY 的取值应大于 0 " + val);
         }
         tableDefinition.putProperty(CUSTOM_UPDATE_CACHE_FREQUENCY, val);
     }
@@ -478,7 +478,7 @@ public class PhoenixHelper {
      */
     public static void setTableGuidPostsWidth(@Nonnull TableDefinition tableDefinition, Integer val) {
         if (Objects.nonNull(val) && val < 0) {
-            throw new IllegalArgumentException("GUIDE_POSTS_WIDTH 的取值应大于0 " + val);
+            throw new IllegalArgumentException("GUIDE_POSTS_WIDTH 的取值应大于 0 " + val);
         }
         tableDefinition.putProperty(CUSTOM_GUIDE_POSTS_WIDTH, val);
     }
@@ -748,7 +748,7 @@ public class PhoenixHelper {
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, Long val) {
         makeSureIndexExists(tableDefinition, indexName);
         if (Objects.nonNull(val) && val < 0) {
-            throw new IllegalArgumentException("UPDATE_CACHE_FREQUENCY 的取值应大于0 " + val);
+            throw new IllegalArgumentException("UPDATE_CACHE_FREQUENCY 的取值应大于 0 " + val);
         }
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_UPDATE_CACHE_FREQUENCY, val);
     }
@@ -805,7 +805,7 @@ public class PhoenixHelper {
             @Nonnull TableDefinition tableDefinition, @Nonnull String indexName, Integer val) {
         makeSureIndexExists(tableDefinition, indexName);
         if (Objects.nonNull(val) && val < 0) {
-            throw new IllegalArgumentException("GUIDE_POSTS_WIDTH 的取值应大于0 " + val);
+            throw new IllegalArgumentException("GUIDE_POSTS_WIDTH 的取值应大于 0 " + val);
         }
         tableDefinition.getOptionalDefinition(indexName).putProperty(CUSTOM_GUIDE_POSTS_WIDTH, val);
     }

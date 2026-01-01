@@ -4,6 +4,47 @@
 
 ### 功能构建
 
+- `subgrade-sdk` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil。
+  - com.dwarfeng.subgrade.sdk.bean.dto.ResponseDataUtil。
+  - com.dwarfeng.subgrade.sdk.bean.key.FastJsonLongIdKey。
+  - com.dwarfeng.subgrade.sdk.common.Constants。
+  - com.dwarfeng.subgrade.sdk.database.ddl.MySQL8CreateTableDatabaseTask。
+  - com.dwarfeng.subgrade.sdk.database.ddl.PhoenixCreateTableDatabaseTask。
+  - com.dwarfeng.subgrade.sdk.database.definition.MySQL8Helper。
+  - com.dwarfeng.subgrade.sdk.database.definition.PhoenixHelper。
+  - com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes。
+  - com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper。
+  - com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker。
+  - com.dwarfeng.subgrade.sdk.hibernate.criteria.SelectAllPresetCriteriaMaker。
+  - com.dwarfeng.subgrade.sdk.hibernate.hql.HavingHelper。
+  - com.dwarfeng.subgrade.sdk.hibernate.hql.WhereHelper。
+  - com.dwarfeng.subgrade.sdk.hibernate.nativelookup.NativeLookup。
+  - com.dwarfeng.subgrade.sdk.interceptor.AdvisorUtil。
+  - com.dwarfeng.subgrade.sdk.interceptor.ExceptionContext。
+  - com.dwarfeng.subgrade.sdk.interceptor.ExceptionContextUtil。
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.ControllerPagingFriendlyParamAopManager。
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.ControllerPagingFriendlyResultAopManager。
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.Friendly。
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyAdvisor。
+  - com.dwarfeng.subgrade.sdk.interceptor.friendly.FriendlyList。
+  - com.dwarfeng.subgrade.sdk.interceptor.http.BindingCheckAdvisor。
+  - com.dwarfeng.subgrade.sdk.interceptor.http.BindingCheckAopManager。
+  - com.dwarfeng.subgrade.sdk.interceptor.http.DefaultBindingCheckAopManager。
+  - com.dwarfeng.subgrade.sdk.interceptor.login.LoginRequiredAdvisor。
+  - com.dwarfeng.subgrade.sdk.interceptor.permission.PermissionRequiredAdvisor。
+  - com.dwarfeng.subgrade.sdk.jdbc.processor.SQLAndParameter。
+  - com.dwarfeng.subgrade.sdk.jdbc.processor.SQLUtil。
+  - com.dwarfeng.subgrade.sdk.kafka.serialize.FastJsonKafkaDeserializer。
+  - com.dwarfeng.subgrade.sdk.kafka.serialize.FastJsonKafkaSerializer。
+  - com.dwarfeng.subgrade.sdk.memory.io.JsonFileMapResourceBridge。
+  - com.dwarfeng.subgrade.sdk.memory.io.JsonFileRefResourceBridge。
+  - com.dwarfeng.subgrade.sdk.memory.io.XmlFileMapResourceBridge。
+  - com.dwarfeng.subgrade.sdk.memory.io.XmlFileRefResourceBridge。
+  - com.dwarfeng.subgrade.sdk.redis.serialize.FastJsonRedisSerializer。
+  - com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation。
+  - com.dwarfeng.subgrade.sdk.service.custom.operation.CrudOperation。
+
 - `subgrade-stack` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.subgrade.stack.bean.BeanTransformer。
   - com.dwarfeng.subgrade.stack.bean.key.ByteIdKey。

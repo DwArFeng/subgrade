@@ -12,7 +12,7 @@ import org.springframework.validation.BindingResult;
  *
  * <p>
  * 当任何 BindingResult 有错误时，返回错误类型为 {@link ServiceExceptionCodes#PARAM_VALIDATION_FAILED}
- * 的bad类型的 FastJsonResponseData
+ * 的 bad 类型的 FastJsonResponseData
  *
  * @author DwArFeng
  * @since 0.3.0-beta

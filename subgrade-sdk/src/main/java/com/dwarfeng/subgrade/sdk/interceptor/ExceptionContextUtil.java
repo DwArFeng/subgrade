@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * ExceptionContext工具类。
+ * ExceptionContext 工具类。
  *
  * @author DwArFeng
  * @since 0.1.1-beta

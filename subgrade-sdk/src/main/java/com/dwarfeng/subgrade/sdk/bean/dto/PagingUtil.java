@@ -203,13 +203,13 @@ public final class PagingUtil {
     }
 
     /**
-     * 通过指定的Bean转换器将第一个类型的PagedData转换成第二个类型的PagedData。
+     * 通过指定的 Bean 转换器将第一个类型的 PagedData 转换成第二个类型的 PagedData。
      *
-     * @param pagedData   第一个类型的PagedData。
-     * @param transformer 第二个类型的PagedData。
+     * @param pagedData   第一个类型的 PagedData。
+     * @param transformer 第二个类型的 PagedData。
      * @param <U>         第一个类型。
      * @param <V>         第二个类型。
-     * @return 第二个类型的PagedData。
+     * @return 第二个类型的 PagedData。
      */
     @SuppressWarnings("DuplicatedCode")
     public static <U extends Bean, V extends Bean> PagedData<V> transform(
@@ -229,13 +229,13 @@ public final class PagingUtil {
     }
 
     /**
-     * 通过指定的Bean转换器将第二个类型的PagedData转换成第一个类型的PagedData。
+     * 通过指定的 Bean 转换器将第二个类型的 PagedData 转换成第一个类型的 PagedData。
      *
-     * @param pagedData   第二个类型的PagedData。
-     * @param transformer 第一个类型的PagedData。
+     * @param pagedData   第二个类型的 PagedData。
+     * @param transformer 第一个类型的 PagedData。
      * @param <U>         第一个类型。
      * @param <V>         第二个类型。
-     * @return 第一个类型的PagedData。
+     * @return 第一个类型的 PagedData。
      */
     @SuppressWarnings("DuplicatedCode")
     public static <U extends Bean, V extends Bean> PagedData<U> reverseTransform(

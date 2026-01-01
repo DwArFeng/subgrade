@@ -9,7 +9,7 @@ package com.dwarfeng.subgrade.sdk.common;
 public final class Constants {
 
     /**
-     * Redis中的通配符。
+     * Redis 中的通配符。
      */
     public static final String REDIS_KEY_WILDCARD_CHARACTER = "*";
 

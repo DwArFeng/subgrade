@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Aspect
-//设定一个特别高的值，保证此方法在行为分析之后立即执行，但不设置最高的值，因为有可能有其它的 AOP 在此方法之前执行。
+// 设定一个特别高的值，保证此方法在行为分析之后立即执行，但不设置最高的值，因为有可能有其它的 AOP 在此方法之前执行。
 @Order(Ordered.HIGHEST_PRECEDENCE + 1000)
 public class LoginRequiredAdvisor {
 
@@ -65,7 +65,7 @@ public class LoginRequiredAdvisor {
     }
 
     private boolean isPostpone(ProceedingJoinPoint pjp) {
-        //获取方法所需的执行登录。
+        // 获取方法所需的执行登录。
         LOGGER.debug("扫描 @LoginRequired 注解，获取方法执行所需的登录");
         LoginRequired loginRequired = AdvisorUtil.directMethodAnnotation(pjp, LoginRequired.class);
         return loginRequired.postpone();
