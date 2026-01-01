@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.stack.bean.key;
 
 /**
- * Long主键，封装了Long。
+ * Long 主键，封装了 Long。
  *
  * @author DwArFeng
  * @since 0.0.1-alpha

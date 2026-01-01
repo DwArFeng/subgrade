@@ -8,7 +8,9 @@ import java.util.List;
 
 /**
  * 预设查询数据访问层。
- * <p>该数据访问层支持有限个自定义的预设查询。</p>
+ *
+ * <p>
+ * 该数据访问层支持有限个自定义的预设查询。
  *
  * @author DwArFeng
  * @since 0.0.3-beta

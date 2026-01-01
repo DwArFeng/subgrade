@@ -30,6 +30,7 @@ public interface BaseCache<K extends Key, E extends Entity<K>> extends Cache<E> 
 
     /**
      * 向缓存中推送指定的键与值。
+     *
      * <p>
      * 如果指定的键不存在，则创建。
      *

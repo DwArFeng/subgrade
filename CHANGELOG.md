@@ -4,6 +4,24 @@
 
 ### 功能构建
 
+- `subgrade-stack` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.subgrade.stack.bean.BeanTransformer。
+  - com.dwarfeng.subgrade.stack.bean.key.ByteIdKey。
+  - com.dwarfeng.subgrade.stack.bean.key.DenseUuidKey。
+  - com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey。
+  - com.dwarfeng.subgrade.stack.bean.key.LongIdKey。
+  - com.dwarfeng.subgrade.stack.bean.key.StringIdKey。
+  - com.dwarfeng.subgrade.stack.bean.key.UuidKey。
+  - com.dwarfeng.subgrade.stack.cache.BaseCache。
+  - com.dwarfeng.subgrade.stack.cache.BatchBaseCache。
+  - com.dwarfeng.subgrade.stack.cache.KeyListCache。
+  - com.dwarfeng.subgrade.stack.dao.BatchRelationDao。
+  - com.dwarfeng.subgrade.stack.dao.PresetLookupDao。
+  - com.dwarfeng.subgrade.stack.dao.RelationDao。
+  - com.dwarfeng.subgrade.stack.dao.WriteDao。
+  - com.dwarfeng.subgrade.stack.handler.LoginPermHandler。
+  - com.dwarfeng.subgrade.stack.service.Service。
+
 - 优化文件格式。
   - 优化 `pom.xml` 文件的格式。
 

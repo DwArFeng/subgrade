@@ -3,7 +3,7 @@ package com.dwarfeng.subgrade.stack.bean.key;
 import java.util.Objects;
 
 /**
- * 特殊的String主键，封装了使用Base64编码压缩过的UUID主键。
+ * 特殊的 String 主键，封装了使用 Base64 编码压缩过的 UUID 主键。
  *
  * @author DwArFeng
  * @since 0.0.1-beta

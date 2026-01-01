@@ -43,7 +43,9 @@ public interface BatchBaseCache<K extends Key, E extends Entity<K>> extends Base
 
     /**
      * 向缓存中批量推送指定的键值对。
-     * <p>需要保证 keys 和 entities 的数量一致。</p>
+     *
+     * <p>
+     * 需要保证 keys 和 entities 的数量一致。
      *
      * @param entities 指定的值组成的列表。
      * @param timeout  超时时间。

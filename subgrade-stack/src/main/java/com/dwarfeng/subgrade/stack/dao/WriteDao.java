@@ -18,12 +18,13 @@ public interface WriteDao<E extends Entity<?>> extends Dao {
 
     /**
      * 写入指定的元素。
+     *
      * <p>
      * 写入的元素应该遵守如下的规则：
-     * <pre>
-     * 1. 元素的主键允许为 null。
-     * 2. 主键不为 null 的元素必须确保之前不存在。
-     * </pre>
+     * <ol>
+     *     <li>元素的主键允许为 null。</li>
+     *     <li>主键不为 null 的元素必须确保之前不存在。</li>
+     * </ol>
      *
      * @param element 指定的元素。
      * @throws DaoException 数据访问层异常。

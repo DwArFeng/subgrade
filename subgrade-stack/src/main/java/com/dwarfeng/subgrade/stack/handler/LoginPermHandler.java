@@ -79,6 +79,7 @@ public interface LoginPermHandler extends Handler {
 
     /**
      * 查询用户缺失的权限。
+     *
      * <p>
      * 如果用户不缺失权限，返回空列表。
      *

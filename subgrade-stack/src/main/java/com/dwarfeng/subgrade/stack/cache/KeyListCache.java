@@ -10,7 +10,9 @@ import java.util.List;
 
 /**
  * 列表型缓存。
- * <p>记录主键对应列表的缓存情形。</p>
+ *
+ * <p>
+ * 记录主键对应列表的缓存情形。
  *
  * @author DwArFeng
  * @since 0.0.3-beta

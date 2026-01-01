@@ -3,7 +3,7 @@ package com.dwarfeng.subgrade.stack.bean.key;
 import java.util.Objects;
 
 /**
- * 特殊的String主键，封装了作为UUID的String。
+ * 特殊的 String 主键，封装了作为 UUID 的 String。
  *
  * @author DwArFeng
  * @since 0.0.1-beta

@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.stack.bean.key;
 
 /**
- * Integer主键，封装了Integer。
+ * Integer 主键，封装了 Integer。
  *
  * @author DwArFeng
  * @since 0.2.4-beta

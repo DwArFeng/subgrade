@@ -1,8 +1,10 @@
 package com.dwarfeng.subgrade.stack.bean;
 
 /**
- * Bean映射器。
- * <p>映射两个Bean对象，使其能够相互转化。</p>
+ * Bean 映射器。
+ *
+ * <p>
+ * 映射两个 Bean 对象，使其能够相互转化。
  *
  * @param <U> 对象 U。
  * @param <V> 对象 V。

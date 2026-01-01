@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.stack.bean.key;
 
 /**
- * Byte主键，封装了Byte。
+ * Byte 主键，封装了 Byte。
  *
  * @author DwArFeng
  * @since 1.0.0
