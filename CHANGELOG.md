@@ -11,6 +11,7 @@
 - 更新 README.md。
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
   - docs/wiki/zh-CN/Introduction.md。
   - docs/wiki/zh-CN/UpgradeGuide1.7.0.md。
   - docs/wiki/zh-CN/UseWithMaven.md。
