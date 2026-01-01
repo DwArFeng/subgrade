@@ -20,7 +20,9 @@
 
 ```java
 public interface LoginRequiredAopManager {
+
     LongIdKey getLoginId(ProceedingJoinPoint pjp) throws Throwable;
+
     Object onNotLogin(ProceedingJoinPoint pjp, LongIdKey loginId) throws Throwable;
 }
 ```
@@ -29,7 +31,9 @@ public interface LoginRequiredAopManager {
 
 ```java
 public interface LoginRequiredAopManager {
+
     String getLoginId(ProceedingJoinPoint pjp) throws Throwable;
+
     Object onNotLogin(ProceedingJoinPoint pjp, String loginId) throws Throwable;
 }
 ```
@@ -40,9 +44,11 @@ public interface LoginRequiredAopManager {
 
 ```java
 public interface PermissionRequiredAopManager {
+
     StringIdKey getUserKey(ProceedingJoinPoint pjp) throws Throwable;
-    Object onMissingPermission(ProceedingJoinPoint pjp, StringIdKey userKey, List<String> missingPermissions) 
-    throws Throwable;
+
+    Object onMissingPermission(ProceedingJoinPoint pjp, StringIdKey userKey, List<String> missingPermissions)
+            throws Throwable;
 }
 ```
 
@@ -50,9 +56,11 @@ public interface PermissionRequiredAopManager {
 
 ```java
 public interface PermissionRequiredAopManager {
+
     String getUserId(ProceedingJoinPoint pjp) throws Throwable;
+
     Object onMissingPermission(ProceedingJoinPoint pjp, String userId, List<String> missingPermissions)
-    throws Throwable;
+            throws Throwable;
 }
 ```
 
@@ -64,6 +72,7 @@ public interface PermissionRequiredAopManager {
 
 ```java
 public interface TokenResolver {
+
     StringIdKey resolve(String token) throws Exception;
 }
 ```
@@ -72,6 +81,7 @@ public interface TokenResolver {
 
 ```java
 public interface TokenResolver {
+
     String resolve(String token) throws Exception;
 }
 ```
@@ -84,12 +94,18 @@ public interface TokenResolver {
 
 ```java
 public interface LoginHandler extends Handler {
+
     boolean checkPassword(StringIdKey userKey, String password) throws HandlerException;
+
     LongIdKey login(StringIdKey userKey, String password) throws HandlerException;
+
     default LongIdKey login(StringIdKey userKey, String password, Map<String, String> extraParamMap)
-    throws HandlerException;
+            throws HandlerException;
+
     void logout(LongIdKey idKey) throws HandlerException;
+
     boolean isLogin(LongIdKey idKey) throws HandlerException;
+
     void postpone(LongIdKey idKey) throws HandlerException;
 }
 ```
@@ -98,11 +114,17 @@ public interface LoginHandler extends Handler {
 
 ```java
 public interface LoginHandler extends Handler {
+
     boolean checkPassword(String userId, String password) throws HandlerException;
+
     String login(String userId, String password) throws HandlerException;
+
     default String login(String userId, String password, Map<String, String> extraParamMap) throws HandlerException;
+
     void logout(String loginId) throws HandlerException;
+
     boolean isLogin(String loginId) throws HandlerException;
+
     void postpone(String loginId) throws HandlerException;
 }
 ```
@@ -113,8 +135,11 @@ public interface LoginHandler extends Handler {
 
 ```java
 public interface PermissionHandler extends Handler {
+
     boolean hasPermission(StringIdKey userKey, String permissionNode) throws HandlerException;
+
     boolean hasPermission(StringIdKey userKey, List<String> permissionNodes) throws HandlerException;
+
     List<String> getMissingPermissions(StringIdKey userKey, List<String> permissionNodes) throws HandlerException;
 }
 ```
@@ -123,8 +148,11 @@ public interface PermissionHandler extends Handler {
 
 ```java
 public interface PermissionHandler extends Handler {
+
     boolean hasPermission(String userId, String permission) throws HandlerException;
+
     boolean hasPermission(String userId, List<String> permissions) throws HandlerException;
+
     List<String> getMissingPermissions(String userId, List<String> permissions) throws HandlerException;
 }
 ```
@@ -135,8 +163,11 @@ public interface PermissionHandler extends Handler {
 
 ```java
 public interface TokenHandler extends Handler {
+
     Long getTokenId(HttpServletRequest httpServletRequest) throws HandlerException;
+
     LongIdKey getLoginKey(HttpServletRequest httpServletRequest) throws HandlerException;
+
     StringIdKey getUserKey(HttpServletRequest httpServletRequest) throws HandlerException;
 }
 ```
@@ -145,7 +176,9 @@ public interface TokenHandler extends Handler {
 
 ```java
 public interface TokenHandler extends Handler {
+
     String getUserId(HttpServletRequest httpServletRequest) throws HandlerException;
+
     String getLoginId(HttpServletRequest httpServletRequest) throws HandlerException;
 }
 ```
@@ -162,13 +195,21 @@ public interface TokenHandler extends Handler {
 
 ```java
 public interface LoginPermHandler extends Handler {
+
     boolean checkPassword(StringIdKey userKey, String password) throws HandlerException;
+
     LongIdKey login(StringIdKey userKey, String password) throws HandlerException;
+
     void logout(LongIdKey idKey) throws HandlerException;
+
     boolean isLogin(LongIdKey idKey) throws HandlerException;
+
     void postpone(LongIdKey idKey) throws HandlerException;
+
     boolean hasPermission(LongIdKey idKey, String permissionNode) throws HandlerException;
+
     boolean hasPermission(LongIdKey idKey, List<String> permissionNodes) throws HandlerException;
+
     List<String> getMissingPermission(LongIdKey idKey, List<String> permissionNodes) throws HandlerException;
 }
 ```
@@ -177,13 +218,21 @@ public interface LoginPermHandler extends Handler {
 
 ```java
 public interface LoginPermHandler extends Handler {
+
     boolean checkPassword(String userId, String password) throws HandlerException;
+
     String login(String userId, String password) throws HandlerException;
+
     void logout(String loginId) throws HandlerException;
+
     boolean isLogin(String loginId) throws HandlerException;
+
     void postpone(String loginId) throws HandlerException;
+
     boolean hasPermission(String loginId, String permission) throws HandlerException;
+
     boolean hasPermission(String loginId, List<String> permissions) throws HandlerException;
+
     List<String> getMissingPermission(String loginId, List<String> permissions) throws HandlerException;
 }
 ```
@@ -200,11 +249,18 @@ package com.dwarfeng.subgrade.sdk.interceptor.login;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
 public class LoginFailedException extends Exception {
+
+    @SuppressWarnings("MissingSerialAnnotation")
+    private static final long serialVersionUID = -1L;
+
     private final LongIdKey loginId;
-    
+
     public LoginFailedException(LongIdKey loginId);
+
     public LoginFailedException(String message, LongIdKey loginId);
+
     public LoginFailedException(String message, Throwable cause, LongIdKey loginId);
+
     public LoginFailedException(Throwable cause, LongIdKey loginId);
 }
 ```
@@ -215,11 +271,18 @@ public class LoginFailedException extends Exception {
 package com.dwarfeng.subgrade.stack.exception;
 
 public class LoginFailedException extends Exception {
+
+    @SuppressWarnings("MissingSerialAnnotation")
+    private static final long serialVersionUID = -1L;
+
     private final String loginId;
-    
+
     public LoginFailedException(String loginId);
+
     public LoginFailedException(String message, String loginId);
+
     public LoginFailedException(String message, Throwable cause, String loginId);
+
     public LoginFailedException(Throwable cause, String loginId);
 }
 ```
@@ -261,7 +324,7 @@ public class LoginFailedException extends Exception {
 
 ```java
 public class CustomLoginRequiredAopManager implements LoginRequiredAopManager {
-    
+
     @Override
     public LongIdKey getLoginId(ProceedingJoinPoint pjp) throws Throwable {
         // 获取登录 ID
@@ -270,7 +333,7 @@ public class CustomLoginRequiredAopManager implements LoginRequiredAopManager {
         Long loginId = Long.parseLong(token);
         return new LongIdKey(loginId);
     }
-    
+
     @Override
     public Object onNotLogin(ProceedingJoinPoint pjp, LongIdKey loginId) throws Throwable {
         // 处理未登录情况
@@ -283,16 +346,17 @@ public class CustomLoginRequiredAopManager implements LoginRequiredAopManager {
 
 ```java
 public class CustomLoginRequiredAopManager implements LoginRequiredAopManager {
-    
+
     @Override
     public String getLoginId(ProceedingJoinPoint pjp) throws Throwable {
         // 获取登录 ID
         HttpServletRequest request = getRequest(pjp);
+        @SuppressWarnings("UnnecessaryLocalVariable")
         String token = request.getHeader("token");
         // 直接返回字符串，如果原来是 Long，可以转换为字符串
         return token;
     }
-    
+
     @Override
     public Object onNotLogin(ProceedingJoinPoint pjp, String loginId) throws Throwable {
         // 处理未登录情况
@@ -314,7 +378,7 @@ public class CustomLoginRequiredAopManager implements LoginRequiredAopManager {
 
 ```java
 public class CustomPermissionRequiredAopManager implements PermissionRequiredAopManager {
-    
+
     @Override
     public StringIdKey getUserKey(ProceedingJoinPoint pjp) throws Throwable {
         // 获取用户主键
@@ -322,10 +386,10 @@ public class CustomPermissionRequiredAopManager implements PermissionRequiredAop
         String userId = request.getHeader("userId");
         return new StringIdKey(userId);
     }
-    
+
     @Override
     public Object onMissingPermission(ProceedingJoinPoint pjp, StringIdKey userKey, List<String> missingPermissions)
-    throws Throwable {
+            throws Throwable {
         // 处理权限缺失情况
         return responseForMissingPermission(userKey.getStringId(), missingPermissions);
     }
@@ -336,19 +400,20 @@ public class CustomPermissionRequiredAopManager implements PermissionRequiredAop
 
 ```java
 public class CustomPermissionRequiredAopManager implements PermissionRequiredAopManager {
-    
+
     @Override
     public String getUserId(ProceedingJoinPoint pjp) throws Throwable {
         // 获取用户 ID
         HttpServletRequest request = getRequest(pjp);
+        @SuppressWarnings("UnnecessaryLocalVariable")
         String userId = request.getHeader("userId");
         // 直接返回字符串
         return userId;
     }
-    
+
     @Override
     public Object onMissingPermission(ProceedingJoinPoint pjp, String userId, List<String> missingPermissions)
-    throws Throwable {
+            throws Throwable {
         // 处理权限缺失情况
         return responseForMissingPermission(userId, missingPermissions);
     }
@@ -368,7 +433,7 @@ public class CustomPermissionRequiredAopManager implements PermissionRequiredAop
 
 ```java
 public class CustomTokenResolver implements TokenResolver {
-    
+
     @Override
     public StringIdKey resolve(String token) throws Exception {
         // 解析 token 获取用户主键
@@ -382,10 +447,11 @@ public class CustomTokenResolver implements TokenResolver {
 
 ```java
 public class CustomTokenResolver implements TokenResolver {
-    
+
     @Override
     public String resolve(String token) throws Exception {
         // 解析 token 获取用户 ID
+        @SuppressWarnings("UnnecessaryLocalVariable")
         String userId = parseToken(token);
         // 直接返回字符串
         return userId;
@@ -406,32 +472,32 @@ public class CustomTokenResolver implements TokenResolver {
 
 ```java
 public class CustomLoginHandler implements LoginHandler {
-    
+
     @Override
     public boolean checkPassword(StringIdKey userKey, String password) throws HandlerException {
         // 检查密码
         return checkUserPassword(userKey.getStringId(), password);
     }
-    
+
     @Override
     public LongIdKey login(StringIdKey userKey, String password) throws HandlerException {
         // 登录逻辑
         Long loginId = createLoginSession(userKey.getStringId(), password);
         return new LongIdKey(loginId);
     }
-    
+
     @Override
     public void logout(LongIdKey idKey) throws HandlerException {
         // 登出逻辑
         removeLoginSession(idKey.getLongId());
     }
-    
+
     @Override
     public boolean isLogin(LongIdKey idKey) throws HandlerException {
         // 检查登录状态
         return checkLoginSession(idKey.getLongId());
     }
-    
+
     @Override
     public void postpone(LongIdKey idKey) throws HandlerException {
         // 延长登录时间
@@ -444,33 +510,34 @@ public class CustomLoginHandler implements LoginHandler {
 
 ```java
 public class CustomLoginHandler implements LoginHandler {
-    
+
     @Override
     public boolean checkPassword(String userId, String password) throws HandlerException {
         // 检查密码
         return checkUserPassword(userId, password);
     }
-    
+
     @Override
     public String login(String userId, String password) throws HandlerException {
         // 登录逻辑
         // 注意：返回的登录 ID 必须具有一定的随机性，不得具有较为显著的规律
+        @SuppressWarnings("UnnecessaryLocalVariable")
         String loginId = createLoginSession(userId, password);
         return loginId;
     }
-    
+
     @Override
     public void logout(String loginId) throws HandlerException {
         // 登出逻辑
         removeLoginSession(loginId);
     }
-    
+
     @Override
     public boolean isLogin(String loginId) throws HandlerException {
         // 检查登录状态
         return checkLoginSession(loginId);
     }
-    
+
     @Override
     public void postpone(String loginId) throws HandlerException {
         // 延长登录时间
@@ -494,13 +561,13 @@ public class CustomLoginHandler implements LoginHandler {
 
 ```java
 public class CustomPermissionHandler implements PermissionHandler {
-    
+
     @Override
     public boolean hasPermission(StringIdKey userKey, String permission) throws HandlerException {
         // 检查权限
         return checkUserPermission(userKey.getStringId(), permission);
     }
-    
+
     @Override
     public List<String> getMissingPermissions(StringIdKey userKey, List<String> permissions) throws HandlerException {
         // 获取缺失的权限
@@ -513,13 +580,13 @@ public class CustomPermissionHandler implements PermissionHandler {
 
 ```java
 public class CustomPermissionHandler implements PermissionHandler {
-    
+
     @Override
     public boolean hasPermission(String userId, String permission) throws HandlerException {
         // 检查权限
         return checkUserPermission(userId, permission);
     }
-    
+
     @Override
     public List<String> getMissingPermissions(String userId, List<String> permissions) throws HandlerException {
         // 获取缺失的权限
@@ -539,13 +606,16 @@ public class CustomPermissionHandler implements PermissionHandler {
 
 ```java
 public class CustomTokenHandler implements TokenHandler {
-    
+
     @Override
     public Long getTokenId(HttpServletRequest request) throws HandlerException {
-        // 获取 Token ID（已废弃）
-        return null;
+        // 获取登录主键
+        String token = request.getHeader("token");
+        @SuppressWarnings("UnnecessaryLocalVariable")
+        Long loginId = parseTokenToLoginId(token);
+        return loginId;
     }
-    
+
     @Override
     public LongIdKey getLoginKey(HttpServletRequest request) throws HandlerException {
         // 获取登录主键
@@ -553,7 +623,7 @@ public class CustomTokenHandler implements TokenHandler {
         Long loginId = parseTokenToLoginId(token);
         return new LongIdKey(loginId);
     }
-    
+
     @Override
     public StringIdKey getUserKey(HttpServletRequest request) throws HandlerException {
         // 获取用户主键
@@ -568,19 +638,21 @@ public class CustomTokenHandler implements TokenHandler {
 
 ```java
 public class CustomTokenHandler implements TokenHandler {
-    
+
     @Override
     public String getUserId(HttpServletRequest request) throws HandlerException {
         // 获取用户 ID
         String token = request.getHeader("token");
+        @SuppressWarnings("UnnecessaryLocalVariable")
         String userId = parseTokenToUserId(token);
         return userId;
     }
-    
+
     @Override
     public String getLoginId(HttpServletRequest request) throws HandlerException {
         // 获取登录 ID
         String token = request.getHeader("token");
+        @SuppressWarnings("UnnecessaryLocalVariable")
         String loginId = parseTokenToLoginId(token);
         return loginId;
     }
@@ -600,29 +672,30 @@ public class CustomTokenHandler implements TokenHandler {
 **变更前**：
 
 ```java
-import com.dwarfeng.subgrade.sdk.interceptor.login.LoginFailedException;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-
-try {
-    // 业务逻辑
-} catch (LoginFailedException e) {
-    LongIdKey loginId = e.getLoginId();
-    // 处理异常
-    log.error("登录失败: {}", loginId.getLongId());
+public void before() {
+    try {
+        // 业务逻辑。
+        doSomeBusiness();
+    } catch (LoginFailedException e) {
+        LongIdKey loginId = e.getLoginId();
+        // 处理异常。
+        log.error("登录失败: {}", loginId.getLongId());
+    }
 }
 ```
 
 **变更后**：
 
 ```java
-import com.dwarfeng.subgrade.stack.exception.LoginFailedException;
-
-try {
-    // 业务逻辑
-} catch (LoginFailedException e) {
-    String loginId = e.getLoginId();
-    // 处理异常
-    log.error("登录失败: {}", loginId);
+public void after() {
+    try {
+        // 业务逻辑。
+        doSomeBusiness();
+    } catch (LoginFailedException e) {
+        String loginId = e.getLoginId();
+        // 处理异常。
+        log.error("登录失败: {}", loginId);
+    }
 }
 ```
 
@@ -641,39 +714,53 @@ try {
 **变更前**：
 
 ```java
-@LoginRequired
-public ResponseData<User> getUserInfo(@RequestLogin LongIdKey loginId) {
-    // 获取用户信息
-    Long id = loginId.getLongId();
-    User user = userService.getUser(id);
-    return ResponseDataUtil.good(user);
-}
+import java.util.List;
+// import more...
 
-@PermissionRequired("user:view")
-public ResponseData<List<User>> listUsers(@RequestUser StringIdKey userKey) {
-    // 获取用户列表
-    String userId = userKey.getStringId();
-    List<User> users = userService.listUsers(userId);
-    return ResponseDataUtil.good(users);
+@Service
+public class CustomService {
+
+    @LoginRequired
+    public ResponseData<User> getUserInfo(@RequestLogin LongIdKey loginId) {
+        // 获取用户信息
+        Long id = loginId.getLongId();
+        User user = userService.getUser(id);
+        return ResponseDataUtil.good(user);
+    }
+
+    @PermissionRequired("user:view")
+    public ResponseData<List<User>> listUsers(@RequestUser StringIdKey userKey) {
+        // 获取用户列表
+        String userId = userKey.getStringId();
+        List<User> users = userService.listUsers(userId);
+        return ResponseDataUtil.good(users);
+    }
 }
 ```
 
 **变更后**：
 
 ```java
-@LoginRequired
-public ResponseData<User> getUserInfo(@RequestLogin String loginId) {
-    // 获取用户信息
-    // 如果原来是 Long，可以转换为 Long：Long id = Long.parseLong(loginId);
-    User user = userService.getUser(loginId);
-    return ResponseDataUtil.good(user);
-}
+import java.util.List;
+// import more...
 
-@PermissionRequired("user:view")
-public ResponseData<List<User>> listUsers(@RequestUser String userId) {
-    // 获取用户列表
-    List<User> users = userService.listUsers(userId);
-    return ResponseDataUtil.good(users);
+@Service
+public class CustomService {
+
+    @LoginRequired
+    public ResponseData<User> getUserInfo(@RequestLogin String loginId) {
+        // 获取用户信息
+        // 如果原来是 Long，可以转换为 Long：Long id = Long.parseLong(loginId);
+        User user = userService.getUser(loginId);
+        return ResponseDataUtil.good(user);
+    }
+
+    @PermissionRequired("user:view")
+    public ResponseData<List<User>> listUsers(@RequestUser String userId) {
+        // 获取用户列表
+        List<User> users = userService.listUsers(userId);
+        return ResponseDataUtil.good(users);
+    }
 }
 ```
 
