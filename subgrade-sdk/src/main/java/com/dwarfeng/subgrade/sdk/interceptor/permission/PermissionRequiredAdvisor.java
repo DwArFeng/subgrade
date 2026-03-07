@@ -13,7 +13,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 权限需求增强。
@@ -58,21 +60,30 @@ public class PermissionRequiredAdvisor {
         }
         List<String> permissionList = Arrays.asList(permissionRequired.value());
 
-        // 获取用户缺失的权限。
-        LOGGER.debug("查询用户缺失的权限...");
-        List<String> missingPermissions = permissionHandler.getMissingPermissions(userId, permissionList);
-
-        // 如果用户缺失权限，则调用 manager 的相关调度方法。
-        if (!missingPermissions.isEmpty()) {
-            LOGGER.debug("用户缺失权限，调用 manager 的相关调度方法...");
-            for (String s : missingPermissions) {
-                LOGGER.debug("\t{}", s);
-            }
-            return manager.onMissingPermission(pjp, userId, missingPermissions);
+        /*
+         * 在一般情况下，hasPermission 的实现效率要远高于 getMissingPermissions 的实现效率，
+         * 因此先调用 hasPermission 方法，如果 hasPermission 方法返回 false，则调用 getMissingPermissions 方法。
+         */
+        boolean hasAllPermission = permissionHandler.hasPermission(userId, permissionList);
+        LOGGER.debug("permissionHandler.hasPermission(userId, permissionList) = {}", hasAllPermission);
+        if (hasAllPermission) {
+            LOGGER.debug("用户具有所需的权限，直接调度原始方法...");
+            return pjp.proceed(pjp.getArgs());
         }
 
-        // 原始方法的调度。
-        return pjp.proceed(pjp.getArgs());
+        // 代码执行到此处意味着用户缺失权限，调用 getMissingPermissions 方法获取用户缺失的权限。
+        LOGGER.debug("查询用户缺失的权限...");
+        List<String> missingPermissions = permissionHandler.getMissingPermissions(userId, permissionList);
+        if (Objects.isNull(missingPermissions)) {
+            missingPermissions = Collections.emptyList();
+        }
+
+        // 调用 manager 的相关调度方法。
+        LOGGER.debug("用户缺失权限，调用 manager 的相关调度方法...");
+        for (String s : missingPermissions) {
+            LOGGER.debug("\t{}", s);
+        }
+        return manager.onMissingPermission(pjp, userId, missingPermissions);
     }
 
     public PermissionHandler getPermissionHandler() {

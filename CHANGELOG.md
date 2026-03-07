@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化部分 AOP Advisor 的执行效率。
+  - com.dwarfeng.subgrade.sdk.interceptor.permission.PermissionRequiredAdvisor。
+
 - 依赖升级。
   - 升级 `dutil` 依赖版本为 `0.4.1.a-beta` 以规避漏洞。
 
