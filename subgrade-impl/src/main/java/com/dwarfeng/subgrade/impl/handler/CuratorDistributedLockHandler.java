@@ -152,10 +152,8 @@ public class CuratorDistributedLockHandler implements DistributedLockHandler {
 
             rest();
             startedFlag = false;
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         } finally {
             lock.unlock();
         }

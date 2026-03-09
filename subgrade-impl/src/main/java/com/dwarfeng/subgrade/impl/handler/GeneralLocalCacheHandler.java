@@ -1,5 +1,6 @@
 package com.dwarfeng.subgrade.impl.handler;
 
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.LocalCacheHandler;
 import org.slf4j.Logger;
@@ -72,7 +73,7 @@ public class GeneralLocalCacheHandler<K, V> implements LocalCacheHandler<K, V> {
                 lock.writeLock().unlock();
             }
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -114,7 +115,7 @@ public class GeneralLocalCacheHandler<K, V> implements LocalCacheHandler<K, V> {
                 lock.writeLock().unlock();
             }
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 

@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 优化部分 Handler 实现类的异常处理逻辑。
+  - com.dwarfeng.subgrade.impl.handler.CuratorDistributedLockHandler。
+  - com.dwarfeng.subgrade.impl.handler.ExpirableLocalCacheHandler。
+  - com.dwarfeng.subgrade.impl.handler.GeneralLocalCacheHandler。
+
 - 为权限需求注解添加 SPEL 表达式解析功能。
   - 新增系统属性 `subgrade.permissionRequired.useSpel` 用于控制是否启用 SPEL 解析。
   - 在 `PermissionRequiredAdvisor` 中实现 SPEL 表达式解析逻辑，支持在权限值中使用 SPEL 表达式。
