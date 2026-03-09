@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 为权限需求注解添加 SPEL 表达式解析功能。
+  - 新增系统属性 `subgrade.permissionRequired.useSpel` 用于控制是否启用 SPEL 解析。
+  - 在 `PermissionRequiredAdvisor` 中实现 SPEL 表达式解析逻辑，支持在权限值中使用 SPEL 表达式。
+
 - 登录与权限处理器接口命名规范化。
   - 新增 com.dwarfeng.subgrade.stack.handler.LoginPermissionHandler。
   - 将 com.dwarfeng.subgrade.stack.handler.LoginPermHandler 标记为废弃并继承 LoginPermissionHandler。

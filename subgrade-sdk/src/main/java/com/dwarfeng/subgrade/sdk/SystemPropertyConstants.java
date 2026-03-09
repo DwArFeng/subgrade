@@ -56,6 +56,13 @@ public final class SystemPropertyConstants {
     @Deprecated
     public static final String LOG_PAGING_WARNING = VALUE_USE_STRICT_PAGING;
 
+    /**
+     * 启用权限需求注解的 SPEL 表达式解析功能。
+     *
+     * @since 1.7.3
+     */
+    public static final String VALUE_PERMISSION_REQUIRED_USE_SPEL = "subgrade.permissionRequired.useSpel";
+
     private SystemPropertyConstants() {
         throw new IllegalStateException("禁止实例化");
     }
