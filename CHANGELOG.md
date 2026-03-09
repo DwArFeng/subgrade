@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/ExpirableLocalCacheHandlerBasics.md。
+
 - 优化部分 Handler 实现类的异常处理逻辑。
   - com.dwarfeng.subgrade.impl.handler.CuratorDistributedLockHandler。
   - com.dwarfeng.subgrade.impl.handler.ExpirableLocalCacheHandler。

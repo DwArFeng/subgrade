@@ -36,6 +36,8 @@
 - [Local Cache Basics](./LocalCacheBasics.md) - 本地缓存基础，说明了本项目的本地缓存处理器基础功能以及接口。
 - [General Local Cache Handler Basics](./GeneralLocalCacheHandlerBasics.md) -
   通用本地缓存处理器基础，说明了 GeneralLocalCacheHandler 的实现和使用方法。
+- [Expirable Local Cache Handler Basics](./ExpirableLocalCacheHandlerBasics.md) -
+  带过期时间的本地缓存处理器基础，说明了 ExpirableLocalCacheHandler 的实现和使用方法。
 
 ## 升级指导
 
