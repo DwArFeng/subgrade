@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 登录与权限处理器接口命名规范化。
+  - 新增 com.dwarfeng.subgrade.stack.handler.LoginPermissionHandler。
+  - 将 com.dwarfeng.subgrade.stack.handler.LoginPermHandler 标记为废弃并继承 LoginPermissionHandler。
+
 - 增加表达式解析机制及其实现。
   - com.dwarfeng.subgrade.stack.expression.ExpressionParser。
   - com.dwarfeng.subgrade.impl.expression.AbstractExpressionParser。
