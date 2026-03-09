@@ -54,6 +54,7 @@ public final class ServiceExceptionHelper {
         map.put(LoginFailedException.class, ServiceExceptionCodes.LOGIN_FAILED);
         map.put(GenerateException.class, ServiceExceptionCodes.GENERATE_FAILED);
         map.put(PagingException.class, ServiceExceptionCodes.PAGING_FAILED);
+        map.put(ExpressionParseException.class, ServiceExceptionCodes.EXPRESSION_PARSE_FAILED);
 
         // 映射过时的异常，以保证兼容性。
         @SuppressWarnings("deprecation")

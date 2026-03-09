@@ -117,6 +117,14 @@ public final class ServiceExceptionCodes {
     public static final ServiceException.Code PAGING_FAILED =
             new ServiceException.Code(offset(130), "paging failed");
 
+    /**
+     * 表达式解析失败。
+     *
+     * @since 1.7.3
+     */
+    public static final ServiceException.Code EXPRESSION_PARSE_FAILED =
+            new ServiceException.Code(offset(140), "expression parse failed");
+
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
     }
@@ -156,6 +164,7 @@ public final class ServiceExceptionCodes {
         NOT_IMPLEMENTED_YET.setCode(offset(110));
         GENERATE_FAILED.setCode(offset(120));
         PAGING_FAILED.setCode(offset(130));
+        EXPRESSION_PARSE_FAILED.setCode(offset(140));
     }
 
     private ServiceExceptionCodes() {

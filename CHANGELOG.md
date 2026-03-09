@@ -4,6 +4,13 @@
 
 ### 功能构建
 
+- 增加表达式解析机制及其实现。
+  - com.dwarfeng.subgrade.stack.expression.ExpressionParser。
+  - com.dwarfeng.subgrade.impl.expression.AbstractExpressionParser。
+  - com.dwarfeng.subgrade.impl.expression.PlaceholderExpressionParser。
+  - com.dwarfeng.subgrade.impl.expression.PlainTextExpressionParser。
+  - com.dwarfeng.subgrade.impl.expression.SpelExpressionParser。
+
 - 优化部分 AOP Advisor 的执行效率。
   - com.dwarfeng.subgrade.sdk.interceptor.permission.PermissionRequiredAdvisor。
 
