@@ -9,7 +9,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分功能实体的静态方法的签名错误。
+  - com.dwarfeng.subgrade.sdk.bean.key.JSFixedFastJsonLongIdKey.toStackBean。
 
 ### 功能移除
 

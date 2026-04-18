@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonLongIdKey implements Bean {
 
-    private static final long serialVersionUID = 8863415673517584070L;
+    private static final long serialVersionUID = 463401283932344584L;
 
     /**
      * 根据指定的 LongIdKey 生成 JSFixedFastJsonLongIdKey。
@@ -33,16 +33,16 @@ public class JSFixedFastJsonLongIdKey implements Bean {
     /**
      * 根据指定的 JSFixedFastJsonLongIdKey 生成 LongIdKey。
      *
-     * @param fastJsonLongIdKey 指定的 JSFixedFastJsonLongIdKey。
+     * @param jsFixedFastJsonLongIdKey 指定的 JSFixedFastJsonLongIdKey。
      * @return 通过指定的 JSFixedFastJsonLongIdKey 生成的 LongIdKey。
      * @since 1.2.13
      */
-    public static JSFixedFastJsonLongIdKey toStackBean(JSFixedFastJsonLongIdKey fastJsonLongIdKey) {
-        if (Objects.isNull(fastJsonLongIdKey)) {
+    public static LongIdKey toStackBean(JSFixedFastJsonLongIdKey jsFixedFastJsonLongIdKey) {
+        if (Objects.isNull(jsFixedFastJsonLongIdKey)) {
             return null;
         } else {
-            return new JSFixedFastJsonLongIdKey(
-                    fastJsonLongIdKey.getLongId()
+            return new LongIdKey(
+                    jsFixedFastJsonLongIdKey.getLongId()
             );
         }
     }
