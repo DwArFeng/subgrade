@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
+
 - 优化开发环境支持。
   - 在 .gitignore 中添加 Vibe Coding 相关文件的忽略规则。
 

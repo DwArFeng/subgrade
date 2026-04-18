@@ -30,21 +30,47 @@
 
 ## 版本黑名单
 
-| 编号                                                 | 大版本   | 起始版本    | 结束版本     | 原因                        |
-|----------------------------------------------------|-------|---------|----------|---------------------------|
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.7.x | 1.7.0.a | 1.7.0.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误 |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.6.x | 1.6.0.a | 1.6.0.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误 |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.5.x | 1.5.0.a | 1.5.11.a | Redis 缓存在顺序敏感场景可能导致数据顺序错误 |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.4.x | 1.4.0.a | 1.4.8.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误 |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.3.x | 1.3.0.a | 1.3.3.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误 |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.2.x | 1.2.0.a | 1.2.14.a | Redis 缓存在顺序敏感场景可能导致数据顺序错误 |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.1.x | 1.1.0.a | 1.1.8.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误 |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.0.x | 1.0.0.a | 1.0.2.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误 |
-| [BLACKLIST-LEGACY-1.5.5.a](#BLACKLIST-LEGACY-155a) | 1.5.x | 1.5.5.a | 1.5.5.a  | 核心类构造器方法存在缺陷              |
-| [BLACKLIST-LEGACY-1.5.4.a](#BLACKLIST-LEGACY-154a) | 1.5.x | 1.5.4.a | 1.5.4.a  | 核心类构造器方法存在缺陷              |
-| [BLACKLIST-LEGACY-1.4.8.a](#BLACKLIST-LEGACY-148a) | 1.4.x | 1.4.8.a | 1.4.8.a  | 核心类存在严重 bug               |
+| 编号                                                 | 大版本   | 起始版本     | 结束版本     | 原因                                            |
+|----------------------------------------------------|-------|----------|----------|-----------------------------------------------|
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.7.x | 1.7.0.a  | 1.7.3.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.6.x | 1.6.0.a  | 1.6.0.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.5.x | 1.5.0.a  | 1.5.11.a | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.4.x | 1.4.0.a  | 1.4.8.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.3.x | 1.3.0.a  | 1.3.3.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.2.x | 1.2.13.a | 1.2.14.a | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.7.x | 1.7.0.a  | 1.7.0.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.6.x | 1.6.0.a  | 1.6.0.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.5.x | 1.5.0.a  | 1.5.11.a | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.4.x | 1.4.0.a  | 1.4.8.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.3.x | 1.3.0.a  | 1.3.3.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.2.x | 1.2.0.a  | 1.2.14.a | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.1.x | 1.1.0.a  | 1.1.8.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.0.x | 1.0.0.a  | 1.0.2.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
+| [BLACKLIST-LEGACY-1.5.5.a](#BLACKLIST-LEGACY-155a) | 1.5.x | 1.5.5.a  | 1.5.5.a  | 核心类构造器方法存在缺陷                                  |
+| [BLACKLIST-LEGACY-1.5.4.a](#BLACKLIST-LEGACY-154a) | 1.5.x | 1.5.4.a  | 1.5.4.a  | 核心类构造器方法存在缺陷                                  |
+| [BLACKLIST-LEGACY-1.4.8.a](#BLACKLIST-LEGACY-148a) | 1.4.x | 1.4.8.a  | 1.4.8.a  | 核心类存在严重 bug                                   |
 
 ## 详细原因
+
+### BLACKLIST-20260418.1
+
+特性编号：F-20260418-01。
+
+原因：`JSFixedFastJsonLongIdKey.toStackBean` 的返回类型与语义不一致：
+方法名表示将 FastJson 适配类型转换为栈层 `LongIdKey`，但实现错误地声明返回 `JSFixedFastJsonLongIdKey`，
+并构造 `new JSFixedFastJsonLongIdKey(...)` 而非 `new LongIdKey(...)`。
+该缺陷在引入 `toStackBean` 后即存在，直至 1.8.0 发布前修复（见 `CHANGELOG.md` 中 `Release_1.8.0_20260418_build_A`）。
+
+- 受影响模块/类：
+  - `com.dwarfeng.subgrade.sdk.bean.key.JSFixedFastJsonLongIdKey`（`toStackBean` 静态方法）。
+- 典型触发条件：
+  - 调用 `JSFixedFastJsonLongIdKey.toStackBean(...)` 并期望得到栈层 `LongIdKey`。
+- 典型症状：
+  - 按 `LongIdKey` 类型承接或强转时出现类型不匹配；或键类型分支判断与预期不符。
+- 影响范围：
+  - 直接或间接依赖上述方法完成 `JSFixedFastJsonLongIdKey` → `LongIdKey` 转换的上层功能与接口。
+
+迁移建议：升级至 1.8.0.a 及以上版本。
 
 ### BLACKLIST-20251031.1
 
