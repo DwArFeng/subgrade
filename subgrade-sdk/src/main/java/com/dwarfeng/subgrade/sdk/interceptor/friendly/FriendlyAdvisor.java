@@ -77,7 +77,6 @@ import java.util.stream.Collectors;
  * @author DwArFeng
  * @since 1.0.2
  */
-@SuppressWarnings("GrazieInspection")
 @Component
 @Aspect
 public class FriendlyAdvisor implements ApplicationContextAware, EmbeddedValueResolverAware {
