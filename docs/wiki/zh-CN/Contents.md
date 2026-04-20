@@ -22,6 +22,7 @@
 ### 数据访问
 
 - [Data Access Basics](./DataAccessBasics.md) - 数据访问基础，说明了本项目的数据访问基础功能以及接口。
+- [Cache Basics](./CacheBasics.md) - 数据缓存基础，说明了数据缓存接口、默认实现及与服务层的典型协作方式。
 
 ### 异常映射
 
