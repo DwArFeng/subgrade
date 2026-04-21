@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/DaoBasics.md。
+
 - 优化部分接口的继承关系。
   - com.dwarfeng.subgrade.stack.dao.BatchReadOnlyDao。
 
