@@ -138,7 +138,7 @@ public class PermissionRequiredAdvisor {
         String userId = manager.getUserId(pjp);
         LOGGER.debug("manager.getUserId(pjp) = {}", userId);
 
-        //获取方法所需的执行权限。
+        // 获取方法所需的执行权限。
         LOGGER.debug("扫描 @PermissionRequired 注解，获取方法执行所需的权限");
         PermissionRequired permissionRequired = AdvisorUtil.directMethodAnnotation(pjp, PermissionRequired.class);
         for (String s : permissionRequired.value()) {
