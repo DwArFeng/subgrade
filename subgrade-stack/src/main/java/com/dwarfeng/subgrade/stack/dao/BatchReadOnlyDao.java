@@ -12,7 +12,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 1.1.0
  */
-public interface BatchReadOnlyDao<K extends Key, E extends Entity<K>> extends Dao {
+public interface BatchReadOnlyDao<K extends Key, E extends Entity<K>> extends ReadOnlyDao<K, E> {
 
     /**
      * 查询指定的键是否全部存在。
