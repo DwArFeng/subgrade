@@ -41,6 +41,15 @@
 - [Expirable Local Cache Handler Basics](./ExpirableLocalCacheHandlerBasics.md) -
   带过期时间的本地缓存处理器基础，说明了 ExpirableLocalCacheHandler 的实现和使用方法。
 
+### 业务逻辑可重入
+
+- [General Online Handler Basics](./GeneralOnlineHandlerBasics.md) -
+  通用线上处理器基础，说明了 GeneralOnlineHandler 的实现和使用方法。
+- [General Startable Handler Basics](./GeneralStartableHandlerBasics.md) -
+  通用可启动处理器基础，说明了 GeneralStartableHandler 的实现和使用方法。
+- [Curator Distributed Lock Handler Basics](./CuratorDistributedLockHandlerBasics.md) -
+  Curator 分布式锁处理器基础，说明了 CuratorDistributedLockHandler 的实现和使用方法。
+
 ## 升级指导
 
 - [Upgrade Guide 1.7.0](./UpgradeGuide1.7.0.md) - 升级指南 1.7.0，详细说明了从 1.6.x 及更早版本升级到 1.7.0

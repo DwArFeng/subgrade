@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/CuratorDistributedLockHandlerBasics.md。
+  - docs/wiki/zh-CN/GeneralOnlineHandlerBasics.md。
+  - docs/wiki/zh-CN/GeneralStartableHandlerBasics.md。
+
 - Wiki 更新。
   - docs/wiki/zh-CN/InstallBySourceCode.md。
 
