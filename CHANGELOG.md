@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/InstallBySourceCode.md。
+
 - 行为分析优化。
   - `BehaviorAnalyseAdvisor` 行为分析日志改为 SLF4J 占位符形式输出，由底层在需要输出时再格式化，减少切面内字符串拼接。
   - `BehaviorAnalyseAdvisor` 详细日志辅助方法 `mayDetailedLog` 同步提供占位符重载。

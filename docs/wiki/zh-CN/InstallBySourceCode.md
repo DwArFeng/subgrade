@@ -7,13 +7,13 @@
 使用 git 进行源码下载。
 
 ```shell
-git clone git@github.com:DwArFeng/supgrade.git
+git clone git@github.com:DwArFeng/subgrade.git
 ```
 
 对于中国用户，可以使用 gitee 进行高速下载。
 
 ```shell
-git clone git@gitee.com:dwarfeng/supgrade.git
+git clone git@gitee.com:dwarfeng/subgrade.git
 ```
 
 ## 切换版本
