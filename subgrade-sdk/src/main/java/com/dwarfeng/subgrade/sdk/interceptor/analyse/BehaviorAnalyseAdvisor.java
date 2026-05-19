@@ -117,57 +117,57 @@ public class BehaviorAnalyseAdvisor {
         // 行为分析开始并记录日志。
         logger.log("行为分析开始...");
         String fullMethodName = metadata.getFullMethodName();
-        logger.log("方法执行开始: " + fullMethodName + "...");
+        logger.log("方法执行开始: {}...", fullMethodName);
         if (args.length == 0) {
             logger.log("  参数: 无");
         } else {
             for (int i = 0; i < args.length; i++) {
                 if (skipParamRecord[i]) {
-                    logger.log("  参数 " + i + "/" + args.length + ": SkipRecord 注解生效, 不记录此参数");
+                    logger.log("  参数 {}/{}: SkipRecord 注解生效, 不记录此参数", i, args.length);
                 } else {
-                    logger.log("  参数 " + i + "/" + args.length + ": " + smartToString(args[i]));
+                    logger.log("  参数 {}/{}: {}", i, args.length, smartToString(args[i]));
                 }
             }
         }
-        mayDetailedLog(logger, "开始计时: " + fullMethodName + "...");
+        mayDetailedLog(logger, "开始计时: {}...", fullMethodName);
         long firstTimeStamp = System.currentTimeMillis();
-        mayDetailedLog(logger, "获取当前系统时间戳: " + firstTimeStamp);
+        mayDetailedLog(logger, "获取当前系统时间戳: {}", firstTimeStamp);
 
         // 执行原始方法。
         try {
-            mayDetailedLog(logger, "调用原始方法: " + fullMethodName + "...");
+            mayDetailedLog(logger, "调用原始方法: {}...", fullMethodName);
             result = pjp.proceed(args);
         } catch (Throwable t) {
             throwable = t;
         }
 
         // 计算方法执行时间。
-        mayDetailedLog(logger, "结束计时: " + fullMethodName + "...");
+        mayDetailedLog(logger, "结束计时: {}...", fullMethodName);
         long lastTimeStamp = System.currentTimeMillis();
         long timeCost = lastTimeStamp - firstTimeStamp;
-        mayDetailedLog(logger, "获取当前系统时间戳: " + lastTimeStamp);
+        mayDetailedLog(logger, "获取当前系统时间戳: {}", lastTimeStamp);
         mayDetailedLog(
-                logger, "计算方法执行时间: " + lastTimeStamp + " - " + firstTimeStamp + " = " + timeCost + " 毫秒"
+                logger, "计算方法执行时间: {} - {} = {} 毫秒", lastTimeStamp, firstTimeStamp, timeCost
         );
 
         // 根据 result 和 throwable 按条件记录日志。
-        logger.log("方法执行结束: " + fullMethodName);
+        logger.log("方法执行结束: {}", fullMethodName);
         if (Objects.nonNull(throwable)) {
             logger.log("  抛出异常: ", throwable);
         } else {
             if (skipResultRecord) {
                 logger.log("  返回对象: SkipRecord 注解生效, 不记录返回对象");
             } else {
-                logger.log("  返回对象: " + smartToString(result));
+                logger.log("  返回对象: {}", smartToString(result));
             }
         }
-        logger.log("  用时: " + timeCost + " 毫秒");
+        logger.log("  用时: {} 毫秒", timeCost);
 
         // 行为分析结束并记录日志。
         if (Objects.nonNull(throwable)) {
-            logger.log("行为分析结束, 方法: " + fullMethodName + ", 用时: " + timeCost + " 毫秒, 抛出异常");
+            logger.log("行为分析结束, 方法: {}, 用时: {} 毫秒, 抛出异常", fullMethodName, timeCost);
         } else {
-            logger.log("行为分析结束, 方法: " + fullMethodName + ", 用时: " + timeCost + " 毫秒, 正常返回");
+            logger.log("行为分析结束, 方法: {}, 用时: {} 毫秒, 正常返回", fullMethodName, timeCost);
         }
 
         // 根据 result 和 throwable 按条件返回结果或抛出异常。
@@ -223,11 +223,67 @@ public class BehaviorAnalyseAdvisor {
         );
     }
 
+    /**
+     * 在详细行为分析日志开启时输出一条完整消息（无占位符）。
+     *
+     * @param logger  单级日志记录器
+     * @param message 日志正文
+     */
+    // mayDetailedLog 重载方法，用于加速 mayDetailedLog 的调用，避免不必要的字符串拼接开销，故忽略相关警告。
+    @SuppressWarnings({"SameParameterValue", "unused"})
     private void mayDetailedLog(SingleLevelLogger logger, String message) {
         if (!DETAILED_BEHAVIOR_ANALYSE_LOG) {
             return;
         }
         logger.log(message);
+    }
+
+    /**
+     * 在详细行为分析日志开启时输出一条占位符格式的日志；占位符语义与底层 SLF4J 一致。
+     *
+     * @param logger 单级日志记录器
+     * @param format 消息格式串（含 <code>{}</code> 占位）
+     * @param arg    填充第一个占位的参数
+     */
+    // mayDetailedLog 重载方法，用于加速 mayDetailedLog 的调用，避免不必要的字符串拼接开销，故忽略相关警告。
+    @SuppressWarnings({"SameParameterValue", "unused"})
+    private void mayDetailedLog(SingleLevelLogger logger, String format, Object arg) {
+        if (!DETAILED_BEHAVIOR_ANALYSE_LOG) {
+            return;
+        }
+        logger.log(format, arg);
+    }
+
+    /**
+     * 在详细行为分析日志开启时输出一条占位符格式的日志；占位符语义与底层 SLF4J 一致。
+     *
+     * @param logger 单级日志记录器
+     * @param format 消息格式串（含 <code>{}</code> 占位）
+     * @param arg1   填充占位用的第一个参数
+     * @param arg2   填充占位用的第二个参数
+     */
+    // mayDetailedLog 重载方法，用于加速 mayDetailedLog 的调用，避免不必要的字符串拼接开销，故忽略相关警告。
+    @SuppressWarnings({"SameParameterValue", "unused"})
+    private void mayDetailedLog(SingleLevelLogger logger, String format, Object arg1, Object arg2) {
+        if (!DETAILED_BEHAVIOR_ANALYSE_LOG) {
+            return;
+        }
+        logger.log(format, arg1, arg2);
+    }
+
+    /**
+     * 在详细行为分析日志开启时输出一条占位符格式的日志；占位符语义与底层 SLF4J 一致。
+     *
+     * @param logger    单级日志记录器
+     * @param format    消息格式串（含 <code>{}</code> 占位）
+     * @param arguments 依次填充占位的参数
+     */
+    @SuppressWarnings({"SameParameterValue", "unused"})
+    private void mayDetailedLog(SingleLevelLogger logger, String format, Object... arguments) {
+        if (!DETAILED_BEHAVIOR_ANALYSE_LOG) {
+            return;
+        }
+        logger.log(format, arguments);
     }
 
     private String smartToString(Object obj) {
