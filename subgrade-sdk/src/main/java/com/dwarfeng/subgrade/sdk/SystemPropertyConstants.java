@@ -63,6 +63,14 @@ public final class SystemPropertyConstants {
      */
     public static final String VALUE_PERMISSION_REQUIRED_USE_SPEL = "subgrade.permissionRequired.useSpel";
 
+    /**
+     * 启用行为分析元数据缓存。
+     *
+     * @since 1.8.3
+     */
+    public static final String VALUE_BEHAVIOR_ANALYSE_METADATA_CACHE_ENABLED =
+            "subgrade.behaviorAnalyse.metadataCache.enabled";
+
     private SystemPropertyConstants() {
         throw new IllegalStateException("禁止实例化");
     }

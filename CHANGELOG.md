@@ -4,7 +4,10 @@
 
 ### 功能构建
 
-- (无)
+- 行为分析优化。
+  - 新增系统属性 `subgrade.behaviorAnalyse.metadataCache.enabled`，用于开关行为分析元数据缓存。
+  - 优化 `BehaviorAnalyseAdvisor`，按需缓存方法级行为分析元数据，减少重复注解与反射解析；关闭该开关时仍按原有方式逐次解析。
+  - 日志记录器缓存改为基于 `ClassValue` 管理，降低动态类加载场景下因静态缓存持有类引用而导致的类卸载受阻风险。
 
 ### Bug 修复
 
