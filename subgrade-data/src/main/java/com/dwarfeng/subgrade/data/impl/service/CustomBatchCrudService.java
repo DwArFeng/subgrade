@@ -1,0 +1,356 @@
+package com.dwarfeng.subgrade.data.impl.service;
+
+import com.dwarfeng.subgrade.basic.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.basic.stack.bean.key.Key;
+import com.dwarfeng.subgrade.basic.stack.exception.GenerateException;
+import com.dwarfeng.subgrade.basic.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.basic.stack.exception.ServiceExceptionMapper;
+import com.dwarfeng.subgrade.basic.stack.generation.KeyGenerator;
+import com.dwarfeng.subgrade.basic.stack.log.LogLevel;
+import com.dwarfeng.subgrade.data.sdk.exception.ServiceExceptionCodeSuppliers;
+import com.dwarfeng.subgrade.data.sdk.service.AbstractBatchCrudService;
+import com.dwarfeng.subgrade.data.sdk.service.custom.operation.BatchCrudOperation;
+
+import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+/**
+ * 自定义的批量实体增删改查服务。
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务或同步锁，请通过代理的方式在代理类中添加事务或者同步锁。
+ *
+ * @author DwArFeng
+ * @since 0.2.1-beta
+ */
+@SuppressWarnings("DuplicatedCode")
+public class CustomBatchCrudService<K extends Key, E extends Entity<K>> extends AbstractBatchCrudService<K, E> {
+
+    @NotNull
+    private BatchCrudOperation<K, E> operation;
+
+    @NotNull
+    private KeyGenerator<K> keyGenerator;
+
+    /**
+     * 构造器方法。
+     *
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @param operation         服务的增删改查操作。
+     * @param keyGenerator      主键生成器。
+     * @since 1.5.4
+     */
+    public CustomBatchCrudService(
+            @NotNull ServiceExceptionMapper sem,
+            @NotNull LogLevel exceptionLogLevel,
+            @NotNull BatchCrudOperation<K, E> operation,
+            @NotNull KeyGenerator<K> keyGenerator
+    ) {
+        super(sem, exceptionLogLevel);
+        this.operation = operation;
+        this.keyGenerator = keyGenerator;
+    }
+
+    /**
+     * 构造器方法。
+     *
+     * <p>
+     * 由于在 1.5.4 后，该类的继承关系发生了变化，因此该构造器方法已经被废弃。<br>
+     * 请使用 {@link #CustomBatchCrudService(ServiceExceptionMapper, LogLevel, BatchCrudOperation, KeyGenerator)}。<br>
+     * 新的构造器调整了参数顺序，使其更符合新的继承形式对应的参数顺序。
+     *
+     * @param operation         服务的增删改查操作。
+     * @param keyGenerator      主键生成器。
+     * @param sem               服务异常映射器。
+     * @param exceptionLogLevel 异常的日志级别。
+     * @see #CustomBatchCrudService(ServiceExceptionMapper, LogLevel, BatchCrudOperation, KeyGenerator)
+     * @deprecated 使用 {@link #CustomBatchCrudService(ServiceExceptionMapper, LogLevel, BatchCrudOperation, KeyGenerator)} 代替。
+     */
+    @Deprecated
+    public CustomBatchCrudService(
+            @NotNull BatchCrudOperation<K, E> operation,
+            @NotNull KeyGenerator<K> keyGenerator,
+            @NotNull ServiceExceptionMapper sem,
+            @NotNull LogLevel exceptionLogLevel
+    ) {
+        super(sem, exceptionLogLevel);
+        this.operation = operation;
+        this.keyGenerator = keyGenerator;
+    }
+
+    @Override
+    protected boolean doExists(K key) throws Exception {
+        return internalExists(key);
+    }
+
+    private boolean internalExists(K key) throws Exception {
+        return operation.exists(key);
+    }
+
+    @Override
+    protected E doGet(K key) throws Exception {
+        return internalGet(key);
+    }
+
+    private E internalGet(K key) throws Exception {
+        if (!operation.exists(key)) {
+            throw new ServiceException(ServiceExceptionCodeSuppliers.ENTITY_NOT_EXIST.get());
+        }
+        return operation.get(key);
+    }
+
+    @Override
+    protected K doInsert(E entity) throws Exception {
+        return internalInsert(entity);
+    }
+
+    private K internalInsert(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey())) {
+            entity.setKey(keyGenerator.generate());
+        }
+        if (internalExists(entity.getKey())) {
+            throw new ServiceException(ServiceExceptionCodeSuppliers.ENTITY_EXISTED.get());
+        }
+        return operation.insert(entity);
+    }
+
+    @Override
+    protected void doUpdate(E entity) throws Exception {
+        internalUpdate(entity);
+    }
+
+    private void internalUpdate(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+            throw new ServiceException(ServiceExceptionCodeSuppliers.ENTITY_NOT_EXIST.get());
+        }
+        operation.update(entity);
+    }
+
+    @Override
+    protected void doDelete(K key) throws Exception {
+        internalDelete(key);
+    }
+
+    private void internalDelete(K key) throws Exception {
+        if (Objects.isNull(key) || !internalExists(key)) {
+            throw new ServiceException(ServiceExceptionCodeSuppliers.ENTITY_NOT_EXIST.get());
+        }
+        operation.delete(key);
+    }
+
+    @Override
+    protected E doGetIfExists(K key) throws Exception {
+        return internalExists(key) ? internalGet(key) : null;
+    }
+
+    @Override
+    protected K doInsertIfNotExists(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+            return internalInsert(entity);
+        }
+        return null;
+    }
+
+    @Override
+    protected void doUpdateIfExists(E entity) throws Exception {
+        if (internalExists(entity.getKey())) {
+            internalUpdate(entity);
+        }
+    }
+
+    @Override
+    protected void doDeleteIfExists(K key) throws Exception {
+        if (internalExists(key)) {
+            internalDelete(key);
+        }
+    }
+
+    @Override
+    protected K doInsertOrUpdate(E entity) throws Exception {
+        if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+            return internalInsert(entity);
+        } else {
+            internalUpdate(entity);
+            return null;
+        }
+    }
+
+    @Override
+    protected boolean doAllExists(List<K> keys) throws Exception {
+        return internalAllExists(keys);
+    }
+
+    private boolean internalAllExists(List<K> keys) throws Exception {
+        return operation.allExists(keys);
+    }
+
+    @Override
+    protected boolean doNonExists(List<K> keys) throws Exception {
+        return internalNonExists(keys);
+    }
+
+    private boolean internalNonExists(List<K> keys) throws Exception {
+        return operation.nonExists(keys);
+    }
+
+    @Override
+    protected List<E> doBatchGet(List<K> keys) throws Exception {
+        return internalBatchGet(keys);
+    }
+
+    private List<E> internalBatchGet(List<K> keys) throws Exception {
+        if (!operation.allExists(keys)) {
+            throw new ServiceException(ServiceExceptionCodeSuppliers.ENTITY_NOT_EXIST.get());
+        }
+        return operation.batchGet(keys);
+    }
+
+    @Override
+    protected List<K> doBatchInsert(List<E> entities) throws Exception {
+        return internalBatchInsert(entities);
+    }
+
+    private List<K> internalBatchInsert(List<E> entities) throws Exception {
+        List<K> collect = entities.stream().filter(e -> Objects.nonNull(e.getKey())).map(E::getKey)
+                .collect(Collectors.toList());
+        if (!internalNonExists(collect)) {
+            throw new ServiceException(ServiceExceptionCodeSuppliers.ENTITY_EXISTED.get());
+        }
+
+        List<E> nonKeyEntities = entities.stream().filter(e -> Objects.isNull(e.getKey())).collect(Collectors.toList());
+        // 根据 nonKeyEntities 的大小，选择性生成主键。
+        mayGenerateKeys(nonKeyEntities);
+
+        return operation.batchInsert(entities);
+    }
+
+    private void mayGenerateKeys(List<E> nonKeyEntities) throws GenerateException {
+        // 如果 nonKeyEntities 为空，则不生成主键。
+        if (nonKeyEntities.isEmpty()) {
+            return;
+        }
+        // 否则生成主键。
+        List<K> generatedKeys = keyGenerator.batchGenerate(nonKeyEntities.size());
+        for (int i = 0; i < nonKeyEntities.size(); i++) {
+            nonKeyEntities.get(i).setKey(generatedKeys.get(i));
+        }
+    }
+
+    @Override
+    protected void doBatchUpdate(List<E> entities) throws Exception {
+        internalBatchUpdate(entities);
+    }
+
+    private void internalBatchUpdate(List<E> entities) throws Exception {
+        List<K> collect = entities.stream().map(E::getKey).collect(Collectors.toList());
+        if (!internalAllExists(collect)) {
+            throw new ServiceException(ServiceExceptionCodeSuppliers.ENTITY_NOT_EXIST.get());
+        }
+
+        operation.batchUpdate(entities);
+    }
+
+    @Override
+    protected void doBatchDelete(List<K> keys) throws Exception {
+        internalBatchDelete(keys);
+    }
+
+    private void internalBatchDelete(List<K> keys) throws Exception {
+        if (!internalAllExists(keys)) {
+            throw new ServiceException(ServiceExceptionCodeSuppliers.ENTITY_NOT_EXIST.get());
+        }
+
+        operation.batchDelete(keys);
+    }
+
+    @Override
+    protected List<E> doBatchGetIfExists(List<K> keys) throws Exception {
+        List<K> existsKeys = new ArrayList<>();
+        for (K key : keys) {
+            if (internalExists(key)) {
+                existsKeys.add(key);
+            }
+        }
+        return internalBatchGet(existsKeys);
+    }
+
+    @Override
+    protected List<K> doBatchInsertIfNotExists(List<E> entities) throws Exception {
+        List<E> entities2Insert = new ArrayList<>();
+        for (E entity : entities) {
+            if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                entities2Insert.add(entity);
+            }
+        }
+        return internalBatchInsert(entities2Insert);
+    }
+
+    @Override
+    protected void doBatchUpdateIfExists(List<E> entities) throws Exception {
+        List<E> entities2Update = new ArrayList<>();
+        for (E entity : entities) {
+            if (internalExists(entity.getKey())) {
+                entities2Update.add(entity);
+            }
+        }
+        internalBatchUpdate(entities2Update);
+    }
+
+    @Override
+    protected void doBatchDeleteIfExists(List<K> keys) throws Exception {
+        List<K> keys2Delete = new ArrayList<>();
+        for (K key : keys) {
+            if (internalExists(key)) {
+                keys2Delete.add(key);
+            }
+        }
+        internalBatchDelete(keys2Delete);
+    }
+
+    @Override
+    protected List<K> doBatchInsertOrUpdate(List<E> entities) throws Exception {
+        List<E> entities2Insert = new ArrayList<>();
+        List<E> entities2Update = new ArrayList<>();
+        for (E entity : entities) {
+            if (Objects.isNull(entity.getKey()) || !internalExists(entity.getKey())) {
+                entities2Insert.add(entity);
+            } else {
+                entities2Update.add(entity);
+            }
+        }
+        internalBatchUpdate(entities2Update);
+        return internalBatchInsert(entities2Insert);
+    }
+
+    @NotNull
+    public BatchCrudOperation<K, E> getOperation() {
+        return operation;
+    }
+
+    public void setOperation(@NotNull BatchCrudOperation<K, E> operation) {
+        this.operation = operation;
+    }
+
+    @NotNull
+    public KeyGenerator<K> getKeyGenerator() {
+        return keyGenerator;
+    }
+
+    public void setKeyGenerator(@NotNull KeyGenerator<K> keyGenerator) {
+        this.keyGenerator = keyGenerator;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomBatchCrudService{" +
+                "operation=" + operation +
+                ", keyGenerator=" + keyGenerator +
+                ", sem=" + sem +
+                ", exceptionLogLevel=" + exceptionLogLevel +
+                '}';
+    }
+}

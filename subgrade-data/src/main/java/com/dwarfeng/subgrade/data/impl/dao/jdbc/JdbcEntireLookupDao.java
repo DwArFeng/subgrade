@@ -1,0 +1,104 @@
+package com.dwarfeng.subgrade.data.impl.dao.jdbc;
+
+import com.dwarfeng.subgrade.basic.stack.bean.dto.PagingInfo;
+import com.dwarfeng.subgrade.basic.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.data.sdk.jdbc.processor.EntireLookupProcessor;
+import com.dwarfeng.subgrade.data.sdk.jdbc.processor.SQLAndParameter;
+import com.dwarfeng.subgrade.data.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.data.stack.exception.DaoException;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * 使用 Jdbc 实现的 EntireLookupDao。
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
+ *
+ * @author DwArFeng
+ * @since 1.1.0
+ */
+public class JdbcEntireLookupDao<E extends Entity<?>> implements EntireLookupDao<E> {
+
+    private JdbcTemplate template;
+    private EntireLookupProcessor<E> processor;
+
+    public JdbcEntireLookupDao(@NotNull JdbcTemplate template, @NotNull EntireLookupProcessor<E> processor) {
+        this.template = template;
+        this.processor = processor;
+    }
+
+    @Override
+    public List<E> lookup() throws DaoException {
+        try {
+            SQLAndParameter sqlAndParameter = processor.provideEntireLookup();
+            return template.query(
+                    sqlAndParameter.getSql(),
+                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                    processor::resolveEntireLookup
+            );
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    // SQL 的安全性由 BaseProcessor 保证。
+    @SuppressWarnings("SqlSourceToSinkFlow")
+    @Override
+    public List<E> lookup(PagingInfo pagingInfo) throws DaoException {
+        try {
+            // 展开参数。
+            int rows = pagingInfo.getRows();
+            // 每页行数大于 0 时，按照正常的逻辑查询数据。
+            if (rows > 0) {
+                SQLAndParameter sqlAndParameter = processor.provideEntirePaging(pagingInfo);
+                return template.query(
+                        sqlAndParameter.getSql(),
+                        new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                        processor::resolveEntirePaging
+                );
+            }
+            // 否则返回空列表。
+            else {
+                return Collections.emptyList();
+            }
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public int lookupCount() throws DaoException {
+        try {
+            SQLAndParameter sqlAndParameter = processor.provideEntireCount();
+            Integer result = template.query(
+                    sqlAndParameter.getSql(),
+                    new ArgumentPreparedStatementSetter(sqlAndParameter.getFirstParameters()),
+                    processor::resolveEntireCount
+            );
+            assert result != null;
+            return result;
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    public JdbcTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(@NotNull JdbcTemplate template) {
+        this.template = template;
+    }
+
+    public EntireLookupProcessor<E> getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(@NotNull EntireLookupProcessor<E> processor) {
+        this.processor = processor;
+    }
+}

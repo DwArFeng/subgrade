@@ -71,7 +71,13 @@ buildNumber.properties
 #################
 ## Logger Files
 #################
-
-#################
-## Configuration Files
-#################
+subgrade-base/logs/
+subgrade-basic/logs/
+subgrade-data/logs/
+subgrade-expression/logs/
+subgrade-aop/logs/
+subgrade-web/logs/
+subgrade-lifecycle/logs/
+subgrade-cache/logs/
+subgrade-lock/logs/
+subgrade-kafka/logs/

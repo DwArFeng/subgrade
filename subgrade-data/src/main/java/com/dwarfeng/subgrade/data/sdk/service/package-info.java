@@ -1,0 +1,7 @@
+/**
+ * 数据服务的公开抽象实现。
+ *
+ * @author DwArFeng
+ * @since 2.0.0
+ */
+package com.dwarfeng.subgrade.data.sdk.service;

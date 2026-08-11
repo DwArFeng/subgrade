@@ -1,0 +1,89 @@
+package com.dwarfeng.subgrade.web.sdk.bean.key;
+
+import com.alibaba.fastjson2.annotation.JSONField;
+import com.dwarfeng.subgrade.basic.stack.bean.key.ByteIdKey;
+import com.dwarfeng.subgrade.basic.stack.bean.key.Key;
+
+import java.io.Serial;
+import java.util.Objects;
+
+/**
+ * 适用于 FastJson 的 ByteIdKey。
+ *
+ * @author DwArFeng
+ * @since 1.0.0
+ */
+public class FastJsonByteIdKey implements Key {
+
+    @Serial
+    private static final long serialVersionUID = -4227706657684342839L;
+    @JSONField(name = "byte_id", ordinal = 1)
+    private byte byteId;
+
+    public FastJsonByteIdKey() {
+    }
+
+    public FastJsonByteIdKey(byte byteId) {
+        this.byteId = byteId;
+    }
+
+    /**
+     * 根据指定的 ByteIdKey 生成 FastJsonByteIdKey。
+     *
+     * @param byteIdKey 指定的 ByteIdKey。
+     * @return 通过指定的 ByteIdKey 生成的 FastJsonByteIdKey。
+     */
+    public static FastJsonByteIdKey of(ByteIdKey byteIdKey) {
+        if (Objects.isNull(byteIdKey)) {
+            return null;
+        }
+        return new FastJsonByteIdKey(byteIdKey.getByteId());
+    }
+
+    /**
+     * 根据指定的 FastJsonByteIdKey 生成 ByteIdKey。
+     *
+     * @param fastJsonByteIdKey 指定的 FastJsonByteIdKey。
+     * @return 通过指定的 FastJsonByteIdKey 生成的 ByteIdKey。
+     * @since 1.2.13
+     */
+    public static ByteIdKey toStackBean(FastJsonByteIdKey fastJsonByteIdKey) {
+        if (Objects.isNull(fastJsonByteIdKey)) {
+            return null;
+        } else {
+            return new ByteIdKey(
+                    fastJsonByteIdKey.getByteId()
+            );
+        }
+    }
+
+    public byte getByteId() {
+        return byteId;
+    }
+
+    public void setByteId(byte byteId) {
+        this.byteId = byteId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FastJsonByteIdKey that = (FastJsonByteIdKey) o;
+
+        return byteId == that.byteId;
+    }
+
+    @Override
+    public int hashCode() {
+        return byteId;
+    }
+
+    @Override
+    public String toString() {
+        return "FastJsonByteIdKey{" +
+                "byteId=" + byteId +
+                '}';
+    }
+}

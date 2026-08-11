@@ -1,0 +1,280 @@
+package com.dwarfeng.subgrade.data.impl.dao.hibernate;
+
+import com.dwarfeng.subgrade.basic.stack.bean.Bean;
+import com.dwarfeng.subgrade.basic.stack.bean.BeanTransformer;
+import com.dwarfeng.subgrade.basic.stack.bean.dto.PagingInfo;
+import com.dwarfeng.subgrade.basic.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.data.sdk.hibernate.hql.*;
+import com.dwarfeng.subgrade.data.sdk.hibernate.operation.HibernateOperations;
+import com.dwarfeng.subgrade.data.stack.dao.PresetLookupDao;
+import com.dwarfeng.subgrade.data.stack.exception.DaoException;
+import org.hibernate.query.Query;
+
+import org.jetbrains.annotations.NotNull;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> implements PresetLookupDao<E> {
+
+    public static final String DEFAULT_ENTITY_ALIAS = "pojo";
+
+    @NotNull
+    private HibernateOperations template;
+    @NotNull
+    private BeanTransformer<E, PE> entityBeanTransformer;
+    @NotNull
+    private Class<PE> classPE;
+    @NotNull
+    private PresetConditionMaker presetConditionMaker;
+    @NotNull
+    private String entityAlias;
+
+    public HibernateHqlPresetLookupDao(
+            @NotNull HibernateOperations template,
+            @NotNull BeanTransformer<E, PE> entityBeanTransformer,
+            @NotNull Class<PE> classPE,
+            @NotNull PresetConditionMaker presetConditionMaker
+    ) {
+        this(template, entityBeanTransformer, classPE, presetConditionMaker, DEFAULT_ENTITY_ALIAS);
+    }
+
+    public HibernateHqlPresetLookupDao(
+            @NotNull HibernateOperations template,
+            @NotNull BeanTransformer<E, PE> entityBeanTransformer,
+            @NotNull Class<PE> classPE,
+            @NotNull PresetConditionMaker presetConditionMaker,
+            @NotNull String entityAlias
+    ) {
+        this.template = template;
+        this.entityBeanTransformer = entityBeanTransformer;
+        this.classPE = classPE;
+        this.presetConditionMaker = presetConditionMaker;
+        this.entityAlias = entityAlias;
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @Override
+    public List<E> lookup(String preset, Object[] objs) throws DaoException {
+        try {
+            return template.execute(session -> {
+                // 构建 HqlCondition 对象。
+                HqlCondition condition = new HqlCondition(classPE, entityAlias);
+
+                // 调用 presetConditionMaker 相应方法，补充查询信息。
+                presetConditionMaker.makeCondition(condition, preset, objs);
+
+                // 创建 Query 对象。
+                condition.setQueryType(QueryType.ENTITY);
+                HqlQueryInfo queryInfo = HqlQueryInfoFactory.buildQueryInfoFormCondition(condition);
+                // HQL 的安全性由 presetConditionMaker 保证，因此这里不需要进行检查。
+                @SuppressWarnings("SqlSourceToSinkFlow")
+                Query<PE> query = session.createQuery(queryInfo.getHql(), classPE);
+
+                // 设置参数。
+                for (Map.Entry<String, Object> entry : queryInfo.getParamMap().entrySet()) {
+                    String paramName = entry.getKey();
+                    Object paramValue = entry.getValue();
+                    query.setParameter(paramName, paramValue);
+                }
+
+                // 执行查询。
+                List<PE> pes = query.getResultList();
+
+                // 将结果转换为相应的实体。
+                return pes.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());
+            });
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public List<E> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
+        try {
+            // 展开参数。
+            int page = pagingInfo.getPage();
+            int rows = pagingInfo.getRows();
+            // 每页行数大于 0 时，按照正常的逻辑查询数据。
+            if (rows > 0) {
+                return lookupWithPositiveRows(preset, objs, page, rows);
+            }
+            // 否则返回空列表。
+            else {
+                return Collections.emptyList();
+            }
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @NotNull
+    private List<E> lookupWithPositiveRows(String preset, Object[] objs, int page, int rows) {
+        return template.execute(session -> {
+            // 构建 HqlCondition 对象。
+            HqlCondition condition = new HqlCondition(classPE, entityAlias);
+
+            // 调用 presetConditionMaker 相应方法，补充查询信息。
+            presetConditionMaker.makeCondition(condition, preset, objs);
+
+            // 创建 Query 对象。
+            condition.setQueryType(QueryType.ENTITY);
+            HqlQueryInfo queryInfo = HqlQueryInfoFactory.buildQueryInfoFormCondition(condition);
+            // HQL 的安全性由 presetConditionMaker 保证，因此这里不需要进行检查。
+            @SuppressWarnings("SqlSourceToSinkFlow")
+            Query<PE> query = session.createQuery(queryInfo.getHql(), classPE);
+
+            // 设置参数。
+            for (Map.Entry<String, Object> entry : queryInfo.getParamMap().entrySet()) {
+                String paramName = entry.getKey();
+                Object paramValue = entry.getValue();
+                query.setParameter(paramName, paramValue);
+            }
+
+            // 设置分页信息。
+            query.setFirstResult(page * rows);
+            query.setMaxResults(rows);
+
+            // 执行查询。
+            List<PE> pes = query.getResultList();
+
+            // 将结果转换为相应的实体。
+            return pes.stream().map(entityBeanTransformer::reverseTransform).collect(Collectors.toList());
+        });
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @Override
+    public int lookupCount(String preset, Object[] objs) throws DaoException {
+        try {
+            // 获取装箱的结果。
+            Integer result = template.execute(session -> {
+                // 构建 HqlCondition 对象。
+                HqlCondition condition = new NoOrderHqlCondition(classPE, entityAlias);
+
+                // 调用 presetConditionMaker 相应方法，补充查询信息。
+                presetConditionMaker.makeCondition(condition, preset, objs);
+
+                // 创建 Query 对象。
+                condition.setQueryType(QueryType.COUNT);
+                HqlQueryInfo queryInfo = HqlQueryInfoFactory.buildQueryInfoFormCondition(condition);
+                // HQL 的安全性由 presetConditionMaker 保证，因此这里不需要进行检查。
+                @SuppressWarnings("SqlSourceToSinkFlow")
+                Query<Long> query = session.createQuery(queryInfo.getHql(), Long.class);
+
+                // 设置参数。
+                for (Map.Entry<String, Object> entry : queryInfo.getParamMap().entrySet()) {
+                    String paramName = entry.getKey();
+                    Object paramValue = entry.getValue();
+                    query.setParameter(paramName, paramValue);
+                }
+
+                // 执行查询，返回结果。
+                return query.getSingleResult().intValue();
+            });
+
+            // 拆箱。
+            return result == null ? 0 : result;
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @Override
+    public E lookupFirst(String preset, Object[] objs) throws DaoException {
+        try {
+            return template.execute(session -> {
+                // 构建 HqlCondition 对象。
+                HqlCondition condition = new HqlCondition(classPE, entityAlias);
+
+                // 调用 presetConditionMaker 相应方法，补充查询信息。
+                presetConditionMaker.makeCondition(condition, preset, objs);
+
+                // 创建 Query 对象。
+                condition.setQueryType(QueryType.ENTITY);
+                HqlQueryInfo queryInfo = HqlQueryInfoFactory.buildQueryInfoFormCondition(condition);
+                // HQL 的安全性由 presetConditionMaker 保证，因此这里不需要进行检查。
+                @SuppressWarnings("SqlSourceToSinkFlow")
+                Query<PE> query = session.createQuery(queryInfo.getHql(), classPE);
+
+                // 设置参数。
+                for (Map.Entry<String, Object> entry : queryInfo.getParamMap().entrySet()) {
+                    String paramName = entry.getKey();
+                    Object paramValue = entry.getValue();
+                    query.setParameter(paramName, paramValue);
+                }
+
+                // 设置分页信息。
+                query.setFirstResult(0);
+                query.setMaxResults(1);
+
+                // 执行查询。
+                PE pe = query.getSingleResult();
+
+                // 将结果转换为相应的实体。
+                return entityBeanTransformer.reverseTransform(pe);
+            });
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @NotNull
+    public HibernateOperations getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(@NotNull HibernateOperations template) {
+        this.template = template;
+    }
+
+    @NotNull
+    public BeanTransformer<E, PE> getEntityBeanTransformer() {
+        return entityBeanTransformer;
+    }
+
+    public void setEntityBeanTransformer(@NotNull BeanTransformer<E, PE> entityBeanTransformer) {
+        this.entityBeanTransformer = entityBeanTransformer;
+    }
+
+    @NotNull
+    public Class<PE> getClassPE() {
+        return classPE;
+    }
+
+    public void setClassPE(@NotNull Class<PE> classPE) {
+        this.classPE = classPE;
+    }
+
+    @NotNull
+    public PresetConditionMaker getPresetConditionMaker() {
+        return presetConditionMaker;
+    }
+
+    public void setPresetConditionMaker(@NotNull PresetConditionMaker presetConditionMaker) {
+        this.presetConditionMaker = presetConditionMaker;
+    }
+
+    @NotNull
+    public String getEntityAlias() {
+        return entityAlias;
+    }
+
+    public void setEntityAlias(@NotNull String entityAlias) {
+        this.entityAlias = entityAlias;
+    }
+
+    @Override
+    public String toString() {
+        return "HibernateHqlPresetLookupDao{" +
+                "template=" + template +
+                ", entityBeanTransformer=" + entityBeanTransformer +
+                ", classPE=" + classPE +
+                ", presetConditionMaker=" + presetConditionMaker +
+                ", entityAlias='" + entityAlias + '\'' +
+                '}';
+    }
+}

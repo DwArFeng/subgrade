@@ -1,0 +1,175 @@
+package com.dwarfeng.subgrade.data.impl.dao.hibernate;
+
+import com.dwarfeng.subgrade.basic.stack.bean.Bean;
+import com.dwarfeng.subgrade.basic.stack.bean.BeanTransformer;
+import com.dwarfeng.subgrade.basic.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.basic.stack.bean.key.Key;
+import com.dwarfeng.subgrade.data.internal.bean.BeanPropertyAccess;
+import com.dwarfeng.subgrade.data.sdk.hibernate.operation.HibernateOperations;
+import com.dwarfeng.subgrade.data.stack.dao.SingleObjectDao;
+import com.dwarfeng.subgrade.data.stack.exception.DaoException;
+
+import org.jetbrains.annotations.NotNull;
+import java.util.Objects;
+
+/**
+ * 通过 Hibernate 实现的单对象数据访问层。
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
+ *
+ * @author DwArFeng
+ * @since 0.0.3-beta
+ */
+public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK extends Bean, PE extends Bean> implements
+        SingleObjectDao<E> {
+
+    @NotNull
+    private HibernateOperations template;
+    @NotNull
+    private BeanTransformer<K, PK> keyBeanTransformer;
+    @NotNull
+    private BeanTransformer<E, PE> entityBeanTransformer;
+    @NotNull
+    private K key;
+    @NotNull
+    private Class<PE> classPE;
+
+    public HibernateSingleObjectDao(
+            @NotNull HibernateOperations template,
+            @NotNull BeanTransformer<K, PK> keyBeanTransformer,
+            @NotNull BeanTransformer<E, PE> entityBeanTransformer,
+            @NotNull K key,
+            @NotNull Class<PE> classPE
+    ) {
+        this.template = template;
+        this.keyBeanTransformer = keyBeanTransformer;
+        this.entityBeanTransformer = entityBeanTransformer;
+        this.key = key;
+        this.classPE = classPE;
+    }
+
+    @Override
+    public boolean exists() throws DaoException {
+        try {
+            return internalExists();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    private boolean internalExists() {
+        return Objects.nonNull(template.get(classPE, transformKey(key)));
+    }
+
+    @Override
+    public E get() throws DaoException {
+        try {
+            return internalGet();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void put(E entity) throws DaoException {
+        try {
+            E newEntity = BeanPropertyAccess.getInstance().cloneBean(entity);
+            newEntity.setKey(key);
+            template.clear();
+            template.saveOrUpdate(newEntity);
+            template.flush();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void clear() throws DaoException {
+        try {
+            if (!internalExists()) {
+                throw new DaoException("实体对象不存在");
+            }
+
+            PK pk = transformKey(key);
+            PE pe = template.get(classPE, pk);
+            // PE 不可能为 null，因为之前的语句已经判断 PE 一定存在。
+            if (Objects.isNull(pe)) {
+                throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
+            }
+            template.delete(pe);
+            template.flush();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    private E internalGet() {
+        PK pk = transformKey(key);
+        return reverseTransformEntity(template.get(classPE, pk));
+    }
+
+    private PK transformKey(K k) {
+        return keyBeanTransformer.transform(k);
+    }
+
+    private E reverseTransformEntity(PE persistenceEntity) {
+        return entityBeanTransformer.reverseTransform(persistenceEntity);
+    }
+
+    @NotNull
+    public HibernateOperations getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(@NotNull HibernateOperations template) {
+        this.template = template;
+    }
+
+    @NotNull
+    public BeanTransformer<K, PK> getKeyBeanTransformer() {
+        return keyBeanTransformer;
+    }
+
+    public void setKeyBeanTransformer(@NotNull BeanTransformer<K, PK> keyBeanTransformer) {
+        this.keyBeanTransformer = keyBeanTransformer;
+    }
+
+    @NotNull
+    public BeanTransformer<E, PE> getEntityBeanTransformer() {
+        return entityBeanTransformer;
+    }
+
+    public void setEntityBeanTransformer(@NotNull BeanTransformer<E, PE> entityBeanTransformer) {
+        this.entityBeanTransformer = entityBeanTransformer;
+    }
+
+    @NotNull
+    public K getKey() {
+        return key;
+    }
+
+    public void setKey(@NotNull K key) {
+        this.key = key;
+    }
+
+    @NotNull
+    public Class<PE> getClassPE() {
+        return classPE;
+    }
+
+    public void setClassPE(@NotNull Class<PE> classPE) {
+        this.classPE = classPE;
+    }
+
+    @Override
+    public String toString() {
+        return "HibernateSingleObjectDao{" +
+                "template=" + template +
+                ", keyBeanTransformer=" + keyBeanTransformer +
+                ", entityBeanTransformer=" + entityBeanTransformer +
+                ", key=" + key +
+                ", classPE=" + classPE +
+                '}';
+    }
+}

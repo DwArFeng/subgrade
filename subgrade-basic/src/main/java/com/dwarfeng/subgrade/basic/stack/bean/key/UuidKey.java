@@ -1,0 +1,55 @@
+package com.dwarfeng.subgrade.basic.stack.bean.key;
+
+import java.io.Serial;
+import java.util.Objects;
+
+/**
+ * 特殊的 String 主键，封装了作为 UUID 的 String。
+ *
+ * @author DwArFeng
+ * @since 0.0.1-beta
+ */
+public class UuidKey implements Key {
+
+    @Serial
+    private static final long serialVersionUID = 8108926020867227560L;
+
+    private String uuid;
+
+    public UuidKey() {
+    }
+
+    public UuidKey(String id) {
+        this.uuid = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UuidKey that = (UuidKey) o;
+
+        return Objects.equals(uuid, that.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return uuid != null ? uuid.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "StringIdKey{" +
+                "id='" + uuid + '\'' +
+                '}';
+    }
+}

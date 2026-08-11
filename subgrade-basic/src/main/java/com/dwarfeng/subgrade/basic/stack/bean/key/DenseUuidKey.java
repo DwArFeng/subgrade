@@ -1,0 +1,55 @@
+package com.dwarfeng.subgrade.basic.stack.bean.key;
+
+import java.io.Serial;
+import java.util.Objects;
+
+/**
+ * 特殊的 String 主键，封装了使用 Base64 编码压缩过的 UUID 主键。
+ *
+ * @author DwArFeng
+ * @since 0.0.1-beta
+ */
+public class DenseUuidKey implements Key {
+
+    @Serial
+    private static final long serialVersionUID = -228223965476098166L;
+
+    private String uuid;
+
+    public DenseUuidKey() {
+    }
+
+    public DenseUuidKey(String id) {
+        this.uuid = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DenseUuidKey that = (DenseUuidKey) o;
+
+        return Objects.equals(uuid, that.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return uuid != null ? uuid.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "DenseUuidKey{" +
+                "uuid='" + uuid + '\'' +
+                '}';
+    }
+}

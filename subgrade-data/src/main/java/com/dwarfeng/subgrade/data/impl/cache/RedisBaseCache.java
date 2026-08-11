@@ -1,0 +1,137 @@
+package com.dwarfeng.subgrade.data.impl.cache;
+
+import com.dwarfeng.subgrade.basic.stack.bean.Bean;
+import com.dwarfeng.subgrade.basic.stack.bean.BeanTransformer;
+import com.dwarfeng.subgrade.basic.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.basic.stack.bean.key.Key;
+import com.dwarfeng.subgrade.data.sdk.redis.formatter.StringKeyFormatter;
+import com.dwarfeng.subgrade.data.stack.cache.BaseCache;
+import com.dwarfeng.subgrade.data.stack.exception.CacheException;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.data.redis.core.RedisTemplate;
+
+import java.time.Duration;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
+
+/**
+ * 使用 Redis 实现的 BaseCache。
+ *
+ * <p>
+ * 该类只提供最基本的方法实现，没有添加任何事务，请通过代理的方式在代理类中添加事务。
+ *
+ * @author DwArFeng
+ * @since 0.0.1-beta
+ */
+public class RedisBaseCache<K extends Key, E extends Entity<K>, JE extends Bean> implements BaseCache<K, E> {
+
+    @NotNull
+    private RedisTemplate<String, JE> template;
+    @NotNull
+    private StringKeyFormatter<K> formatter;
+    @NotNull
+    private BeanTransformer<E, JE> transformer;
+
+    public RedisBaseCache(
+            @NotNull RedisTemplate<String, JE> template,
+            @NotNull StringKeyFormatter<K> formatter,
+            @NotNull BeanTransformer<E, JE> transformer
+    ) {
+        this.template = template;
+        this.formatter = formatter;
+        this.transformer = transformer;
+    }
+
+    @Override
+    public boolean exists(K key) throws CacheException {
+        try {
+            // 获得装箱后的结果，拆箱并返回。
+            return template.hasKey(formatKey(key));
+        } catch (Exception e) {
+            throw new CacheException(e);
+        }
+    }
+
+    @Override
+    public E get(K key) throws CacheException {
+        try {
+            JE je = template.opsForValue().get(formatKey(key));
+            return transformer.reverseTransform(je);
+        } catch (Exception e) {
+            throw new CacheException(e);
+        }
+    }
+
+    @Override
+    public void push(E value, long timeout) throws CacheException {
+        try {
+            template.opsForValue().set(
+                    formatKey(value.getKey()),
+                    transformer.transform(value),
+                    Duration.ofMillis(timeout)
+            );
+        } catch (Exception e) {
+            throw new CacheException(e);
+        }
+    }
+
+    @Override
+    public void delete(K key) throws CacheException {
+        try {
+            template.delete(formatKey(key));
+        } catch (Exception e) {
+            throw new CacheException(e);
+        }
+    }
+
+    @Override
+    public void clear() throws CacheException {
+        try {
+            Set<String> keys = Optional.of(template.keys(formatter.generalFormat())).orElse(Collections.emptySet());
+            template.delete(keys);
+        } catch (Exception e) {
+            throw new CacheException(e);
+        }
+    }
+
+    private String formatKey(K key) {
+        return formatter.format(key);
+    }
+
+    @NotNull
+    public RedisTemplate<String, JE> getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(@NotNull RedisTemplate<String, JE> template) {
+        this.template = template;
+    }
+
+    @NotNull
+    public StringKeyFormatter<K> getFormatter() {
+        return formatter;
+    }
+
+    public void setFormatter(@NotNull StringKeyFormatter<K> formatter) {
+        this.formatter = formatter;
+    }
+
+    @NotNull
+    public BeanTransformer<E, JE> getTransformer() {
+        return transformer;
+    }
+
+    public void setTransformer(@NotNull BeanTransformer<E, JE> transformer) {
+        this.transformer = transformer;
+    }
+
+    @Override
+    public String toString() {
+        return "RedisBaseCache{" +
+                "template=" + template +
+                ", formatter=" + formatter +
+                ", transformer=" + transformer +
+                '}';
+    }
+}

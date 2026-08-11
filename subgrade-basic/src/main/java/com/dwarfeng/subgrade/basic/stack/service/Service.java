@@ -1,0 +1,10 @@
+package com.dwarfeng.subgrade.basic.stack.service;
+
+/**
+ * Service 接口。
+ *
+ * @author DwArFeng
+ * @since 0.0.1-alpha
+ */
+public interface Service {
+}
