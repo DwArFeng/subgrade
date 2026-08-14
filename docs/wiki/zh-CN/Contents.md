@@ -43,6 +43,8 @@
 
 ### 业务逻辑可重入
 
+- [Reentrant Business Logic Basics](./ReentrantBusinessLogicBasics.md) -
+  业务逻辑可重入基础，说明了业务逻辑可重入的接口、状态与协作以及默认实现总览。
 - [General Online Handler Basics](./GeneralOnlineHandlerBasics.md) -
   通用线上处理器基础，说明了 GeneralOnlineHandler 的实现和使用方法。
 - [General Startable Handler Basics](./GeneralStartableHandlerBasics.md) -
