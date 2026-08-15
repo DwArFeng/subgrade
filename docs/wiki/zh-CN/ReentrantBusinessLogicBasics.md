@@ -19,7 +19,9 @@
 
 ## 接口定义
 
-可重入相关的核心接口均位于 `com.dwarfeng.subgrade.stack.handler` 包中，且都继承标记接口 `com.dwarfeng.subgrade.stack.handler.Handler`。接口之间的继承关系如下：
+`OnlineHandler` 和 `StartableHandler` 位于 `com.dwarfeng.subgrade.lifecycle.stack.handler` 包，
+`DistributedLockHandler` 位于 `com.dwarfeng.subgrade.lock.stack.handler` 包。这些接口均直接或间接继承标记接口
+`com.dwarfeng.subgrade.basic.stack.handler.Handler`。接口之间的继承关系如下：
 
 - `OnlineHandler extends Handler`；
 - `StartableHandler extends Handler`；
@@ -166,7 +168,7 @@ public interface DistributedLockHandler extends OnlineHandler, StartableHandler 
 
 ### 与 Worker 的协作
 
-`Worker` 接口定义业务侧进入与退出运行态的具体步骤，位于 `com.dwarfeng.subgrade.impl.handler` 包，接口签名如下：
+`Worker` 接口定义业务侧进入与退出运行态的具体步骤，位于 `com.dwarfeng.subgrade.lifecycle.stack.handler` 包，接口签名如下：
 
 ```java
 public interface Worker {
@@ -203,7 +205,8 @@ public interface Worker {
 
 ## 默认实现总览
 
-本项目在 `com.dwarfeng.subgrade.impl.handler` 包中提供三个默认实现，与接口的对应关系、依赖与适用场景如下：
+`GeneralOnlineHandler` 和 `GeneralStartableHandler` 位于 `com.dwarfeng.subgrade.lifecycle.impl.handler` 包，
+`CuratorDistributedLockHandler` 位于 `com.dwarfeng.subgrade.lock.impl.handler.curator` 包。它们与接口的对应关系、依赖与适用场景如下：
 
 | 实现类                          | 实现的接口               | 外部依赖                                         | 维护的标志                                                    | 适用场景          |
 |:--------------------------------|:-------------------------|:-------------------------------------------------|:--------------------------------------------------------------|:------------------|
@@ -228,7 +231,7 @@ public interface Worker {
 ```java
 package com.example.stack.handler;
 
-import com.dwarfeng.subgrade.stack.handler.OnlineHandler;
+import com.dwarfeng.subgrade.lifecycle.stack.handler.OnlineHandler;
 
 /**
  * Foo 线上处理器。
@@ -252,10 +255,10 @@ public interface FooOnlineHandler extends OnlineHandler {
 ```java
 package com.example.impl.handler;
 
-import com.dwarfeng.subgrade.impl.handler.GeneralOnlineHandler;
-import com.dwarfeng.subgrade.impl.handler.Worker;
-import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.aop.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.lifecycle.impl.handler.GeneralOnlineHandler;
+import com.dwarfeng.subgrade.lifecycle.stack.handler.Worker;
 import com.example.stack.handler.FooOnlineHandler;
 import org.springframework.stereotype.Component;
 

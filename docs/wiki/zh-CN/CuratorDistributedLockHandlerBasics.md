@@ -17,12 +17,12 @@
 
 实现类在锁内维护：
 
-| 标志                | 含义                               |
-|:------------------|:---------------------------------|
+| 标志              | 含义                                    |
+|:------------------|:----------------------------------------|
 | `onlineFlag`      | 已调用 `online()`，`LeaderLatch` 已启动 |
-| `startedFlag`     | 已调用 `start()`，允许在持锁时工作           |
-| `lockHoldingFlag` | 当前实例为 Leader                     |
-| `workingFlag`     | 已执行 `work()` 且尚未 `rest()`        |
+| `startedFlag`     | 已调用 `start()`，允许在持锁时工作      |
+| `lockHoldingFlag` | 当前实例为 Leader                       |
+| `workingFlag`     | 已执行 `work()` 且尚未 `rest()`         |
 
 另持有 `CuratorFramework`、`leaderLatchPath`、`Worker` 及 `LeaderLatch` 实例（上线后非空）。
 
@@ -37,13 +37,13 @@
 
 ### 上线、启动、持锁与工作的关系
 
-| 调用 / 事件    | 效果                                  |
-|:-----------|:------------------------------------|
-| `online()` | 参与选主，不必然 `work()`                   |
-| `start()`  | `startedFlag = true`；若已持锁则 `work()` |
-| `stop()`   | `rest()`，`startedFlag = false`      |
-| 成为 Leader  | 若已 `start()`，则 `work()`             |
-| 失去 Leader  | `rest()`                            |
+| 调用 / 事件 | 效果                                      |
+|:------------|:------------------------------------------|
+| `online()`  | 参与选主，不必然 `work()`                 |
+| `start()`   | `startedFlag = true`；若已持锁则 `work()` |
+| `stop()`    | `rest()`，`startedFlag = false`           |
+| 成为 Leader | 若已 `start()`，则 `work()`               |
+| 失去 Leader | `rest()`                                  |
 
 因此运维上常见顺序为：先 `online()` 再 `start()`；
 仅 `start()` 而不 `online()` 不会选主；
@@ -61,7 +61,7 @@
 ```java
 package com.example.stack.handler;
 
-import com.dwarfeng.subgrade.stack.handler.DistributedLockHandler;
+import com.dwarfeng.subgrade.lock.stack.handler.DistributedLockHandler;
 
 /**
  * Foo 分布式锁处理器。
@@ -81,14 +81,14 @@ public interface FooHandler extends DistributedLockHandler {
 ```java
 package com.example.impl.handler;
 
-import com.dwarfeng.subgrade.impl.handler.CuratorDistributedLockHandler;
-import com.dwarfeng.subgrade.impl.handler.Worker;
-import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.aop.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.lifecycle.stack.handler.Worker;
+import com.dwarfeng.subgrade.lock.impl.handler.curator.CuratorDistributedLockHandler;
 import com.example.stack.handler.FooHandler;
 import com.example.stack.handler.BarSession;
 import com.example.stack.handler.BarSessionHoldHandler;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.basic.stack.bean.key.LongIdKey;
 import org.apache.curator.framework.CuratorFramework;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

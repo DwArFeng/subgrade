@@ -9,7 +9,7 @@
 
 ## 异常定义
 
-本项目中，应该使用 `com.dwarfeng.subgrade.stack.exception.ServiceException` 在服务之间传递异常。
+本项目中，应该使用 `com.dwarfeng.subgrade.basic.stack.exception.ServiceException` 在服务之间传递异常。
 
 ServiceException 具有一个 `Code` 字段：
 
@@ -41,7 +41,7 @@ public static class Code implements Serializable {
 
 ### 异常映射器接口
 
-在本项目中，使用 `com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper` 接口对异常进行统一映射。
+在本项目中，使用 `com.dwarfeng.subgrade.basic.stack.exception.ServiceExceptionMapper` 接口对异常进行统一映射。
 
 ```java
 public interface ServiceExceptionMapper {
@@ -63,13 +63,14 @@ public interface ServiceExceptionMapper {
 服务之间通信时，被调用的服务首先调用服务内部的处理器，进行业务处理，并捕获处理器抛出的任何异常。一旦捕获了异常之后，
 便交付异常映射器进行异常的统一映射，将处理器内部的各种异常统一转化为服务异常。
 
-由于 `ServiceExceptionMapper` 中的 `Code` 对象实现了序列化接口，因此，整个异常对象可以进行序列化，
+由于 `ServiceException` 中的 `Code` 对象实现了序列化接口，因此，整个异常对象可以进行序列化，
 通过 RPC 协议在 java 服务之间传递，甚至是跨语言平台传递。
 
-以 dubbo 服务举例：
+以服务实现举例：
 
 ```java
-@DubboService
+
+@org.springframework.stereotype.Service
 public class Service {
 
     @Autowired
@@ -146,11 +147,11 @@ public class SettingNodeController {
 
 ### 异常映射器接口
 
-异常映射器的默认实现为 `com.dwarfeng.subgrade.impl.exception.MapServiceExceptionMapper`。
+异常映射器的默认实现为 `com.dwarfeng.subgrade.basic.impl.exception.MapServiceExceptionMapper`。
 
-该实现的内部维护了一个 `Map<Class<? extends Exception>, ServiceException.Code>`，将一般的异常与异常代码进行了映射。
-同时，该映射器处理了异常的继承关系，对于未知的异常，会尝试迭代查找其父类、祖父类，直到命中异常映射或没有父类。
-如果一个异常没有被该实现中的 `Map` 维护，那么它将会被一个缺省的 `Code` 代替。
+该实现的内部维护了一个 `Map<Class<? extends Exception>, Supplier<ServiceException.Code>>`，将一般的异常与异常代码供应器进行了映射。
+同时，该映射器处理了异常的继承关系，对于未知的异常，会尝试迭代查找其父类、祖父类，直到命中异常映射或没有父类。 如果一个异常没有被该实现中的
+`Map` 维护，它将由缺省的异常代码供应器生成 `Code`。
 
 ## 异常偏移
 
@@ -192,25 +193,30 @@ public class SettingNodeController {
 |    200 |    1 |        201 | permission not exists |
 |    200 |    2 |        202 | database disconnected |
 
-## 预置异常编码
+## 默认异常编码
 
-Subgrade 项目预置了一些常用的异常编码，如下所示：
+Subgrade 2.x 按模块分配默认异常编码。下表为各模块默认提示与编码：
 
-| code | tip                     | explain                                   |
-|-----:|:------------------------|:------------------------------------------|
-|    1 | undefined               | 未定义异常，通常作为 MapServiceExceptionMapper 的缺省值 |
-|   10 | key fetch failed        | 主键抓取失败                                    |
-|   20 | cache failed            | 缓存失败                                      |
-|   30 | dao failed              | 数据访问层失败                                   |
-|   31 | entity existed          | 实体已存在                                     |
-|   32 | entity not existed      | 实体不存在                                     |
-|   40 | param validation failed | 参数验证失败                                    |
-|   50 | io exception            | IO 失败                                     |
-|   60 | process failed          | 处理失败                                      |
-|   70 | handler failed          | 处理器失败                                     |
-|   80 | permission denied       | 权限拒绝                                      |
-|   90 | login failed            | 登录失败                                      |
-|  100 | database failed         | 数据库失败                                     |
-|  110 | not implemented yet     | 未实现                                       |
-|  120 | generate failed         | 生成失败                                      |
-|  130 | paging failed           | 分页失败                                      |
+| 模块       | code | tip                  | explain                            |
+|:-----------|-----:|:---------------------|:-----------------------------------|
+| basic      |    1 | 未定义错误           | MapServiceExceptionMapper 的缺省值 |
+| basic      |   50 | 输入输出操作失败     | IO 处理失败                        |
+| basic      |   60 | 过程执行失败         | 过程执行失败                       |
+| basic      |   70 | 处理器执行失败       | 处理器执行失败                     |
+| basic      |  110 | 请求的能力尚未实现   | 功能尚未实现                       |
+| basic      |  120 | 数值生成失败         | 数据或对象生成失败                 |
+| basic      |  130 | 分页操作失败         | 分页处理失败                       |
+| data       | 1020 | 缓存操作失败         | 缓存操作失败                       |
+| data       | 1030 | 数据访问操作失败     | DAO 操作失败                       |
+| data       | 1031 | 实体已经存在         | 创建已存在的实体                   |
+| data       | 1032 | 实体不存在           | 操作不存在的实体                   |
+| data       | 1100 | 数据库操作失败       | 数据库操作失败                     |
+| expression | 2010 | 表达式解析失败       | 表达式解析失败                     |
+| aop        | 3010 | 拦截处理失败         | AOP 拦截处理失败                   |
+| web        | 4040 | 参数验证失败         | Web 参数验证失败                   |
+| web        | 4080 | 权限被拒绝           | 访问权限检查失败                   |
+| web        | 4090 | 登录失败             | 登录或身份校验失败                 |
+| lifecycle  | 5010 | 生命周期操作失败     | 生命周期操作失败                   |
+| cache      | 6010 | 本地缓存操作失败     | 缓存操作失败                       |
+| lock       | 7010 | 分布式锁操作失败     | 分布式锁操作失败                   |
+| kafka      | 8010 | 序列化或反序列化失败 | Kafka 消息转换失败                 |

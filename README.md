@@ -61,6 +61,11 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 ## 安装说明
 
+构建环境要求：
+
+- JDK 25 或更高版本，不启用预览特性。
+- Maven 3.9.16 或更高版本。
+
 1. 下载源码。
 
    使用 git 进行源码下载。
@@ -84,7 +89,7 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 3. 项目部署。
 
-   该项目使用了 `2.8.2` 版本的 `maven-deploy-plugin`，如果您有属于自己的 maven 依赖仓库，
+   该项目使用了 `3.1.4` 版本的 `maven-deploy-plugin`，如果您有属于自己的 maven 依赖仓库，
    可以在妥善配置 maven 的 `setting.xml` 之后，进入项目根目录，运行 maven 部署指令。
    ```
    mvn clean source:jar deploy
@@ -94,91 +99,44 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 ## 项目使用
 
-### 注意
-
-该项目开发时使用的部分第三方依赖已经停止维护。因此相关的实现均不推荐使用。
-开发人员在引用该项目的坐标时推荐主动排除这些第三方依赖。
-
-相关的依赖列表：
-
-| groupId      | artifactId   | 相关说明                                           |
-|:-------------|:-------------|:-----------------------------------------------|
-| net.sf.dozer | dozer        | [github](https://github.com/DozerMapper/dozer) |
-| net.sf.dozer | dozer-spring | [github](https://github.com/DozerMapper/dozer) |
-
 ### maven
 
-#### subgrade-stack
+2.0.0 起，项目按功能拆分为十个 Maven artifact，每个 artifact 对应一个 JPMS 模块：
+
+| Maven artifact        | JPMS 模块名                        | 主要职责                                 |
+|:----------------------|:-----------------------------------|:-----------------------------------------|
+| `subgrade-base`       | `com.dwarfeng.subgrade.base`       | 国际化与模块内部基础机制                 |
+| `subgrade-basic`      | `com.dwarfeng.subgrade.basic`      | Bean、Key、基础异常、生成器与日志协议    |
+| `subgrade-data`       | `com.dwarfeng.subgrade.data`       | DAO、Service、实体缓存及数据访问实现     |
+| `subgrade-expression` | `com.dwarfeng.subgrade.expression` | 通用表达式协议与解析实现                 |
+| `subgrade-aop`        | `com.dwarfeng.subgrade.aop`        | 行为分析与通用 AOP 能力                  |
+| `subgrade-web`        | `com.dwarfeng.subgrade.web`        | Web 响应、登录、权限与验证               |
+| `subgrade-lifecycle`  | `com.dwarfeng.subgrade.lifecycle`  | Startable、Online 与 Worker 生命周期能力 |
+| `subgrade-cache`      | `com.dwarfeng.subgrade.cache`      | 进程内本地缓存                           |
+| `subgrade-lock`       | `com.dwarfeng.subgrade.lock`       | 分布式锁及 Curator 实现                  |
+| `subgrade-kafka`      | `com.dwarfeng.subgrade.kafka`      | Kafka 序列化与 Fastjson2 适配            |
+
+应用应按实际使用的功能显式声明对应 artifact。例如：
 
 ```xml
-
 <dependency>
     <groupId>com.dwarfeng</groupId>
-    <artifactId>subgrade-stack</artifactId>
+    <artifactId>subgrade-basic</artifactId>
     <version>${subgrade.version}</version>
-</dependency>
-```
-
-#### subgrade-sdk
-
-```xml
-
-<dependency>
-    <groupId>com.dwarfeng</groupId>
-    <artifactId>subgrade-sdk</artifactId>
-    <version>${subgrade.version}</version>
-    <exclusions>
-        <exclusion>
-            <artifactId>dozer</artifactId>
-            <groupId>net.sf.dozer</groupId>
-        </exclusion>
-        <exclusion>
-            <artifactId>dozer-spring</artifactId>
-            <groupId>net.sf.dozer</groupId>
-        </exclusion>
-    </exclusions>
-</dependency>
-```
-
-#### subgrade-impl
-
-```xml
-
-<dependency>
-    <groupId>com.dwarfeng</groupId>
-    <artifactId>subgrade-impl</artifactId>
-    <version>${subgrade.version}</version>
-    <exclusions>
-        <exclusion>
-            <artifactId>dozer</artifactId>
-            <groupId>net.sf.dozer</groupId>
-        </exclusion>
-        <exclusion>
-            <artifactId>dozer-spring</artifactId>
-            <groupId>net.sf.dozer</groupId>
-        </exclusion>
-    </exclusions>
 </dependency>
 ```
 
 ## 推荐使用版本
 
-- 对于任何的新项目，推荐使用不低于 `1.5.7.a` 的版本。
-
-- 对于使用 `WriteService` 或 `BatchWriteService` 的项目，请勿使用 `1.5.4.a` `1.5.5.a` 版本。
-
+- JDK 25 模块化版本当前为 `2.0.0.a`，其 Maven artifact、JPMS 模块和 Java 包均不兼容 1.x。
+- 继续维护 1.x 项目时，应使用不低于 `1.5.7.a` 的 1.x 版本。
+- 1.x 项目使用 `WriteService` 或 `BatchWriteService` 时，请勿使用 `1.5.4.a` `1.5.5.a` 版本。
 - 对于任何项目，请勿使用 `1.4.8.a` 的版本，此版本核心类存在严重 bug。
-
 - 低于 `1.2.13.a` 的版本，内存数据访问层分页查询逻辑存在问题，如使用内存数据访问层，则需要将版本升级至 `1.2.13.a` 以上。
-
 - 低于 `1.2.7.a` 的版本，部分关键依赖有严重等级的 bug，使用可能会造成安全问题。
-
 - 低于 `1.2.3.b` 的版本包含以下已经发现的 bug，如果项目使用到了下述模块，则需要将 subgrade 版本升级至 `1.2.3.b`。
    - `RedisBatchBaseDao` 执行 `batchDelete` 存在执行不成功或行为异常的 bug。
-
 - 低于 `1.1.8.a` 的版本包含以下已经发现的 bug，如果项目使用到了下述模块，则需要将 subgrade 版本升级至 `1.1.8.a`。
    - `com.dwarfeng.subgrade.stack.service.CrudService.get` 部分实现当实体不存在时抛出意料之外的异常的 bug。
-
 - 对于任何使用 subgrade 旧版本的项目，请酌情将 subgrade 版本升级至不低于 `1.2.3.b`。
-
 - 所有项目勿使用 `1.1.0.a` 的版本，此版本存在严重的兼容性问题。

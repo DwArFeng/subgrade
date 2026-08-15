@@ -14,7 +14,7 @@
 
 ## 接口定义
 
-所有的数据缓存接口均位于 `com.dwarfeng.subgrade.stack.cache` 包中。
+所有的数据缓存接口均位于 `com.dwarfeng.subgrade.data.stack.cache` 包中。
 除根接口外，具体缓存接口均以实体类型 `E extends Entity<?>` 为操作对象；带主键的接口使用 `K extends Key` 作为键类型。
 
 根接口 `Cache` 的 UML 关系与常用子接口的概览见：
@@ -23,7 +23,7 @@
 
 ### 根接口 `Cache`
 
-`com.dwarfeng.subgrade.stack.cache.Cache` 是所有数据缓存接口的根，定义如下行为：
+`com.dwarfeng.subgrade.data.stack.cache.Cache` 是所有数据缓存接口的根，定义如下行为：
 
 - `clear()`：清空该缓存对象所管理的全部内容，可能抛出 `CacheException`。
 
@@ -33,25 +33,25 @@
 
 `BaseCache<K extends Key, E extends Entity<K>>` 提供按主键访问的单实体缓存：
 
-| 方法                             | 说明                            |
-|:-------------------------------|:------------------------------|
-| `exists(K key)`                | 判断指定主键是否存在于缓存中。               |
-| `get(K key)`                   | 获取指定主键对应的实体。                  |
+| 方法                           | 说明                                             |
+|:-------------------------------|:-------------------------------------------------|
+| `exists(K key)`                | 判断指定主键是否存在于缓存中。                   |
+| `get(K key)`                   | 获取指定主键对应的实体。                         |
 | `push(E entity, long timeout)` | 写入或更新缓存；`timeout` 为毫秒，表示过期时间。 |
-| `delete(K key)`                | 删除指定主键对应的缓存项。                 |
-| `clear()`                      | 继承自 `Cache`，清空本缓存管理的全部键值。     |
+| `delete(K key)`                | 删除指定主键对应的缓存项。                       |
+| `clear()`                      | 继承自 `Cache`，清空本缓存管理的全部键值。       |
 
 ### `BatchBaseCache`
 
 `BatchBaseCache` 在 `BaseCache` 基础上增加批量操作：
 
-| 方法                                          | 说明                                                  |
-|:--------------------------------------------|:----------------------------------------------------|
-| `allExists(List<K> keys)`                   | 当且仅当列表中**每一个**主键在缓存中均存在时返回 `true`。                  |
-| `nonExists(List<K> keys)`                   | 当且仅当列表中**每一个**主键在缓存中均不存在时返回 `true`。                 |
-| `batchGet(List<K> keys)`                    | 按顺序批量获取与主键列表对应的实体列表。                                |
+| 方法                                        | 说明                                                                                 |
+|:--------------------------------------------|:-------------------------------------------------------------------------------------|
+| `allExists(List<K> keys)`                   | 当且仅当列表中**每一个**主键在缓存中均存在时返回 `true`。                            |
+| `nonExists(List<K> keys)`                   | 当且仅当列表中**每一个**主键在缓存中均不存在时返回 `true`。                          |
+| `batchGet(List<K> keys)`                    | 按顺序批量获取与主键列表对应的实体列表。                                             |
 | `batchPush(List<E> entities, long timeout)` | 批量写入；实现上对每个实体执行与 `push` 等价的写入，`timeout` 为毫秒，表示过期时间。 |
-| `batchDelete(List<K> keys)`                 | 批量删除指定主键。                                           |
+| `batchDelete(List<K> keys)`                 | 批量删除指定主键。                                                                   |
 
 ### `ListCache`
 
@@ -73,11 +73,11 @@
 
 `SingleObjectCache<E extends Entity<?>>` 表示全局仅缓存一个实体实例（无业务主键维度的多键）：
 
-| 方法                            | 说明                    |
-|:------------------------------|:----------------------|
-| `exists()`                    | 判断该单对象是否存在于缓存中。       |
-| `get()`                       | 获取缓存的实体。              |
-| `put(E entity, long timeout)` | 写入或更新；`timeout` 为毫秒。  |
+| 方法                          | 说明                               |
+|:------------------------------|:-----------------------------------|
+| `exists()`                    | 判断该单对象是否存在于缓存中。     |
+| `get()`                       | 获取缓存的实体。                   |
+| `put(E entity, long timeout)` | 写入或更新；`timeout` 为毫秒。     |
 | `clear()`                     | 继承自 `Cache`，清空该单对象缓存。 |
 
 常与 `SingleObjectDao`、`SingleObjectService` 及 `GeneralSingleObjectService` 配合使用。
@@ -86,9 +86,9 @@
 
 ### Redis 实现
 
-`com.dwarfeng.subgrade.impl.cache` 包提供了基于 Spring Data Redis 的实现，包括：
+`com.dwarfeng.subgrade.data.impl.cache` 包提供了基于 Spring Data Redis 的实现，包括：
 
-| 类名                       | 对应的接口               |
+| 类名                     | 对应的接口          |
 |:-------------------------|:--------------------|
 | `RedisBaseCache`         | `BaseCache`         |
 | `RedisBatchBaseCache`    | `BatchBaseCache`    |
@@ -141,7 +141,7 @@
 
 ## 异常
 
-缓存层方法抛出 `com.dwarfeng.subgrade.stack.exception.CacheException`（通常为包装底层存储或序列化异常）。
+缓存层方法抛出 `com.dwarfeng.subgrade.data.stack.exception.CacheException`（通常为包装底层存储或序列化异常）。
 对外服务接口则多使用 `ServiceException`，
 并通过异常映射统一处理；详见 [Exception Mapping Basics](./ExceptionMappingBasics.md)。
 

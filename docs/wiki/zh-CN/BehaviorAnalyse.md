@@ -78,10 +78,10 @@ public @interface SkipRecord {
 
 ### 详细日志模式
 
-通过系统属性 `subgrade.detailedBehaviorAnalyseLog` 可以开启详细日志模式，记录更详细的调试信息：
+通过系统属性 `com.dwarfeng.subgrade.aop.behavior_analyse.detailed_log` 可以开启详细日志模式，记录更详细的调试信息：
 
 ```bash
--Dsubgrade.detailedBehaviorAnalyseLog=true
+-Dcom.dwarfeng.subgrade.aop.behavior_analyse.detailed_log=true
 ```
 
 ## 使用示例
@@ -223,9 +223,10 @@ com.dwarfeng.etc...: 账户 StringIdKey{stringId='etc...'} 不存在
 
 ### 系统属性配置
 
-| 属性名                                   | 默认值     | 说明            |
-|:--------------------------------------|:--------|:--------------|
-| `subgrade.detailedBehaviorAnalyseLog` | `false` | 是否开启详细的行为分析日志 |
+| 属性名                                                              | 默认值  | 说明                           |
+|:--------------------------------------------------------------------|:--------|:-------------------------------|
+| `com.dwarfeng.subgrade.aop.behavior_analyse.detailed_log`           | `false` | 是否开启详细的行为分析日志     |
+| `com.dwarfeng.subgrade.aop.behavior_analyse.metadata_cache_enabled` | `true`  | 是否缓存行为分析元数据解析结果 |
 
 ### AOP 优先级
 

@@ -44,8 +44,8 @@
 
 - **ttl**：缓存过期时间，单位为毫秒。当 `ttl > 0` 时，新写入的缓存项在 `ttl` 毫秒后过期；当 `ttl <= 0` 时，缓存项永不过期（使用
   `Long.MAX_VALUE` 作为过期时间戳）。
-- **cleanupInterval**：定期清理任务的执行间隔，单位为毫秒。当 `cleanupInterval > 0` 时，会使用 `ThreadPoolTaskScheduler`
-  按固定间隔执行清理任务，移除所有已过期的缓存项；当 `cleanupInterval <= 0` 时，不启动定时清理任务。
+- **cleanupInterval**：定期清理任务的执行间隔，单位为毫秒。当 `cleanupInterval > 0` 时，会使用 `ScheduledExecutorService`
+  按固定延迟执行清理任务，移除所有已过期的缓存项；当 `cleanupInterval <= 0` 时，不启动定时清理任务。
 - **访问时过期检查**：在 `exists` 和 `get` 方法中，会检查缓存项是否已过期，若已过期则移除并重新从数据源获取。
 
 ### 缓存失效机制
@@ -70,8 +70,8 @@
 ```java
 package com.example.stack.handler;
 
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import com.dwarfeng.subgrade.stack.handler.LocalCacheHandler;
+import com.dwarfeng.subgrade.basic.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.cache.stack.handler.LocalCacheHandler;
 
 /**
  * Foo 本地缓存处理器。
@@ -102,17 +102,17 @@ import com.example.stack.handler.Foo;
 import com.example.stack.handler.FooHandler;
 import com.example.stack.handler.FooLocalCacheHandler;
 import com.example.stack.service.FooInfoMaintainService;
-import com.dwarfeng.subgrade.impl.handler.ExpirableLocalCacheHandler;
-import com.dwarfeng.subgrade.impl.handler.Fetcher;
-import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.aop.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.basic.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.cache.impl.handler.ExpirableLocalCacheHandler;
+import com.dwarfeng.subgrade.cache.stack.loader.Fetcher;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.concurrent.ScheduledExecutorService;
 
 @Component
 public class FooLocalCacheHandlerImpl implements FooLocalCacheHandler {
@@ -121,7 +121,7 @@ public class FooLocalCacheHandlerImpl implements FooLocalCacheHandler {
 
     public FooLocalCacheHandlerImpl(
             FooFetcher fooFetcher,
-            ThreadPoolTaskScheduler scheduler,
+            ScheduledExecutorService scheduler,
             @Value("${local_cache.foo.ttl}") long ttl,
             @Value("${local_cache.foo.cleanup_interval}") long cleanupInterval
     ) {
@@ -192,10 +192,10 @@ public class FooLocalCacheHandlerImpl implements FooLocalCacheHandler {
 }
 ```
 
-### 配置 ThreadPoolTaskScheduler 与缓存参数
+### 配置 ScheduledExecutorService 与缓存参数
 
-`ExpirableLocalCacheHandler` 需要 `ThreadPoolTaskScheduler` 作为 Spring Bean 提供，用于执行定期清理任务。应用需在配置类中定义该
-Bean。
+`ExpirableLocalCacheHandler` 需要应用提供 `ScheduledExecutorService`，用于以毫秒为单位按固定延迟执行定期清理任务。
+可将调度器定义为 Spring Bean，但其生命周期由应用负责，应在应用停止时关闭调度器。
 
 同时，需要在配置文件中设置 TTL 和清理间隔：
 

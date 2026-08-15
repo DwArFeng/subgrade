@@ -55,8 +55,8 @@
 ```java
 package com.example.stack.handler;
 
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import com.dwarfeng.subgrade.stack.handler.LocalCacheHandler;
+import com.dwarfeng.subgrade.basic.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.cache.stack.handler.LocalCacheHandler;
 
 /**
  * Foo 本地缓存处理器。
@@ -87,11 +87,11 @@ import com.example.stack.handler.Foo;
 import com.example.stack.handler.FooHandler;
 import com.example.stack.handler.FooLocalCacheHandler;
 import com.example.stack.service.FooInfoMaintainService;
-import com.dwarfeng.subgrade.impl.handler.Fetcher;
-import com.dwarfeng.subgrade.impl.handler.GeneralLocalCacheHandler;
-import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.aop.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.basic.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.basic.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.cache.impl.handler.GeneralLocalCacheHandler;
+import com.dwarfeng.subgrade.cache.stack.loader.Fetcher;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

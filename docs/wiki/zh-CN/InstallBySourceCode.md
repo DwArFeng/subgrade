@@ -1,5 +1,10 @@
 # Install by Source Code - 通过源码安装本项目
 
+## 构建环境
+
+- JDK 25 或更高版本，不启用预览特性。
+- Maven 3.9.16 或更高版本。
+
 ## 获取源码
 
 从 Github 或者 Gitee 中获取项目源码。

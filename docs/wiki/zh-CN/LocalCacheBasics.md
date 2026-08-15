@@ -14,7 +14,7 @@
 
 ### 本地缓存处理器接口
 
-在本项目中，所有的本地缓存处理器都必须实现 `com.dwarfeng.subgrade.stack.handler.LocalCacheHandler` 接口，本接口签名如下：
+在本项目中，所有的本地缓存处理器都必须实现 `com.dwarfeng.subgrade.cache.stack.handler.LocalCacheHandler` 接口，本接口签名如下：
 
 ```java
 public interface LocalCacheHandler<K, V> {
@@ -64,17 +64,17 @@ public interface LocalCacheHandler<K, V> {
 
 该接口定义了一个本地缓存处理器的基本操作方法，所有的本地缓存操作都将基于这些基础方法进行。
 
-其中，`K` 是键的类型，通常为主键类型，必须实现 `com.dwarfeng.subgrade.stack.bean.key.Key` 接口；`V`
+其中，`K` 是键的类型，通常为主键类型，必须实现 `com.dwarfeng.subgrade.basic.stack.bean.key.Key` 接口；`V`
 是值的类型，可以是任意类型，通常为业务对象或配置对象。
 
 ### 方法说明
 
-| 方法名             | 描述             | 返回值                                     | 异常                 |
-|:----------------|:---------------|:----------------------------------------|:-------------------|
-| `exists(K key)` | 判断指定的键对应的值是否存在 | `boolean`：存在返回 `true`，不存在返回 `false`     | `HandlerException` |
-| `get(K key)`    | 获取指定的键对应的值     | `V`：存在返回对应的值，不存在返回 `null`               | `HandlerException` |
-| `remove(K key)` | 移除指定的键对应的本地缓存  | `boolean`：如果缓存被移除返回 `true`，否则返回 `false` | `HandlerException` |
-| `clear()`       | 清除所有本地缓存       | `void`                                  | `HandlerException` |
+| 方法名          | 描述                         | 返回值                                                 | 异常               |
+|:----------------|:-----------------------------|:-------------------------------------------------------|:-------------------|
+| `exists(K key)` | 判断指定的键对应的值是否存在 | `boolean`：存在返回 `true`，不存在返回 `false`         | `HandlerException` |
+| `get(K key)`    | 获取指定的键对应的值         | `V`：存在返回对应的值，不存在返回 `null`               | `HandlerException` |
+| `remove(K key)` | 移除指定的键对应的本地缓存   | `boolean`：如果缓存被移除返回 `true`，否则返回 `false` | `HandlerException` |
+| `clear()`       | 清除所有本地缓存             | `void`                                                 | `HandlerException` |
 
 ## 工作方式
 
@@ -118,12 +118,12 @@ public interface LocalCacheHandler<K, V> {
 
 ### 定位差异
 
-| 特性   | LocalCacheHandler | Cache             |
-|:-----|:------------------|:------------------|
-| 缓存位置 | 进程内内存             | 分布式缓存（如 Redis）    |
-| 数据共享 | 仅在同一进程内共享         | 可在多个进程间共享         |
+| 特性     | LocalCacheHandler              | Cache                              |
+|:---------|:-------------------------------|:-----------------------------------|
+| 缓存位置 | 进程内内存                     | 分布式缓存（如 Redis）             |
+| 数据共享 | 仅在同一进程内共享             | 可在多个进程间共享                 |
 | 性能特点 | 访问速度快，但占用进程内存     | 访问速度相对较慢，但不占用进程内存 |
-| 适用场景 | 读取量大、写入量小的进程内数据   | 需要在多个进程间共享的数据     |
+| 适用场景 | 读取量大、写入量小的进程内数据 | 需要在多个进程间共享的数据         |
 
 ### 使用场景建议
 

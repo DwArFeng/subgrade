@@ -6,125 +6,41 @@
 
 ## 使用本项目
 
-在 Maven 中使用本项目非常简单，只需要在 `pom.xml` 中添加如下依赖即可：
+Subgrade 2.0 按功能拆分为十个 Maven artifact。应用只需声明实际使用的模块：
 
-### subgrade-stack
+| Maven artifact        | JPMS 模块名                        | 主要职责                                 |
+|:----------------------|:-----------------------------------|:-----------------------------------------|
+| `subgrade-base`       | `com.dwarfeng.subgrade.base`       | 国际化与模块内部基础机制                 |
+| `subgrade-basic`      | `com.dwarfeng.subgrade.basic`      | Bean、Key、基础异常、生成器与日志协议    |
+| `subgrade-data`       | `com.dwarfeng.subgrade.data`       | DAO、Service、实体缓存及数据访问实现     |
+| `subgrade-expression` | `com.dwarfeng.subgrade.expression` | 通用表达式协议与解析实现                 |
+| `subgrade-aop`        | `com.dwarfeng.subgrade.aop`        | 行为分析与通用 AOP 能力                  |
+| `subgrade-web`        | `com.dwarfeng.subgrade.web`        | Web 响应、登录、权限与验证               |
+| `subgrade-lifecycle`  | `com.dwarfeng.subgrade.lifecycle`  | Startable、Online 与 Worker 生命周期能力 |
+| `subgrade-cache`      | `com.dwarfeng.subgrade.cache`      | 进程内本地缓存                           |
+| `subgrade-lock`       | `com.dwarfeng.subgrade.lock`       | 分布式锁及 Curator 实现                  |
+| `subgrade-kafka`      | `com.dwarfeng.subgrade.kafka`      | Kafka 序列化与 Fastjson2 适配            |
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!--suppress MavenModelInspection, MavenModelVersionMissed -->
-<project
-        xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-        http://maven.apache.org/xsd/maven-4.0.0.xsd"
->
-
-    <!-- 省略其他配置 -->
-    <dependencies>
-        <!-- 省略其他配置 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>subgrade-stack</artifactId>
-            <version>${subgrade.version}</version>
-        </dependency>
-        <!-- 省略其他配置 -->
-    </dependencies>
-    <!-- 省略其他配置 -->
-</project>
-```
-
-### subgrade-sdk
+例如，使用基础模型和数据访问能力时，可声明：
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
 
-<!--suppress MavenModelInspection, MavenModelVersionMissed -->
-<project
-        xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-        http://maven.apache.org/xsd/maven-4.0.0.xsd"
->
-
-    <!-- 省略其他配置 -->
-    <dependencies>
-        <!-- 省略其他配置 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>subgrade-sdk</artifactId>
-            <version>${subgrade.version}</version>
-            <!-- 推荐排除以下已停止维护的依赖 -->
-            <exclusions>
-                <exclusion>
-                    <artifactId>dozer</artifactId>
-                    <groupId>net.sf.dozer</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>dozer-spring</artifactId>
-                    <groupId>net.sf.dozer</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- 省略其他配置 -->
-    </dependencies>
-    <!-- 省略其他配置 -->
-</project>
+<dependencies>
+    <dependency>
+        <groupId>com.dwarfeng</groupId>
+        <artifactId>subgrade-basic</artifactId>
+        <version>${subgrade.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.dwarfeng</groupId>
+        <artifactId>subgrade-data</artifactId>
+        <version>${subgrade.version}</version>
+    </dependency>
+</dependencies>
 ```
 
-### subgrade-impl
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!--suppress MavenModelInspection, MavenModelVersionMissed -->
-<project
-        xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-        http://maven.apache.org/xsd/maven-4.0.0.xsd"
->
-
-    <!-- 省略其他配置 -->
-    <dependencies>
-        <!-- 省略其他配置 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>subgrade-impl</artifactId>
-            <version>${subgrade.version}</version>
-            <!-- 推荐排除以下已停止维护的依赖 -->
-            <exclusions>
-                <exclusion>
-                    <artifactId>dozer</artifactId>
-                    <groupId>net.sf.dozer</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>dozer-spring</artifactId>
-                    <groupId>net.sf.dozer</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- 省略其他配置 -->
-    </dependencies>
-    <!-- 省略其他配置 -->
-</project>
-```
-
-## 注意事项
-
-### 停止维护的依赖
-
-该项目中的部分依赖已明确停止维护，对于这些已经停止维护的依赖，本项目在 `pom.xml` 中使用 `provided` 进行标记，
-因此，这些停止维护的依赖不会被打包到最终构建的产物中，如果您确实需要在运行环境中使用这些依赖，
-请您在您的 `pom.xml` 中声明这些依赖。
-
-停止维护的依赖清单如下：
-
-| 名称                        | 版本    | 说明                                                                                 |
-|:--------------------------|:------|:-----------------------------------------------------------------------------------|
-| net.sf.dozer:dozer        | 5.5.1 | [停止维护说明](https://github.com/DozerMapper/dozer?tab=readme-ov-file#project-activity) |
-| net.sf.dozer:dozer-spring | 5.5.1 | [停止维护说明](https://github.com/DozerMapper/dozer?tab=readme-ov-file#project-activity) |
+当前 JDK 25 模块化正式版为 `2.0.0.a`。使用 JPMS 的应用还需在自身 `module-info.java` 中声明与所选 artifact 对应的模块名。历史
+`subgrade-stack`、`subgrade-sdk`、`subgrade-impl` artifact 已删除，不提供兼容转发模块。
 
 ## 参阅
 
