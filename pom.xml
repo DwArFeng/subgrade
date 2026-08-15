@@ -10,7 +10,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>subgrade</artifactId>
-    <version>2.0.0.a-SNAPSHOT</version>
+    <version>2.0.0.a</version>
 
     <packaging>pom</packaging>
 
