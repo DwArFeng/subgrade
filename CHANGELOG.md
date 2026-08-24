@@ -8,7 +8,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分 HQL 子句中已知的问题。
+  - 修复 `OrPredicateClause` 在无谓词子句时错误匹配全部数据的问题。
 
 ### 功能移除
 
@@ -334,7 +335,7 @@
 - Wiki 编写。
   - docs/wiki/zh_CN/BehaviorAnalyse.md。
 
-- 登录和权限相关接口的大版本更新（**不兼容更新**）。
+- 登录和权限相关接口的大版本更新（ **不兼容更新**）。
   - 优化 `LoginRequiredAopManager` 接口，将方法签名从使用 `LongIdKey` 类型改为直接使用 `String` 类型。
   - 优化 `PermissionRequiredAopManager` 接口，将方法签名从使用 `StringIdKey` 类型改为直接使用 `String` 类型。
   - 更新相关实现类以适配新的接口签名：
@@ -997,7 +998,7 @@
 
 - AOP 调度逻辑优化。
   - 强化 LoginRequiredAdvisor 调度逻辑。
-  - 强化 PermissionRequiredAdvisor 调度逻辑（**不兼容更新**）。
+  - 强化 PermissionRequiredAdvisor 调度逻辑（ **不兼容更新**）。
 
 ### Bug 修复
 
@@ -1051,7 +1052,7 @@
 - 放宽 LocalCacheHandler 的泛型约束。
 
 - 登陆处理器扩展方法。
-  - LoginHandler.login(StringIdKey, String, Map<String,String>) throws HandlerException。
+  - LoginHandler.login (StringIdKey, String, Map<String,String>) throws HandlerException。
 
 - 依赖升级。
   - 升级 `netty` 依赖版本为 `4.1.86.Final` 以规避漏洞。
