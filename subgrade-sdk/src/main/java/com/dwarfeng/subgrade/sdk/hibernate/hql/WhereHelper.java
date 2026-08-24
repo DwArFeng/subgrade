@@ -28,6 +28,22 @@ public final class WhereHelper {
     }
 
     /**
+     * 生成表达式等于的 Where 子句。
+     *
+     * <p>
+     * 两个表达式会直接写入 HQL，应仅传入由程序定义的受信任表达式。
+     *
+     * @param leftExpression  左表达式。
+     * @param rightExpression 右表达式。
+     * @return 生成的 Where 子句。
+     */
+    public static PredicateClause eqExpression(
+            @Nonnull String leftExpression, @Nonnull String rightExpression
+    ) {
+        return new EqExpressionPredicateClause(leftExpression, rightExpression);
+    }
+
+    /**
      * 生成等于或者为 null 的 Where 子句。
      *
      * @param expression 属性表达式。
@@ -248,6 +264,20 @@ public final class WhereHelper {
      */
     public static PredicateClause or(@Nonnull PredicateClause... whereClauses) {
         return or(Arrays.asList(whereClauses));
+    }
+
+    /**
+     * 生成存在的 Where 子句。
+     *
+     * @param entityClass     子查询实体类型。
+     * @param entityAlias     子查询实体别名。
+     * @param predicateClause 子查询谓词。
+     * @return 生成的 Where 子句。
+     */
+    public static PredicateClause exists(
+            @Nonnull Class<?> entityClass, @Nonnull String entityAlias, @Nonnull PredicateClause predicateClause
+    ) {
+        return new ExistsPredicateClause(entityClass, entityAlias, predicateClause);
     }
 
     /**
