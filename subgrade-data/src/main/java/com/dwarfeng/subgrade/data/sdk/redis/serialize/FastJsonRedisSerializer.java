@@ -6,7 +6,7 @@ import com.alibaba.fastjson2.JSONReader;
 import com.alibaba.fastjson2.JSONWriter;
 import com.dwarfeng.subgrade.data.internal.i18n.DataMessageKey;
 import com.dwarfeng.subgrade.data.internal.i18n.DataMessages;
-import org.jspecify.annotations.NullMarked;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
@@ -42,9 +42,8 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
         this.autoTypeBeforeHandler = JSONReader.autoTypeFilter(acceptedTypes);
     }
 
-    @NullMarked
     @Override
-    public byte[] serialize(T t) throws SerializationException {
+    public byte @NotNull [] serialize(T t) throws SerializationException {
         if (t == null) {
             return new byte[0];
         }

@@ -8,7 +8,9 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分类错误使用 JSpecify 注解的问题。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateAccelerableHqlPresetLookupDao。
+  - com.dwarfeng.subgrade.data.sdk.redis.serialize.FastJsonRedisSerializer。
 
 ### 功能移除
 

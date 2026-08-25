@@ -12,7 +12,6 @@ import com.dwarfeng.subgrade.data.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.data.stack.exception.DaoException;
 import org.hibernate.query.Query;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NonNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -158,7 +157,6 @@ public class HibernateAccelerableHqlPresetLookupDao<E extends Entity<?>, PE exte
     }
 
     @SuppressWarnings("DuplicatedCode")
-    @NonNull
     private List<E> lookupWithPositiveRows(String preset, Object[] objs, PagingInfo pagingInfo, int page, int rows) {
         if (nativeLookup.supportPreset(preset)) {
             List<E> result = template.executeWithNativeSession(session -> session.doReturningWork(

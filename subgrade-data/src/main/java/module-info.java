@@ -19,7 +19,6 @@ module com.dwarfeng.subgrade.data {
     requires org.glassfish.jaxb.runtime;
     requires org.slf4j;
     requires static org.jetbrains.annotations;
-    requires org.jspecify;
 
     exports com.dwarfeng.subgrade.data.stack.cache;
     exports com.dwarfeng.subgrade.data.stack.dao;
