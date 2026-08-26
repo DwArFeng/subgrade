@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/UpgradeGuide2.0.0.md。
+
 - Wiki 更新。
   - docs/wiki/zh-CN/VersionBlacklist.md。
 
