@@ -30,25 +30,25 @@
 
 ## 版本黑名单
 
-| 编号                                                 | 大版本   | 起始版本     | 结束版本     | 原因                                            |
-|----------------------------------------------------|-------|----------|----------|-----------------------------------------------|
-| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.7.x | 1.7.0.a  | 1.7.3.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
-| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.6.x | 1.6.0.a  | 1.6.0.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
-| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.5.x | 1.5.0.a  | 1.5.11.a | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
-| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.4.x | 1.4.0.a  | 1.4.8.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
-| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.3.x | 1.3.0.a  | 1.3.3.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
-| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.2.x | 1.2.13.a | 1.2.14.a | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.7.x | 1.7.0.a  | 1.7.0.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.6.x | 1.6.0.a  | 1.6.0.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.5.x | 1.5.0.a  | 1.5.11.a | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.4.x | 1.4.0.a  | 1.4.8.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.3.x | 1.3.0.a  | 1.3.3.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.2.x | 1.2.0.a  | 1.2.14.a | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.1.x | 1.1.0.a  | 1.1.8.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
-| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.0.x | 1.0.0.a  | 1.0.2.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误                     |
-| [BLACKLIST-LEGACY-1.5.5.a](#BLACKLIST-LEGACY-155a) | 1.5.x | 1.5.5.a  | 1.5.5.a  | 核心类构造器方法存在缺陷                                  |
-| [BLACKLIST-LEGACY-1.5.4.a](#BLACKLIST-LEGACY-154a) | 1.5.x | 1.5.4.a  | 1.5.4.a  | 核心类构造器方法存在缺陷                                  |
-| [BLACKLIST-LEGACY-1.4.8.a](#BLACKLIST-LEGACY-148a) | 1.4.x | 1.4.8.a  | 1.4.8.a  | 核心类存在严重 bug                                   |
+| 编号                                               | 大版本 | 起始版本 | 结束版本 | 原因                                                  |
+|----------------------------------------------------|--------|----------|----------|-------------------------------------------------------|
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.7.x  | 1.7.0.a  | 1.7.3.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.6.x  | 1.6.0.a  | 1.6.0.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.5.x  | 1.5.0.a  | 1.5.11.a | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.4.x  | 1.4.0.a  | 1.4.8.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.3.x  | 1.3.0.a  | 1.3.3.a  | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20260418.1](#BLACKLIST-202604181)       | 1.2.x  | 1.2.13.a | 1.2.14.a | JSFixedFastJsonLongIdKey.toStackBean 静态方法签名错误 |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.7.x  | 1.7.0.a  | 1.7.0.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误          |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.6.x  | 1.6.0.a  | 1.6.0.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误          |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.5.x  | 1.5.0.a  | 1.5.11.a | Redis 缓存在顺序敏感场景可能导致数据顺序错误          |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.4.x  | 1.4.0.a  | 1.4.8.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误          |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.3.x  | 1.3.0.a  | 1.3.3.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误          |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.2.x  | 1.2.0.a  | 1.2.14.a | Redis 缓存在顺序敏感场景可能导致数据顺序错误          |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.1.x  | 1.1.0.a  | 1.1.8.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误          |
+| [BLACKLIST-20251031.1](#BLACKLIST-202510311)       | 1.0.x  | 1.0.0.a  | 1.0.2.a  | Redis 缓存在顺序敏感场景可能导致数据顺序错误          |
+| [BLACKLIST-LEGACY-1.5.5.a](#BLACKLIST-LEGACY-155a) | 1.5.x  | 1.5.5.a  | 1.5.5.a  | 核心类构造器方法存在缺陷                              |
+| [BLACKLIST-LEGACY-1.5.4.a](#BLACKLIST-LEGACY-154a) | 1.5.x  | 1.5.4.a  | 1.5.4.a  | 核心类构造器方法存在缺陷                              |
+| [BLACKLIST-LEGACY-1.4.8.a](#BLACKLIST-LEGACY-148a) | 1.4.x  | 1.4.8.a  | 1.4.8.a  | 核心类存在严重 bug                                    |
 
 ## 详细原因
 
