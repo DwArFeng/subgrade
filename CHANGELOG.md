@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/AuditRecord.md。
+
 - 为部分过时类/方法添加 `@Deprecated` 注解。
   - com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer。
   - com.dwarfeng.subgrade.impl.dao.HibernateAcceleratePresetLookupDao。

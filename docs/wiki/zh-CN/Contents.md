@@ -32,6 +32,7 @@
 ### AOP
 
 - [Behavior Analyse](./BehaviorAnalyse.md) - 行为分析，说明了本项目的行为分析 AOP 功能以及注解的使用。
+- [Audit Record](./AuditRecord.md) - 审计记录，说明了本项目的审计记录 AOP 功能以及注解的使用。
 
 ### 本地缓存
 
