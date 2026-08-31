@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 新增审计记录拦截能力。
+  - 新增审计记录注解拦截、上下文构建与默认审计属性生成。
+  - 新增贡献器式审计属性构建器，以及请求、结果、异常属性贡献器。
+  - 新增审计记录处理器接口，用于统一提交审计信息。
+
 - 新增 HQL 谓词子句。
   - com.dwarfeng.subgrade.sdk.hibernate.hql.clause.EqExpressionPredicateClause。
   - com.dwarfeng.subgrade.sdk.hibernate.hql.clause.ExistsPredicateClause。
