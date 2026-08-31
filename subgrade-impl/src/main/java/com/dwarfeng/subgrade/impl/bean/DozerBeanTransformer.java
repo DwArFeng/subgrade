@@ -21,6 +21,7 @@ import java.util.Objects;
  * @since 0.0.1-alpha
  * @deprecated 由于 <code>Dozer</code> 框架已经停止维护，故此实现过期，请勿再使用。
  */
+@Deprecated
 public class DozerBeanTransformer<U extends Bean, V extends Bean> implements BeanTransformer<U, V> {
 
     private Class<U> classU;

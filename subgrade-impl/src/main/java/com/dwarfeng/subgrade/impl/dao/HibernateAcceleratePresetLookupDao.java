@@ -18,6 +18,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
  * @author DwArFeng
  * @since 1.2.8
  */
+@Deprecated
 public final class HibernateAcceleratePresetLookupDao<E extends Entity<?>, PE extends Bean> extends
         HibernateAccelerablePresetLookupDao<E, PE> {
 

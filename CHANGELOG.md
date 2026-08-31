@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 为部分过时类/方法添加 `@Deprecated` 注解。
+  - com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer。
+  - com.dwarfeng.subgrade.impl.dao.HibernateAcceleratePresetLookupDao。
+  - com.dwarfeng.subgrade.impl.service.DaoOnlyBatchWriteService。
+  - com.dwarfeng.subgrade.sdk.bean.dto.ResponseDataUtil。
+
 - 新增审计记录拦截能力。
   - 新增审计记录注解拦截、上下文构建与默认审计属性生成。
   - 新增贡献器式审计属性构建器，以及请求、结果、异常属性贡献器。

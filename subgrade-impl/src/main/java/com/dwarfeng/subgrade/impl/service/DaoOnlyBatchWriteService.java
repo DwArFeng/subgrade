@@ -64,6 +64,7 @@ public class DaoOnlyBatchWriteService<K extends Key, E extends Entity<K>> extend
      * @see #DaoOnlyBatchWriteService(ServiceExceptionMapper, LogLevel, BatchWriteDao, KeyGenerator)
      * @deprecated 使用 {@link #DaoOnlyBatchWriteService(ServiceExceptionMapper, LogLevel, BatchWriteDao, KeyGenerator)} 代替。
      */
+    @Deprecated
     public DaoOnlyBatchWriteService(
             @Nonnull BatchWriteDao<E> dao,
             @Nonnull KeyGenerator<K> keyGenerator,

@@ -38,6 +38,7 @@ public final class ResponseDataUtil {
      * @see #bad(ServiceException)
      * @deprecated 有多余的入口参数，已被 {@link #bad(ServiceException)} 代替。
      */
+    @Deprecated
     public static <T> ResponseData<T> bad(
             @SuppressWarnings("unused") Class<? super T> clazz, ServiceException e
     ) {
@@ -55,6 +56,7 @@ public final class ResponseDataUtil {
      * @see #bad(Exception, ServiceExceptionMapper)
      * @deprecated 有多余的入口参数，已被 {@link #bad(Exception, ServiceExceptionMapper)} 代替。
      */
+    @Deprecated
     public static <T> ResponseData<T> bad(
             @SuppressWarnings("unused") Class<? super T> clazz, Exception e, ServiceExceptionMapper sem
     ) {
