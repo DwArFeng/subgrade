@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/AuditRecord.md。
+
 - Wiki 更新。
   - docs/wiki/zh-CN/Contents.md。
 
