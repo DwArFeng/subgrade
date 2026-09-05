@@ -31,9 +31,9 @@ public class OrPredicateClause extends AbstractPredicateClause {
         // 拼接左括号。
         hqlBuilder.append("(");
 
-        // 如果谓词子句为空，则拼接 1=1；否则，拼接谓词子句。
+        // 如果谓词子句为空，则拼接 1=0；否则，拼接谓词子句。
         if (predicateClauses.isEmpty()) {
-            hqlBuilder.append("1=1");
+            hqlBuilder.append("1=0");
         } else {
             for (int i = 0; i < predicateClauses.size(); i++) {
                 // 获取谓词子句。
