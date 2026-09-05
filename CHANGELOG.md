@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 扩展 HQL 谓词子句构建能力。
+  - 扩展 `WhereHelper` 谓词子句构建能力。
+
 - 新增 HQL 谓词子句。
   - com.dwarfeng.subgrade.data.sdk.hibernate.hql.clause.EqExpressionPredicateClause。
   - com.dwarfeng.subgrade.data.sdk.hibernate.hql.clause.ExistsPredicateClause。
