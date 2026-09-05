@@ -24,6 +24,7 @@ module com.dwarfeng.subgrade.web {
     exports com.dwarfeng.subgrade.web.sdk.exception;
     exports com.dwarfeng.subgrade.web.sdk.fastjson.serialize;
     exports com.dwarfeng.subgrade.web.sdk.interceptor;
+    exports com.dwarfeng.subgrade.web.sdk.interceptor.audit.propctr;
     exports com.dwarfeng.subgrade.web.sdk.interceptor.http;
     exports com.dwarfeng.subgrade.web.sdk.interceptor.login;
     exports com.dwarfeng.subgrade.web.sdk.interceptor.permission;
