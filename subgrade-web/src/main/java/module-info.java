@@ -8,8 +8,8 @@ module com.dwarfeng.subgrade.web {
     requires spring.beans;
     requires spring.context;
     requires spring.aop;
-    requires transitive jakarta.servlet;
-    requires transitive jakarta.validation;
+    requires jakarta.servlet;
+    requires jakarta.validation;
     requires com.alibaba.fastjson2;
     requires org.slf4j;
     requires static org.jetbrains.annotations;

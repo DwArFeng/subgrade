@@ -10,7 +10,7 @@ module com.dwarfeng.subgrade.data {
     requires spring.tx;
     requires spring.data.redis;
     requires org.hibernate.orm.core;
-    requires transitive jakarta.persistence;
+    requires jakarta.persistence;
     requires org.mybatis;
     requires org.mybatis.spring;
     requires com.alibaba.fastjson2;

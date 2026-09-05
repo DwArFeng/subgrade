@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 优化 JPMS 依赖读取边界。
+  - subgrade-basic。
+  - subgrade-data。
+  - subgrade-web。
+
 - `subgrade-web` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.subgrade.web.sdk.bean.key.WebInputStringIdKey。
   - com.dwarfeng.subgrade.web.sdk.bean.key.WebInputLongIdKey。

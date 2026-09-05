@@ -2,7 +2,7 @@ module com.dwarfeng.subgrade.basic {
 
     requires com.dwarfeng.subgrade.base;
     requires com.dwarfeng.dutil.basic;
-    requires transitive org.slf4j;
+    requires org.slf4j;
     requires static org.jetbrains.annotations;
 
     exports com.dwarfeng.subgrade.basic.stack.bean;
