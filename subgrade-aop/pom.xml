@@ -41,6 +41,10 @@
         </dependency>
         <!-- 日志处理 -->
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <scope>test</scope>
@@ -49,10 +53,6 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j2-impl</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
         </dependency>
         <!-- Spring 框架 -->
         <dependency>
@@ -103,7 +103,7 @@
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
-            <!-- Maven 强制规则插件，用于检查构建环境和依赖收敛。 -->
+            <!-- Maven 强制规则插件，用于检查构建环境。 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>

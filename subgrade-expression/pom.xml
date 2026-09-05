@@ -84,7 +84,7 @@
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
-            <!-- Maven 强制规则插件，用于检查构建环境和依赖收敛。 -->
+            <!-- Maven 强制规则插件，用于检查构建环境。 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
