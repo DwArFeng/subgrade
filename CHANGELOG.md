@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 新增 HQL 谓词子句。
+  - com.dwarfeng.subgrade.data.sdk.hibernate.hql.clause.EqExpressionPredicateClause。
+  - com.dwarfeng.subgrade.data.sdk.hibernate.hql.clause.ExistsPredicateClause。
+
 - 优化 JPMS 依赖读取边界。
   - subgrade-basic。
   - subgrade-data。
