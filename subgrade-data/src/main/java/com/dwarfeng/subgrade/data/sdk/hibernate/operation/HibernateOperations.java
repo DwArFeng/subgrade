@@ -97,8 +97,8 @@ public class HibernateOperations {
     @SuppressWarnings("resource")
     public void delete(@NotNull Object entity) {
         Session session = currentSession();
-        Object managedEntity = session.contains(entity) ? entity : session.merge(entity);
-        session.remove(managedEntity);
+        // 删除操作不执行 merge，避免将实体的关联对象图重新合并进当前会话。
+        session.remove(entity);
     }
 
     /**
