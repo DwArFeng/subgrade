@@ -120,11 +120,6 @@
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
         </dependency>
-        <!-- Mapstruct 框架 -->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
         <!-- Dutil 工具库 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
@@ -154,20 +149,6 @@
                             <directory>logs</directory>
                         </fileset>
                     </filesets>
-                </configuration>
-            </plugin>
-            <!-- Maven 编译插件，用于处理 Annotation Processor。 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <!-- Maven 测试插件，用于选项式执行单元测试。 -->

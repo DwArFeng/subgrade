@@ -2,6 +2,7 @@ module com.dwarfeng.subgrade.basic {
 
     requires com.dwarfeng.subgrade.base;
     requires com.dwarfeng.dutil.basic;
+    requires org.mapstruct;
     requires org.slf4j;
     requires static org.jetbrains.annotations;
 

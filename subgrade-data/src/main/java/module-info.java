@@ -14,7 +14,6 @@ module com.dwarfeng.subgrade.data {
     requires org.mybatis;
     requires org.mybatis.spring;
     requires com.alibaba.fastjson2;
-    requires org.mapstruct;
     requires jakarta.xml.bind;
     requires org.glassfish.jaxb.runtime;
     requires org.slf4j;
