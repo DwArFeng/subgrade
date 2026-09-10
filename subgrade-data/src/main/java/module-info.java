@@ -55,4 +55,8 @@ module com.dwarfeng.subgrade.data {
     exports com.dwarfeng.subgrade.data.impl.generation;
     exports com.dwarfeng.subgrade.data.impl.handler;
     exports com.dwarfeng.subgrade.data.impl.service;
+
+    opens com.dwarfeng.subgrade.data.impl.i18n to com.dwarfeng.subgrade.base;
+    opens com.dwarfeng.subgrade.data.sdk.i18n to com.dwarfeng.subgrade.base;
+    opens com.dwarfeng.subgrade.data.stack.i18n to com.dwarfeng.subgrade.base;
 }

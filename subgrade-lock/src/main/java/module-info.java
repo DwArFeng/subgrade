@@ -11,4 +11,7 @@ module com.dwarfeng.subgrade.lock {
     exports com.dwarfeng.subgrade.lock.stack.handler;
     exports com.dwarfeng.subgrade.lock.sdk.exception;
     exports com.dwarfeng.subgrade.lock.impl.handler.curator;
+
+    opens com.dwarfeng.subgrade.lock.impl.i18n to com.dwarfeng.subgrade.base;
+    opens com.dwarfeng.subgrade.lock.sdk.i18n to com.dwarfeng.subgrade.base;
 }

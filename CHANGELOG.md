@@ -4,6 +4,17 @@
 
 ### 功能构建
 
+- 优化 JPMS 依赖读取边界。
+  - subgrade-aop。
+  - subgrade-basic。
+  - subgrade-cache。
+  - subgrade-data。
+  - subgrade-expression。
+  - subgrade-kafka。
+  - subgrade-lifecycle。
+  - subgrade-lock。
+  - subgrade-web。
+
 - 项目结构优化。
   - 将 `SystemPropertyConstants` 从 `sdk.configuration` 迁移至 `sdk.util`。
   - 将 `MapStructBeanTransformer` 及其依赖迁移至 `subgrade-basic`。

@@ -7,4 +7,6 @@ module com.dwarfeng.subgrade.kafka {
 
     exports com.dwarfeng.subgrade.kafka.sdk.exception;
     exports com.dwarfeng.subgrade.kafka.impl.serializer.fastjson;
+
+    opens com.dwarfeng.subgrade.kafka.sdk.i18n to com.dwarfeng.subgrade.base;
 }

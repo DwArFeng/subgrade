@@ -22,4 +22,7 @@ module com.dwarfeng.subgrade.basic {
     exports com.dwarfeng.subgrade.basic.impl.bean;
     exports com.dwarfeng.subgrade.basic.impl.exception;
     exports com.dwarfeng.subgrade.basic.impl.generation;
+
+    opens com.dwarfeng.subgrade.basic.sdk.i18n to com.dwarfeng.subgrade.base;
+    opens com.dwarfeng.subgrade.basic.stack.i18n to com.dwarfeng.subgrade.base;
 }

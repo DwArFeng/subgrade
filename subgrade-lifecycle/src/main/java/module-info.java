@@ -8,4 +8,7 @@ module com.dwarfeng.subgrade.lifecycle {
     exports com.dwarfeng.subgrade.lifecycle.stack.handler;
     exports com.dwarfeng.subgrade.lifecycle.sdk.exception;
     exports com.dwarfeng.subgrade.lifecycle.impl.handler;
+
+    opens com.dwarfeng.subgrade.lifecycle.impl.i18n to com.dwarfeng.subgrade.base;
+    opens com.dwarfeng.subgrade.lifecycle.sdk.i18n to com.dwarfeng.subgrade.base;
 }

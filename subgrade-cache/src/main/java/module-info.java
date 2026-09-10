@@ -9,4 +9,7 @@ module com.dwarfeng.subgrade.cache {
     exports com.dwarfeng.subgrade.cache.stack.loader;
     exports com.dwarfeng.subgrade.cache.sdk.exception;
     exports com.dwarfeng.subgrade.cache.impl.handler;
+
+    opens com.dwarfeng.subgrade.cache.impl.i18n to com.dwarfeng.subgrade.base;
+    opens com.dwarfeng.subgrade.cache.sdk.i18n to com.dwarfeng.subgrade.base;
 }
