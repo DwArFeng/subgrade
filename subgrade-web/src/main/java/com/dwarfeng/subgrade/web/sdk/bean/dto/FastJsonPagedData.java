@@ -18,26 +18,6 @@ public class FastJsonPagedData<E> implements Dto {
 
     @Serial
     private static final long serialVersionUID = 6589920906705210348L;
-    @JSONField(name = "current_page", ordinal = 1)
-    private int currentPage;
-    @JSONField(name = "total_pages", ordinal = 2)
-    private int totalPages;
-    @JSONField(name = "rows", ordinal = 3)
-    private int rows;
-    @JSONField(name = "count", ordinal = 4)
-    private long count;
-    @JSONField(name = "data", ordinal = 5)
-    private List<E> data;
-    public FastJsonPagedData() {
-    }
-
-    public FastJsonPagedData(int currentPage, int totalPages, int rows, long count, List<E> data) {
-        this.currentPage = currentPage;
-        this.totalPages = totalPages;
-        this.rows = rows;
-        this.count = count;
-        this.data = data;
-    }
 
     /**
      * 通过指定的 PagedData 生成的 FastJsonPagedData。
@@ -57,6 +37,28 @@ public class FastJsonPagedData<E> implements Dto {
                 pagedData.getCount(),
                 pagedData.getData()
         );
+    }
+
+    @JSONField(name = "current_page", ordinal = 1)
+    private int currentPage;
+    @JSONField(name = "total_pages", ordinal = 2)
+    private int totalPages;
+    @JSONField(name = "rows", ordinal = 3)
+    private int rows;
+    @JSONField(name = "count", ordinal = 4)
+    private long count;
+    @JSONField(name = "data", ordinal = 5)
+    private List<E> data;
+
+    public FastJsonPagedData() {
+    }
+
+    public FastJsonPagedData(int currentPage, int totalPages, int rows, long count, List<E> data) {
+        this.currentPage = currentPage;
+        this.totalPages = totalPages;
+        this.rows = rows;
+        this.count = count;
+        this.data = data;
     }
 
     public int getCurrentPage() {

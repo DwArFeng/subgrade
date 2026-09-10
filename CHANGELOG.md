@@ -4,6 +4,24 @@
 
 ### 功能构建
 
+- `subgrade-web` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.WebInputStringIdKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.WebInputLongIdKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.WebInputIntegerIdKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.WebInputDenseUuidKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.WebInputByteIdKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.JSFixedFastJsonLongIdKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.FastJsonUuidKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.FastJsonStringIdKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.FastJsonLongIdKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.FastJsonIntegerIdKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.FastJsonDenseUuidKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.FastJsonByteIdKey。
+  - com.dwarfeng.subgrade.web.sdk.bean.dto.JSFixedFastJsonPagedData。
+  - com.dwarfeng.subgrade.web.sdk.bean.dto.FastJsonResponseData。
+  - com.dwarfeng.subgrade.web.sdk.bean.dto.FastJsonPagedData。
+  - com.dwarfeng.subgrade.web.sdk.bean.key.WebInputUuidKey。
+
 - `subgrade-data` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateAccelerableHqlPresetLookupDao。
   - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateAccelerablePresetLookupDao。

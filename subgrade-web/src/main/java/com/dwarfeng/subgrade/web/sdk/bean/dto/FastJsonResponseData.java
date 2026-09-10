@@ -19,16 +19,6 @@ public class FastJsonResponseData<T> implements Dto {
 
     @Serial
     private static final long serialVersionUID = -8941192962662790671L;
-    private T data;
-    private FastJsonMeta meta;
-
-    public FastJsonResponseData() {
-    }
-
-    public FastJsonResponseData(T data, FastJsonMeta meta) {
-        this.data = data;
-        this.meta = meta;
-    }
 
     /**
      * 通过指定的 ResponseData 生成的 FastJsonPagedData。
@@ -42,6 +32,17 @@ public class FastJsonResponseData<T> implements Dto {
                 responseData.getData(),
                 FastJsonMeta.of(responseData.getMeta())
         );
+    }
+
+    private T data;
+    private FastJsonMeta meta;
+
+    public FastJsonResponseData() {
+    }
+
+    public FastJsonResponseData(T data, FastJsonMeta meta) {
+        this.data = data;
+        this.meta = meta;
     }
 
     public T getData() {
@@ -78,18 +79,6 @@ public class FastJsonResponseData<T> implements Dto {
 
         @Serial
         private static final long serialVersionUID = -3369353657122102639L;
-        @JSONField(name = "code", ordinal = 1)
-        private int code;
-        @JSONField(name = "message", ordinal = 2)
-        private String message;
-
-        public FastJsonMeta() {
-        }
-
-        public FastJsonMeta(int code, String message) {
-            this.code = code;
-            this.message = message;
-        }
 
         /**
          * 通过指定的 Meta 生成的 FastJsonMeta。
@@ -102,6 +91,19 @@ public class FastJsonResponseData<T> implements Dto {
                     meta.getCode(),
                     meta.getMessage()
             );
+        }
+
+        @JSONField(name = "code", ordinal = 1)
+        private int code;
+        @JSONField(name = "message", ordinal = 2)
+        private String message;
+
+        public FastJsonMeta() {
+        }
+
+        public FastJsonMeta(int code, String message) {
+            this.code = code;
+            this.message = message;
         }
 
         public int getCode() {

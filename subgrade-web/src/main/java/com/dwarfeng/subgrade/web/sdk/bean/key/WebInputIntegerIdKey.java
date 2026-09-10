@@ -17,15 +17,6 @@ public class WebInputIntegerIdKey implements Key {
 
     @Serial
     private static final long serialVersionUID = 1512955326197006779L;
-    @JSONField(name = "integer_id")
-    private int integerId;
-
-    public WebInputIntegerIdKey() {
-    }
-
-    public WebInputIntegerIdKey(int integerId) {
-        this.integerId = integerId;
-    }
 
     /**
      * WebInputIntegerIdKey 转 IntegerIdKey。
@@ -38,6 +29,16 @@ public class WebInputIntegerIdKey implements Key {
             return null;
         }
         return new IntegerIdKey(webInputIntegerIdKey.getIntegerId());
+    }
+
+    @JSONField(name = "integer_id")
+    private int integerId;
+
+    public WebInputIntegerIdKey() {
+    }
+
+    public WebInputIntegerIdKey(int integerId) {
+        this.integerId = integerId;
     }
 
     public int getIntegerId() {

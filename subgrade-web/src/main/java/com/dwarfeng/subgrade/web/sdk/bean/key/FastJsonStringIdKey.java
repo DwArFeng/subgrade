@@ -17,15 +17,6 @@ public class FastJsonStringIdKey implements Key {
 
     @Serial
     private static final long serialVersionUID = 8922387699812570200L;
-    @JSONField(name = "string_id", ordinal = 1)
-    private String stringId;
-
-    public FastJsonStringIdKey() {
-    }
-
-    public FastJsonStringIdKey(String id) {
-        this.stringId = id;
-    }
 
     /**
      * 根据指定的 StringIdKey 生成 FastJsonStringIdKey。
@@ -55,6 +46,16 @@ public class FastJsonStringIdKey implements Key {
                     fastJsonStringIdKey.getStringId()
             );
         }
+    }
+
+    @JSONField(name = "string_id", ordinal = 1)
+    private String stringId;
+
+    public FastJsonStringIdKey() {
+    }
+
+    public FastJsonStringIdKey(String id) {
+        this.stringId = id;
     }
 
     public String getStringId() {

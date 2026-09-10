@@ -17,15 +17,6 @@ public class FastJsonIntegerIdKey implements Key {
 
     @Serial
     private static final long serialVersionUID = 8660442236099459939L;
-    @JSONField(name = "integer_id", ordinal = 1)
-    private int integerId;
-
-    public FastJsonIntegerIdKey() {
-    }
-
-    public FastJsonIntegerIdKey(int integerId) {
-        this.integerId = integerId;
-    }
 
     /**
      * 根据指定的 IntegerIdKey 生成 FastJsonIntegerIdKey。
@@ -55,6 +46,16 @@ public class FastJsonIntegerIdKey implements Key {
                     fastJsonIntegerIdKey.getIntegerId()
             );
         }
+    }
+
+    @JSONField(name = "integer_id", ordinal = 1)
+    private int integerId;
+
+    public FastJsonIntegerIdKey() {
+    }
+
+    public FastJsonIntegerIdKey(int integerId) {
+        this.integerId = integerId;
     }
 
     public int getIntegerId() {

@@ -17,15 +17,6 @@ public class WebInputByteIdKey implements Key {
 
     @Serial
     private static final long serialVersionUID = 3377428283123558992L;
-    @JSONField(name = "byte_id")
-    private byte byteId;
-
-    public WebInputByteIdKey() {
-    }
-
-    public WebInputByteIdKey(byte byteId) {
-        this.byteId = byteId;
-    }
 
     /**
      * WebInputByteIdKey 转 ByteIdKey。
@@ -38,6 +29,16 @@ public class WebInputByteIdKey implements Key {
             return null;
         }
         return new ByteIdKey(webInputByteIdKey.getByteId());
+    }
+
+    @JSONField(name = "byte_id")
+    private byte byteId;
+
+    public WebInputByteIdKey() {
+    }
+
+    public WebInputByteIdKey(byte byteId) {
+        this.byteId = byteId;
     }
 
     public byte getByteId() {

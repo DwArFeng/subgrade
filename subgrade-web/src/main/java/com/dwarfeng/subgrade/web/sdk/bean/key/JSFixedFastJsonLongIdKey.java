@@ -18,15 +18,6 @@ public class JSFixedFastJsonLongIdKey implements Bean {
 
     @Serial
     private static final long serialVersionUID = 5705339812584667040L;
-    @JSONField(name = "long_id", ordinal = 1, serializeUsing = ObjectWriterImplToString.class)
-    private long longId;
-
-    public JSFixedFastJsonLongIdKey() {
-    }
-
-    public JSFixedFastJsonLongIdKey(long id) {
-        this.longId = id;
-    }
 
     /**
      * 根据指定的 LongIdKey 生成 JSFixedFastJsonLongIdKey。
@@ -56,6 +47,16 @@ public class JSFixedFastJsonLongIdKey implements Bean {
                     jsFixedFastJsonLongIdKey.getLongId()
             );
         }
+    }
+
+    @JSONField(name = "long_id", ordinal = 1, serializeUsing = ObjectWriterImplToString.class)
+    private long longId;
+
+    public JSFixedFastJsonLongIdKey() {
+    }
+
+    public JSFixedFastJsonLongIdKey(long id) {
+        this.longId = id;
     }
 
     public long getLongId() {

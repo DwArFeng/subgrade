@@ -20,17 +20,6 @@ public class WebInputDenseUuidKey implements Key {
 
     @Serial
     private static final long serialVersionUID = -3595199149327272588L;
-    @JSONField(name = "uuid")
-    @NotNull
-    @NotEmpty
-    private String uuid;
-
-    public WebInputDenseUuidKey() {
-    }
-
-    public WebInputDenseUuidKey(String id) {
-        this.uuid = id;
-    }
 
     /**
      * WebInputDenseUuidKey 转 DenseUuidKey。
@@ -43,6 +32,18 @@ public class WebInputDenseUuidKey implements Key {
             return null;
         }
         return new DenseUuidKey(webInputDenseUuidKey.getUuid());
+    }
+
+    @JSONField(name = "uuid")
+    @NotNull
+    @NotEmpty
+    private String uuid;
+
+    public WebInputDenseUuidKey() {
+    }
+
+    public WebInputDenseUuidKey(String id) {
+        this.uuid = id;
     }
 
     public String getUuid() {

@@ -17,15 +17,6 @@ public class FastJsonUuidKey implements Key {
 
     @Serial
     private static final long serialVersionUID = -4497856449451463199L;
-    @JSONField(name = "uuid", ordinal = 1)
-    private String uuid;
-
-    public FastJsonUuidKey() {
-    }
-
-    public FastJsonUuidKey(String id) {
-        this.uuid = id;
-    }
 
     /**
      * 根据指定的 UuidKey 生成 FastJsonUuidKey。
@@ -55,6 +46,16 @@ public class FastJsonUuidKey implements Key {
                     fastJsonUuidKey.getUuid()
             );
         }
+    }
+
+    @JSONField(name = "uuid", ordinal = 1)
+    private String uuid;
+
+    public FastJsonUuidKey() {
+    }
+
+    public FastJsonUuidKey(String id) {
+        this.uuid = id;
     }
 
     public String getUuid() {

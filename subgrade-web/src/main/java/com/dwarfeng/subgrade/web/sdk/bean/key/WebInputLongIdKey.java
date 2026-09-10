@@ -17,15 +17,6 @@ public class WebInputLongIdKey implements Key {
 
     @Serial
     private static final long serialVersionUID = -3356098743236106737L;
-    @JSONField(name = "long_id")
-    private long longId;
-
-    public WebInputLongIdKey() {
-    }
-
-    public WebInputLongIdKey(long id) {
-        this.longId = id;
-    }
 
     /**
      * WebInputLongIdKey 转 LongIdKey。
@@ -38,6 +29,16 @@ public class WebInputLongIdKey implements Key {
             return null;
         }
         return new LongIdKey(webInputLongIdKey.getLongId());
+    }
+
+    @JSONField(name = "long_id")
+    private long longId;
+
+    public WebInputLongIdKey() {
+    }
+
+    public WebInputLongIdKey(long id) {
+        this.longId = id;
     }
 
     public long getLongId() {

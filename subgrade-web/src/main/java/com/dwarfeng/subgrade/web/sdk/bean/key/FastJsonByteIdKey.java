@@ -17,15 +17,6 @@ public class FastJsonByteIdKey implements Key {
 
     @Serial
     private static final long serialVersionUID = -4227706657684342839L;
-    @JSONField(name = "byte_id", ordinal = 1)
-    private byte byteId;
-
-    public FastJsonByteIdKey() {
-    }
-
-    public FastJsonByteIdKey(byte byteId) {
-        this.byteId = byteId;
-    }
 
     /**
      * 根据指定的 ByteIdKey 生成 FastJsonByteIdKey。
@@ -55,6 +46,16 @@ public class FastJsonByteIdKey implements Key {
                     fastJsonByteIdKey.getByteId()
             );
         }
+    }
+
+    @JSONField(name = "byte_id", ordinal = 1)
+    private byte byteId;
+
+    public FastJsonByteIdKey() {
+    }
+
+    public FastJsonByteIdKey(byte byteId) {
+        this.byteId = byteId;
     }
 
     public byte getByteId() {

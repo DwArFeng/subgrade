@@ -17,15 +17,6 @@ public class FastJsonDenseUuidKey implements Key {
 
     @Serial
     private static final long serialVersionUID = -7886194682489509620L;
-    @JSONField(name = "uuid", ordinal = 1)
-    private String uuid;
-
-    public FastJsonDenseUuidKey() {
-    }
-
-    public FastJsonDenseUuidKey(String id) {
-        this.uuid = id;
-    }
 
     /**
      * 根据指定的 DenseUuidKey 生成 FastJsonDenseUuidKey。
@@ -55,6 +46,16 @@ public class FastJsonDenseUuidKey implements Key {
                     fastJsonDenseUuidKey.getUuid()
             );
         }
+    }
+
+    @JSONField(name = "uuid", ordinal = 1)
+    private String uuid;
+
+    public FastJsonDenseUuidKey() {
+    }
+
+    public FastJsonDenseUuidKey(String id) {
+        this.uuid = id;
     }
 
     public String getUuid() {
