@@ -5,7 +5,7 @@ import com.dwarfeng.subgrade.expression.stack.exception.ExpressionParseException
 import com.dwarfeng.subgrade.expression.stack.parser.ExpressionParser;
 import com.dwarfeng.subgrade.web.internal.i18n.WebMessageKey;
 import com.dwarfeng.subgrade.web.internal.i18n.WebMessages;
-import com.dwarfeng.subgrade.web.sdk.configuration.SystemPropertyConstants;
+import com.dwarfeng.subgrade.web.sdk.util.SystemPropertyConstants;
 import com.dwarfeng.subgrade.web.stack.handler.PermissionHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

@@ -135,7 +135,7 @@ public interface PresetLookupService<E extends Entity<?>> extends Service {
      * 关闭后，使用每页行数小于 0 的分页信息将会抛出异常。<br>
      * 在该特性开启的情况下，当每页行数小于 0 时，查询全部数据，并向日志中记录警告信息。
      * 记录警告日志的行为默认启用，可以通过设置系统参数 <code>-Dsubgrade.logPagingWarning=false</code> 来关闭。<br>
-     * 所有系统参数的值均可以在 <code>com.dwarfeng.subgrade.data.sdk.configuration.SystemPropertyConstants</code> 类中找到。
+     * 所有系统参数的值均可以在 <code>com.dwarfeng.subgrade.data.sdk.util.SystemPropertyConstants</code> 类中找到。
      *
      * <p>
      * 在该接口的实践中发现，
@@ -179,7 +179,7 @@ public interface PresetLookupService<E extends Entity<?>> extends Service {
      * 关闭后，使用每页行数小于 0 的分页信息将会抛出异常。<br>
      * 在该特性开启的情况下，当每页行数小于 0 时，查询全部数据，并向日志中记录警告信息。
      * 记录警告日志的行为默认启用，可以通过设置系统参数 <code>-Dsubgrade.logPagingWarning=false</code> 来关闭。<br>
-     * 所有系统参数的值均可以在 <code>com.dwarfeng.subgrade.data.sdk.configuration.SystemPropertyConstants</code> 类中找到。
+     * 所有系统参数的值均可以在 <code>com.dwarfeng.subgrade.data.sdk.util.SystemPropertyConstants</code> 类中找到。
      *
      * @param preset     指定的预设名称。
      * @param objs       预设对应的对象数组。
@@ -280,7 +280,7 @@ public interface PresetLookupService<E extends Entity<?>> extends Service {
      * 关闭后，使用每页行数小于 0 的分页信息将会抛出异常。<br>
      * 在该特性开启的情况下，当每页行数小于 0 时，查询全部数据，并向日志中记录警告信息。
      * 记录警告日志的行为默认启用，可以通过设置系统参数 <code>-Dsubgrade.logPagingWarning=false</code> 来关闭。<br>
-     * 所有系统参数的值均可以在 <code>com.dwarfeng.subgrade.data.sdk.configuration.SystemPropertyConstants</code> 类中找到。
+     * 所有系统参数的值均可以在 <code>com.dwarfeng.subgrade.data.sdk.util.SystemPropertyConstants</code> 类中找到。
      *
      * <p>
      * 在该接口的实践中发现，
@@ -324,7 +324,7 @@ public interface PresetLookupService<E extends Entity<?>> extends Service {
      * 关闭后，使用每页行数小于 0 的分页信息将会抛出异常。<br>
      * 在该特性开启的情况下，当每页行数小于 0 时，查询全部数据，并向日志中记录警告信息。
      * 记录警告日志的行为默认启用，可以通过设置系统参数 <code>-Dsubgrade.logPagingWarning=false</code> 来关闭。<br>
-     * 所有系统参数的值均可以在 <code>com.dwarfeng.subgrade.data.sdk.configuration.SystemPropertyConstants</code> 类中找到。
+     * 所有系统参数的值均可以在 <code>com.dwarfeng.subgrade.data.sdk.util.SystemPropertyConstants</code> 类中找到。
      *
      * @param preset     指定的预设名称。
      * @param objs       预设对应的对象数组。

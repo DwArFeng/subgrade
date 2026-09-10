@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.web.sdk.configuration;
+package com.dwarfeng.subgrade.web.sdk.util;
 
 /**
  * Web 模块系统属性常量。

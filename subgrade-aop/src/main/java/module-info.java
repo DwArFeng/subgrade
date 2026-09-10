@@ -10,7 +10,7 @@ module com.dwarfeng.subgrade.aop {
     requires static org.jetbrains.annotations;
 
     exports com.dwarfeng.subgrade.aop.stack.handler;
-    exports com.dwarfeng.subgrade.aop.sdk.configuration;
+    exports com.dwarfeng.subgrade.aop.sdk.util;
     exports com.dwarfeng.subgrade.aop.sdk.exception;
     exports com.dwarfeng.subgrade.aop.sdk.interceptor;
     exports com.dwarfeng.subgrade.aop.sdk.interceptor.analyse;

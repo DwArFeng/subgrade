@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.data.sdk.configuration;
+package com.dwarfeng.subgrade.data.sdk.util;
 
 /**
  * 数据模块系统属性常量。

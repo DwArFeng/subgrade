@@ -5,6 +5,7 @@
 ### 功能构建
 
 - 项目结构优化。
+  - 将 `SystemPropertyConstants` 从 `sdk.configuration` 迁移至 `sdk.util`。
   - 将 `MapStructBeanTransformer` 及其依赖迁移至 `subgrade-basic`。
 
 - 新增审计记录拦截能力。

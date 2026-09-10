@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.aop.sdk.interceptor.analyse;
 
-import com.dwarfeng.subgrade.aop.sdk.configuration.SystemPropertyConstants;
 import com.dwarfeng.subgrade.aop.sdk.interceptor.AdvisorUtil;
+import com.dwarfeng.subgrade.aop.sdk.util.SystemPropertyConstants;
 import com.dwarfeng.subgrade.basic.sdk.log.SingleLevelLoggerFactory;
 import com.dwarfeng.subgrade.basic.stack.log.LogLevel;
 import com.dwarfeng.subgrade.basic.stack.log.SingleLevelLogger;

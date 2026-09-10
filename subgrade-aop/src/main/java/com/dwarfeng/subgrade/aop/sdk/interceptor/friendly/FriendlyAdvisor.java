@@ -1,7 +1,7 @@
 package com.dwarfeng.subgrade.aop.sdk.interceptor.friendly;
 
-import com.dwarfeng.subgrade.aop.sdk.configuration.SystemPropertyConstants;
 import com.dwarfeng.subgrade.aop.sdk.interceptor.AdvisorUtil;
+import com.dwarfeng.subgrade.aop.sdk.util.SystemPropertyConstants;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

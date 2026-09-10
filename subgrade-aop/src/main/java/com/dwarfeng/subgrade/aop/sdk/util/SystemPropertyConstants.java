@@ -1,4 +1,4 @@
-package com.dwarfeng.subgrade.aop.sdk.configuration;
+package com.dwarfeng.subgrade.aop.sdk.util;
 
 /**
  * AOP 模块系统属性常量。

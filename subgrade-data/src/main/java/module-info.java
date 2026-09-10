@@ -27,7 +27,7 @@ module com.dwarfeng.subgrade.data {
     exports com.dwarfeng.subgrade.data.sdk.bean.key.hibernate;
     exports com.dwarfeng.subgrade.data.sdk.database.ddl;
     exports com.dwarfeng.subgrade.data.sdk.database.definition;
-    exports com.dwarfeng.subgrade.data.sdk.configuration;
+    exports com.dwarfeng.subgrade.data.sdk.util;
     exports com.dwarfeng.subgrade.data.sdk.exception;
     exports com.dwarfeng.subgrade.data.sdk.hibernate.converter;
     exports com.dwarfeng.subgrade.data.sdk.hibernate.criteria;

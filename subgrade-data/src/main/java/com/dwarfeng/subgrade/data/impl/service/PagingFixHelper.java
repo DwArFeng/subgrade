@@ -4,7 +4,7 @@ import com.dwarfeng.subgrade.basic.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.basic.stack.exception.PagingException;
 import com.dwarfeng.subgrade.data.internal.i18n.DataMessageKey;
 import com.dwarfeng.subgrade.data.internal.i18n.DataMessages;
-import com.dwarfeng.subgrade.data.sdk.configuration.SystemPropertyConstants;
+import com.dwarfeng.subgrade.data.sdk.util.SystemPropertyConstants;
 import com.dwarfeng.subgrade.data.stack.service.EntireLookupService;
 import com.dwarfeng.subgrade.data.stack.service.PresetLookupService;
 import org.slf4j.Logger;

@@ -18,7 +18,7 @@ module com.dwarfeng.subgrade.web {
     exports com.dwarfeng.subgrade.web.stack.exception;
     exports com.dwarfeng.subgrade.web.stack.handler;
     exports com.dwarfeng.subgrade.web.stack.response;
-    exports com.dwarfeng.subgrade.web.sdk.configuration;
+    exports com.dwarfeng.subgrade.web.sdk.util;
     exports com.dwarfeng.subgrade.web.sdk.bean.dto;
     exports com.dwarfeng.subgrade.web.sdk.bean.key;
     exports com.dwarfeng.subgrade.web.sdk.exception;
