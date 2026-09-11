@@ -13,6 +13,7 @@ import org.hibernate.dialect.Dialect;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -30,7 +31,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 PresetLookupDao 的实现。
      *
-     * @param template                  HibernateOperations 操作类。
+     * @param operations                HibernateOperations 操作类。
      * @param entityBeanTransformer     实体与持久化 Bean 的 Bean 映射器。
      * @param classPE                   持久化 Bean 的类。
      * @param presetCriteriaMaker       预设 Criteria 制造器。
@@ -42,7 +43,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetCriteriaMaker<PE> presetCriteriaMaker,
@@ -52,7 +53,7 @@ public final class HibernateDaoFactory {
         NativeLookup<E> nativeLookup = nativeSqlLookups.stream().filter(
                 lookup -> lookup.supportDialect(dialectClassCanonicalName)
         ).findFirst().orElse(null);
-        return newPresetLookupDao(template, entityBeanTransformer, classPE, presetCriteriaMaker, nativeLookup);
+        return newPresetLookupDao(operations, entityBeanTransformer, classPE, presetCriteriaMaker, nativeLookup);
     }
 
     /**
@@ -61,7 +62,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 PresetLookupDao 的实现。
      *
-     * @param template              HibernateOperations 操作类。
+     * @param operations            HibernateOperations 操作类。
      * @param entityBeanTransformer 实体与持久化 Bean 的 Bean 映射器。
      * @param classPE               持久化 Bean 的类。
      * @param presetCriteriaMaker   预设 Criteria 制造器。
@@ -73,7 +74,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetCriteriaMaker<PE> presetCriteriaMaker,
@@ -83,7 +84,7 @@ public final class HibernateDaoFactory {
         NativeLookup<E> nativeLookup = nativeSqlLookups.stream().filter(
                 lookup -> lookup.supportDialect(dialectClass)
         ).findFirst().orElse(null);
-        return newPresetLookupDao(template, entityBeanTransformer, classPE, presetCriteriaMaker, nativeLookup);
+        return newPresetLookupDao(operations, entityBeanTransformer, classPE, presetCriteriaMaker, nativeLookup);
     }
 
     /**
@@ -92,7 +93,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 PresetLookupDao 的实现。
      *
-     * @param template                  HibernateOperations 操作类。
+     * @param operations                HibernateOperations 操作类。
      * @param entityBeanTransformer     实体与持久化 Bean 的 Bean 映射器。
      * @param classPE                   持久化 Bean 的类。
      * @param presetCriteriaMaker       预设 Criteria 制造器。
@@ -105,7 +106,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetCriteriaMaker<PE> presetCriteriaMaker,
@@ -115,11 +116,11 @@ public final class HibernateDaoFactory {
     ) {
         if (accelerateEnabled) {
             return newPresetLookupDaoWithChosenDialect(
-                    template, entityBeanTransformer, classPE, presetCriteriaMaker, nativeSqlLookups,
+                    operations, entityBeanTransformer, classPE, presetCriteriaMaker, nativeSqlLookups,
                     dialectClassCanonicalName
             );
         } else {
-            return new HibernatePresetLookupDao<>(template, entityBeanTransformer, classPE, presetCriteriaMaker);
+            return new HibernatePresetLookupDao<>(operations, entityBeanTransformer, classPE, presetCriteriaMaker);
         }
     }
 
@@ -129,7 +130,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 PresetLookupDao 的实现。
      *
-     * @param template              HibernateOperations 操作类。
+     * @param operations            HibernateOperations 操作类。
      * @param entityBeanTransformer 实体与持久化 Bean 的 Bean 映射器。
      * @param classPE               持久化 Bean 的类。
      * @param presetCriteriaMaker   预设 Criteria 制造器。
@@ -142,7 +143,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetCriteriaMaker<PE> presetCriteriaMaker,
@@ -152,11 +153,11 @@ public final class HibernateDaoFactory {
     ) {
         if (accelerateEnabled) {
             return newPresetLookupDaoWithChosenDialect(
-                    template, entityBeanTransformer, classPE, presetCriteriaMaker, nativeSqlLookups,
+                    operations, entityBeanTransformer, classPE, presetCriteriaMaker, nativeSqlLookups,
                     dialectClass
             );
         } else {
-            return new HibernatePresetLookupDao<>(template, entityBeanTransformer, classPE, presetCriteriaMaker);
+            return new HibernatePresetLookupDao<>(operations, entityBeanTransformer, classPE, presetCriteriaMaker);
         }
     }
 
@@ -166,7 +167,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 PresetLookupDao 的实现。
      *
-     * @param template              HibernateOperations 操作类。
+     * @param operations            HibernateOperations 操作类。
      * @param entityBeanTransformer 实体与持久化 Bean 的 Bean 映射器。
      * @param classPE               持久化 Bean 的类。
      * @param presetCriteriaMaker   预设 Criteria 制造器。
@@ -176,17 +177,17 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newPresetLookupDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetCriteriaMaker<PE> presetCriteriaMaker,
             @Nullable NativeLookup<E> nativeLookup
     ) {
         if (Objects.isNull(nativeLookup)) {
-            return new HibernatePresetLookupDao<>(template, entityBeanTransformer, classPE, presetCriteriaMaker);
+            return new HibernatePresetLookupDao<>(operations, entityBeanTransformer, classPE, presetCriteriaMaker);
         } else {
             return new HibernateAccelerablePresetLookupDao<>(
-                    template, entityBeanTransformer, classPE, nativeLookup, presetCriteriaMaker
+                    operations, entityBeanTransformer, classPE, nativeLookup, presetCriteriaMaker
             );
         }
     }
@@ -197,7 +198,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 HqlPresetLookupDao 的实现。
      *
-     * @param template                  HibernateOperations 操作类。
+     * @param operations                HibernateOperations 操作类。
      * @param entityBeanTransformer     实体与持久化 Bean 的 Bean 映射器。
      * @param classPE                   持久化 Bean 的类。
      * @param presetConditionMaker      预设 Condition 制造器。
@@ -209,7 +210,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
@@ -219,7 +220,7 @@ public final class HibernateDaoFactory {
         NativeLookup<E> nativeLookup = nativeSqlLookups.stream().filter(
                 lookup -> lookup.supportDialect(dialectClassCanonicalName)
         ).findFirst().orElse(null);
-        return newHqlPresetLookupDao(template, entityBeanTransformer, classPE, presetConditionMaker, nativeLookup);
+        return newHqlPresetLookupDao(operations, entityBeanTransformer, classPE, presetConditionMaker, nativeLookup);
     }
 
     /**
@@ -228,7 +229,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 HqlPresetLookupDao 的实现。
      *
-     * @param template                  HibernateOperations 操作类。
+     * @param operations                HibernateOperations 操作类。
      * @param entityBeanTransformer     实体与持久化 Bean 的 Bean 映射器。
      * @param classPE                   持久化 Bean 的类。
      * @param presetConditionMaker      预设 Condition 制造器。
@@ -241,7 +242,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
@@ -253,7 +254,7 @@ public final class HibernateDaoFactory {
                 lookup -> lookup.supportDialect(dialectClassCanonicalName)
         ).findFirst().orElse(null);
         return newHqlPresetLookupDao(
-                template, entityBeanTransformer, classPE, presetConditionMaker, nativeLookup, entityAlias
+                operations, entityBeanTransformer, classPE, presetConditionMaker, nativeLookup, entityAlias
         );
     }
 
@@ -263,7 +264,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 HqlPresetLookupDao 的实现。
      *
-     * @param template              HibernateOperations 操作类。
+     * @param operations            HibernateOperations 操作类。
      * @param entityBeanTransformer 实体与持久化 Bean 的 Bean 映射器。
      * @param classPE               持久化 Bean 的类。
      * @param presetConditionMaker  预设 Condition 制造器。
@@ -275,7 +276,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
@@ -285,7 +286,7 @@ public final class HibernateDaoFactory {
         NativeLookup<E> nativeLookup = nativeSqlLookups.stream().filter(
                 lookup -> lookup.supportDialect(dialectClass)
         ).findFirst().orElse(null);
-        return newHqlPresetLookupDao(template, entityBeanTransformer, classPE, presetConditionMaker, nativeLookup);
+        return newHqlPresetLookupDao(operations, entityBeanTransformer, classPE, presetConditionMaker, nativeLookup);
     }
 
     /**
@@ -294,7 +295,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 HqlPresetLookupDao 的实现。
      *
-     * @param template              HibernateOperations 操作类。
+     * @param operations            HibernateOperations 操作类。
      * @param entityBeanTransformer 实体与持久化 Bean 的 Bean 映射器。
      * @param classPE               持久化 Bean 的类。
      * @param presetConditionMaker  预设 Condition 制造器。
@@ -307,7 +308,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
@@ -319,7 +320,7 @@ public final class HibernateDaoFactory {
                 lookup -> lookup.supportDialect(dialectClass)
         ).findFirst().orElse(null);
         return newHqlPresetLookupDao(
-                template, entityBeanTransformer, classPE, presetConditionMaker, nativeLookup, entityAlias
+                operations, entityBeanTransformer, classPE, presetConditionMaker, nativeLookup, entityAlias
         );
     }
 
@@ -329,7 +330,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 HqlPresetLookupDao 的实现。
      *
-     * @param template                  HibernateOperations 操作类。
+     * @param operations                HibernateOperations 操作类。
      * @param entityBeanTransformer     实体与持久化 Bean 的 Bean 映射器。
      * @param classPE                   持久化 Bean 的类。
      * @param presetConditionMaker      预设 Condition 制造器。
@@ -342,7 +343,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
@@ -352,11 +353,11 @@ public final class HibernateDaoFactory {
     ) {
         if (accelerateEnabled) {
             return newHqlPresetLookupDaoWithChosenDialect(
-                    template, entityBeanTransformer, classPE, presetConditionMaker, nativeSqlLookups,
+                    operations, entityBeanTransformer, classPE, presetConditionMaker, nativeSqlLookups,
                     dialectClassCanonicalName
             );
         } else {
-            return new HibernateHqlPresetLookupDao<>(template, entityBeanTransformer, classPE, presetConditionMaker);
+            return new HibernateHqlPresetLookupDao<>(operations, entityBeanTransformer, classPE, presetConditionMaker);
         }
     }
 
@@ -366,7 +367,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 HqlPresetLookupDao 的实现。
      *
-     * @param template                  HibernateOperations 操作类。
+     * @param operations                HibernateOperations 操作类。
      * @param entityBeanTransformer     实体与持久化 Bean 的 Bean 映射器。
      * @param classPE                   持久化 Bean 的类。
      * @param presetConditionMaker      预设 Condition 制造器。
@@ -380,7 +381,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
@@ -391,11 +392,11 @@ public final class HibernateDaoFactory {
     ) {
         if (accelerateEnabled) {
             return newHqlPresetLookupDaoWithChosenDialect(
-                    template, entityBeanTransformer, classPE, presetConditionMaker, nativeSqlLookups,
+                    operations, entityBeanTransformer, classPE, presetConditionMaker, nativeSqlLookups,
                     dialectClassCanonicalName, entityAlias
             );
         } else {
-            return new HibernateHqlPresetLookupDao<>(template, entityBeanTransformer, classPE, presetConditionMaker);
+            return new HibernateHqlPresetLookupDao<>(operations, entityBeanTransformer, classPE, presetConditionMaker);
         }
     }
 
@@ -405,7 +406,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 HqlPresetLookupDao 的实现。
      *
-     * @param template              HibernateOperations 操作类。
+     * @param operations            HibernateOperations 操作类。
      * @param entityBeanTransformer 实体与持久化 Bean 的 Bean 映射器。
      * @param classPE               持久化 Bean 的类。
      * @param presetConditionMaker  预设 Condition 制造器。
@@ -418,7 +419,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
@@ -428,11 +429,11 @@ public final class HibernateDaoFactory {
     ) {
         if (accelerateEnabled) {
             return newHqlPresetLookupDaoWithChosenDialect(
-                    template, entityBeanTransformer, classPE, presetConditionMaker, nativeSqlLookups,
+                    operations, entityBeanTransformer, classPE, presetConditionMaker, nativeSqlLookups,
                     dialectClass
             );
         } else {
-            return new HibernateHqlPresetLookupDao<>(template, entityBeanTransformer, classPE, presetConditionMaker);
+            return new HibernateHqlPresetLookupDao<>(operations, entityBeanTransformer, classPE, presetConditionMaker);
         }
     }
 
@@ -442,7 +443,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 HqlPresetLookupDao 的实现。
      *
-     * @param template              HibernateOperations 操作类。
+     * @param operations            HibernateOperations 操作类。
      * @param entityBeanTransformer 实体与持久化 Bean 的 Bean 映射器。
      * @param classPE               持久化 Bean 的类。
      * @param presetConditionMaker  预设 Condition 制造器。
@@ -456,7 +457,7 @@ public final class HibernateDaoFactory {
      * @see DialectNativeLookup
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDaoWithChosenDialect(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
@@ -467,11 +468,11 @@ public final class HibernateDaoFactory {
     ) {
         if (accelerateEnabled) {
             return newHqlPresetLookupDaoWithChosenDialect(
-                    template, entityBeanTransformer, classPE, presetConditionMaker, nativeSqlLookups,
+                    operations, entityBeanTransformer, classPE, presetConditionMaker, nativeSqlLookups,
                     dialectClass, entityAlias
             );
         } else {
-            return new HibernateHqlPresetLookupDao<>(template, entityBeanTransformer, classPE, presetConditionMaker);
+            return new HibernateHqlPresetLookupDao<>(operations, entityBeanTransformer, classPE, presetConditionMaker);
         }
     }
 
@@ -481,7 +482,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 HqlPresetLookupDao 的实现。
      *
-     * @param template              HibernateOperations 操作类。
+     * @param operations            HibernateOperations 操作类。
      * @param entityBeanTransformer 实体与持久化 Bean 的 Bean 映射器。
      * @param classPE               持久化 Bean 的类。
      * @param presetConditionMaker  预设 Condition 制造器。
@@ -491,17 +492,17 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
             @Nullable NativeLookup<E> nativeLookup
     ) {
         if (Objects.isNull(nativeLookup)) {
-            return new HibernateHqlPresetLookupDao<>(template, entityBeanTransformer, classPE, presetConditionMaker);
+            return new HibernateHqlPresetLookupDao<>(operations, entityBeanTransformer, classPE, presetConditionMaker);
         } else {
             return new HibernateAccelerableHqlPresetLookupDao<>(
-                    template, entityBeanTransformer, classPE, nativeLookup, presetConditionMaker
+                    operations, entityBeanTransformer, classPE, nativeLookup, presetConditionMaker
             );
         }
     }
@@ -512,7 +513,7 @@ public final class HibernateDaoFactory {
      * <p>
      * 根据输入参数的不同，生成不同的基于 Hibernate 的 HqlPresetLookupDao 的实现。
      *
-     * @param template              HibernateOperations 操作类。
+     * @param operations            HibernateOperations 操作类。
      * @param entityBeanTransformer 实体与持久化 Bean 的 Bean 映射器。
      * @param classPE               持久化 Bean 的类。
      * @param presetConditionMaker  预设 Condition 制造器。
@@ -523,7 +524,7 @@ public final class HibernateDaoFactory {
      * @return 新的预设查询数据访问层。
      */
     public static <E extends Entity<?>, PE extends Bean> PresetLookupDao<E> newHqlPresetLookupDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
@@ -531,10 +532,10 @@ public final class HibernateDaoFactory {
             @NotNull String entityAlias
     ) {
         if (Objects.isNull(nativeLookup)) {
-            return new HibernateHqlPresetLookupDao<>(template, entityBeanTransformer, classPE, presetConditionMaker);
+            return new HibernateHqlPresetLookupDao<>(operations, entityBeanTransformer, classPE, presetConditionMaker);
         } else {
             return new HibernateAccelerableHqlPresetLookupDao<>(
-                    template, entityBeanTransformer, classPE, nativeLookup, presetConditionMaker, entityAlias
+                    operations, entityBeanTransformer, classPE, nativeLookup, presetConditionMaker, entityAlias
             );
         }
     }

@@ -26,7 +26,7 @@ import java.util.List;
 public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends Bean> implements PresetLookupDao<E> {
 
     @NotNull
-    private HibernateOperations template;
+    private HibernateOperations operations;
     @NotNull
     private BeanTransformer<E, PE> entityBeanTransformer;
     @NotNull
@@ -37,13 +37,13 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
     private PresetCriteriaMaker<PE> presetCriteriaMaker;
 
     public HibernateAccelerablePresetLookupDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull NativeLookup<E> nativeLookup,
             @NotNull PresetCriteriaMaker<PE> presetCriteriaMaker
     ) {
-        this.template = template;
+        this.operations = operations;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
         this.nativeLookup = nativeLookup;
@@ -56,7 +56,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
             return fallbackDao().lookup(preset, objs);
         }
         try {
-            return template.executeWithNativeSession(session -> session.doReturningWork(
+            return operations.executeWithNativeSession(session -> session.doReturningWork(
                     connection -> nativeLookup.lookupEntity(connection, preset, objs)
             ));
         } catch (Exception exception) {
@@ -70,7 +70,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
             return fallbackDao().lookup(preset, objs, pagingInfo);
         }
         try {
-            return template.executeWithNativeSession(session -> session.doReturningWork(
+            return operations.executeWithNativeSession(session -> session.doReturningWork(
                     connection -> nativeLookup.lookupEntity(connection, preset, objs, pagingInfo)
             ));
         } catch (Exception exception) {
@@ -84,7 +84,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
             return fallbackDao().lookupCount(preset, objs);
         }
         try {
-            return template.executeWithNativeSession(session -> session.doReturningWork(
+            return operations.executeWithNativeSession(session -> session.doReturningWork(
                     connection -> nativeLookup.lookupCount(connection, preset, objs)
             ));
         } catch (Exception exception) {
@@ -98,7 +98,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
             return fallbackDao().lookupFirst(preset, objs);
         }
         try {
-            List<E> result = template.executeWithNativeSession(session -> session.doReturningWork(
+            List<E> result = operations.executeWithNativeSession(session -> session.doReturningWork(
                     connection -> nativeLookup.lookupEntity(connection, preset, objs, PagingInfo.FIRST_ONE)
             ));
             return result.stream().findFirst().orElse(null);
@@ -108,16 +108,16 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
     }
 
     private HibernatePresetLookupDao<E, PE> fallbackDao() {
-        return new HibernatePresetLookupDao<>(template, entityBeanTransformer, classPE, presetCriteriaMaker);
+        return new HibernatePresetLookupDao<>(operations, entityBeanTransformer, classPE, presetCriteriaMaker);
     }
 
     @NotNull
-    public HibernateOperations getTemplate() {
-        return template;
+    public HibernateOperations getOperations() {
+        return operations;
     }
 
-    public void setTemplate(@NotNull HibernateOperations template) {
-        this.template = template;
+    public void setOperations(@NotNull HibernateOperations operations) {
+        this.operations = operations;
     }
 
     @NotNull
@@ -159,7 +159,7 @@ public class HibernateAccelerablePresetLookupDao<E extends Entity<?>, PE extends
     @Override
     public String toString() {
         return "HibernateAccelerablePresetLookupDao{" +
-                "template=" + template +
+                "operations=" + operations +
                 ", entityBeanTransformer=" + entityBeanTransformer +
                 ", classPE=" + classPE +
                 ", nativeLookup=" + nativeLookup +

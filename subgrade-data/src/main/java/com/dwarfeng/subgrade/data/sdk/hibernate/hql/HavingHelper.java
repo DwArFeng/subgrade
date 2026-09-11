@@ -97,7 +97,8 @@ public final class HavingHelper {
     public static PredicateClause ilike(
             @NotNull String expression,
             @NotNull String value,
-            @NotNull MatchType matchType) {
+            @NotNull MatchType matchType
+    ) {
         return new CaseSensitiveLikePredicateClause(expression, value, matchType);
     }
 

@@ -12,6 +12,7 @@ import com.dwarfeng.subgrade.data.stack.dao.BaseDao;
 import com.dwarfeng.subgrade.data.stack.exception.DaoException;
 
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +32,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         BaseDao<K, E> {
 
     @NotNull
-    private HibernateOperations template;
+    private HibernateOperations operations;
     @NotNull
     private BeanTransformer<K, PK> keyBeanTransformer;
     @NotNull
@@ -44,26 +45,26 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     private Collection<String> updateKeepFields;
 
     public HibernateBaseDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<K, PK> keyBeanTransformer,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE
     ) {
         this(
-                template, keyBeanTransformer, entityBeanTransformer, classPE, new DefaultDeletionMod<>(),
+                operations, keyBeanTransformer, entityBeanTransformer, classPE, new DefaultDeletionMod<>(),
                 Collections.emptySet()
         );
     }
 
     public HibernateBaseDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<K, PK> keyBeanTransformer,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull DeletionMod<PE> deletionMod,
             @NotNull Collection<String> updateKeepFields
     ) {
-        this.template = template;
+        this.operations = operations;
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
@@ -76,9 +77,9 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         try {
             PE pe = transformEntity(element);
             @SuppressWarnings("unchecked")
-            PK pk = (PK) template.save(pe);
-            template.flush();
-            template.clear();
+            PK pk = (PK) operations.save(pe);
+            operations.flush();
+            operations.clear();
             K key = reverseTransformKey(pk);
             element.setKey(key);
             return key;
@@ -98,10 +99,10 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
                     BeanPropertyAccess.getInstance().setProperty(pe, updateKeepField, oldValue);
                 }
             }
-            template.clear();
-            template.update(pe);
-            template.flush();
-            template.clear();
+            operations.clear();
+            operations.update(pe);
+            operations.flush();
+            operations.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -112,11 +113,11 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
         try {
             PE pe = internalGet(key);
             List<Object> objects = deletionMod.updateBeforeDelete(pe);
-            template.clear();
-            objects.forEach(template::update);
-            template.delete(pe);
-            template.flush();
-            template.clear();
+            operations.clear();
+            objects.forEach(operations::update);
+            operations.delete(pe);
+            operations.flush();
+            operations.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -125,7 +126,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     @Override
     public boolean exists(K key) throws DaoException {
         try {
-            return Objects.nonNull(template.get(classPE, transformKey(key)));
+            return Objects.nonNull(operations.get(classPE, transformKey(key)));
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -143,7 +144,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
 
     private PE internalGet(K key) {
         PK pk = transformKey(key);
-        return template.get(classPE, pk);
+        return operations.get(classPE, pk);
     }
 
     private PK transformKey(K k) {
@@ -163,12 +164,12 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     }
 
     @NotNull
-    public HibernateOperations getTemplate() {
-        return template;
+    public HibernateOperations getOperations() {
+        return operations;
     }
 
-    public void setTemplate(@NotNull HibernateOperations template) {
-        this.template = template;
+    public void setOperations(@NotNull HibernateOperations operations) {
+        this.operations = operations;
     }
 
     @NotNull
@@ -219,7 +220,7 @@ public class HibernateBaseDao<K extends Key, PK extends Bean, E extends Entity<K
     @Override
     public String toString() {
         return "HibernateBaseDao{" +
-                "template=" + template +
+                "operations=" + operations +
                 ", keyBeanTransformer=" + keyBeanTransformer +
                 ", entityBeanTransformer=" + entityBeanTransformer +
                 ", classPE=" + classPE +

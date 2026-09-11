@@ -30,18 +30,18 @@ import java.util.List;
 public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> implements EntireLookupDao<E> {
 
     @NotNull
-    private HibernateOperations template;
+    private HibernateOperations operations;
     @NotNull
     private BeanTransformer<E, PE> entityBeanTransformer;
     @NotNull
     private Class<PE> classPE;
 
     public HibernateEntireLookupDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE
     ) {
-        this.template = template;
+        this.operations = operations;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
     }
@@ -49,8 +49,12 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
     @Override
     public List<E> lookup() throws DaoException {
         try {
-            return template.execute(session -> createEntityQuery(session).getResultList().stream()
-                    .map(entityBeanTransformer::reverseTransform).toList());
+            return operations.execute(
+                    session -> createEntityQuery(session)
+                            .getResultList()
+                            .stream()
+                            .map(entityBeanTransformer::reverseTransform).toList()
+            );
         } catch (Exception exception) {
             throw new DaoException(exception);
         }
@@ -64,13 +68,15 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
             return Collections.emptyList();
         }
         try {
-            return template.execute(session -> createEntityQuery(session)
-                    .setFirstResult(page * rows)
-                    .setMaxResults(rows)
-                    .getResultList()
-                    .stream()
-                    .map(entityBeanTransformer::reverseTransform)
-                    .toList());
+            return operations.execute(
+                    session -> createEntityQuery(session)
+                            .setFirstResult(page * rows)
+                            .setMaxResults(rows)
+                            .getResultList()
+                            .stream()
+                            .map(entityBeanTransformer::reverseTransform)
+                            .toList()
+            );
         } catch (Exception exception) {
             throw new DaoException(exception);
         }
@@ -79,7 +85,7 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
     @Override
     public int lookupCount() throws DaoException {
         try {
-            return template.execute(session -> {
+            return operations.execute(session -> {
                 CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
                 CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
                 Root<PE> root = criteriaQuery.from(classPE);
@@ -94,13 +100,15 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
     @Override
     public E lookupFirst() throws DaoException {
         try {
-            return template.execute(session -> createEntityQuery(session)
-                    .setMaxResults(1)
-                    .getResultList()
-                    .stream()
-                    .findFirst()
-                    .map(entityBeanTransformer::reverseTransform)
-                    .orElse(null));
+            return operations.execute(
+                    session -> createEntityQuery(session)
+                            .setMaxResults(1)
+                            .getResultList()
+                            .stream()
+                            .findFirst()
+                            .map(entityBeanTransformer::reverseTransform)
+                            .orElse(null)
+            );
         } catch (Exception exception) {
             throw new DaoException(exception);
         }
@@ -115,12 +123,12 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
     }
 
     @NotNull
-    public HibernateOperations getTemplate() {
-        return template;
+    public HibernateOperations getOperations() {
+        return operations;
     }
 
-    public void setTemplate(@NotNull HibernateOperations template) {
-        this.template = template;
+    public void setOperations(@NotNull HibernateOperations operations) {
+        this.operations = operations;
     }
 
     @NotNull
@@ -144,7 +152,7 @@ public class HibernateEntireLookupDao<E extends Entity<?>, PE extends Bean> impl
     @Override
     public String toString() {
         return "HibernateEntireLookupDao{" +
-                "template=" + template +
+                "operations=" + operations +
                 ", entityBeanTransformer=" + entityBeanTransformer +
                 ", classPE=" + classPE +
                 '}';

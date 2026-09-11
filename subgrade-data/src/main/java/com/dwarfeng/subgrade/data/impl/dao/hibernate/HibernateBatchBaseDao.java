@@ -37,7 +37,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     public static final int DEFAULT_BATCH_SIZE = 100;
 
     @NotNull
-    private HibernateOperations template;
+    private HibernateOperations operations;
     @NotNull
     private BeanTransformer<K, PK> keyBeanTransformer;
     @NotNull
@@ -52,28 +52,28 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     private Collection<String> updateKeepFields;
 
     public HibernateBatchBaseDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<K, PK> keyBeanTransformer,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE
     ) {
-        this(template, keyBeanTransformer, entityBeanTransformer, classPE, new DefaultDeletionMod<>(),
+        this(operations, keyBeanTransformer, entityBeanTransformer, classPE, new DefaultDeletionMod<>(),
                 DEFAULT_BATCH_SIZE, Collections.emptySet());
     }
 
     public HibernateBatchBaseDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<K, PK> keyBeanTransformer,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull DeletionMod<PE> deletionMod
     ) {
-        this(template, keyBeanTransformer, entityBeanTransformer,
+        this(operations, keyBeanTransformer, entityBeanTransformer,
                 classPE, deletionMod, DEFAULT_BATCH_SIZE, Collections.emptySet());
     }
 
     public HibernateBatchBaseDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<K, PK> keyBeanTransformer,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
@@ -82,13 +82,13 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
 
     ) {
         this(
-                template, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod, DEFAULT_BATCH_SIZE,
+                operations, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod, DEFAULT_BATCH_SIZE,
                 updateKeepFields
         );
     }
 
     public HibernateBatchBaseDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<K, PK> keyBeanTransformer,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
@@ -96,13 +96,13 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @Range(from = 0, to = Long.MAX_VALUE) int batchSize
     ) {
         this(
-                template, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod, batchSize,
+                operations, keyBeanTransformer, entityBeanTransformer, classPE, deletionMod, batchSize,
                 Collections.emptySet()
         );
     }
 
     public HibernateBatchBaseDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<K, PK> keyBeanTransformer,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
@@ -110,7 +110,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             @Range(from = 0, to = Long.MAX_VALUE) int batchSize,
             @NotNull Collection<String> updateKeepFields
     ) {
-        this.template = template;
+        this.operations = operations;
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
@@ -124,9 +124,9 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         try {
             PE pe = transformEntity(element);
             @SuppressWarnings("unchecked")
-            PK pk = (PK) template.save(pe);
-            template.flush();
-            template.clear();
+            PK pk = (PK) operations.save(pe);
+            operations.flush();
+            operations.clear();
             K key = reverseTransformKey(pk);
             element.setKey(key);
             return key;
@@ -146,10 +146,10 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
                     BeanPropertyAccess.getInstance().setProperty(pe, updateKeepField, oldValue);
                 }
             }
-            template.clear();
-            template.update(pe);
-            template.flush();
-            template.clear();
+            operations.clear();
+            operations.update(pe);
+            operations.flush();
+            operations.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -160,11 +160,11 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
         try {
             PE pe = internalGet(key);
             List<Object> objects = deletionMod.updateBeforeDelete(pe);
-            template.clear();
-            objects.forEach(template::update);
-            template.delete(pe);
-            template.flush();
-            template.clear();
+            operations.clear();
+            objects.forEach(operations::update);
+            operations.delete(pe);
+            operations.flush();
+            operations.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -191,11 +191,11 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
 
     private PE internalGet(K key) {
         PK pk = transformKey(key);
-        return template.get(classPE, pk);
+        return operations.get(classPE, pk);
     }
 
     private boolean internalExists(K key) {
-        return Objects.nonNull(template.get(classPE, transformKey(key)));
+        return Objects.nonNull(operations.get(classPE, transformKey(key)));
     }
 
     @Override
@@ -205,16 +205,16 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             List<PK> listPK = new ArrayList<>();
             for (int i = 0; i < collect.size(); i++) {
                 if (i % batchSize == 0) {
-                    template.flush();
-                    template.clear();
+                    operations.flush();
+                    operations.clear();
                 }
                 PE pe = collect.get(i);
                 @SuppressWarnings("unchecked")
-                PK save = (PK) template.save(pe);
+                PK save = (PK) operations.save(pe);
                 listPK.add(save);
             }
-            template.flush();
-            template.clear();
+            operations.flush();
+            operations.clear();
             List<K> ks = listPK.stream().map(keyBeanTransformer::reverseTransform).collect(Collectors.toList());
             for (int i = 0; i < elements.size(); i++) {
                 elements.get(i).setKey(ks.get(i));
@@ -228,15 +228,15 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     @Override
     public void batchUpdate(List<E> elements) throws DaoException {
         try {
-            template.clear();
+            operations.clear();
             List<PE> collect = elements.stream().map(entityBeanTransformer::transform).toList();
             List<PE> pesToUpdate = new ArrayList<>();
             for (int i = 0; i < collect.size(); i++) {
                 if (i % batchSize == 0) {
-                    template.clear();
-                    pesToUpdate.forEach(template::update);
-                    template.flush();
-                    template.clear();
+                    operations.clear();
+                    pesToUpdate.forEach(operations::update);
+                    operations.flush();
+                    operations.clear();
                     pesToUpdate.clear();
                 }
                 PE pe = collect.get(i);
@@ -249,10 +249,10 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
                 }
                 pesToUpdate.add(pe);
             }
-            template.clear();
-            pesToUpdate.forEach(template::update);
-            template.flush();
-            template.clear();
+            operations.clear();
+            pesToUpdate.forEach(operations::update);
+            operations.flush();
+            operations.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -265,11 +265,11 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
             List<PE> pesToDelete = new ArrayList<>();
             for (int i = 0; i < keys.size(); i++) {
                 if (i % batchSize == 0) {
-                    template.clear();
-                    objectsToUpdate.forEach(template::update);
-                    pesToDelete.forEach(template::delete);
-                    template.flush();
-                    template.clear();
+                    operations.clear();
+                    objectsToUpdate.forEach(operations::update);
+                    pesToDelete.forEach(operations::delete);
+                    operations.flush();
+                    operations.clear();
                     objectsToUpdate.clear();
                     pesToDelete.clear();
                 }
@@ -278,11 +278,11 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
                 objectsToUpdate.addAll(deletionMod.updateBeforeDelete(pe));
                 pesToDelete.add(pe);
             }
-            template.clear();
-            objectsToUpdate.forEach(template::update);
-            pesToDelete.forEach(template::delete);
-            template.flush();
-            template.clear();
+            operations.clear();
+            objectsToUpdate.forEach(operations::update);
+            pesToDelete.forEach(operations::delete);
+            operations.flush();
+            operations.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -342,12 +342,12 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     }
 
     @NotNull
-    public HibernateOperations getTemplate() {
-        return template;
+    public HibernateOperations getOperations() {
+        return operations;
     }
 
-    public void setTemplate(@NotNull HibernateOperations template) {
-        this.template = template;
+    public void setOperations(@NotNull HibernateOperations operations) {
+        this.operations = operations;
     }
 
     @NotNull
@@ -407,7 +407,7 @@ public class HibernateBatchBaseDao<K extends Key, PK extends Bean, E extends Ent
     @Override
     public String toString() {
         return "HibernateBatchBaseDao{" +
-                "template=" + template +
+                "operations=" + operations +
                 ", keyBeanTransformer=" + keyBeanTransformer +
                 ", entityBeanTransformer=" + entityBeanTransformer +
                 ", classPE=" + classPE +

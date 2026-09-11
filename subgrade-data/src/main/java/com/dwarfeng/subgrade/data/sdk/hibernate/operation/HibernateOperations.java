@@ -54,7 +54,7 @@ public class HibernateOperations {
      * @param entity 指定的实体。
      * @return 实体标识。
      */
-    // 当前会话由事务上下文管理生命周期，本方法不会主动关闭该会话。
+    // 当前会话由调用方管理生命周期，本方法不会主动关闭该会话。
     @SuppressWarnings("resource")
     public Object save(@NotNull Object entity) {
         Session session = currentSession();
@@ -67,7 +67,7 @@ public class HibernateOperations {
      *
      * @param entity 指定的实体。
      */
-    // 当前会话由事务上下文管理生命周期，本方法不会主动关闭该会话。
+    // 当前会话由调用方管理生命周期，本方法不会主动关闭该会话。
     @SuppressWarnings("resource")
     public void update(@NotNull Object entity) {
         currentSession().merge(entity);
@@ -78,7 +78,7 @@ public class HibernateOperations {
      *
      * @param entity 指定的实体。
      */
-    // 当前会话由事务上下文管理生命周期，本方法不会主动关闭该会话。
+    // 当前会话由调用方管理生命周期，本方法不会主动关闭该会话。
     @SuppressWarnings("resource")
     public void saveOrUpdate(@NotNull Object entity) {
         Session session = currentSession();
@@ -93,7 +93,7 @@ public class HibernateOperations {
      *
      * @param entity 指定的实体。
      */
-    // 当前会话由事务上下文管理生命周期，本方法不会主动关闭该会话。
+    // 当前会话由调用方管理生命周期，本方法不会主动关闭该会话。
     @SuppressWarnings("resource")
     public void delete(@NotNull Object entity) {
         Session session = currentSession();
@@ -109,7 +109,7 @@ public class HibernateOperations {
      * @param <T>         实体类型。
      * @return 查询结果。
      */
-    // 当前会话由事务上下文管理生命周期，本方法不会主动关闭该会话。
+    // 当前会话由调用方管理生命周期，本方法不会主动关闭该会话。
     @SuppressWarnings("resource")
     public <T> T get(@NotNull Class<T> entityClass, Object identifier) {
         return currentSession().find(entityClass, identifier);
@@ -118,7 +118,7 @@ public class HibernateOperations {
     /**
      * 将当前会话中的变更同步至数据库。
      */
-    // 当前会话由事务上下文管理生命周期，本方法不会主动关闭该会话。
+    // 当前会话由调用方管理生命周期，本方法不会主动关闭该会话。
     @SuppressWarnings("resource")
     public void flush() {
         currentSession().flush();
@@ -127,7 +127,7 @@ public class HibernateOperations {
     /**
      * 清除当前会话中的持久化上下文。
      */
-    // 当前会话由事务上下文管理生命周期，本方法不会主动关闭该会话。
+    // 当前会话由调用方管理生命周期，本方法不会主动关闭该会话。
     @SuppressWarnings("resource")
     public void clear() {
         currentSession().clear();

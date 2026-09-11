@@ -10,6 +10,7 @@ import com.dwarfeng.subgrade.data.stack.dao.SingleObjectDao;
 import com.dwarfeng.subgrade.data.stack.exception.DaoException;
 
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 /**
@@ -25,7 +26,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
         SingleObjectDao<E> {
 
     @NotNull
-    private HibernateOperations template;
+    private HibernateOperations operations;
     @NotNull
     private BeanTransformer<K, PK> keyBeanTransformer;
     @NotNull
@@ -36,13 +37,13 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
     private Class<PE> classPE;
 
     public HibernateSingleObjectDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<K, PK> keyBeanTransformer,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull K key,
             @NotNull Class<PE> classPE
     ) {
-        this.template = template;
+        this.operations = operations;
         this.keyBeanTransformer = keyBeanTransformer;
         this.entityBeanTransformer = entityBeanTransformer;
         this.key = key;
@@ -59,7 +60,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
     }
 
     private boolean internalExists() {
-        return Objects.nonNull(template.get(classPE, transformKey(key)));
+        return Objects.nonNull(operations.get(classPE, transformKey(key)));
     }
 
     @Override
@@ -76,9 +77,9 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
         try {
             E newEntity = BeanPropertyAccess.getInstance().cloneBean(entity);
             newEntity.setKey(key);
-            template.clear();
-            template.saveOrUpdate(newEntity);
-            template.flush();
+            operations.clear();
+            operations.saveOrUpdate(newEntity);
+            operations.flush();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -92,13 +93,13 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
             }
 
             PK pk = transformKey(key);
-            PE pe = template.get(classPE, pk);
+            PE pe = operations.get(classPE, pk);
             // PE 不可能为 null，因为之前的语句已经判断 PE 一定存在。
             if (Objects.isNull(pe)) {
                 throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
             }
-            template.delete(pe);
-            template.flush();
+            operations.delete(pe);
+            operations.flush();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -106,7 +107,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
 
     private E internalGet() {
         PK pk = transformKey(key);
-        return reverseTransformEntity(template.get(classPE, pk));
+        return reverseTransformEntity(operations.get(classPE, pk));
     }
 
     private PK transformKey(K k) {
@@ -118,12 +119,12 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
     }
 
     @NotNull
-    public HibernateOperations getTemplate() {
-        return template;
+    public HibernateOperations getOperations() {
+        return operations;
     }
 
-    public void setTemplate(@NotNull HibernateOperations template) {
-        this.template = template;
+    public void setOperations(@NotNull HibernateOperations operations) {
+        this.operations = operations;
     }
 
     @NotNull
@@ -165,7 +166,7 @@ public class HibernateSingleObjectDao<K extends Key, E extends Entity<K>, PK ext
     @Override
     public String toString() {
         return "HibernateSingleObjectDao{" +
-                "template=" + template +
+                "operations=" + operations +
                 ", keyBeanTransformer=" + keyBeanTransformer +
                 ", entityBeanTransformer=" + entityBeanTransformer +
                 ", key=" + key +

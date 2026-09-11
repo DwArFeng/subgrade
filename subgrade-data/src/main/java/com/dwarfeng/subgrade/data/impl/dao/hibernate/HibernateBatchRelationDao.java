@@ -10,6 +10,7 @@ import com.dwarfeng.subgrade.data.stack.dao.BatchRelationDao;
 import com.dwarfeng.subgrade.data.stack.exception.DaoException;
 
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +48,7 @@ public class HibernateBatchRelationDao<
     }
 
     @NotNull
-    private HibernateOperations template;
+    private HibernateOperations operations;
     @NotNull
     private BeanTransformer<PK, PPK> pkTransformer;
     @NotNull
@@ -68,7 +69,7 @@ public class HibernateBatchRelationDao<
     private JoinType joinType;
 
     public HibernateBatchRelationDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<PK, PPK> pkTransformer,
             @NotNull BeanTransformer<CK, PCK> ckTransformer,
             @NotNull BeanTransformer<PE, PPE> peTransformer,
@@ -79,7 +80,7 @@ public class HibernateBatchRelationDao<
             @NotNull String childProperty,
             @NotNull JoinType joinType
     ) {
-        this.template = template;
+        this.operations = operations;
         this.pkTransformer = pkTransformer;
         this.ckTransformer = ckTransformer;
         this.peTransformer = peTransformer;
@@ -96,7 +97,7 @@ public class HibernateBatchRelationDao<
     public boolean existsRelation(PK pk, CK ck) throws DaoException {
         try {
             PCK pck = ckTransformer.transform(ck);
-            PCE pce = template.get(classPCE, pck);
+            PCE pce = operations.get(classPCE, pck);
             // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
             BeanPropertyAccess propertyUtils = BeanPropertyAccess.getInstance();
             @SuppressWarnings("unchecked")
@@ -119,8 +120,8 @@ public class HibernateBatchRelationDao<
         try {
             PPK ppk = pkTransformer.transform(pk);
             PCK pck = ckTransformer.transform(ck);
-            PPE ppe = template.get(classPPE, ppk);
-            PCE pce = template.get(classPCE, pck);
+            PPE ppe = operations.get(classPPE, ppk);
+            PCE pce = operations.get(classPCE, pck);
             if (joinType == JoinType.JOIN_BY_CHILD) {
                 // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
                 BeanPropertyAccess propertyUtils = BeanPropertyAccess.getInstance();
@@ -128,7 +129,7 @@ public class HibernateBatchRelationDao<
                 Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
                 ppes.add(ppe);
                 assert pce != null;
-                template.save(pce);
+                operations.save(pce);
             } else if (joinType == JoinType.JOIN_BY_PARENT) {
                 // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
                 BeanPropertyAccess propertyUtils = BeanPropertyAccess.getInstance();
@@ -136,11 +137,11 @@ public class HibernateBatchRelationDao<
                 Collection<PCE> pces = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
                 pces.add(pce);
                 assert ppe != null;
-                template.save(ppe);
+                operations.save(ppe);
             } else {
                 throw new IllegalStateException("非法的 joinType: " + joinType);
             }
-            template.flush();
+            operations.flush();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -152,8 +153,8 @@ public class HibernateBatchRelationDao<
         try {
             PPK ppk = pkTransformer.transform(pk);
             PCK pck = ckTransformer.transform(ck);
-            PPE ppe = template.get(classPPE, ppk);
-            PCE pce = template.get(classPCE, pck);
+            PPE ppe = operations.get(classPPE, ppk);
+            PCE pce = operations.get(classPCE, pck);
             if (joinType == JoinType.JOIN_BY_CHILD) {
                 // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
                 BeanPropertyAccess propertyUtils = BeanPropertyAccess.getInstance();
@@ -161,7 +162,7 @@ public class HibernateBatchRelationDao<
                 Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
                 ppes.remove(ppe);
                 assert pce != null;
-                template.save(pce);
+                operations.save(pce);
             } else if (joinType == JoinType.JOIN_BY_PARENT) {
                 // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
                 BeanPropertyAccess propertyUtils = BeanPropertyAccess.getInstance();
@@ -169,11 +170,11 @@ public class HibernateBatchRelationDao<
                 Collection<PCE> pces = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
                 pces.remove(pce);
                 assert ppe != null;
-                template.save(ppe);
+                operations.save(ppe);
             } else {
                 throw new IllegalStateException("非法的 joinType: " + joinType);
             }
-            template.flush();
+            operations.flush();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -184,7 +185,7 @@ public class HibernateBatchRelationDao<
     public boolean existsAllRelations(PK pk, List<CK> cks) throws DaoException {
         try {
             PPK ppk = pkTransformer.transform(pk);
-            PPE ppe = template.get(classPPE, ppk);
+            PPE ppe = operations.get(classPPE, ppk);
             // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
             BeanPropertyAccess propertyUtils = BeanPropertyAccess.getInstance();
             @SuppressWarnings("unchecked")
@@ -202,7 +203,7 @@ public class HibernateBatchRelationDao<
     public boolean existsNonRelations(PK pk, List<CK> cks) throws DaoException {
         try {
             PPK ppk = pkTransformer.transform(pk);
-            PPE ppe = template.get(classPPE, ppk);
+            PPE ppe = operations.get(classPPE, ppk);
             // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
             BeanPropertyAccess propertyUtils = BeanPropertyAccess.getInstance();
             @SuppressWarnings("unchecked")
@@ -226,8 +227,8 @@ public class HibernateBatchRelationDao<
         try {
             PPK ppk = pkTransformer.transform(pk);
             List<PCK> pcks = cks.stream().map(ckTransformer::transform).toList();
-            PPE ppe = template.get(classPPE, ppk);
-            List<PCE> pces = pcks.stream().map(pck -> template.get(classPCE, pck)).toList();
+            PPE ppe = operations.get(classPPE, ppk);
+            List<PCE> pces = pcks.stream().map(pck -> operations.get(classPCE, pck)).toList();
             if (joinType == JoinType.JOIN_BY_CHILD) {
                 for (PCE pce : pces) {
                     // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
@@ -235,7 +236,7 @@ public class HibernateBatchRelationDao<
                     @SuppressWarnings("unchecked")
                     Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
                     ppes.add(ppe);
-                    template.save(pce);
+                    operations.save(pce);
                 }
             } else if (joinType == JoinType.JOIN_BY_PARENT) {
                 // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
@@ -244,11 +245,11 @@ public class HibernateBatchRelationDao<
                 Collection<PCE> property = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
                 property.addAll(pces);
                 assert ppe != null;
-                template.save(ppe);
+                operations.save(ppe);
             } else {
                 throw new IllegalStateException("非法的 joinType: " + joinType);
             }
-            template.flush();
+            operations.flush();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -260,8 +261,8 @@ public class HibernateBatchRelationDao<
         try {
             PPK ppk = pkTransformer.transform(pk);
             List<PCK> pcks = cks.stream().map(ckTransformer::transform).toList();
-            PPE ppe = template.get(classPPE, ppk);
-            List<PCE> pces = pcks.stream().map(pck -> template.get(classPCE, pck)).toList();
+            PPE ppe = operations.get(classPPE, ppk);
+            List<PCE> pces = pcks.stream().map(pck -> operations.get(classPCE, pck)).toList();
             if (joinType == JoinType.JOIN_BY_CHILD) {
                 for (PCE pce : pces) {
                     // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
@@ -269,7 +270,7 @@ public class HibernateBatchRelationDao<
                     @SuppressWarnings("unchecked")
                     Collection<PPE> ppes = (Collection<PPE>) propertyUtils.getProperty(pce, childProperty);
                     ppes.remove(ppe);
-                    template.save(pce);
+                    operations.save(pce);
                 }
             } else if (joinType == JoinType.JOIN_BY_PARENT) {
                 // 如果配置的字段是正确的，则此处转换应该是对的，否则会抛出异常。
@@ -278,23 +279,23 @@ public class HibernateBatchRelationDao<
                 Collection<PCE> property = (Collection<PCE>) propertyUtils.getProperty(ppe, parentProperty);
                 property.removeAll(pces);
                 assert ppe != null;
-                template.save(ppe);
+                operations.save(ppe);
             } else {
                 throw new IllegalStateException("非法的 joinType: " + joinType);
             }
-            template.flush();
+            operations.flush();
         } catch (Exception e) {
             throw new DaoException(e);
         }
     }
 
     @NotNull
-    public HibernateOperations getTemplate() {
-        return template;
+    public HibernateOperations getOperations() {
+        return operations;
     }
 
-    public void setTemplate(@NotNull HibernateOperations template) {
-        this.template = template;
+    public void setOperations(@NotNull HibernateOperations operations) {
+        this.operations = operations;
     }
 
     @NotNull
@@ -381,7 +382,7 @@ public class HibernateBatchRelationDao<
     @Override
     public String toString() {
         return "HibernateBatchRelationDao{" +
-                "template=" + template +
+                "operations=" + operations +
                 ", pkTransformer=" + pkTransformer +
                 ", ckTransformer=" + ckTransformer +
                 ", peTransformer=" + peTransformer +

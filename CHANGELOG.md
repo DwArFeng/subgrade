@@ -4,6 +4,23 @@
 
 ### 功能构建
 
+- `subgrade-data` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateAccelerableHqlPresetLookupDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateAccelerablePresetLookupDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateBaseDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateBatchBaseDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateBatchRelationDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateBatchWriteDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateDaoFactory。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateEntireLookupDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateHqlPresetLookupDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernatePresetLookupDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateRelationDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateSingleObjectDao。
+  - com.dwarfeng.subgrade.data.impl.dao.hibernate.HibernateWriteDao。
+  - com.dwarfeng.subgrade.data.sdk.hibernate.hql.HavingHelper。
+  - com.dwarfeng.subgrade.data.sdk.hibernate.operation.HibernateOperations。
+
 - 优化文件格式。
   - 优化 `pom.xml` 文件的格式。
 

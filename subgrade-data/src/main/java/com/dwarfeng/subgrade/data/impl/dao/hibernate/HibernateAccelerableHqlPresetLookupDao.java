@@ -55,7 +55,7 @@ public class HibernateAccelerableHqlPresetLookupDao<E extends Entity<?>, PE exte
     public static final String DEFAULT_ENTITY_ALIAS = HibernateHqlPresetLookupDao.DEFAULT_ENTITY_ALIAS;
 
     @NotNull
-    private HibernateOperations template;
+    private HibernateOperations operations;
     @NotNull
     private BeanTransformer<E, PE> entityBeanTransformer;
     @NotNull
@@ -68,24 +68,24 @@ public class HibernateAccelerableHqlPresetLookupDao<E extends Entity<?>, PE exte
     private String entityAlias;
 
     public HibernateAccelerableHqlPresetLookupDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull NativeLookup<E> nativeLookup,
             @NotNull PresetConditionMaker presetConditionMaker
     ) {
-        this(template, entityBeanTransformer, classPE, nativeLookup, presetConditionMaker, DEFAULT_ENTITY_ALIAS);
+        this(operations, entityBeanTransformer, classPE, nativeLookup, presetConditionMaker, DEFAULT_ENTITY_ALIAS);
     }
 
     public HibernateAccelerableHqlPresetLookupDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull NativeLookup<E> nativeLookup,
             @NotNull PresetConditionMaker presetConditionMaker,
             @NotNull String entityAlias
     ) {
-        this.template = template;
+        this.operations = operations;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
         this.nativeLookup = nativeLookup;
@@ -98,13 +98,13 @@ public class HibernateAccelerableHqlPresetLookupDao<E extends Entity<?>, PE exte
     public List<E> lookup(String preset, Object[] objs) throws DaoException {
         try {
             if (nativeLookup.supportPreset(preset)) {
-                List<E> result = template.executeWithNativeSession(session -> session.doReturningWork(
+                List<E> result = operations.executeWithNativeSession(session -> session.doReturningWork(
                         connection -> this.nativeLookup.lookupEntity(connection, preset, objs)
                 ));
                 assert result != null;
                 return result;
             } else {
-                return template.execute(session -> {
+                return operations.execute(session -> {
                     // 构建 HqlCondition 对象。
                     HqlCondition condition = new HqlCondition(classPE, entityAlias);
 
@@ -159,13 +159,13 @@ public class HibernateAccelerableHqlPresetLookupDao<E extends Entity<?>, PE exte
     @SuppressWarnings("DuplicatedCode")
     private List<E> lookupWithPositiveRows(String preset, Object[] objs, PagingInfo pagingInfo, int page, int rows) {
         if (nativeLookup.supportPreset(preset)) {
-            List<E> result = template.executeWithNativeSession(session -> session.doReturningWork(
+            List<E> result = operations.executeWithNativeSession(session -> session.doReturningWork(
                     connection -> this.nativeLookup.lookupEntity(connection, preset, objs, pagingInfo)
             ));
             assert result != null;
             return result;
         } else {
-            return template.execute(session -> {
+            return operations.execute(session -> {
                 // 构建 HqlCondition 对象。
                 HqlCondition condition = new HqlCondition(classPE, entityAlias);
 
@@ -204,14 +204,14 @@ public class HibernateAccelerableHqlPresetLookupDao<E extends Entity<?>, PE exte
     public int lookupCount(String preset, Object[] objs) throws DaoException {
         try {
             if (nativeLookup.supportPreset(preset)) {
-                Integer result = template.executeWithNativeSession(session -> session.doReturningWork(
+                Integer result = operations.executeWithNativeSession(session -> session.doReturningWork(
                         connection -> nativeLookup.lookupCount(connection, preset, objs)
                 ));
                 assert result != null;
                 return result;
             } else {
                 // 获取装箱的结果。
-                Integer result = template.execute(session -> {
+                Integer result = operations.execute(session -> {
                     // 构建 HqlCondition 对象。
                     HqlCondition condition = new NoOrderHqlCondition(classPE, entityAlias);
 
@@ -249,13 +249,13 @@ public class HibernateAccelerableHqlPresetLookupDao<E extends Entity<?>, PE exte
     public E lookupFirst(String preset, Object[] objs) throws DaoException {
         try {
             if (nativeLookup.supportPreset(preset)) {
-                List<E> result = template.executeWithNativeSession(session -> session.doReturningWork(
+                List<E> result = operations.executeWithNativeSession(session -> session.doReturningWork(
                         connection -> this.nativeLookup.lookupEntity(connection, preset, objs, PagingInfo.FIRST_ONE)
                 ));
                 assert result != null;
                 return result.stream().findFirst().orElse(null);
             } else {
-                return template.execute(session -> {
+                return operations.execute(session -> {
                     // 构建 HqlCondition 对象。
                     HqlCondition condition = new HqlCondition(classPE, entityAlias);
 
@@ -293,12 +293,12 @@ public class HibernateAccelerableHqlPresetLookupDao<E extends Entity<?>, PE exte
     }
 
     @NotNull
-    public HibernateOperations getTemplate() {
-        return template;
+    public HibernateOperations getOperations() {
+        return operations;
     }
 
-    public void setTemplate(@NotNull HibernateOperations template) {
-        this.template = template;
+    public void setOperations(@NotNull HibernateOperations operations) {
+        this.operations = operations;
     }
 
     @NotNull
@@ -349,7 +349,7 @@ public class HibernateAccelerableHqlPresetLookupDao<E extends Entity<?>, PE exte
     @Override
     public String toString() {
         return "HibernateAccelerableHqlPresetLookupDao{" +
-                "template=" + template +
+                "operations=" + operations +
                 ", entityBeanTransformer=" + entityBeanTransformer +
                 ", classPE=" + classPE +
                 ", nativeLookup=" + nativeLookup +

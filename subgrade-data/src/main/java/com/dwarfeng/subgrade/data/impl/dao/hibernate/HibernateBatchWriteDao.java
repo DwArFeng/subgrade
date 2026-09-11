@@ -28,25 +28,25 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
     public static final int DEFAULT_BATCH_SIZE = 100;
 
     @NotNull
-    private HibernateOperations template;
+    private HibernateOperations operations;
     @NotNull
     private BeanTransformer<E, PE> entityBeanTransformer;
     @Range(from = 0, to = Long.MAX_VALUE)
     private int batchSize;
 
     public HibernateBatchWriteDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer
     ) {
-        this(template, entityBeanTransformer, DEFAULT_BATCH_SIZE);
+        this(operations, entityBeanTransformer, DEFAULT_BATCH_SIZE);
     }
 
     public HibernateBatchWriteDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @Range(from = 0, to = Long.MAX_VALUE) int batchSize
     ) {
-        this.template = template;
+        this.operations = operations;
         this.entityBeanTransformer = entityBeanTransformer;
         this.batchSize = batchSize;
     }
@@ -55,9 +55,9 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
     public void write(E element) throws DaoException {
         try {
             PE pe = transformEntity(element);
-            template.save(pe);
-            template.flush();
-            template.clear();
+            operations.save(pe);
+            operations.flush();
+            operations.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -69,14 +69,14 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
             List<PE> collect = elements.stream().map(entityBeanTransformer::transform).toList();
             for (int i = 0; i < collect.size(); i++) {
                 if (i % batchSize == 0) {
-                    template.flush();
-                    template.clear();
+                    operations.flush();
+                    operations.clear();
                 }
                 PE pe = collect.get(i);
-                template.save(pe);
+                operations.save(pe);
             }
-            template.flush();
-            template.clear();
+            operations.flush();
+            operations.clear();
         } catch (Exception e) {
             throw new DaoException(e);
         }
@@ -87,12 +87,12 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
     }
 
     @NotNull
-    public HibernateOperations getTemplate() {
-        return template;
+    public HibernateOperations getOperations() {
+        return operations;
     }
 
-    public void setTemplate(@NotNull HibernateOperations template) {
-        this.template = template;
+    public void setOperations(@NotNull HibernateOperations operations) {
+        this.operations = operations;
     }
 
     @NotNull
@@ -116,7 +116,7 @@ public class HibernateBatchWriteDao<E extends Entity<?>, PE extends Bean> implem
     @Override
     public String toString() {
         return "HibernateBatchWriteDao{" +
-                "template=" + template +
+                "operations=" + operations +
                 ", entityBeanTransformer=" + entityBeanTransformer +
                 ", batchSize=" + batchSize +
                 '}';

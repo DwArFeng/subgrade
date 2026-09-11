@@ -11,6 +11,7 @@ import com.dwarfeng.subgrade.data.stack.exception.DaoException;
 import org.hibernate.query.Query;
 
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> i
     public static final String DEFAULT_ENTITY_ALIAS = "pojo";
 
     @NotNull
-    private HibernateOperations template;
+    private HibernateOperations operations;
     @NotNull
     private BeanTransformer<E, PE> entityBeanTransformer;
     @NotNull
@@ -32,22 +33,22 @@ public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> i
     private String entityAlias;
 
     public HibernateHqlPresetLookupDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker
     ) {
-        this(template, entityBeanTransformer, classPE, presetConditionMaker, DEFAULT_ENTITY_ALIAS);
+        this(operations, entityBeanTransformer, classPE, presetConditionMaker, DEFAULT_ENTITY_ALIAS);
     }
 
     public HibernateHqlPresetLookupDao(
-            @NotNull HibernateOperations template,
+            @NotNull HibernateOperations operations,
             @NotNull BeanTransformer<E, PE> entityBeanTransformer,
             @NotNull Class<PE> classPE,
             @NotNull PresetConditionMaker presetConditionMaker,
             @NotNull String entityAlias
     ) {
-        this.template = template;
+        this.operations = operations;
         this.entityBeanTransformer = entityBeanTransformer;
         this.classPE = classPE;
         this.presetConditionMaker = presetConditionMaker;
@@ -58,7 +59,7 @@ public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> i
     @Override
     public List<E> lookup(String preset, Object[] objs) throws DaoException {
         try {
-            return template.execute(session -> {
+            return operations.execute(session -> {
                 // 构建 HqlCondition 对象。
                 HqlCondition condition = new HqlCondition(classPE, entityAlias);
 
@@ -112,7 +113,7 @@ public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> i
     @SuppressWarnings("DuplicatedCode")
     @NotNull
     private List<E> lookupWithPositiveRows(String preset, Object[] objs, int page, int rows) {
-        return template.execute(session -> {
+        return operations.execute(session -> {
             // 构建 HqlCondition 对象。
             HqlCondition condition = new HqlCondition(classPE, entityAlias);
 
@@ -150,7 +151,7 @@ public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> i
     public int lookupCount(String preset, Object[] objs) throws DaoException {
         try {
             // 获取装箱的结果。
-            Integer result = template.execute(session -> {
+            Integer result = operations.execute(session -> {
                 // 构建 HqlCondition 对象。
                 HqlCondition condition = new NoOrderHqlCondition(classPE, entityAlias);
 
@@ -186,7 +187,7 @@ public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> i
     @Override
     public E lookupFirst(String preset, Object[] objs) throws DaoException {
         try {
-            return template.execute(session -> {
+            return operations.execute(session -> {
                 // 构建 HqlCondition 对象。
                 HqlCondition condition = new HqlCondition(classPE, entityAlias);
 
@@ -223,12 +224,12 @@ public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> i
     }
 
     @NotNull
-    public HibernateOperations getTemplate() {
-        return template;
+    public HibernateOperations getOperations() {
+        return operations;
     }
 
-    public void setTemplate(@NotNull HibernateOperations template) {
-        this.template = template;
+    public void setOperations(@NotNull HibernateOperations operations) {
+        this.operations = operations;
     }
 
     @NotNull
@@ -270,7 +271,7 @@ public class HibernateHqlPresetLookupDao<E extends Entity<?>, PE extends Bean> i
     @Override
     public String toString() {
         return "HibernateHqlPresetLookupDao{" +
-                "template=" + template +
+                "operations=" + operations +
                 ", entityBeanTransformer=" + entityBeanTransformer +
                 ", classPE=" + classPE +
                 ", presetConditionMaker=" + presetConditionMaker +
