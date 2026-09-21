@@ -29,7 +29,7 @@ import java.util.Objects;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SpecificClass {
 
-    String message() default "{com.dwarfeng.subgrade.web.validation.specific_class.message}";
+    String message() default "The value must be an instance of the required class";
 
     Class<?>[] groups() default {};
 
