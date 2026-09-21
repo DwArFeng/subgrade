@@ -51,7 +51,7 @@ public class FastJsonKafkaDeserializer<T> implements Deserializer<T> {
             return JSON.parseObject(str, clazz, autoTypeBeforeHandler);
         } catch (JSONException e) {
             throw new SerializationException(
-                    KafkaMessages.message(KafkaMessageKey.FAST_JSON_DESERIALIZATION_FAILED), e
+                    KafkaMessages.message(KafkaMessageKey.EXCEPTION_FAST_JSON_DESERIALIZATION_FAILED), e
             );
         }
     }

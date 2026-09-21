@@ -11,11 +11,11 @@ import static com.dwarfeng.subgrade.lifecycle.internal.i18n.LifecycleMessages.Ca
  */
 public enum LifecycleMessageKey {
 
-    SERVICE_EXCEPTION_OPERATION_FAILED(SDK, "service_exception.operation_failed"),
-    LOG_ONLINE(IMPL, "log.online"),
     LOG_OFFLINE(IMPL, "log.offline"),
+    LOG_ONLINE(IMPL, "log.online"),
     LOG_START(IMPL, "log.start"),
-    LOG_STOP(IMPL, "log.stop");
+    LOG_STOP(IMPL, "log.stop"),
+    SERVICE_EXCEPTION_OPERATION_FAILED(SDK, "service_exception.operation_failed");
 
     private final LifecycleMessages.Catalog catalog;
     private final String key;

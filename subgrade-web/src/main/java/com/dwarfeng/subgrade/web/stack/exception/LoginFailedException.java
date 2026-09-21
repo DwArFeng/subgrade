@@ -19,7 +19,7 @@ public class LoginFailedException extends Exception {
     private final String loginId;
 
     public LoginFailedException(String loginId) {
-        super(WebMessages.message(WebMessageKey.LOGIN_FAILED_DETAIL, loginId));
+        super(WebMessages.message(WebMessageKey.EXCEPTION_LOGIN_FAILED_DETAIL, loginId));
         this.loginId = loginId;
     }
 
@@ -34,12 +34,12 @@ public class LoginFailedException extends Exception {
     }
 
     public LoginFailedException(Throwable cause, String loginId) {
-        super(WebMessages.message(WebMessageKey.LOGIN_FAILED_DETAIL, loginId), cause);
+        super(WebMessages.message(WebMessageKey.EXCEPTION_LOGIN_FAILED_DETAIL, loginId), cause);
         this.loginId = loginId;
     }
 
     @Override
     public String getMessage() {
-        return WebMessages.message(WebMessageKey.LOGIN_FAILED_DETAIL, loginId);
+        return WebMessages.message(WebMessageKey.EXCEPTION_LOGIN_FAILED_DETAIL, loginId);
     }
 }

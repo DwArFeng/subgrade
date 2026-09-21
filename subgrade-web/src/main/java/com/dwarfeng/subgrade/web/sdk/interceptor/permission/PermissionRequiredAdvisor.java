@@ -179,7 +179,7 @@ public class PermissionRequiredAdvisor {
             LOGGER.warn(WebMessages.message(WebMessageKey.LOG_EXPRESSION_DISABLED_HINT,
                     SystemPropertyConstants.VALUE_PERMISSION_REQUIRED_USE_EXPRESSION
             ));
-            throw new IllegalStateException(WebMessages.message(WebMessageKey.ERROR_EXPRESSION_PARSER_MISSING));
+            throw new IllegalStateException(WebMessages.message(WebMessageKey.EXCEPTION_EXPRESSION_PARSER_MISSING));
         }
 
         // 创建解析后的权限值列表。

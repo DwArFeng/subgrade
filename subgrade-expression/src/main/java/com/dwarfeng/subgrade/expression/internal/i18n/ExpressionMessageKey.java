@@ -11,8 +11,8 @@ import static com.dwarfeng.subgrade.expression.internal.i18n.ExpressionMessages.
  */
 public enum ExpressionMessageKey {
 
-    SERVICE_EXCEPTION_PARSE_FAILED(SDK, "service_exception.parse_failed"),
-    PARSE_FAILED_DETAIL(STACK, "expression.parse_failed_detail");
+    EXCEPTION_EXPRESSION_PARSE_FAILED_DETAIL(STACK, "exception.expression_parse_failed_detail"),
+    SERVICE_EXCEPTION_PARSE_FAILED(SDK, "service_exception.parse_failed");
 
     private final ExpressionMessages.Catalog catalog;
     private final String key;

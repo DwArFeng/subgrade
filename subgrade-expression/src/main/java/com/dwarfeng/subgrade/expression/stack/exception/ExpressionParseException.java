@@ -19,17 +19,17 @@ public class ExpressionParseException extends Exception {
     private final String expressionString;
 
     public ExpressionParseException(String expressionString) {
-        super(ExpressionMessages.message(ExpressionMessageKey.PARSE_FAILED_DETAIL, expressionString));
+        super(ExpressionMessages.message(ExpressionMessageKey.EXCEPTION_EXPRESSION_PARSE_FAILED_DETAIL, expressionString));
         this.expressionString = expressionString;
     }
 
     public ExpressionParseException(Throwable cause, String expressionString) {
-        super(ExpressionMessages.message(ExpressionMessageKey.PARSE_FAILED_DETAIL, expressionString), cause);
+        super(ExpressionMessages.message(ExpressionMessageKey.EXCEPTION_EXPRESSION_PARSE_FAILED_DETAIL, expressionString), cause);
         this.expressionString = expressionString;
     }
 
     @Override
     public String getMessage() {
-        return ExpressionMessages.message(ExpressionMessageKey.PARSE_FAILED_DETAIL, expressionString);
+        return ExpressionMessages.message(ExpressionMessageKey.EXCEPTION_EXPRESSION_PARSE_FAILED_DETAIL, expressionString);
     }
 }

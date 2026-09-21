@@ -11,15 +11,15 @@ import static com.dwarfeng.subgrade.basic.internal.i18n.BasicMessages.Catalog.ST
  */
 public enum BasicMessageKey {
 
-    SERVICE_EXCEPTION_UNDEFINED(SDK, "service_exception.undefined"),
-    SERVICE_EXCEPTION_IO(SDK, "service_exception.io"),
-    SERVICE_EXCEPTION_PROCESS_FAILED(SDK, "service_exception.process_failed"),
-    SERVICE_EXCEPTION_HANDLER_FAILED(SDK, "service_exception.handler_failed"),
-    SERVICE_EXCEPTION_NOT_IMPLEMENTED(SDK, "service_exception.not_implemented"),
+    EXCEPTION_PAGING_DETAIL(STACK, "exception.paging_detail"),
     SERVICE_EXCEPTION_GENERATE_FAILED(SDK, "service_exception.generate_failed"),
-    SERVICE_EXCEPTION_PAGING_FAILED(SDK, "service_exception.paging_failed"),
+    SERVICE_EXCEPTION_HANDLER_FAILED(SDK, "service_exception.handler_failed"),
+    SERVICE_EXCEPTION_IO(SDK, "service_exception.io"),
     SERVICE_EXCEPTION_MESSAGE(SDK, "service_exception.message"),
-    PAGING_EXCEPTION_DETAIL(STACK, "paging_exception.detail");
+    SERVICE_EXCEPTION_NOT_IMPLEMENTED(SDK, "service_exception.not_implemented"),
+    SERVICE_EXCEPTION_PAGING_FAILED(SDK, "service_exception.paging_failed"),
+    SERVICE_EXCEPTION_PROCESS_FAILED(SDK, "service_exception.process_failed"),
+    SERVICE_EXCEPTION_UNDEFINED(SDK, "service_exception.undefined");
 
     private final BasicMessages.Catalog catalog;
     private final String key;

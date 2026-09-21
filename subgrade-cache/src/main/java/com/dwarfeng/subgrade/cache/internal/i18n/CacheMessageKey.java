@@ -11,13 +11,13 @@ import static com.dwarfeng.subgrade.cache.internal.i18n.CacheMessages.Catalog.SD
  */
 public enum CacheMessageKey {
 
-    SERVICE_EXCEPTION_OPERATION_FAILED(SDK, "service_exception.operation_failed"),
-    LOG_FETCH_SUCCEEDED(IMPL, "log.fetch_succeeded"),
-    LOG_CLEAR_KEY(IMPL, "log.clear_key"),
     LOG_CLEAR_ALL(IMPL, "log.clear_all"),
+    LOG_CLEAR_KEY(IMPL, "log.clear_key"),
     LOG_EXPIRE_SCAN_STARTED(IMPL, "log.expire_scan_started"),
     LOG_EXPIRED_REMOVED(IMPL, "log.expired_removed"),
-    LOG_NO_EXPIRED(IMPL, "log.no_expired");
+    LOG_FETCH_SUCCEEDED(IMPL, "log.fetch_succeeded"),
+    LOG_NO_EXPIRED(IMPL, "log.no_expired"),
+    SERVICE_EXCEPTION_OPERATION_FAILED(SDK, "service_exception.operation_failed");
 
     private final CacheMessages.Catalog catalog;
     private final String key;

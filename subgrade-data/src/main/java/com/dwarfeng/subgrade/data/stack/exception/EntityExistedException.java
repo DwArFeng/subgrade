@@ -19,17 +19,17 @@ public class EntityExistedException extends DaoException {
     private final Object key;
 
     public EntityExistedException(Object key) {
-        super(DataMessages.message(DataMessageKey.ENTITY_EXISTED_DETAIL, key));
+        super(DataMessages.message(DataMessageKey.EXCEPTION_ENTITY_EXISTED_DETAIL, key));
         this.key = key;
     }
 
     public EntityExistedException(Throwable cause, Object key) {
-        super(DataMessages.message(DataMessageKey.ENTITY_EXISTED_DETAIL, key), cause);
+        super(DataMessages.message(DataMessageKey.EXCEPTION_ENTITY_EXISTED_DETAIL, key), cause);
         this.key = key;
     }
 
     @Override
     public String getMessage() {
-        return DataMessages.message(DataMessageKey.ENTITY_EXISTED_DETAIL, key);
+        return DataMessages.message(DataMessageKey.EXCEPTION_ENTITY_EXISTED_DETAIL, key);
     }
 }

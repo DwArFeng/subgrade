@@ -20,7 +20,7 @@ public class PagingException extends Exception {
     private final PagingInfo pagingInfo;
 
     public PagingException(PagingInfo pagingInfo) {
-        super(BasicMessages.message(BasicMessageKey.PAGING_EXCEPTION_DETAIL, pagingInfo));
+        super(BasicMessages.message(BasicMessageKey.EXCEPTION_PAGING_DETAIL, pagingInfo));
         this.pagingInfo = pagingInfo;
     }
 
@@ -31,6 +31,6 @@ public class PagingException extends Exception {
 
     @Override
     public String getMessage() {
-        return BasicMessages.message(BasicMessageKey.PAGING_EXCEPTION_DETAIL, pagingInfo);
+        return BasicMessages.message(BasicMessageKey.EXCEPTION_PAGING_DETAIL, pagingInfo);
     }
 }

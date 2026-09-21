@@ -76,7 +76,7 @@ public final class PagingFixHelper {
             }
             // 如果记录分页警告，则记录警告。
             if (LOG_PAGING_WARNING) {
-                String message = DataMessages.message(DataMessageKey.PAGING_PAGE_FIXED, page, 0);
+                String message = DataMessages.message(DataMessageKey.LOG_PAGING_PAGE_FIXED, page, 0);
                 LOGGER.warn(message);
                 LOGGER.debug(message, new PagingException(pagingInfo));
             }
@@ -93,7 +93,7 @@ public final class PagingFixHelper {
             }
             // 如果记录分页警告，则记录警告。
             if (LOG_PAGING_WARNING) {
-                String message = DataMessages.message(DataMessageKey.PAGING_ROWS_FIXED, rows, Integer.MAX_VALUE);
+                String message = DataMessages.message(DataMessageKey.LOG_PAGING_ROWS_FIXED, rows, Integer.MAX_VALUE);
                 LOGGER.warn(message);
                 LOGGER.debug(message, new PagingException(pagingInfo));
             }

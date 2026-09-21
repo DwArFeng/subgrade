@@ -10,8 +10,8 @@ import static com.dwarfeng.subgrade.kafka.internal.i18n.KafkaMessages.Catalog.SD
  */
 public enum KafkaMessageKey {
 
-    SERVICE_EXCEPTION_SERIALIZATION_FAILED(SDK, "service_exception.serialization_failed"),
-    FAST_JSON_DESERIALIZATION_FAILED(SDK, "fast_json.deserialization_failed");
+    EXCEPTION_FAST_JSON_DESERIALIZATION_FAILED(SDK, "exception.fast_json_deserialization_failed"),
+    SERVICE_EXCEPTION_SERIALIZATION_FAILED(SDK, "service_exception.serialization_failed");
 
     private final KafkaMessages.Catalog catalog;
     private final String key;

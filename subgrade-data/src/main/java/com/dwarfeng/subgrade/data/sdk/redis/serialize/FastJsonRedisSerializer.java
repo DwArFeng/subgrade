@@ -59,7 +59,7 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
             return JSON.parseObject(bytes, clazz, autoTypeBeforeHandler);
         } catch (JSONException e) {
             throw new SerializationException(
-                    DataMessages.message(DataMessageKey.FAST_JSON_DESERIALIZATION_FAILED), e
+                    DataMessages.message(DataMessageKey.EXCEPTION_FAST_JSON_DESERIALIZATION_FAILED), e
             );
         }
     }

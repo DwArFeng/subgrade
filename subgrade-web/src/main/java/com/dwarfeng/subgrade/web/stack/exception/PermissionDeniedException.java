@@ -45,6 +45,6 @@ public class PermissionDeniedException extends Exception {
 
     @Override
     public String getMessage() {
-        return WebMessages.message(WebMessageKey.PERMISSION_DENIED_DETAIL, formatPermissions(missingPermissions));
+        return WebMessages.message(WebMessageKey.EXCEPTION_PERMISSION_DENIED_DETAIL, formatPermissions(missingPermissions));
     }
 }
