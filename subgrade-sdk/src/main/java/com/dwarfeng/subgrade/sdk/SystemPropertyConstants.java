@@ -71,6 +71,13 @@ public final class SystemPropertyConstants {
     public static final String VALUE_BEHAVIOR_ANALYSE_METADATA_CACHE_ENABLED =
             "subgrade.behaviorAnalyse.metadataCache.enabled";
 
+    /**
+     * 启用审计记录的 SPEL 表达式解析功能。
+     *
+     * @since 1.10.0
+     */
+    public static final String VALUE_AUDIT_RECORD_USE_SPEL = "subgrade.auditRecord.useSpel";
+
     private SystemPropertyConstants() {
         throw new IllegalStateException("禁止实例化");
     }
