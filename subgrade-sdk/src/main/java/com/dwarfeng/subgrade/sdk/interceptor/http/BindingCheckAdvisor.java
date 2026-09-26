@@ -26,7 +26,7 @@ public class BindingCheckAdvisor {
     private static final Logger LOGGER = LoggerFactory.getLogger(BindingCheckAdvisor.class);
 
     // 为了与旧代码兼容，使用字段注入，忽略相关警告。
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
     private BindingCheckAopManager manager;
 

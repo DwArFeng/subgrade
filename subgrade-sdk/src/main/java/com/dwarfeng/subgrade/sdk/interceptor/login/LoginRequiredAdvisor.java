@@ -27,12 +27,12 @@ public class LoginRequiredAdvisor {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginRequiredAdvisor.class);
 
     // 为了与旧代码兼容，使用字段注入，忽略相关警告。
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
     private LoginHandler loginHandler;
 
     // 为了与旧代码兼容，使用字段注入，忽略相关警告。
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
     private LoginRequiredAopManager manager;
 

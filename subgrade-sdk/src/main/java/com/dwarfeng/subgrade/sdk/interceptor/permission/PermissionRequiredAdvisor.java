@@ -84,12 +84,12 @@ public class PermissionRequiredAdvisor {
     );
 
     // 为了与旧代码兼容，使用字段注入，忽略相关警告。
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
     private PermissionHandler permissionHandler;
 
     // 为了与旧代码兼容，使用字段注入，忽略相关警告。
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
     private PermissionRequiredAopManager manager;
 
@@ -102,7 +102,7 @@ public class PermissionRequiredAdvisor {
      * @since 1.7.3
      */
     // 为了与旧代码兼容，使用字段注入，忽略相关警告。
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Nullable
     @Autowired(required = false)
     private ConfigurableBeanFactory configurableBeanFactory;
@@ -113,7 +113,7 @@ public class PermissionRequiredAdvisor {
      * @since 1.7.3
      */
     // 为了与旧代码兼容，使用字段注入，忽略相关警告。
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Nullable
     @Autowired(required = false)
     private ExpressionParser expressionParser;
@@ -124,7 +124,7 @@ public class PermissionRequiredAdvisor {
      * @since 1.7.3
      */
     // 为了与旧代码兼容，使用字段注入，忽略相关警告。
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Nullable
     @Autowired(required = false)
     private ParserContext parserContext;
