@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/AuditRecord.md。
+
 - 审计记录 AOP 重构。
 
 ### Bug 修复
