@@ -16,9 +16,14 @@ import static com.dwarfeng.subgrade.web.sdk.exception.ServiceExceptionCodeSuppli
  * 该登录增强需要在入口参数中定义一个 {@link HttpServletRequest} 对象，该对象用于获取 token。<br>
  * 同时，该登录增强限定返回类型为 {@link FastJsonResponseData}，如果权限验证失败，则将权限验证失败信息写入到返回值中。
  *
+ * <p>
+ * 请使用 {@link com.dwarfeng.subgrade.web.impl.interceptor.permission.HttpPermissionRequiredAopManager}。
+ *
  * @author DwArFeng
  * @since 1.7.0
+ * @deprecated 该类因包路径不规范而废弃，请使用 impl 包内的同名类。
  */
+@Deprecated(since = "2.1.1")
 public class HttpPermissionRequiredAopManager implements PermissionRequiredAopManager {
 
     private String tokenKey;

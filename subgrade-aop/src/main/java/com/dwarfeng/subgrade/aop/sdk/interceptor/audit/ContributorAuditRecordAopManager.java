@@ -9,9 +9,14 @@ import java.util.*;
  * 该管理器组合多个 {@link PropertyContributor}，并将所有适用于当前调用的贡献器生成的属性合并为一份审计属性映射。
  * 贡献器按照配置顺序执行，属性键冲突会被视为配置错误。
  *
+ * <p>
+ * 请使用 {@link com.dwarfeng.subgrade.aop.impl.interceptor.audit.ContributorAuditRecordAopManager}。
+ *
  * @author DwArFeng
  * @since 2.1.0
+ * @deprecated 该类因包路径不规范而废弃，请使用 impl 包内的同名类。
  */
+@Deprecated(since = "2.1.1")
 public class ContributorAuditRecordAopManager implements AuditRecordAopManager {
 
     public static final String BEAN_NAME = "contributorAuditRecordAopManager";

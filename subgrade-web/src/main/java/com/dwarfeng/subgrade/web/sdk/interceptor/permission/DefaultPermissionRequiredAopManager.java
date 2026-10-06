@@ -19,9 +19,14 @@ import java.util.List;
  * 这个参数的值将会被当作用户 ID。<br>
  * 同时，该权限增强管理器需要在入口参数中定义一个 {@link ExceptionContext} 类型的参数，用于存储权限缺失的异常信息。
  *
+ * <p>
+ * 请使用 {@link com.dwarfeng.subgrade.web.impl.interceptor.permission.DefaultPermissionRequiredAopManager}。
+ *
  * @author DwArFeng
  * @since 1.7.0
+ * @deprecated 该类因包路径不规范而废弃，请使用 impl 包内的同名类。
  */
+@Deprecated(since = "2.1.1")
 public class DefaultPermissionRequiredAopManager implements PermissionRequiredAopManager {
 
     @Override

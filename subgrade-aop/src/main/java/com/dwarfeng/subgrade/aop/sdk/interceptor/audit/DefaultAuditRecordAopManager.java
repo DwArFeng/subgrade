@@ -11,9 +11,14 @@ import java.util.Map;
  * 该管理器使用固定的属性键记录入口参数和方法执行结果。所有非布尔属性均转换为字符串，
  * 适用于审计属性定义简单、无需精细拆分业务字段的场景。
  *
+ * <p>
+ * 请使用 {@link com.dwarfeng.subgrade.aop.impl.interceptor.audit.DefaultAuditRecordAopManager}。
+ *
  * @author DwArFeng
  * @since 2.1.0
+ * @deprecated 该类因包路径不规范而废弃，请使用 impl 包内的同名类。
  */
+@Deprecated(since = "2.1.1")
 public class DefaultAuditRecordAopManager implements AuditRecordAopManager {
 
     public static final String BEAN_NAME = "defaultAuditRecordAopManager";

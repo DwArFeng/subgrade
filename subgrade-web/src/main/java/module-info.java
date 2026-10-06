@@ -31,6 +31,10 @@ module com.dwarfeng.subgrade.web {
     exports com.dwarfeng.subgrade.web.sdk.validation;
     exports com.dwarfeng.subgrade.web.sdk.validation.group;
     exports com.dwarfeng.subgrade.web.impl.interceptor.friendly;
+    exports com.dwarfeng.subgrade.web.impl.interceptor.audit.propctr;
+    exports com.dwarfeng.subgrade.web.impl.interceptor.http;
+    exports com.dwarfeng.subgrade.web.impl.interceptor.login;
+    exports com.dwarfeng.subgrade.web.impl.interceptor.permission;
 
     opens com.dwarfeng.subgrade.web.impl.i18n to com.dwarfeng.subgrade.base;
     opens com.dwarfeng.subgrade.web.sdk.i18n to com.dwarfeng.subgrade.base;

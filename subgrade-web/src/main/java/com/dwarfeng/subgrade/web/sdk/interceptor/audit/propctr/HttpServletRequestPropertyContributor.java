@@ -16,9 +16,14 @@ import java.util.Objects;
  * 该贡献器从入口参数中查找 {@link HttpServletRequest}，并记录稳定的请求方法、请求 URI 和远程地址。
  * 为避免泄露凭证或产生过大的审计属性，该贡献器不记录请求头、请求体、Token 和 Session。
  *
+ * <p>
+ * 请使用 {@link com.dwarfeng.subgrade.web.impl.interceptor.audit.propctr.HttpServletRequestPropertyContributor}。
+ *
  * @author DwArFeng
  * @since 2.1.0
+ * @deprecated 该类因包路径不规范而废弃，请使用 impl 包内的同名类。
  */
+@Deprecated(since = "2.1.1")
 public class HttpServletRequestPropertyContributor implements PropertyContributor {
 
     public static final String PROPERTY_REQUEST_METHOD = "requestMethod";

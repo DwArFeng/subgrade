@@ -17,9 +17,14 @@ import static com.dwarfeng.subgrade.web.stack.response.ResponseData.Meta;
  * 该登录增强需要在入口参数中定义一个 {@link HttpServletRequest} 对象，该对象用于获取 token。<br>
  * 同时，该登录增强限定返回类型为 {@link FastJsonResponseData}，如果登录失败，则将登录失败信息写入到返回值中。
  *
+ * <p>
+ * 请使用 {@link com.dwarfeng.subgrade.web.impl.interceptor.login.HttpLoginRequiredAopManager}。
+ *
  * @author DwArFeng
  * @since 1.7.0
+ * @deprecated 该类因包路径不规范而废弃，请使用 impl 包内的同名类。
  */
+@Deprecated(since = "2.1.1")
 public class HttpLoginRequiredAopManager implements LoginRequiredAopManager {
 
     private String tokenKey;

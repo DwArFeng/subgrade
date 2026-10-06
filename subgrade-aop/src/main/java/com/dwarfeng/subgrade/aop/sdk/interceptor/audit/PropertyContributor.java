@@ -9,9 +9,14 @@ import java.util.Map;
  * 属性贡献器用于生成一次审计记录中的部分属性。
  * 多个贡献器可以由 {@link ContributorAuditRecordAopManager} 组合，从而复用通用的请求、返回值和异常处理逻辑。
  *
+ * <p>
+ * 请使用 {@link com.dwarfeng.subgrade.aop.impl.interceptor.audit.PropertyContributor}。
+ *
  * @author DwArFeng
  * @since 2.1.0
+ * @deprecated 该接口因包路径不规范而废弃，请使用 impl 包内的同名接口。
  */
+@Deprecated(since = "2.1.1")
 public interface PropertyContributor {
 
     /**

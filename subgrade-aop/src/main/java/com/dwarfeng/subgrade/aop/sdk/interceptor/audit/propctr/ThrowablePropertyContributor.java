@@ -14,9 +14,14 @@ import java.util.Objects;
  * <p>
  * 该贡献器只处理异常结束的方法调用，记录失败标记、异常类型和异常消息。
  *
+ * <p>
+ * 请使用 {@link com.dwarfeng.subgrade.aop.impl.interceptor.audit.propctr.ThrowablePropertyContributor}。
+ *
  * @author DwArFeng
  * @since 2.1.0
+ * @deprecated 该类因包路径不规范而废弃，请使用 impl 包内的同名类。
  */
+@Deprecated(since = "2.1.1")
 public class ThrowablePropertyContributor implements PropertyContributor {
 
     @Override

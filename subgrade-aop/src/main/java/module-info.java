@@ -20,4 +20,7 @@ module com.dwarfeng.subgrade.aop {
 
     opens com.dwarfeng.subgrade.aop.sdk.i18n to com.dwarfeng.subgrade.base;
     opens com.dwarfeng.subgrade.aop.sdk.interceptor.audit to spring.core, spring.beans;
+    exports com.dwarfeng.subgrade.aop.impl.interceptor.audit;
+    exports com.dwarfeng.subgrade.aop.impl.interceptor.audit.propctr;
+    opens com.dwarfeng.subgrade.aop.impl.interceptor.audit to spring.beans, spring.core;
 }

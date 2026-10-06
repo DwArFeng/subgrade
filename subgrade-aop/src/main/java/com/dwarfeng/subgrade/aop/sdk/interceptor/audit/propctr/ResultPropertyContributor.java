@@ -13,9 +13,14 @@ import java.util.Map;
  * <p>
  * 该贡献器只处理成功完成的方法调用，记录成功标记以及返回值的字符串表示。
  *
+ * <p>
+ * 请使用 {@link com.dwarfeng.subgrade.aop.impl.interceptor.audit.propctr.ResultPropertyContributor}。
+ *
  * @author DwArFeng
  * @since 2.1.0
+ * @deprecated 该类因包路径不规范而废弃，请使用 impl 包内的同名类。
  */
+@Deprecated(since = "2.1.1")
 public class ResultPropertyContributor implements PropertyContributor {
 
     @Override
