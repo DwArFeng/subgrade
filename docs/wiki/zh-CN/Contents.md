@@ -19,6 +19,11 @@
 
 ## 功能
 
+### 基础组件
+
+- [Basic Components Basics](./BasicComponentsBasics.md) -
+  基础组件基础，说明了 Bean、Key、Entity、Dto、生成器、异常与日志等基础公共契约。
+
 ### 数据访问
 
 - [Data Access Basics](./DataAccessBasics.md) - 数据访问基础，说明了本项目的数据访问基础功能以及接口。
